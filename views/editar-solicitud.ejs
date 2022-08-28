@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css y js bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!-- linkeado css propio -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- icons bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- generador de pdf cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <!-- moment.js cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <title>Editar solicitud</title>
+</head>
+
+<body>
+    <div class="container-fluid " style="background-color: #ececec;">
+        <div class=" d-flex align-items-center">
+            <h5 class="text-dark m-2" style="font-size: large;">PANEL DE SOLICITUDES DE PRESTAMOS</h5>
+            <a href="/solicita-ya">ir a solicita ya</a>
+            <!-- <a class="nav-link me-lg-3 text-light" style="font-size: 15px;" href="/solicitudes-nuevas"><strong>ir a solicitudes nuevas</strong></a> -->
+        </div>
+    </div>
+
+    <div class=" p-2 d-flex flex-sm-row mt-4 " style="background-color: #ececec;">
+        <div class="container-fluid w-25 me-lg-3 d-flex bg-white">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-nuevas-solicitudes.svg" alt="Solicitudes Nuevas">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%= arraySolicitudesNuevas.length %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-nuevas">Solicitudes Nuevas</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white w-25 me-lg-3 d-flex ">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-aprobadas.svg" alt="Solicitudes Aprobadas">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%= arraySolicitudesAprobadas.length %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-aprobadas">Solicitudes Aprobadas</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white w-25 me-lg-3 d-flex">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-declinadas.svg" alt="Solicitudes Declinadas">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%= arraySolicitudesDeclinadas.length %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-declinadas">Solicitudes Declinadas</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white w-25 d-flex">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-en-revision.svg" alt="Solicitudes en Revision">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%= arraySolicitudesEnRevision.length %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-en-revision">Solicitudes en Revision</a></div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="container-fluid p-4 mt-5">
+        <h3 class="text-secondary">EDITAR SOLICITUD</h3>
+
+
+
+        <div class="container mt-3">
+
+            <form class="" autocomplete="off" action="" method="POST">
+
+                <div class="d-flex justify-content-end">
+                    <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i class="bi bi-check-lg me-lg-2"></i>Guardar Cambios</button>
+                    <a href="/" class="btn btn-danger btn-block p-2 mb-2"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a>
+                </div>
+
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            <strong>DATOS PERSONALES </strong>
+                    </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                            <div class="accordion-body">
+                                <!-- primera parte -->
+                                <div class="container-datos-header ">
+                                    <div class="datos-de-busqueda ">
+                                        <div class=" mb-4">
+                                            <div class="form-group d-flex justify-content-end  ">
+                                                <div class="form-group  ">
+                                                    <div class="input-group ">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Estado Solicitud</span>
+                                                        </div>
+
+                                                        <select name="estadoSolicitud" class="form-control" id="estadoSolicitud">
+                                                            <option value="<%= solicitud.estadoSolicitud %>" disabled selected><%= solicitud.estadoSolicitud %></option>
+                                                            <option value="Nueva">Nueva</option>
+                                                            <option value="Aprobada">Aprobada</option>
+                                                            <option value="Declinada">Declinada</option>
+                                                            <option value="En Revision">En Revision</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!-- <select name="estado" class="form-control" id="estadoSolicitud">
+                                                <option value="Nueva" selected>Nueva</option>
+                                                <option disabled value="Activo">Nueva</option>
+                                                <option value="Inactivo">Aprobada</option>
+                                                <option value="Inactivo">Declinada</option>
+                                                <option value="Inactivo">En Revision</option>
+                                            </select> -->
+                                            </div>
+                                        </div>
+
+                                        <div class="">
+                                            <div class="form-group   ">
+                                                <div class="input-group ">
+                                                    <div class=" me-lg-5">
+                                                        <label class="p-2">Cedula</label>
+                                                        <input type="text" name="cedula" class="form-control " id="cedula" value="<%= solicitud.cedula %>">
+                                                    </div>
+                                                    <div class="me-lg-5">
+                                                        <label for="sexo" class="p-2">Sexo</label>
+                                                        <select name="sexo" class="form-control" id="sexo">
+                                                        <option value="<%= solicitud.sexo %>" selected><%= solicitud.sexo %></option>
+                                                        <option value="hombre">Hombre</option>
+                                                        <option value="mujer">Mujer</option>
+                                                    </select>
+                                                        <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
+                                                    </div>
+                                                    <div class="me-lg-5">
+                                                        <label for="sexo" class="p-2">Estado Civil</label>
+                                                        <select name="estadoCivil" class="form-control" id="estadoCivil">
+                                                        <option value="<%= solicitud.estadoCivil %>" selected><%= solicitud.estadoCivil %></option>
+                                                        <option value="hombre">Casado</option>
+                                                        <option value="mujer">Soltero</option>
+                                                        <option value="mujer">Union Libre</option>
+                                                    </select>
+                                                        <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="form-group  ">
+                                            <label for="sexo" class="p-2">Sexo</label>
+                                            <select name="sexo" class="form-control" id="sexo">
+                                            <option value="seleccionar" selected>Seleccionar</option>
+                                            <option value="hombre">Hombre</option>
+                                            <option value="mujer">Mujer</option>
+                                        </select>
+                                        </div> -->
+                                            <!-- <div class="form-group  ">
+                                            <label for="sexo" class="">Estado Civil</label>
+                                            <select name="estadoCivil" class="form-control" id="estadoCivil">
+                                            <option value="seleccionar" selected>Seleccionar</option>
+                                            <option value="hombre">Casado</option>
+                                            <option value="mujer">Soltero</option>
+                                            <option value="mujer">Union Libre</option>
+                                            
+                                        </select>
+                                        </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombre" class=" p-2">Nombre</label>
+                                    <input type="text" name="nombre" class="form-control p-2" id="nombre" aria-describedby="emailHelp" value="<%= solicitud.nombre %>">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="apellido" class="p-2">Apellido</label>
+                                    <input type="text" name="apellido" class="form-control p-2" id="apellido" aria-describedby="emailHelp" value="<%= solicitud.apellido %>">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="direccion" class="p-2">Direccion </label>
+                                    <input type="text" name="direccion" class="form-control p-2" id="direccion" aria-describedby="emailHelp" value="<%= solicitud.direccion %>">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="direccionNegocio" class=" p-2">Direccion del Negocio</label>
+                                    <input type="text" name="direccionNegocio" class="form-control p-2" id="direccionNegocio" aria-describedby="emailHelp" value="<%= solicitud.direccionNegocio %>">
+                                </div>
+
+                                <div class="form-group ">
+                                    <label for="email" class=" p-2">Email</label>
+                                    <input type="email" name="email" class="form-control p-2" id="email" aria-describedby="emailHelp" value="<%= solicitud.email %>">
+                                </div>
+                                <div class="d-flex">
+                                    <div class="form-group me-lg-5">
+                                        <label for="celular" class="  p-2">Celular</label>
+                                        <input type="number" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" value="<%= solicitud.celular %>">
+                                    </div>
+                                    <div class="form-group me-lg-5 ">
+                                        <label for="ocupacion" class=" p-2">Ocupacion</label>
+                                        <input type="text" name="ocupacion" class="form-control p-2" id="ocupacion" aria-describedby="emailHelp" value="<%= solicitud.ocupacion %>">
+                                    </div>
+                                    <div class="form-group me-lg-5 ">
+                                        <label for="nacionadlidad" class="  p-2">Nacionadlidad</label>
+                                        <!-- <input type="text" name="nacionadlidad" class="form-control p-2" id="nacionadlidad" aria-describedby="emailHelp" placeholder=""> -->
+                                        <select name="nacionadlidad" class="form-control" id="nacionadlidad">
+                                        <option value="<%= solicitud.nacionadlidad %>" selected><%= solicitud.nacionadlidad %></option>
+                                        <option value="Dominicano">Dominicano</option>
+                                        <option value="Extranjero">Extranjero</option>
+                                    </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                      <strong>PASO 2 - DATOS DE UN FAMILIAR QUE NO VIVA CON USTED</strong>
+                    </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                            <div class="accordion-body">
+                                <!-- segunda parte -->
+                                <div class="form-group  ">
+                                    <label for="nombreFamilia" class="  p-2">Nombre </label>
+                                    <input type="text" name="nombreFamilia" class="form-control p-2" id="nombreFamilia" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="direccionFamilia" class="  p-2">Direccion</label>
+                                    <input type="text" name="direccionFamilia" class="form-control p-2" id="direccionFamilia" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="parentescoFamilia" class="  p-2">Parentesco</label>
+                                    <input type="text" name="parentescoFamilia" class="form-control p-2" id="parentescoFamilia" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="telefonoFamilia" class="  p-2">Telefono</label>
+                                    <input type="text" name="telefonoFamilia" class="form-control p-2" id="telefonoFamilia" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="apodoFamilia" class=" p-2">Apodo</label>
+                                    <input type="text" name="apodoFamilia" class="form-control p-2" id="apodoFamilia" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                     <strong>PASO 3 - DATOS LABORALES</strong>
+                    </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                            <div class="accordion-body">
+                                <!-- tercera parte -->
+                                <div class="form-group  ">
+                                    <label for="empresa" class=" p-2">Empresa donde labora</label>
+                                    <input type="text" name="empresa" class="form-control p-2" id="empresa" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="salario" class=" p-2">Salario</label>
+                                    <input type="text" name="salario" class="form-control p-2" id="salario" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="puesto" class="  p-2">Puesto</label>
+                                    <input type="text" name="puesto" class="form-control p-2" id="puesto" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="dir-empresa" class="  p-2">Dirreccion Empresa</label>
+                                    <input type="text" name="dir-empresa" class="form-control p-2" id="dir-empresa" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="telefonoEmpresa" class="  p-2">Telefono Empresa</label>
+                                    <input type="text" name="telefonoEmpresa" class="form-control p-2" id="telefonoEmpresa" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="departamento" class="  p-2">Departamento</label>
+                                    <input type="text" name="departamento" class="form-control p-2" id="departamento" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="tiempoEmpresa" class=" p-2">Tiempo en la Empresa</label>
+                                    <input type="text" name="tiempoEmpresa" class="form-control p-2" id="tiempoEmpresa" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                     <strong>PASO 4 - REFERENCIAS PERSONALES</strong>
+                    </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                            <div class="accordion-body">
+
+                                <!-- cuarta parte -->
+                                <div class="form-group  ">
+                                    <label for="nombreRefPers1" class=" p-2">Nombre Persona de Referencia 1</label>
+                                    <input type="text" name="nombreRefPers1" class="form-control p-2" id="nombreRefPers1" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="telefonoRefPer1" class="  p-2">Telefono Persona de Referencia 1</label>
+                                    <input type="text" name="telefonoRefPer1" class="form-control p-2" id="telefonoRefPer1" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="nombreRefPers2" class="  p-2">Nombre Persona de Referencia 2</label>
+                                    <input type="text" name="nombreRefPers2" class="form-control p-2" id="nombreRefPers2" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="telefonoRefPer2" class="  p-2">Telefono Persona de Referencia 2</label>
+                                    <input type="text" name="telefonoRefPer2" class="form-control p-2" id="telefonoRefPer2" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                      <strong>PASO 5 - DATOS DEL PRESTAMO</strong>
+                    </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
+                            <div class="accordion-body">
+                                <!-- quinta parte -->
+                                <div class="form-group  ">
+                                    <label for="tipoPrestamo" class="  p-2">Tipo de Prestamo</label>
+                                    <!-- <input type="text" name="tipoPrestamo" class="form-control p-2" id="tipoPrestamo" aria-describedby="emailHelp" placeholder=""> -->
+                                    <select name="tipoPrestamo" class="form-control" id="tipoPrestamo">
+                                    <option value="Selecional">Seleccionar</option>
+                                    <option value="Peronal">Personal</option>
+                                    <option value="Comercial">Comercial</option>
+                                    <option value="Vehiculo">Vehiculo</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="banco" class="  p-2">Banco</label>
+                                    <input type="text" name="banco" class="form-control p-2" id="banco" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group ">
+                                    <label for="numeroCuenta" class="  p-2">Numero de Cuenta</label>
+                                    <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" placeholder="">
+                                </div>
+                                <div class="form-group  ">
+                                    <label for="montoSolicitado" class="  p-2">Monto Solicitado</label>
+                                    <input type="number" name="montoSolicitado" class="form-control p-2" id="montoSolicitado" aria-describedby="emailHelp" placeholder="">
+                                </div>
+
+                                <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mt-4 mb-3" type="submit"><i class="bi bi-check-lg me-lg-2"></i>Guardar datos</button>
+                                <a href="/" class="btn btn-danger btn-block p-2 mt-4 mb-3"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+</body>
+
+</html>
