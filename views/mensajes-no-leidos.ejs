@@ -17,7 +17,7 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <!-- moment.js cdn -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
-    <title>Mensajes</title>
+    <title>Mensajes no leidos</title>
 </head>
 
 <body>
@@ -36,10 +36,10 @@
 
 
     <div class=" p-2 d-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">
-        <div class="container-fluid w-25  d-flex" style="background-color: #d4d4d4;">
+        <div class="container-fluid w-25  d-flex bg-white">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
-                    <img style="width: 60px;" src="/img/img-icons/img-nuevo-mensaje-inbox.svg" alt="Mensajes">
+                    <img style="width: 60px;" src="/img/img-icons/img-nuevo-mensaje-inbox.svg" alt="Mensajes Nuevos">
                 </div>
                 <div class="container-titulo">
                     <div class="indicador">
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white w-25  d-flex ">
+        <div class="container-fluid  w-25  d-flex " style=" background-color: #d4d4d4; ">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-mensaje-no-leido.svg" alt="Mensajes no Leidos">
@@ -86,10 +86,10 @@
 
     </div>
 
-    <!-- <h3>BANDEJA TODOS LOS MENSAJES</h3> -->
+    <!-- <h3>BANDEJA MENSAJES NO LEIDOS</h3> -->
     <div class="container-fluid d-flex">
         <div class="container-fluid p-4 mt-5 ">
-            <h3 class="text-secondary"><strong>BANDEJA</strong> MENSAJES NUEVOS</h3>
+            <h3 class="text-secondary"><strong>BANDEJA</strong> MENSAJES NO LEIDOS</h3>
             <div class="container-fluid p-4">
                 <div class="container-table table-responsive">
                     <table class="table table-sm table-hover ">
@@ -131,9 +131,9 @@
                                             <%= mensaje.estadoMensaje %>
                                         </td>
 
-                                        <td class=""><a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%= mensaje.idMensaje %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
-                                            <!-- <a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%=  %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a> -->
-                                            <a href="/mensajes/<%= mensaje.idMensaje %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar empleado"></i></a>
+                                        <td class="w-0 "><a id="eventoAct-Inact" href="/mensajes-no-leidos/ver-mensaje/<%= mensaje.idMensaje %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
+                                            <!-- <a id="eventoAct-Inact" href="/mensajes-no-leidos/ver-mensaje/<%=  %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a> -->
+                                            <a href="/mensajes-no-leidos/<%= mensaje.idMensaje %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar empleado"></i></a>
                                         </td>
                                     </tr>
 
@@ -154,8 +154,6 @@
 
         </div>
     </div>
-
-
 
 
 

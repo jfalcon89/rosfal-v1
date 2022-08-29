@@ -26,7 +26,7 @@ const usuariosRoutes = require("./routes/usuarios");
 const rutasRoutes = require("./routes/rutas");
 
 //--------------CONEXION AL SERVIDOR-----------------//
-app.set("port", process.env.PORT || 3003);
+app.set("port", process.env.PORT || 3005);
 
 app.listen(app.get("port"), () => {
     console.log("servidor funcionando en el puerto", app.get("port"))

@@ -17,7 +17,7 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <!-- moment.js cdn -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
-    <title>Mensajes</title>
+    <title>Ver Mensaje</title>
 </head>
 
 <body>
@@ -36,7 +36,7 @@
 
 
     <div class=" p-2 d-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">
-        <div class="container-fluid w-25  d-flex" style="background-color: #d4d4d4;">
+        <div class="container-fluid w-25  d-flex bg-white">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-nuevo-mensaje-inbox.svg" alt="Mensajes">
@@ -86,10 +86,12 @@
 
     </div>
 
-    <!-- <h3>BANDEJA TODOS LOS MENSAJES</h3> -->
+    <!-- <h3>VER MENSAJE</h3> -->
+
     <div class="container-fluid d-flex">
+        <!-- <div class="container-fluid container-todos-los-mensajes"> -->
         <div class="container-fluid p-4 mt-5 ">
-            <h3 class="text-secondary"><strong>BANDEJA</strong> MENSAJES NUEVOS</h3>
+            <h3 class="text-secondary"><strong>BANDEJA</strong> MENSAJES</h3>
             <div class="container-fluid p-4">
                 <div class="container-table table-responsive">
                     <table class="table table-sm table-hover ">
@@ -131,9 +133,9 @@
                                             <%= mensaje.estadoMensaje %>
                                         </td>
 
-                                        <td class=""><a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%= mensaje.idMensaje %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
-                                            <!-- <a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%=  %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a> -->
-                                            <a href="/mensajes/<%= mensaje.idMensaje %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar empleado"></i></a>
+                                        <td class="w-0 "><a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%= mensaje.idMensaje %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a>
+                                            <!-- <a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                            <a href="/mensajes/ver-mensaje/<%= mensaje.idMensaje %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Mensaje"></i></a>
                                         </td>
                                     </tr>
 
@@ -144,16 +146,67 @@
                     </table>
                 </div>
             </div>
+            <!-- </div> -->
         </div>
-        <div class="container-fluid p-4 mt-5 d-flex justify-content-center ">
-            <div>
-                <h3 class="text-secondary">NINGUN MENSAJE SELECCIONADO</h3>
-                <img style="width: 200px;" src="/img/img-icons/img-mensajes-no-select.svg" alt="">
-            </div>
+        <div class="container-fluid container-ver-mensaje">
+            <form class="" autocomplete="off" action="" method="POST">
+                <div class="container-fluid p-4 mt-5 vh-100" style="background-color: #e8e7e7;">
+                    <h3 class="text-secondary"><strong>Asunto:</strong>
+                        <%= mensaje.asunto %>
+                    </h3>
+                    <div class="d-flex justify-content-md-end ">
+                        <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
+                        <select class="" name="estadoMensaje" id="">
+                        <option value="Leido">Leido</option>
+                        <option value="No Leido">No Leido</option>
+                    </select>
+                    </div>
+
+                    <div class="container-fluid p-4">
+
+                        <div class="">
+                            <h6>
+                                <strong>Nombre:</strong>
+                                <%= mensaje.nombre %>
+                            </h6>
+                            <h6>
+                                <strong>Email:</strong>
+                                <%= mensaje.email %>
+                            </h6>
+                            <h6>
+                                <strong>Telefono:</strong>
+                                <%= mensaje.telefono %>
+                            </h6>
+                            <h6>
+                                <strong>Fecha:</strong>
+                                <%= mensaje.fechaMensaje.toLocaleString() %>
+                            </h6>
+                            <h6>
+                                <strong>Estado:</strong>
+                                <%= mensaje.estadoMensaje %>
+                            </h6>
+                        </div>
+                        <hr>
+
+                        <h5 class="text-secondary mt-4 mb-3">MENSAJE:</h5>
+                        <div class="container-fluid container-mensaje">
+                            <h3>
+                                <%= mensaje.mensaje %>
+                            </h3>
+                        </div>
 
 
+
+
+                    </div>
+                </div>
+            </form>
         </div>
+
+
     </div>
+
+
 
 
 
