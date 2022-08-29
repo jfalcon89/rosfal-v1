@@ -33,6 +33,29 @@ app.listen(app.get("port"), () => {
 });
 
 
+//7- variables de session
+const session = require('express-session');
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+
+//función para limpiar la caché luego del logout
+app.use(function(req, res, next) {
+    if (!req.user)
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    next();
+});
+
+//Logout
+//Destruye la sesión.
+app.get('/logout', function(req, res) {
+    req.session.destroy(() => {
+        res.redirect('/login') // siempre se ejecutará después de que se destruya la sesión
+    })
+});
+
 
 //CONFIGURACION PARA LEER EL BODY
 app.use(bodyParser.json());

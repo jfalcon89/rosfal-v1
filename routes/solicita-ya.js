@@ -10,9 +10,9 @@ router.get('/solicita-ya', (req, res) => {
     res.render('solicita-ya');
 })
 
-//INSERTAR NUEVO EMPLEADO A MYSQL****************
+//INSERTAR NUEVA SOLICITUD A MYSQL****************
 router.post("/solicita-ya", async(req, res) => {
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -46,8 +46,8 @@ router.post("/solicita-ya", async(req, res) => {
         tipoPrestamo,
         banco,
         numeroCuenta,
-        montoSolicitado,
-        estadoSolicitud
+        montoSolicitado
+
     };
 
     await pool.query('INSERT INTO solicitudes set ?', [nuevaSolicitud]);

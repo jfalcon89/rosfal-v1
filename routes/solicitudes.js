@@ -11,116 +11,116 @@ const pool = require("../database");
 
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES NUEVAS********************
 router.get('/solicitudes-nuevas', async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
 
-    const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-    const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-    const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-    const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
-    res.render("solicitudes-nuevas", {
-        arraySolicitudes: arraySolicitudesDB,
-        arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-        arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-        arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
-            // login: true,
-            // name: req.session.name
+        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+        res.render("solicitudes-nuevas", {
+            arraySolicitudes: arraySolicitudesDB,
+            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+            login: true,
+            name: req.session.name
 
-    });
+        });
 
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
+        });
+    }
 
 });
 
 
 //VER SOLICITUD EN ESTADO NUEVA ************
 router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const id = req.params.id
-    console.log(req.params)
+        const id = req.params.id
+        console.log(req.params)
 
-    try {
+        try {
 
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+            const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+            const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
 
-        const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
-        console.log(solicitudDB[0]);
-        res.render("ver-solicitud", {
-            solicitud: solicitudDB[0],
-            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
-                // login: true,
-                // name: req.session.name
-        });
+            const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            console.log(solicitudDB[0]);
+            res.render("ver-solicitud", {
+                solicitud: solicitudDB[0],
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+                arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+                arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                login: true,
+                name: req.session.name
+            });
 
-    } catch (error) {
-        console.log(error)
-        res.render("ver-solicitud", {
-            error: true,
-            mensaje: "no se encuentra el id seleccionado"
+        } catch (error) {
+            console.log(error)
+            res.render("ver-solicitud", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
+
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
         });
     }
-
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
 });
 
 
 //EDITAR SOLICITUD EN ESTADO NUEVA ************
 router.get("/Solicitudes-nuevas/editar-solicitud/:id", async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const id = req.params.id
-    console.log(req.params)
+        const id = req.params.id
+        console.log(req.params)
 
-    try {
+        try {
 
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+            const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+            const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
 
-        const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
-        console.log(solicitudDB[0]);
-        res.render("editar-solicitud", {
-            solicitud: solicitudDB[0],
-            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
-                // login: true,
-                // name: req.session.name
-        });
+            const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            console.log(solicitudDB[0]);
+            res.render("editar-solicitud", {
+                solicitud: solicitudDB[0],
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+                arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+                arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                login: true,
+                name: req.session.name
+            });
 
-    } catch (error) {
-        console.log(error)
-        res.render("editar-solicitud", {
-            error: true,
-            mensaje: "no se encuentra el id seleccionado"
+        } catch (error) {
+            console.log(error)
+            res.render("editar-solicitud", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
+
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
         });
     }
-
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
 });
 
 
@@ -196,115 +196,114 @@ router.get("/solicitudes-nuevas/:id", async(req, res) => {
 
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES APROBADAS********************
 router.get('/solicitudes-aprobadas', async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-    const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-    const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-    const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
-    res.render("solicitudes-aprobadas", {
-        arraySolicitudes: arraySolicitudesDB,
-        arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-        arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-        arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
+        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+        res.render("solicitudes-aprobadas", {
+            arraySolicitudes: arraySolicitudesDB,
+            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+            login: true,
+            name: req.session.name
 
-        // login: true,
-        // name: req.session.name
+        });
 
-    });
-
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
+        });
+    }
 
 });
 
 //EDITAR SOLICITUD EN ESTADO APROBADAS************
 router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const id = req.params.id
-    console.log(req.params)
+        const id = req.params.id
+        console.log(req.params)
 
-    try {
+        try {
 
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+            const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+            const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
 
-        const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
-        console.log(solicitudDB[0]);
-        res.render("ver-solicitud", {
-            solicitud: solicitudDB[0],
-            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
-                // login: true,
-                // name: req.session.name
-        });
+            const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            console.log(solicitudDB[0]);
+            res.render("ver-solicitud", {
+                solicitud: solicitudDB[0],
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+                arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+                arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                login: true,
+                name: req.session.name
+            });
 
-    } catch (error) {
-        console.log(error)
-        res.render("editar-solicitud", {
-            error: true,
-            mensaje: "no se encuentra el id seleccionado"
+        } catch (error) {
+            console.log(error)
+            res.render("editar-solicitud", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
+
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
         });
     }
-
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
 });
 
 
 //EDITAR SOLICITUD EN ESTADO APROBADAS************
 router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const id = req.params.id
-    console.log(req.params)
+        const id = req.params.id
+        console.log(req.params)
 
-    try {
+        try {
 
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+            const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+            const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
 
-        const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
-        console.log(solicitudDB[0]);
-        res.render("editar-solicitud", {
-            solicitud: solicitudDB[0],
-            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
-                // login: true,
-                // name: req.session.name
-        });
+            const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            console.log(solicitudDB[0]);
+            res.render("editar-solicitud", {
+                solicitud: solicitudDB[0],
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+                arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+                arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                login: true,
+                name: req.session.name
+            });
 
-    } catch (error) {
-        console.log(error)
-        res.render("editar-solicitud", {
-            error: true,
-            mensaje: "no se encuentra el id seleccionado"
+        } catch (error) {
+            console.log(error)
+            res.render("editar-solicitud", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
+
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
         });
     }
-
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
 });
 
 
@@ -362,116 +361,116 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
 
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES DECLINADAS********************
 router.get('/solicitudes-declinadas', async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-    const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-    const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-    const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
-    res.render("solicitudes-declinadas", {
-        arraySolicitudes: arraySolicitudesDB,
-        arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-        arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-        arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
-            // login: true,
-            // name: req.session.name
+        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+        res.render("solicitudes-declinadas", {
+            arraySolicitudes: arraySolicitudesDB,
+            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+            login: true,
+            name: req.session.name
 
-    });
+        });
 
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
+        });
+    }
 
 });
 
 
 //EDITAR SOLICITUD EN ESTADO DECLINADAS************
 router.get("/Solicitudes-declinadas/ver-solicitud/:id", async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const id = req.params.id
-    console.log(req.params)
+        const id = req.params.id
+        console.log(req.params)
 
-    try {
+        try {
 
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+            const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+            const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
 
-        const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
-        console.log(solicitudDB[0]);
-        res.render("ver-solicitud", {
-            solicitud: solicitudDB[0],
-            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
-                // login: true,
-                // name: req.session.name
-        });
+            const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            console.log(solicitudDB[0]);
+            res.render("ver-solicitud", {
+                solicitud: solicitudDB[0],
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+                arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+                arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                login: true,
+                name: req.session.name
+            });
 
-    } catch (error) {
-        console.log(error)
-        res.render("editar-solicitud", {
-            error: true,
-            mensaje: "no se encuentra el id seleccionado"
+        } catch (error) {
+            console.log(error)
+            res.render("editar-solicitud", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
+
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
         });
     }
-
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
 });
 
 
 
 //EDITAR SOLICITUD EN ESTADO DECLINADAS************
 router.get("/Solicitudes-declinadas/editar-solicitud/:id", async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const id = req.params.id
-    console.log(req.params)
+        const id = req.params.id
+        console.log(req.params)
 
-    try {
+        try {
 
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+            const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+            const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
 
-        const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
-        console.log(solicitudDB[0]);
-        res.render("editar-solicitud", {
-            solicitud: solicitudDB[0],
-            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
-                // login: true,
-                // name: req.session.name
-        });
+            const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            console.log(solicitudDB[0]);
+            res.render("editar-solicitud", {
+                solicitud: solicitudDB[0],
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+                arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+                arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                login: true,
+                name: req.session.name
+            });
 
-    } catch (error) {
-        console.log(error)
-        res.render("editar-solicitud", {
-            error: true,
-            mensaje: "no se encuentra el id seleccionado"
+        } catch (error) {
+            console.log(error)
+            res.render("editar-solicitud", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
+
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
         });
     }
-
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
 });
 
 //GUARDAR ACTUALIZACION DE SOLICITUD DESDE DECLINADAS
@@ -528,114 +527,114 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
 
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES NUEVAS********************
 router.get('/solicitudes-en-revision', async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
-    const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-    const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-    const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-    res.render("solicitudes-en-revision", {
-        arraySolicitudes: arraySolicitudesDB,
-        arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-        arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-        arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB
-            // login: true,
-            // name: req.session.name
+        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+        res.render("solicitudes-en-revision", {
+            arraySolicitudes: arraySolicitudesDB,
+            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+            login: true,
+            name: req.session.name
 
-    });
+        });
 
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
+        });
+    }
 
 });
 
 //EDITAR SOLICITUD EN ESTADO DECLINADAS************
 router.get("/Solicitudes-en-revision/ver-solicitud/:id", async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const id = req.params.id
-    console.log(req.params)
+        const id = req.params.id
+        console.log(req.params)
 
-    try {
+        try {
 
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+            const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+            const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
 
-        const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
-        console.log(solicitudDB[0]);
-        res.render("ver-solicitud", {
-            solicitud: solicitudDB[0],
-            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
-                // login: true,
-                // name: req.session.name
-        });
+            const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            console.log(solicitudDB[0]);
+            res.render("ver-solicitud", {
+                solicitud: solicitudDB[0],
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+                arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+                arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                login: true,
+                name: req.session.name
+            });
 
-    } catch (error) {
-        console.log(error)
-        res.render("editar-solicitud", {
-            error: true,
-            mensaje: "no se encuentra el id seleccionado"
+        } catch (error) {
+            console.log(error)
+            res.render("editar-solicitud", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
+
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
         });
     }
-
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
 });
 
 
 //EDITAR SOLICITUD EN ESTADO DECLINADAS************
 router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
-    // if (req.session.loggedin) {
+    if (req.session.loggedin) {
 
-    const id = req.params.id
-    console.log(req.params)
+        const id = req.params.id
+        console.log(req.params)
 
-    try {
+        try {
 
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+            const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+            const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
 
-        const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
-        console.log(solicitudDB[0]);
-        res.render("editar-solicitud", {
-            solicitud: solicitudDB[0],
-            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB
-                // login: true,
-                // name: req.session.name
-        });
+            const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            console.log(solicitudDB[0]);
+            res.render("editar-solicitud", {
+                solicitud: solicitudDB[0],
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+                arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+                arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                login: true,
+                name: req.session.name
+            });
 
-    } catch (error) {
-        console.log(error)
-        res.render("editar-solicitud", {
-            error: true,
-            mensaje: "no se encuentra el id seleccionado"
+        } catch (error) {
+            console.log(error)
+            res.render("editar-solicitud", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
+
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
         });
     }
-
-    // } else {
-    //     res.render('login', {
-    //         login: false,
-    //         name: 'Debe iniciar sesión',
-    //     });
-    // }
 });
 
 //GUARDAR ACTUALIZACION DE SOLICITUD DESDE EN REVISION
