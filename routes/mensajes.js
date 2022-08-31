@@ -24,6 +24,7 @@ router.get('/mensajes', async(req, res) => {
             login: true,
             name: req.session.name
 
+
         });
 
     } else {
@@ -108,6 +109,8 @@ router.get("/mensajes/:id", async(req, res) => {
         await pool.query("DELETE FROM mensajes WHERE idMensaje = ?", [id]);
         // req.flash('success', 'Link eliminado correctamente');
         res.redirect("/mensajes");
+
+
 
     } catch (error) {
         console.log(error)

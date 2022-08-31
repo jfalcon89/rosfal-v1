@@ -25,7 +25,17 @@ router.post("/contacto", async(req, res) => {
 
     await pool.query('INSERT INTO mensajes set ?', [nuevoMensaje]);
     // req.flash('success', 'Link guardado correctamente');
-    res.redirect('/contacto');
+    // res.redirect('/contacto');
+
+    res.render('contacto', {
+        alert: true,
+        alertTitle: "Muchas Gracias",
+        alertMessage: "¡MENSAJE ENVIADO CORRECTAMENTE!",
+        alertIcon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+        ruta: 'contacto'
+    });
 
 });
 

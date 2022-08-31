@@ -21,6 +21,7 @@
 </head>
 
 <body>
+
     <a href="https://bit.ly/3pUAZZq"><img src="/img/logo-ws.png" alt="logo ws" style="width: 60px; position: fixed; left: 1607px; bottom: 30px;"></a>
     <div class="container-fluid " style="background-color: #0B5496;">
         <div class="container d-flex align-items-center justify-content-between">
@@ -84,11 +85,11 @@
             <div class="  d-lg-flex flex-lg-row">
                 <div class="form-group me-lg-3 mb-3 w-100 ">
                     <!-- <label for="nombre" class=" text-black-50 p-2"><strong>Nombre</strong></label> -->
-                    <input type="text" name="nombre" class="form-control p-2 " id="nombre" aria-describedby="" placeholder="Nombre">
+                    <input type="text" name="nombre" class="form-control p-2 " id="nombre" aria-describedby="" placeholder="Nombre" required>
                 </div>
                 <div class="form-group  mb-3 w-100 ">
                     <!-- <label for="apellido" class="p-2">Apellido</label> -->
-                    <input type="tel" name="telefono" class="form-control p-2" id="telefono" aria-describedby="" placeholder="Telefono">
+                    <input type="tel" name="telefono" class="form-control p-2" id="telefono" aria-describedby="" placeholder="Telefono" required>
                 </div>
             </div>
             <div class="d-lg-flex flex-lg-row">
@@ -98,12 +99,12 @@
                 </div>
                 <div class="form-group mb-3 w-100">
                     <!-- <label for="direccionNegocio" class=" p-2">Direccion del Negocio</label> -->
-                    <input type="text" name="asunto" class="form-control p-2" id="asunto" aria-describedby="" placeholder="Asunto">
+                    <input type="text" name="asunto" class="form-control p-2" id="asunto" aria-describedby="" placeholder="Asunto" required>
                 </div>
             </div>
             <div class="form-group ">
                 <!-- <label for="email" class=" p-2">Email</label> -->
-                <input type="text" name="mensaje" class="form-control p-2 " id="mensaje" aria-describedby="" placeholder="Mensaje">
+                <input type="text" name="mensaje" class="form-control p-2 " id="mensaje" aria-describedby="" placeholder="Mensaje" required>
             </div>
 
             <button class="btn p-2 mt-5 mb-4 text-white" style="background-color: #0B5495;" type="submit"><i class="bi bi-check-lg me-lg-2"></i>ENVIAR</button>
@@ -112,58 +113,73 @@
 
     </div>
 
-    <div class="container-map">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <% if (typeof alert != "undefined")  { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '/<%= ruta %>'
+            })
+        </script>
+        <% } %>
 
-        <iframe class="w-100" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15136.442388133928!2d-69.96694444999999!3d18.4786489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sdo!4v1661720189182!5m2!1ses-419!2sdo" width="600" height="450"
-            style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="container-map">
 
-    </div>
+                <iframe class="w-100" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15136.442388133928!2d-69.96694444999999!3d18.4786489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sdo!4v1661720189182!5m2!1ses-419!2sdo" width="600" height="450"
+                    style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-
-
-
-
-
-
-    <footer class="d-flex" style="background-color: #0B5496 ;">
-        <div class="container  d-lg-flex justify-content-lg-between">
-            <div class="container-dir mt-5 mb-5">
-                <img class="mb-5" src="/img/LOGO- footer.png" alt="logo" style="width: 120px;">
-                <h6 class="text-white">Calle Primera #59</h6>
-                <h6 class="text-white">Sector Enriquillo de Herrara</h6>
-                <h6 class="text-white">Santo Domingo R.D</h6>
-                <h6 class="text-white">rosfal@outlook.com</h6>
             </div>
-            <div class="container-link mt-5 mb-5">
-                <h6 class="text-white mb-3"><strong>LINKS DE INTERES</strong></h6>
-                <a class="text-white text-decoration-none" href="/">
-                    <li>Inicio</li>
-                </a>
-                <a class="text-white text-decoration-none" href="/quienes-somos">
-                    <li>Quienes Somos</li>
-                </a>
-                <a class="text-white text-decoration-none" href="/solicita-ya">
-                    <li>Solicita Ya</li>
-                </a>
-                <a class="text-white text-decoration-none" href="/preguntas-frecuentes">
-                    <li>Preguntas Frecuentes</li>
-                </a>
-                <a class="text-white text-decoration-none" href="/contacto">
-                    <li>Contactos</li>
-                </a>
-                <a class="text-white text-decoration-none" href="/login">
-                    <li>Panel Administracion</li>
-                </a>
-            </div>
-            <div class="container-redes mt-5 mb-5">
-                <h6 class="text-white mb-3"><strong>NUESTRAS REDES SOCIALES</strong></h6>
-                <a href="https://www.facebook.com/rosfalrd/"> <img style="width: 40px;" src="/img/logo-facebook.png" alt="facebook"></a>
-                <a href="https://www.instagram.com/rosfalrd/"> <img style="width: 40px;" src="/img/logo-instagram.png" alt="instagram"></a>
-                <a href="https://bit.ly/3pUAZZq"> <img style="width: 40px;" src="/img/logo-ws-navar-footer.png" alt="ws"></a>
-                <a href="#"> <img style="width: 40px;" src="/img/logo-twiter.png" alt="twier"></a>
-            </div>
-        </div>
-    </footer>
+
+
+
+
+
+
+
+            <footer class="d-flex" style="background-color: #0B5496 ;">
+                <div class="container  d-lg-flex justify-content-lg-between">
+                    <div class="container-dir mt-5 mb-5">
+                        <img class="mb-5" src="/img/LOGO- footer.png" alt="logo" style="width: 120px;">
+                        <h6 class="text-white">Calle Primera #59</h6>
+                        <h6 class="text-white">Sector Enriquillo de Herrara</h6>
+                        <h6 class="text-white">Santo Domingo R.D</h6>
+                        <h6 class="text-white">rosfal@outlook.com</h6>
+                    </div>
+                    <div class="container-link mt-5 mb-5">
+                        <h6 class="text-white mb-3"><strong>LINKS DE INTERES</strong></h6>
+                        <a class="text-white text-decoration-none" href="/">
+                            <li>Inicio</li>
+                        </a>
+                        <a class="text-white text-decoration-none" href="/quienes-somos">
+                            <li>Quienes Somos</li>
+                        </a>
+                        <a class="text-white text-decoration-none" href="/solicita-ya">
+                            <li>Solicita Ya</li>
+                        </a>
+                        <a class="text-white text-decoration-none" href="/preguntas-frecuentes">
+                            <li>Preguntas Frecuentes</li>
+                        </a>
+                        <a class="text-white text-decoration-none" href="/contacto">
+                            <li>Contactos</li>
+                        </a>
+                        <a class="text-white text-decoration-none" href="/login">
+                            <li>Panel Administracion</li>
+                        </a>
+                    </div>
+                    <div class="container-redes mt-5 mb-5">
+                        <h6 class="text-white mb-3"><strong>NUESTRAS REDES SOCIALES</strong></h6>
+                        <a href="https://www.facebook.com/rosfalrd/"> <img style="width: 40px;" src="/img/logo-facebook.png" alt="facebook"></a>
+                        <a href="https://www.instagram.com/rosfalrd/"> <img style="width: 40px;" src="/img/logo-instagram.png" alt="instagram"></a>
+                        <a href="https://bit.ly/3pUAZZq"> <img style="width: 40px;" src="/img/logo-ws-navar-footer.png" alt="ws"></a>
+                        <a href="#"> <img style="width: 40px;" src="/img/logo-twiter.png" alt="twier"></a>
+                    </div>
+                </div>
+            </footer>
 
 </body>
 

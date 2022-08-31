@@ -52,7 +52,17 @@ router.post("/solicita-ya", async(req, res) => {
 
     await pool.query('INSERT INTO solicitudes set ?', [nuevaSolicitud]);
     // req.flash('success', 'Link guardado correctamente');
-    res.redirect('/');
+    // res.redirect('/');
+
+    res.render('solicita-ya', {
+        alert: true,
+        alertTitle: "Muchas Gracias",
+        alertMessage: "¡SOLICITUD ENVIADA CORRECTAMENTE!",
+        alertIcon: 'success',
+        showConfirmButton: false,
+        timer: 2000,
+        ruta: ''
+    });
 
 });
 
