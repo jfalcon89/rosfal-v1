@@ -13,8 +13,11 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- icons bootstrap cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- AOS ANIMACION CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- generador de pdf cdn -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <!-- moment.js cdn -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
     <title>Quienes somos</title>
@@ -89,15 +92,15 @@
     </div>
 
     <div class="container d-lg-flex mt-5 mb-5">
-        <div class="container-mision mt-1 p-4 ">
+        <div data-aos="fade-up" class="container-mision mt-1 p-4 ">
             <h5 style="color:#0B5496;" class="text-center">MISION</h5>
             <h5 class="text-center text-secondary">Satisfacer las necesidades de nuestros clientes ofreciéndoles soluciones financieras de alta calidad de la mano de un equipo comprometido con el buen servicio.</h5>
         </div>
-        <div class="container-vision mt-1 p-4">
+        <div data-aos="fade-up" class="container-vision mt-1 p-4">
             <h5 style="color:#0B5496;" class="text-center">VISIÓN</h5>
             <h5 class="text-center text-secondary">Convertirnos en la institución financiera número uno del país, siendo la mejor opción para nuestros clientes </h5>
         </div>
-        <div class="container-valores mt-1 p-4">
+        <div data-aos="fade-up" class="container-valores mt-1 p-4">
             <h5 style="color:#0B5496;" class="text-center">VALORES </h5>
             <h5 class="text-center text-secondary">Transparencia, Puntualidad, Diferencia, Excelencia, Responsabilidad y Compromiso </h5>
         </div>
@@ -149,7 +152,11 @@
         </div>
     </footer>
 
-
+    <script>
+        AOS.init({
+            duration: 1000
+        });
+    </script>
 </body>
 
 </html>

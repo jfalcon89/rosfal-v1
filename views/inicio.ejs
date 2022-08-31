@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="/css/style.css">
     <!-- icons bootstrap cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- AOS ANIMACION CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- generador de pdf cdn -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <!-- moment.js cdn -->
@@ -142,9 +145,9 @@
 
     <div class="container d-lg-flex mt-5 mb-5 justify-content-center">
         <div class="container-img ">
-            <img class="w-75" src="/img/img-quienes-somos.png" alt="">
+            <img data-aos="fade-up" class="w-75" src="/img/img-quienes-somos.png" alt="">
         </div>
-        <div class="container-text">
+        <div data-aos="fade-left" class="container-text">
             <h3 class="text-secondary mt-3 mb-3">QUIENES SOMOS ?</h3>
             <h2 style="color: #0B5496;" class=""><strong>ROSFAL SOLUCIONES DE PRESTAMOS</strong></h2>
             <h5 class="text-secondary">Es una institución financiera de soluciones de préstamos orientada a comerciantes, pequeñas y medianas empresas como tambien a préstamos personales que se adaptan a las necesidades de nuestros clientes.
@@ -159,15 +162,15 @@
         <div class=" d-lg-flex mt-5 mb-5">
             <div class="container-mision mt-1 p-4 ">
                 <h2 style="color:#ffffff; font-weight: 600" class="text-center">Años de Experiencia</h2>
-                <h1 style="font-size: 100px; font-weight: 1000;" class="text-center text-white">5</h1>
+                <h1 data-aos="fade-right" style="font-size: 100px; font-weight: 1000;" class="text-center text-white">5</h1>
             </div>
             <div class="container-vision mt-1 p-4">
                 <h2 style="color:#ffffff; font-weight: 600" class="text-center">Prestamos Aprobados</h2>
-                <h1 style="font-size: 100px; font-weight: 1000;" class="text-center text-white">372</h1>
+                <h1 data-aos="zoom-out-up" style="font-size: 100px; font-weight: 1000;" class="text-center text-white">372</h1>
             </div>
             <div class="container-valores mt-1 p-4">
                 <h2 style="color:#ffffff; font-weight: 600;" class="text-center">Nivel de Satisfaccion</h2>
-                <h1 style="font-size: 100px; font-weight: 1000" class="text-center text-white">100% </h1>
+                <h1 data-aos="fade-left" style="font-size: 100px; font-weight: 1000" class="text-center text-white">100% </h1>
             </div>
         </div>
     </div>
@@ -189,7 +192,7 @@
                 </div>
             </h5>
             <div class="d-flex mt-4">
-                <a class="btn text-white mb-5 mt-4 fw-bold " style="background-color:#0B5496 ;" href="/aplica-ya">SOLICITAR PRESTAMO</a>
+                <a class="btn text-white mb-5 mt-4 fw-bold " style="background-color:#0B5496 ;" href="/solicita-ya">SOLICITAR PRESTAMO</a>
             </div>
         </div>
     </div>
@@ -245,6 +248,14 @@
 
     <a href="#" title="Contador De Visitas"><img style="border: 0px solid; display: inline; width: 100px;" alt="contador de visitas" src="https://websmultimedia.com/contador-de-visitas.php?id=5091"></a><br>
 
+
+
+
+    <script>
+        AOS.init({
+            duration: 1000
+        });
+    </script>
 </body>
 
 </html>
