@@ -126,7 +126,7 @@
 
                 <div class="d-flex justify-content-end">
                     <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i class="bi bi-check-lg me-lg-2"></i>Guardar Cambios</button>
-                    <a href="/" class="btn btn-danger btn-block p-2 mb-2"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a>
+                    <a href="/solicitudes-nuevas" class="btn btn-danger btn-block p-2 mb-2"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a>
                 </div>
 
                 <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -167,7 +167,6 @@
                                             </select> -->
                                             </div>
                                         </div>
-
                                         <div class="">
                                             <div class="form-group   ">
                                                 <div class="input-group ">
@@ -188,8 +187,8 @@
                                                         <label for="sexo" class="p-2">Estado Civil</label>
                                                         <select name="estadoCivil" class="form-control" id="estadoCivil">
                                                         <option value="<%= solicitud.estadoCivil %>" selected><%= solicitud.estadoCivil %></option>
-                                                        <option value="Casado">Casado</option>
-                                                        <option value="Soltero">Soltero</option>
+                                                        <option value="Casado/a">Casado/a</option>
+                                                        <option value="Soltero/a">Soltero/a</option>
                                                         <option value="Union Libre">Union Libre</option>
                                                     </select>
                                                         <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
@@ -253,8 +252,8 @@
                                         <!-- <input type="text" name="nacionadlidad" class="form-control p-2" id="nacionadlidad" aria-describedby="emailHelp" placeholder=""> -->
                                         <select name="nacionadlidad" class="form-control" id="nacionadlidad">
                                         <option value="<%= solicitud.nacionadlidad %>" selected><%= solicitud.nacionadlidad %></option>
-                                        <option value="Dominicano">Dominicano</option>
-                                        <option value="Extranjero">Extranjero</option>
+                                        <option value="Dominicano/a">Dominicano/a</option>
+                                        <option value="Extranjero/a">Extranjero/a</option>
                                     </select>
                                     </div>
                                 </div>
@@ -273,23 +272,23 @@
                                 <!-- segunda parte -->
                                 <div class="form-group  ">
                                     <label for="nombreFamilia" class="  p-2">Nombre </label>
-                                    <input type="text" name="nombreFamilia" class="form-control p-2" id="nombreFamilia" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="nombreFamilia" class="form-control p-2" id="nombreFamilia" aria-describedby="emailHelp" value="<%= solicitud.nombreFamilia %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="direccionFamilia" class="  p-2">Direccion</label>
-                                    <input type="text" name="direccionFamilia" class="form-control p-2" id="direccionFamilia" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="direccionFamilia" class="form-control p-2" id="direccionFamilia" aria-describedby="emailHelp" value="<%= solicitud.direccionFamilia %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="parentescoFamilia" class="  p-2">Parentesco</label>
-                                    <input type="text" name="parentescoFamilia" class="form-control p-2" id="parentescoFamilia" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="parentescoFamilia" class="form-control p-2" id="parentescoFamilia" aria-describedby="emailHelp" value="<%= solicitud.parentescoFamilia %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="telefonoFamilia" class="  p-2">Telefono</label>
-                                    <input type="text" name="telefonoFamilia" class="form-control p-2" id="telefonoFamilia" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="telefonoFamilia" class="form-control p-2" id="telefonoFamilia" aria-describedby="emailHelp" value="<%= solicitud.telefonoFamilia %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="apodoFamilia" class=" p-2">Apodo</label>
-                                    <input type="text" name="apodoFamilia" class="form-control p-2" id="apodoFamilia" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="apodoFamilia" class="form-control p-2" id="apodoFamilia" aria-describedby="emailHelp" value="<%= solicitud.apodoFamilia %>">
                                 </div>
                             </div>
                         </div>
@@ -305,31 +304,31 @@
                                 <!-- tercera parte -->
                                 <div class="form-group  ">
                                     <label for="empresa" class=" p-2">Empresa donde labora</label>
-                                    <input type="text" name="empresa" class="form-control p-2" id="empresa" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="empresa" class="form-control p-2" id="empresa" aria-describedby="emailHelp" value="<%= solicitud.empresa %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="salario" class=" p-2">Salario</label>
-                                    <input type="text" name="salario" class="form-control p-2" id="salario" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="salario" class="form-control p-2" id="salario" aria-describedby="emailHelp" value="<%= solicitud.salario %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="puesto" class="  p-2">Puesto</label>
-                                    <input type="text" name="puesto" class="form-control p-2" id="puesto" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="puesto" class="form-control p-2" id="puesto" aria-describedby="emailHelp" value="<%= solicitud.puesto %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="dir-empresa" class="  p-2">Dirreccion Empresa</label>
-                                    <input type="text" name="dir-empresa" class="form-control p-2" id="dir-empresa" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="dirEmpresa" class="form-control p-2" id="dir-empresa" aria-describedby="emailHelp" value="<%= solicitud.dirEmpresa %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="telefonoEmpresa" class="  p-2">Telefono Empresa</label>
-                                    <input type="text" name="telefonoEmpresa" class="form-control p-2" id="telefonoEmpresa" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="telefonoEmpresa" class="form-control p-2" id="telefonoEmpresa" aria-describedby="emailHelp" value="<%= solicitud.telefonoEmpresa %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="departamento" class="  p-2">Departamento</label>
-                                    <input type="text" name="departamento" class="form-control p-2" id="departamento" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="departamento" class="form-control p-2" id="departamento" aria-describedby="emailHelp" value="<%= solicitud.departamento %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="tiempoEmpresa" class=" p-2">Tiempo en la Empresa</label>
-                                    <input type="text" name="tiempoEmpresa" class="form-control p-2" id="tiempoEmpresa" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="tiempoEmpresa" class="form-control p-2" id="tiempoEmpresa" aria-describedby="emailHelp" value="<%= solicitud.tiempoEmpresa %>">
                                 </div>
                             </div>
                         </div>
@@ -347,19 +346,19 @@
                                 <!-- cuarta parte -->
                                 <div class="form-group  ">
                                     <label for="nombreRefPers1" class=" p-2">Nombre Persona de Referencia 1</label>
-                                    <input type="text" name="nombreRefPers1" class="form-control p-2" id="nombreRefPers1" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="nombreRefPers1" class="form-control p-2" id="nombreRefPers1" aria-describedby="emailHelp" value="<%= solicitud.nombreRefPers1 %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="telefonoRefPer1" class="  p-2">Telefono Persona de Referencia 1</label>
-                                    <input type="text" name="telefonoRefPer1" class="form-control p-2" id="telefonoRefPer1" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="telefonoRefPer1" class="form-control p-2" id="telefonoRefPer1" aria-describedby="emailHelp" value="<%= solicitud.telefonoRefPer1 %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="nombreRefPers2" class="  p-2">Nombre Persona de Referencia 2</label>
-                                    <input type="text" name="nombreRefPers2" class="form-control p-2" id="nombreRefPers2" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="nombreRefPers2" class="form-control p-2" id="nombreRefPers2" aria-describedby="emailHelp" value="<%= solicitud.nombreRefPers2 %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="telefonoRefPer2" class="  p-2">Telefono Persona de Referencia 2</label>
-                                    <input type="text" name="telefonoRefPer2" class="form-control p-2" id="telefonoRefPer2" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="telefonoRefPer2" class="form-control p-2" id="telefonoRefPer2" aria-describedby="emailHelp" value="<%= solicitud.telefonoRefPer2 %>">
                                 </div>
                             </div>
                         </div>
@@ -378,8 +377,8 @@
                                     <label for="tipoPrestamo" class="  p-2">Tipo de Prestamo</label>
                                     <!-- <input type="text" name="tipoPrestamo" class="form-control p-2" id="tipoPrestamo" aria-describedby="emailHelp" placeholder=""> -->
                                     <select name="tipoPrestamo" class="form-control" id="tipoPrestamo">
-                                    <option value="Selecional">Seleccionar</option>
-                                    <option value="Peronal">Personal</option>
+                                    <option value="<%= solicitud.tipoPrestamo %>"><%= solicitud.tipoPrestamo %></option>
+                                    <option value="Personal">Personal</option>
                                     <option value="Comercial">Comercial</option>
                                     <option value="Vehiculo">Vehiculo</option>
                                     <option value="Otro">Otro</option>
@@ -387,19 +386,19 @@
                                 </div>
                                 <div class="form-group  ">
                                     <label for="banco" class="  p-2">Banco</label>
-                                    <input type="text" name="banco" class="form-control p-2" id="banco" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="banco" class="form-control p-2" id="banco" aria-describedby="emailHelp" value="<%= solicitud.banco %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="numeroCuenta" class="  p-2">Numero de Cuenta</label>
-                                    <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" placeholder="">
+                                    <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" value="<%= solicitud.numeroCuenta %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="montoSolicitado" class="  p-2">Monto Solicitado</label>
-                                    <input type="number" name="montoSolicitado" class="form-control p-2" id="montoSolicitado" aria-describedby="emailHelp" placeholder="">
+                                    <input type="number" name="montoSolicitado" class="form-control p-2" id="montoSolicitado" aria-describedby="emailHelp" value="<%= solicitud.montoSolicitado %>">
                                 </div>
 
                                 <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mt-4 mb-3" type="submit"><i class="bi bi-check-lg me-lg-2"></i>Guardar datos</button>
-                                <a href="/" class="btn btn-danger btn-block p-2 mt-4 mb-3"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a>
+                                <a href="/solicitudes-nuevas" class="btn btn-danger btn-block p-2 mt-4 mb-3"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a>
                             </div>
                         </div>
                     </div>

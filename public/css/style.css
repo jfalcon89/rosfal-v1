@@ -259,3 +259,10 @@ body {
 .select-css option {
     font-weight: normal;
 }
+
+.hover:hover {
+    border-bottom: solid 3px #0B5496;
+    padding-bottom: 15px;
+    transition-property: all;
+    transition-duration: 0.1s;
+}

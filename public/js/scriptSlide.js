@@ -1,5 +1,6 @@
 const imgArray = [
 
+    '/img/historia-1.png',
     '/img/historia-2.png',
     '/img/historia-3.png'
 ];
