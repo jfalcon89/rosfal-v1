@@ -23,11 +23,11 @@
 <body>
 
     <div class="container-fluid " style="background-color: #ececec;">
-        <div class=" d-flex align-items-center justify-content-between">
-            <div class="d-flex">
+        <div class=" d-flex align-items-center justify-content-end">
+            <!-- <div class="d-flex">
                 <a class="bg-info text-decoration-none text-light p-2" href="/panel-administracion">VOLVER ATRAS</a>
                 <h5 class="text-dark m-2" style="font-size: large;">PANEL DE SOLICITUDES DE PRESTAMOS</h5>
-            </div>
+            </div> -->
             <div class="btn-group">
                 <% if (login) { %>
                     <button type="button" class="btn btn-info"><%= name %></button>
@@ -35,7 +35,7 @@
                     <span class="visually-hidden">Toggle Dropdown</span>
                 </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>">Volver a Solicitudes</a></li>
                         <li><a class="dropdown-item" href="/">Ir a ROSFAL PAGE</a></li>
                         <li>
                             <hr class="dropdown-divider">
@@ -49,87 +49,21 @@
         </div>
     </div>
 
-    <div class=" p-2 d-lg-flex flex-sm-row mt-4 " style="background-color: #ececec;">
-        <div class="container-fluid mt-3 mb-3 me-lg-3 d-flex bg-white">
-            <div class="container-nuevas d-flex">
-                <div class="container-img m-2 me-lg-3">
-                    <img style="width: 60px;" src="/img/img-icons/img-nuevas-solicitudes.svg" alt="Solicitudes Nuevas">
-                </div>
-                <div class="container-titulo">
-                    <div class="indicador">
-                        <h3>
-                            <%= arraySolicitudesNuevas.length %>
-                        </h3>
-                    </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-nuevas">Solicitudes Nuevas</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex ">
-            <div class="container-nuevas d-flex">
-                <div class="container-img m-2 me-lg-3">
-                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-aprobadas.svg" alt="Solicitudes Aprobadas">
-                </div>
-                <div class="container-titulo">
-                    <div class="indicador">
-                        <h3>
-                            <%= arraySolicitudesAprobadas.length %>
-                        </h3>
-                    </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-aprobadas">Solicitudes Aprobadas</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex">
-            <div class="container-nuevas d-flex">
-                <div class="container-img m-2 me-lg-3">
-                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-declinadas.svg" alt="Solicitudes Declinadas">
-                </div>
-                <div class="container-titulo">
-                    <div class="indicador">
-                        <h3>
-                            <%= arraySolicitudesDeclinadas.length %>
-                        </h3>
-                    </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-declinadas">Solicitudes Declinadas</a></div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid bg-white mt-3 mb-3 d-flex">
-            <div class="container-nuevas d-flex">
-                <div class="container-img m-2 me-lg-3">
-                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-en-revision.svg" alt="Solicitudes en Revision">
-                </div>
-                <div class="container-titulo">
-                    <div class="indicador">
-                        <h3>
-                            <%= arraySolicitudesEnRevision.length %>
-                        </h3>
-                    </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-en-revision">Solicitudes en Revision</a></div>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
 
 
 
-    <div class="container-fluid p-4 mt-5">
-        <h3 class="text-secondary">VER SOLICITUD</h3>
+    <div class="container-fluid p-4 ">
 
 
-        <div class="container mt-3">
+        <!-- <div class="d-flex justify-content-end">
+            <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i class="bi bi-check-lg me-lg-2"></i>Guardar Cambios</button>
+            <a href="/" class="btn btn-danger btn-block p-2 mb-2"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a>
+        </div> -->
+
+        <div class="container ">
 
             <form class="" autocomplete="off" action="" method="POST">
 
-                <div class="d-flex justify-content-end">
-                    <!-- <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i class="bi bi-check-lg me-lg-2"></i>Guardar Cambios</button> -->
-                    <a href="/solicitudes-aprobadas/imprimir-solicitud/<%= solicitud.idSolicitud %>" class="btn btn-warning btn-block p-2 mb-2"><i class="bi bi-printer me-lg-2"></i>IMPRIMIR SOLICITUD</a>
-                    <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/imprimir-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Imprimir Solicitud"><i class="bi bi-folder2-open "></i></a> -->
-
-                </div>
 
 
                 <div class="accordion" id="accordionPanelsStayOpenExample">
