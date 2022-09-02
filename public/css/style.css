@@ -266,3 +266,7 @@ body {
     transition-property: all;
     transition-duration: 0.1s;
 }
+
+.efecto {
+    visibility: hidden;
+}

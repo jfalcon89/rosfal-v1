@@ -115,6 +115,18 @@
                                         </div>
                                     </div> -->
 
+                                    <div class="form-group  ">
+                                        <label for="tipoPrestamo" class="  p-2">Tipo de Prestamo <span class="text-secondary fs-6">Obligatorio <span class="text-danger">*</span></span></label>
+                                        <!-- <input type="text" name="tipoPrestamo" class="form-control p-2" id="tipoPrestamo" aria-describedby="emailHelp" placeholder=""> -->
+                                        <select name="tipoPrestamo" class="form-control" id="inputTipPrestamo">
+                                            <option value="Seleccionar">Seleccionar</option>
+                                            <option value="Personal">Personal</option>
+                                            <option value="Comercial">Comercial</option>
+                                            <!-- <option value="Vehiculo">Vehiculo</option>
+                                            <option value="Otro">Otro</option> -->
+                                        </select>
+                                    </div>
+
                                     <div class="">
                                         <div class="form-group   ">
                                             <div class="input-group ">
@@ -166,7 +178,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="nombre" class=" text-black-50 p-2"><strong>Nombre</strong></label>
+                                <label for="nombre" class="  p-2">Nombre</label>
                                 <input type="text" name="nombre" class="form-control p-2 " id="nombre" aria-describedby="emailHelp" placeholder="">
                             </div>
                             <div class="form-group  ">
@@ -177,9 +189,13 @@
                                 <label for="direccion" class="p-2">Direccion </label>
                                 <input type="text" name="direccion" class="form-control p-2" id="direccion" aria-describedby="emailHelp" placeholder="">
                             </div>
-                            <div class="form-group  ">
+                            <div class="form-group  " id="labelDireccionNegocio">
                                 <label for="direccionNegocio" class=" p-2">Direccion del Negocio</label>
-                                <input type="text" name="direccionNegocio" class="form-control p-2" id="direccionNegocio" aria-describedby="emailHelp" placeholder="Opcional">
+                                <input type="text" name="direccionNegocio" class="form-control p-2" id="direccionNegocio" aria-describedby="emailHelp" placeholder="">
+                            </div>
+                            <div class="form-group  " id="labelTiempoNegocio">
+                                <label for="tiempoNegocio" class=" p-2">Tiempo del Negocio</label>
+                                <input type="text" name="tiempoNegocio" class="form-control p-2" id="tiempoNegocio" aria-describedby="emailHelp" placeholder="">
                             </div>
                             <div class="form-group ">
                                 <label for="email" class=" p-2">Email</label>
@@ -188,7 +204,7 @@
                             <div class="d-flex">
                                 <div class="form-group me-lg-5">
                                     <label for="celular" class="  p-2">Celular</label>
-                                    <input type="number" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" placeholder="">
+                                    <input type="tel" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" placeholder="">
                                 </div>
                                 <div class="form-group me-lg-5 ">
                                     <label for="ocupacion" class=" p-2">Ocupacion</label>
@@ -240,7 +256,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item">
+                <div class="accordion-item" id="labelDatosLaborales">
                     <h2 class="accordion-header" id="panelsStayOpen-headingThree">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                      <strong>PASO 3 - DATOS LABORALES</strong>
@@ -284,7 +300,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="panelsStayOpen-headingFour">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
-                     <strong>PASO 4 - REFERENCIAS PERSONALES</strong>
+                     <strong id="label_4">PASO 4 - REFERENCIAS PERSONALES</strong>
                     </button>
                     </h2>
                     <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
@@ -314,23 +330,13 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="panelsStayOpen-headingFive">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
-                      <strong>PASO 5 - DATOS DEL PRESTAMO</strong>
+                      <strong id="label_5">PASO 5 - DATOS DEL PRESTAMO</strong>
                     </button>
                     </h2>
                     <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
                         <div class="accordion-body">
                             <!-- quinta parte -->
-                            <div class="form-group  ">
-                                <label for="tipoPrestamo" class="  p-2">Tipo de Prestamo</label>
-                                <!-- <input type="text" name="tipoPrestamo" class="form-control p-2" id="tipoPrestamo" aria-describedby="emailHelp" placeholder=""> -->
-                                <select name="tipoPrestamo" class="form-control" id="tipoPrestamo">
-                                    <option value="Seleccionar">Seleccionar</option>
-                                    <option value="Personal">Personal</option>
-                                    <option value="Comercial">Comercial</option>
-                                    <option value="Vehiculo">Vehiculo</option>
-                                    <option value="Otro">Otro</option>
-                                </select>
-                            </div>
+
                             <div class="form-group  ">
                                 <label for="banco" class="  p-2">Banco</label>
                                 <input type="text" name="banco" class="form-control p-2" id="banco" aria-describedby="emailHelp" placeholder="">
@@ -420,6 +426,9 @@
                 </div>
             </footer>
 
+
+
+            <script src="/js/solicita-ya-event.js"></script>
 </body>
 
 </html>

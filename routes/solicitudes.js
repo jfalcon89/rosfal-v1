@@ -129,7 +129,7 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -139,6 +139,7 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
         estadoCivil,
         direccion,
         direccionNegocio,
+        tiempoNegocio,
         email,
         telefono,
         celular,
@@ -354,7 +355,7 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -364,6 +365,7 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         estadoCivil,
         direccion,
         direccionNegocio,
+        tiempoNegocio,
         email,
         telefono,
         celular,
@@ -389,7 +391,8 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         banco,
         numeroCuenta,
         montoSolicitado,
-        estadoSolicitud
+        estadoSolicitud,
+        contrato
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -520,7 +523,7 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -530,6 +533,7 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
         estadoCivil,
         direccion,
         direccionNegocio,
+        tiempoNegocio,
         email,
         telefono,
         celular,
@@ -684,7 +688,7 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
     const id = req.params.id;
     console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -694,6 +698,7 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
         estadoCivil,
         direccion,
         direccionNegocio,
+        tiempoNegocio,
         email,
         telefono,
         celular,

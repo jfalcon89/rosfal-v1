@@ -12,7 +12,7 @@ router.get('/solicita-ya', (req, res) => {
 
 //INSERTAR NUEVA SOLICITUD A MYSQL****************
 router.post("/solicita-ya", async(req, res) => {
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -22,6 +22,7 @@ router.post("/solicita-ya", async(req, res) => {
         estadoCivil,
         direccion,
         direccionNegocio,
+        tiempoNegocio,
         email,
         telefono,
         celular,

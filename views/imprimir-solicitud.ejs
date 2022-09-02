@@ -23,11 +23,11 @@
 <body>
 
     <div class="container-fluid " style="background-color: #ececec;">
-        <div class=" d-flex align-items-center justify-content-end">
-            <!-- <div class="d-flex">
-                <a class="bg-info text-decoration-none text-light p-2" href="/panel-administracion">VOLVER ATRAS</a>
-                <h5 class="text-dark m-2" style="font-size: large;">PANEL DE SOLICITUDES DE PRESTAMOS</h5>
-            </div> -->
+        <div class=" d-flex align-items-center justify-content-between">
+            <div class="d-flex">
+
+                <button onclick="imprimirDocumento();">imprimir</button>
+            </div>
             <div class="btn-group">
                 <% if (login) { %>
                     <button type="button" class="btn btn-info"><%= name %></button>
@@ -66,6 +66,8 @@
 
 
 
+
+
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -79,13 +81,13 @@
                                 <div class="container-datos-header ">
                                     <div class="datos-de-busqueda ">
                                         <div class=" mb-4">
-                                            <div class="form-group d-flex justify-content-end  ">
-                                                <div class="form-group  ">
+                                            <div class="form-group d-lg-flex justify-content-end  ">
+                                                <div class="form-group mt-2 me-lg-2 ">
                                                     <div class="input-group ">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Estado Solicitud</span>
                                                         </div>
-                                                        <select name="estadoSolicitud" class="form-control" id="estadoSolicitud">
+                                                        <select name="estadoSolicitud" class="form-control" id="">
                                                             <option value="<%= solicitud.estadoSolicitud %>" selected><%= solicitud.estadoSolicitud %></option>
                                                             <!-- <option value="Nueva">Nueva</option>
                                                             <option value="Aprobada">Aprobada</option>
@@ -94,13 +96,18 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <!-- <select name="estado" class="form-control" id="estadoSolicitud">
-                                                <option value="Nueva" selected>Nueva</option>
-                                                <option disabled value="Activo">Nueva</option>
-                                                <option value="Inactivo">Aprobada</option>
-                                                <option value="Inactivo">Declinada</option>
-                                                <option value="Inactivo">En Revision</option>
-                                            </select> -->
+                                                <div class="form-group mt-2 me-lg-2 ">
+                                                    <div class="form-group d-lg-flex">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Tipo de Prestamo</span>
+                                                        </div>
+                                                        <select name="tipoPrestamo" class="form-control" id="inputTipPrestamo">
+                                                            <option value="<%= solicitud.tipoPrestamo %>" selected><%= solicitud.tipoPrestamo %></option>
+                                                            <!-- <option value="Personal">Personal</option>
+                                                            <option value="Comercial">Comercial</option> -->
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -115,8 +122,8 @@
                                                         <label for="sexo" class="p-2">Sexo</label>
                                                         <select name="sexo" class="form-control" id="sexo">
                                                         <option value="<%= solicitud.sexo %>" selected><%= solicitud.sexo %></option>
-                                                        <option value="hombre">Hombre</option>
-                                                        <option value="mujer">Mujer</option>
+                                                        <option value="Hombre">Hombre</option>
+                                                        <option value="Mujer">Mujer</option>
                                                     </select>
                                                         <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
                                                     </div>
@@ -124,9 +131,9 @@
                                                         <label for="sexo" class="p-2">Estado Civil</label>
                                                         <select name="estadoCivil" class="form-control" id="estadoCivil">
                                                         <option value="<%= solicitud.estadoCivil %>" selected><%= solicitud.estadoCivil %></option>
-                                                        <option value="hombre">Casado</option>
-                                                        <option value="mujer">Soltero</option>
-                                                        <option value="mujer">Union Libre</option>
+                                                        <option value="Casado/a">Casado/a</option>
+                                                        <option value="Soltero/a">Soltero/a</option>
+                                                        <option value="Union Libre">Union Libre</option>
                                                     </select>
                                                         <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
                                                     </div>
@@ -166,9 +173,13 @@
                                     <label for="direccion" class="p-2">Direccion </label>
                                     <input type="text" name="direccion" class="form-control p-2" id="direccion" aria-describedby="emailHelp" value="<%= solicitud.direccion %>">
                                 </div>
-                                <div class="form-group  ">
+                                <div class="form-group " id="labelDireccionNegocio">
                                     <label for="direccionNegocio" class=" p-2">Direccion del Negocio</label>
                                     <input type="text" name="direccionNegocio" class="form-control p-2" id="direccionNegocio" aria-describedby="emailHelp" value="<%= solicitud.direccionNegocio %>">
+                                </div>
+                                <div class="form-group " id="labelTiempoNegocio">
+                                    <label for="tiempoNegocio" class=" p-2">Tiempo del Negocio</label>
+                                    <input type="text" name="tiempoNegocio" class="form-control p-2" id="tiempoNegocio" aria-describedby="emailHelp" value="<%= solicitud.tiempoNegocio %>">
                                 </div>
 
                                 <div class="form-group ">
@@ -189,8 +200,8 @@
                                         <!-- <input type="text" name="nacionadlidad" class="form-control p-2" id="nacionadlidad" aria-describedby="emailHelp" placeholder=""> -->
                                         <select name="nacionadlidad" class="form-control" id="nacionadlidad">
                                         <option value="<%= solicitud.nacionadlidad %>" selected><%= solicitud.nacionadlidad %></option>
-                                        <option value="Dominicano">Dominicano</option>
-                                        <option value="Extranjero">Extranjero</option>
+                                        <option value="Dominicano/a">Dominicano/a</option>
+                                        <option value="Extranjero/a">Extranjero/a</option>
                                     </select>
                                     </div>
                                 </div>
@@ -209,63 +220,63 @@
                                 <!-- segunda parte -->
                                 <div class="form-group  ">
                                     <label for="nombreFamilia" class="  p-2">Nombre </label>
-                                    <input type="text" name="nombreFamilia" class="form-control p-2" id="nombreFamilia" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="nombreFamilia" class="form-control p-2" id="nombreFamilia" aria-describedby="emailHelp" value="<%= solicitud.nombreFamilia %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="direccionFamilia" class="  p-2">Direccion</label>
-                                    <input type="text" name="direccionFamilia" class="form-control p-2" id="direccionFamilia" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="direccionFamilia" class="form-control p-2" id="direccionFamilia" aria-describedby="emailHelp" value="<%= solicitud.direccionFamilia %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="parentescoFamilia" class="  p-2">Parentesco</label>
-                                    <input type="text" name="parentescoFamilia" class="form-control p-2" id="parentescoFamilia" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="parentescoFamilia" class="form-control p-2" id="parentescoFamilia" aria-describedby="emailHelp" value="<%= solicitud.parentescoFamilia %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="telefonoFamilia" class="  p-2">Telefono</label>
-                                    <input type="text" name="telefonoFamilia" class="form-control p-2" id="telefonoFamilia" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="telefonoFamilia" class="form-control p-2" id="telefonoFamilia" aria-describedby="emailHelp" value="<%= solicitud.telefonoFamilia %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="apodoFamilia" class=" p-2">Apodo</label>
-                                    <input type="text" name="apodoFamilia" class="form-control p-2" id="apodoFamilia" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="apodoFamilia" class="form-control p-2" id="apodoFamilia" aria-describedby="emailHelp" value="<%= solicitud.apodoFamilia %>">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item">
+                    <div class="accordion-item" id="labelDatosLaborales">
                         <h2 class="accordion-header" id="panelsStayOpen-headingThree">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                     <strong>PASO 3 - DATOS LABORALES</strong>
-                    </button>
+                         <strong>PASO 3 - DATOS LABORALES</strong>
+                         </button>
                         </h2>
                         <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                             <div class="accordion-body">
                                 <!-- tercera parte -->
                                 <div class="form-group  ">
                                     <label for="empresa" class=" p-2">Empresa donde labora</label>
-                                    <input type="text" name="empresa" class="form-control p-2" id="empresa" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="empresa" class="form-control p-2" id="empresa" aria-describedby="emailHelp" value="<%= solicitud.empresa %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="salario" class=" p-2">Salario</label>
-                                    <input type="text" name="salario" class="form-control p-2" id="salario" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="salario" class="form-control p-2" id="salario" aria-describedby="emailHelp" value="<%= solicitud.salario %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="puesto" class="  p-2">Puesto</label>
-                                    <input type="text" name="puesto" class="form-control p-2" id="puesto" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="puesto" class="form-control p-2" id="puesto" aria-describedby="emailHelp" value="<%= solicitud.puesto %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="dir-empresa" class="  p-2">Dirreccion Empresa</label>
-                                    <input type="text" name="dir-empresa" class="form-control p-2" id="dir-empresa" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="dirEmpresa" class="form-control p-2" id="dir-empresa" aria-describedby="emailHelp" value="<%= solicitud.dirEmpresa %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="telefonoEmpresa" class="  p-2">Telefono Empresa</label>
-                                    <input type="text" name="telefonoEmpresa" class="form-control p-2" id="telefonoEmpresa" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="telefonoEmpresa" class="form-control p-2" id="telefonoEmpresa" aria-describedby="emailHelp" value="<%= solicitud.telefonoEmpresa %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="departamento" class="  p-2">Departamento</label>
-                                    <input type="text" name="departamento" class="form-control p-2" id="departamento" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="departamento" class="form-control p-2" id="departamento" aria-describedby="emailHelp" value="<%= solicitud.departamento %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="tiempoEmpresa" class=" p-2">Tiempo en la Empresa</label>
-                                    <input type="text" name="tiempoEmpresa" class="form-control p-2" id="tiempoEmpresa" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="tiempoEmpresa" class="form-control p-2" id="tiempoEmpresa" aria-describedby="emailHelp" value="<%= solicitud.tiempoEmpresa %>">
                                 </div>
                             </div>
                         </div>
@@ -274,7 +285,7 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingFour">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
-                     <strong>PASO 4 - REFERENCIAS PERSONALES</strong>
+                     <strong id="label_4">PASO 4 - REFERENCIAS PERSONALES</strong>
                     </button>
                         </h2>
                         <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
@@ -283,19 +294,19 @@
                                 <!-- cuarta parte -->
                                 <div class="form-group  ">
                                     <label for="nombreRefPers1" class=" p-2">Nombre Persona de Referencia 1</label>
-                                    <input type="text" name="nombreRefPers1" class="form-control p-2" id="nombreRefPers1" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="nombreRefPers1" class="form-control p-2" id="nombreRefPers1" aria-describedby="emailHelp" value="<%= solicitud.nombreRefPers1 %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="telefonoRefPer1" class="  p-2">Telefono Persona de Referencia 1</label>
-                                    <input type="text" name="telefonoRefPer1" class="form-control p-2" id="telefonoRefPer1" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="telefonoRefPer1" class="form-control p-2" id="telefonoRefPer1" aria-describedby="emailHelp" value="<%= solicitud.telefonoRefPer1 %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="nombreRefPers2" class="  p-2">Nombre Persona de Referencia 2</label>
-                                    <input type="text" name="nombreRefPers2" class="form-control p-2" id="nombreRefPers2" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="nombreRefPers2" class="form-control p-2" id="nombreRefPers2" aria-describedby="emailHelp" value="<%= solicitud.nombreRefPers2 %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="telefonoRefPer2" class="  p-2">Telefono Persona de Referencia 2</label>
-                                    <input type="text" name="telefonoRefPer2" class="form-control p-2" id="telefonoRefPer2" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="telefonoRefPer2" class="form-control p-2" id="telefonoRefPer2" aria-describedby="emailHelp" value="<%= solicitud.telefonoRefPer2 %>">
                                 </div>
                             </div>
                         </div>
@@ -304,34 +315,24 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingFive">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
-                      <strong>PASO 5 - DATOS DEL PRESTAMO</strong>
+                      <strong id="label_5">PASO 5 - DATOS DEL PRESTAMO</strong>
                     </button>
                         </h2>
                         <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
                             <div class="accordion-body">
                                 <!-- quinta parte -->
-                                <div class="form-group  ">
-                                    <label for="tipoPrestamo" class="  p-2">Tipo de Prestamo</label>
-                                    <!-- <input type="text" name="tipoPrestamo" class="form-control p-2" id="tipoPrestamo" aria-describedby="emailHelp" placeholder=""> -->
-                                    <select name="tipoPrestamo" class="form-control" id="tipoPrestamo">
-                                    <option value="Selecional">Seleccionar</option>
-                                    <option value="Peronal">Personal</option>
-                                    <option value="Comercial">Comercial</option>
-                                    <option value="Vehiculo">Vehiculo</option>
-                                    <option value="Otro">Otro</option>
-                                </select>
-                                </div>
+
                                 <div class="form-group  ">
                                     <label for="banco" class="  p-2">Banco</label>
-                                    <input type="text" name="banco" class="form-control p-2" id="banco" aria-describedby="emailHelp" placeholder="">
+                                    <input type="text" name="banco" class="form-control p-2" id="banco" aria-describedby="emailHelp" value="<%= solicitud.banco %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="numeroCuenta" class="  p-2">Numero de Cuenta</label>
-                                    <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" placeholder="">
+                                    <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" value="<%= solicitud.numeroCuenta %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="montoSolicitado" class="  p-2">Monto Solicitado</label>
-                                    <input type="number" name="montoSolicitado" class="form-control p-2" id="montoSolicitado" aria-describedby="emailHelp" placeholder="">
+                                    <input type="number" name="montoSolicitado" class="form-control p-2" id="montoSolicitado" aria-describedby="emailHelp" value="<%= solicitud.montoSolicitado %>">
                                 </div>
 
                                 <!-- <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mt-4 mb-3" type="submit"><i class="bi bi-check-lg me-lg-2"></i>Guardar datos</button>
@@ -350,9 +351,13 @@
 
 
 
+    <script>
+        function imprimirDocumento() {
+            window.print();
+        }
+    </script>
 
-
-
+    <script src="/js/ver-solicitud-event.js"></script>
 
 </body>
 
