@@ -23,10 +23,12 @@
     <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
-    <title>Rutas</title>
+    <title>Crear Rutas</title>
 </head>
 
 <body>
+
+
 
     <div class="container-fluid " style="background-color: #ececec;">
         <div class=" d-flex align-items-center justify-content-between">
@@ -56,12 +58,8 @@
     </div>
 
 
-
-
-
-
     <div class=" p-2 d-lg-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">
-        <div class="container-fluid   d-flex mt-3 mb-3 me-lg-3" style="background-color: #d4d4d4;">
+        <div class="container-fluid bg-white   d-flex mt-3 mb-3 me-lg-3">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-nuevo-mensaje-inbox.svg" alt="Rutas Creadas">
@@ -76,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white   d-flex mt-3 mb-3 me-lg-3 ">
+        <div class="container-fluid   d-flex mt-3 mb-3 me-lg-3 " style="background-color: #d4d4d4;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-mensaje-no-leido.svg" alt="Crear Nueva Ruta">
@@ -132,9 +130,9 @@
                         </thead>
                         <tbody>
 
-
                             <% if (arrayRutas.length > 0) { %>
                                 <% arrayRutas.forEach(ruta=> { %>
+
 
                                     <tr>
                                         <td>
@@ -152,13 +150,12 @@
 
                                         <td class="w-0 "><a id="eventoAct-Inact" href="/rutas/editar-ruta/<%= ruta.idRuta %>" class="btn " title="Editar Ruta"><i class="bi bi-pencil-square "></i></a>
                                             <!-- <a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
-                                            <a href="/rutas/<%= ruta.idRuta %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a>
+                                            <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
                                         </td>
                                     </tr>
 
                                     <% }) %>
                                         <% } %>
-
 
                         </tbody>
                     </table>
@@ -166,38 +163,75 @@
             </div>
             <!-- </div> -->
         </div>
+        <div class="container-fluid p-4 mt-5 ">
+            <h3 class="text-secondary"><strong>CREAR </strong>NUEVA RUTA</h3>
+            <form class="" autocomplete="off" action="" method="POST">
+                <div class="container bg-white mt-5 mb-5 pb-5 pt-5">
+                    <!-- <h1>aqui formulario</h1> -->
+                    <input class="form-control mt-3 mb-3" type="text" name="nombreRuta" placeholder="Nombre de la Ruta">
+                    <input class="form-control mt-3 mb-3" type="date" name="fechaCreacion" placeholder="Fecha de Creacion">
+                    <select class="form-control" name="estadoRuta" id="">
+                        <option value="Seleccionar" selected>Seleccionar</option>
+                        <option value="Activa">Activa</option>
+                        <option value="Inactiva">Inactiva</option>
+                    </select>
+
+                    <div class="d-flex justify-content-center">
+                        <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mt-4 mb-3 w-100" style="background-color: #0B5496;" type="submit">CREAR RUTA</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
 
 
 
-
-
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <% if (typeof alert != "undefined")  { %>
         <script>
-            $(document).ready(function() {
-                $('#datatable').DataTable({
-                    language: {
-                        "decimal": "",
-                        "emptyTable": "No hay información",
-                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                        "infoPostFix": "",
-                        "thousands": ",",
-                        "lengthMenu": "Mostrar _MENU_ Entradas",
-                        "loadingRecords": "Cargando...",
-                        "processing": "Procesando...",
-                        "search": "Buscar:",
-                        "zeroRecords": "Sin resultados encontrados",
-                        "paginate": {
-                            "first": "Primero",
-                            "last": "Ultimo",
-                            "next": "Siguiente",
-                            "previous": "Anterior"
-                        }
-                    }
-                });
-            });
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '/<%= ruta %>'
+            })
         </script>
+        <% } %>
+
+
+
+
+            <script>
+                $(document).ready(function() {
+                    $('#datatable').DataTable({
+                        language: {
+                            "decimal": "",
+                            "emptyTable": "No hay información",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar _MENU_ Entradas",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscar:",
+                            "zeroRecords": "Sin resultados encontrados",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            }
+                        }
+                    });
+                });
+            </script>
 
 
 </body>

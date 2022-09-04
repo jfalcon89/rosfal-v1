@@ -37,3 +37,13 @@ function eventCambio() {
 
 }
 eventCambio()
+
+
+// document.getElementById("pdfFile").addEventListener("change", () => {
+
+//     let pdfFile = document.getElementById("pdfFile").files[0];
+//     let pdfFileURL = URL.createObjectURL(pdfFile);
+//     console.log(pdfFileURL)
+
+//     document.getElementById("pdfVista").setAttribute("src", pdfFileURL);
+// });
