@@ -4,6 +4,8 @@ const labelDatosLaborales = document.getElementById("labelDatosLaborales")
 const labelDireccionNegocio = document.getElementById("labelDireccionNegocio")
 const labelTiempoNegocio = document.getElementById("labelTiempoNegocio")
 
+
+
 const label_4 = document.getElementById("label_4")
 const label_5 = document.getElementById("label_5")
 

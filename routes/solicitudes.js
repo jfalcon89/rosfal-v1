@@ -14,7 +14,7 @@ router.get('/solicitudes-nuevas', async(req, res) => {
     if (req.session.loggedin) {
 
 
-        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva" ORDER BY fechaSolicitud DESC');
+        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva" ORDER BY fechaSolicitud ASC');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
         const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
@@ -51,6 +51,7 @@ router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
             const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
             const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             console.log(solicitudDB[0]);
@@ -60,6 +61,7 @@ router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
                 arraySolicitudesNuevas: arraySolicitudesNuevasDB,
                 arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                arrayRutas: arrayRutasDB,
                 login: true,
                 name: req.session.name
             });
@@ -94,6 +96,7 @@ router.get("/Solicitudes-nuevas/editar-solicitud/:id", async(req, res) => {
             const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
             const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             console.log(solicitudDB[0]);
@@ -103,6 +106,7 @@ router.get("/Solicitudes-nuevas/editar-solicitud/:id", async(req, res) => {
                 arraySolicitudesNuevas: arraySolicitudesNuevasDB,
                 arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                arrayRutas: arrayRutasDB,
                 login: true,
                 name: req.session.name
             });
@@ -129,7 +133,7 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -165,7 +169,9 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
         banco,
         numeroCuenta,
         montoSolicitado,
-        estadoSolicitud
+        estadoSolicitud,
+        contrato,
+        ruta
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -235,6 +241,7 @@ router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
             const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
             const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             console.log(solicitudDB[0]);
@@ -244,6 +251,7 @@ router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
                 arraySolicitudesNuevas: arraySolicitudesNuevasDB,
                 arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                arrayRutas: arrayRutasDB,
                 login: true,
                 name: req.session.name
             });
@@ -277,6 +285,7 @@ router.get("/Solicitudes-aprobadas/imprimir-solicitud/:id", async(req, res) => {
             const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
             const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             console.log(solicitudDB[0]);
@@ -286,6 +295,7 @@ router.get("/Solicitudes-aprobadas/imprimir-solicitud/:id", async(req, res) => {
                 arraySolicitudesNuevas: arraySolicitudesNuevasDB,
                 arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                arrayRutas: arrayRutasDB,
                 login: true,
                 name: req.session.name
             });
@@ -293,6 +303,50 @@ router.get("/Solicitudes-aprobadas/imprimir-solicitud/:id", async(req, res) => {
         } catch (error) {
             console.log(error)
             res.render("imprimir-solicitud", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
+
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
+        });
+    }
+});
+
+//IMPRIMIR SOLICITUD EN ESTADO APROBADAS************
+router.get("/Solicitudes-aprobadas/imprimir-contato/:id", async(req, res) => {
+    if (req.session.loggedin) {
+
+        const id = req.params.id
+        console.log(req.params)
+
+        try {
+
+            const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
+            const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
+            const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+
+            const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            console.log(solicitudDB[0]);
+            res.render("imprimir-contrato", {
+                solicitud: solicitudDB[0],
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                arraySolicitudesNuevas: arraySolicitudesNuevasDB,
+                arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
+                arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                arrayRutas: arrayRutasDB,
+                login: true,
+                name: req.session.name
+            });
+
+        } catch (error) {
+            console.log(error)
+            res.render("imprimir-contrato", {
                 error: true,
                 mensaje: "no se encuentra el id seleccionado"
             });
@@ -320,6 +374,7 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
             const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
             const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             console.log(solicitudDB[0]);
@@ -329,6 +384,7 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
                 arraySolicitudesNuevas: arraySolicitudesNuevasDB,
                 arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                arrayRutas: arrayRutasDB,
                 login: true,
                 name: req.session.name
             });
@@ -355,7 +411,7 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -392,7 +448,9 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         numeroCuenta,
         montoSolicitado,
         estadoSolicitud,
-        contrato
+        contrato,
+        ruta,
+        firmaContrato
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -445,6 +503,7 @@ router.get("/Solicitudes-declinadas/ver-solicitud/:id", async(req, res) => {
             const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
             const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             console.log(solicitudDB[0]);
@@ -454,6 +513,7 @@ router.get("/Solicitudes-declinadas/ver-solicitud/:id", async(req, res) => {
                 arraySolicitudesNuevas: arraySolicitudesNuevasDB,
                 arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                arrayRutas: arrayRutasDB,
                 login: true,
                 name: req.session.name
             });
@@ -489,6 +549,7 @@ router.get("/Solicitudes-declinadas/editar-solicitud/:id", async(req, res) => {
             const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
             const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             console.log(solicitudDB[0]);
@@ -498,6 +559,7 @@ router.get("/Solicitudes-declinadas/editar-solicitud/:id", async(req, res) => {
                 arraySolicitudesNuevas: arraySolicitudesNuevasDB,
                 arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                arrayRutas: arrayRutasDB,
                 login: true,
                 name: req.session.name
             });
@@ -523,7 +585,7 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -559,7 +621,9 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
         banco,
         numeroCuenta,
         montoSolicitado,
-        estadoSolicitud
+        estadoSolicitud,
+        contrato,
+        ruta
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -611,6 +675,7 @@ router.get("/Solicitudes-en-revision/ver-solicitud/:id", async(req, res) => {
             const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
             const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             console.log(solicitudDB[0]);
@@ -620,6 +685,7 @@ router.get("/Solicitudes-en-revision/ver-solicitud/:id", async(req, res) => {
                 arraySolicitudesNuevas: arraySolicitudesNuevasDB,
                 arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                arrayRutas: arrayRutasDB,
                 login: true,
                 name: req.session.name
             });
@@ -654,6 +720,7 @@ router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
             const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
             const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+            const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             console.log(solicitudDB[0]);
@@ -663,6 +730,7 @@ router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
                 arraySolicitudesNuevas: arraySolicitudesNuevasDB,
                 arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+                arrayRutas: arrayRutasDB,
                 login: true,
                 name: req.session.name
             });
@@ -688,7 +756,7 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
     const id = req.params.id;
     console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -724,7 +792,9 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
         banco,
         numeroCuenta,
         montoSolicitado,
-        estadoSolicitud
+        estadoSolicitud,
+        contrato,
+        ruta
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);

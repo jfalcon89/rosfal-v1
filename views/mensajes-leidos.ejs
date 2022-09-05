@@ -17,6 +17,12 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <!-- moment.js cdn -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <!-- DATATABLE -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
     <title>Mensajes leidos</title>
 </head>
 
@@ -110,7 +116,7 @@
             <h3 class="text-secondary"><strong>BANDEJA</strong> MENSAJES LEIDOS</h3>
             <div class="container-fluid p-4">
                 <div class="container-table table-responsive">
-                    <table class="table table-sm table-hover ">
+                    <table id="datatable" class="display responsive nowrap" style="width:100%">
                         <thead class="thead-ligth">
                             <tr>
                                 <!-- <th scope="col">Id</th> -->
@@ -123,7 +129,7 @@
                                 <!-- <th scope="col">Estatado solicitud</th> -->
                                 <!-- <th scope="col">T. desc</th> -->
                                 <!-- <th scope="col">Sueldo Neto</th> -->
-                                <!-- <th scope="col">Acciones</th> -->
+                                <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -178,6 +184,32 @@
 
 
 
+    <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable({
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
 
 
 

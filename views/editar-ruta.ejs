@@ -61,7 +61,7 @@
         <div class="container-fluid bg-white   d-flex mt-3 mb-3 me-lg-3">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
-                    <img style="width: 60px;" src="/img/img-icons/img-nuevo-mensaje-inbox.svg" alt="Rutas Creadas">
+                    <img style="width: 60px;" src="/img/img-icons/street-map-panel-administrativo.svg" alt="Rutas Creadas">
                 </div>
                 <div class="container-titulo">
                     <div class="indicador">
@@ -113,7 +113,7 @@
             <h3 class="text-secondary"><strong>LISTADO</strong> RUTAS</h3>
             <div class="container-fluid p-4">
                 <div class="container-table table-responsive">
-                    <table id="datatable" class="table table-sm table-hover ">
+                    <table id="datatable" class="display responsive nowrap" style="width:100%">
                         <thead class="thead-ligth">
                             <tr>
                                 <!-- <th scope="col">Id</th> -->
@@ -173,8 +173,11 @@
                     <label for="">Fecha de Creacion</label>
                     <input class="form-control mt-3 mb-3" type="text" name="fechaCreacion" value="<%= ruta.fechaCreacion %>">
                     <label for="">Estado</label>
-                    <input class="form-control mt-3 mb-3" type="text" name="estadoRuta" value="<%= ruta.estadoRuta %>">
-
+                    <select class="form-control" name="estadoRuta" id="">
+                        <option value="<%= ruta.estadoRuta %>" selected><%= ruta.estadoRuta %></option>
+                        <option value="Activa">Activa</option>
+                        <option value="Inactiva">Inactiva</option>
+                    </select>
                     <div class="d-flex justify-content-center">
                         <button id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-4 mb-3 w-100" type="submit">EDITAR RUTA</button>
                     </div>

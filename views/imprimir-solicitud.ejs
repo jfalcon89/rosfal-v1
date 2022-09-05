@@ -85,14 +85,30 @@
                                                 <div class="form-group mt-2 me-lg-2 ">
                                                     <div class="input-group ">
                                                         <div class="input-group-prepend">
+                                                            <span class="input-group-text">Contrato Firmado</span>
+                                                        </div>
+                                                        <select name="firmaContrato" class="form-control form-select " id="firmaContrato">
+                                                            <option  value="<%= solicitud.firmaContrato %>" selected><%= solicitud.firmaContrato %></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-2 me-lg-2 ">
+                                                    <div class="input-group ">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">Ruta</span>
+                                                        </div>
+                                                        <select name="ruta" class="form-control" id="">
+                                                            <option value="<%= solicitud.ruta %>" selected><%= solicitud.ruta %></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-2 me-lg-2 ">
+                                                    <div class="input-group ">
+                                                        <div class="input-group-prepend">
                                                             <span class="input-group-text">Estado Solicitud</span>
                                                         </div>
                                                         <select name="estadoSolicitud" class="form-control" id="">
                                                             <option value="<%= solicitud.estadoSolicitud %>" selected><%= solicitud.estadoSolicitud %></option>
-                                                            <!-- <option value="Nueva">Nueva</option>
-                                                            <option value="Aprobada">Aprobada</option>
-                                                            <option value="Declinada">Declinada</option>
-                                                            <option value="En Revision">En Revision</option> -->
                                                         </select>
                                                     </div>
                                                 </div>
