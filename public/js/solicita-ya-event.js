@@ -33,3 +33,106 @@ inputTipPrestamo.addEventListener("change", () => {
     }
 
 })
+
+
+//function para la calculadora de prestamos 
+
+const btnCalculo = document.getElementById("btn");
+const btnLimpiar = document.getElementById("btnLimpiar");
+const frecuenciaPago = document.getElementById("frecuenciaPago");
+
+
+var rangeslider = document.getElementById("sliderRange");
+var output = document.getElementById("demo");
+output.innerHTML = rangeslider.value;
+
+rangeslider.oninput = function() {
+    output.innerHTML = this.value;
+}
+
+
+const labelSemanas = document.getElementById("labelSemanas")
+const labelDias = document.getElementById("labelDias")
+
+labelSemanas.style.display = "none"
+labelDias.style.display = "none"
+
+frecuenciaPago.addEventListener("change", () => {
+    console.log("cambiaste el tipo de frecuenencia")
+
+    if (frecuenciaPago.value == "pagos diarios") {
+
+        labelSemanas.style.display = "none"
+        labelDias.style.display = "block"
+        labelResul.textContent = "";
+        labelRespuesta.textContent = "";
+
+    }
+
+    if (frecuenciaPago.value == "pagos semanales") {
+
+        labelSemanas.style.display = "block"
+        labelDias.style.display = "none"
+        labelResul.textContent = "";
+        labelRespuesta.textContent = "";
+
+    }
+
+});
+
+
+//     labelResul.textContent = "";
+//     labelRespuesta.textContent = "";
+
+btnCalculo.addEventListener("click", () => {
+    event.preventDefault();
+
+    let monto = parseInt(document.getElementById("sliderRange").value);
+    let cuotaDias = parseInt(document.getElementById("cuotaDias").value);
+    let cuotaSemanas = parseInt(document.getElementById("cuotaSemanas").value);
+    // const interes = parseInt(document.getElementById("interes").value);
+
+    let labelResul = document.getElementById("labelResul");
+    let labelRespuesta = document.getElementById("labelRespuesta");
+
+
+    if (frecuenciaPago.value == "pagos diarios") {
+        const interes = 0.01
+        const operacionInteres = monto * interes;
+        const operacionCuota = operacionInteres * cuotaDias;
+
+        const operacion = (operacionCuota + monto) / cuotaDias;
+        labelResul.textContent = "Su cuota seria";
+        labelRespuesta.textContent = `$${operacion.toFixed()} Pesos`;
+        console.log(operacionInteres)
+        console.log(operacionCuota)
+
+    }
+
+    if (frecuenciaPago.value == "pagos semanales") {
+        const interes = 0.035
+        const operacionInteres = monto * interes;
+        const operacionCuota = operacionInteres * cuotaSemanas;
+
+        const operacion = (operacionCuota + monto) / cuotaSemanas;
+        labelResul.textContent = "Su cuota seria";
+        labelRespuesta.textContent = `$${operacion.toFixed()} Pesos`;
+        console.log(operacionInteres)
+        console.log(operacionCuota)
+
+    }
+
+});
+
+
+// btnLimpiar.addEventListener("click", () => {
+//     event.preventDefault();
+
+//     monto.value = "";
+//     cuota.value = "";
+//     interes.value = "";
+//     labelResul.textContent = "";
+//     labelRespuesta.textContent = "";
+
+
+// });
