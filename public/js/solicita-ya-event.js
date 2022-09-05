@@ -53,9 +53,13 @@ rangeslider.oninput = function() {
 
 const labelSemanas = document.getElementById("labelSemanas")
 const labelDias = document.getElementById("labelDias")
+const labelQuincenas = document.getElementById("labelQuincenas")
+const labelMeses = document.getElementById("labelMeses")
 
 labelSemanas.style.display = "none"
 labelDias.style.display = "none"
+labelQuincenas.style.display = "none"
+labelMeses.style.display = "none"
 
 frecuenciaPago.addEventListener("change", () => {
     console.log("cambiaste el tipo de frecuenencia")
@@ -64,6 +68,8 @@ frecuenciaPago.addEventListener("change", () => {
 
         labelSemanas.style.display = "none"
         labelDias.style.display = "block"
+        labelQuincenas.style.display = "none"
+        labelMeses.style.display = "none"
         labelResul.textContent = "";
         labelRespuesta.textContent = "";
 
@@ -73,6 +79,28 @@ frecuenciaPago.addEventListener("change", () => {
 
         labelSemanas.style.display = "block"
         labelDias.style.display = "none"
+        labelQuincenas.style.display = "none"
+        labelMeses.style.display = "none"
+        labelResul.textContent = "";
+        labelRespuesta.textContent = "";
+
+    }
+    if (frecuenciaPago.value == "pagos quincenales") {
+        console.log("entraste a pagos quincenales")
+        labelSemanas.style.display = "none"
+        labelDias.style.display = "none"
+        labelQuincenas.style.display = "block"
+        labelMeses.style.display = "none"
+        labelResul.textContent = "";
+        labelRespuesta.textContent = "";
+
+    }
+    if (frecuenciaPago.value == "pagos mensuales") {
+
+        labelSemanas.style.display = "none"
+        labelDias.style.display = "none"
+        labelQuincenas.style.display = "none"
+        labelMeses.style.display = "block"
         labelResul.textContent = "";
         labelRespuesta.textContent = "";
 
@@ -90,6 +118,8 @@ btnCalculo.addEventListener("click", () => {
     let monto = parseInt(document.getElementById("sliderRange").value);
     let cuotaDias = parseInt(document.getElementById("cuotaDias").value);
     let cuotaSemanas = parseInt(document.getElementById("cuotaSemanas").value);
+    let cuotaQuincenas = parseInt(document.getElementById("cuotaQuincenas").value);
+    let cuotaMeses = parseInt(document.getElementById("cuotaMeses").value);
     // const interes = parseInt(document.getElementById("interes").value);
 
     let labelResul = document.getElementById("labelResul");
@@ -115,6 +145,30 @@ btnCalculo.addEventListener("click", () => {
         const operacionCuota = operacionInteres * cuotaSemanas;
 
         const operacion = (operacionCuota + monto) / cuotaSemanas;
+        labelResul.textContent = "Su cuota seria";
+        labelRespuesta.textContent = `$${operacion.toFixed()} Pesos`;
+        console.log(operacionInteres)
+        console.log(operacionCuota)
+
+    }
+    if (frecuenciaPago.value == "pagos quincenales") {
+        const interes = 0.0625
+        const operacionInteres = monto * interes;
+        const operacionCuota = operacionInteres * cuotaQuincenas;
+
+        const operacion = (operacionCuota + monto) / cuotaQuincenas;
+        labelResul.textContent = "Su cuota seria";
+        labelRespuesta.textContent = `$${operacion.toFixed()} Pesos`;
+        console.log(operacionInteres)
+        console.log(operacionCuota)
+
+    }
+    if (frecuenciaPago.value == "pagos mensuales") {
+        const interes = 0.08
+        const operacionInteres = monto * interes;
+        const operacionCuota = operacionInteres * cuotaMeses;
+
+        const operacion = (operacionCuota + monto) / cuotaMeses;
         labelResul.textContent = "Su cuota seria";
         labelRespuesta.textContent = `$${operacion.toFixed()} Pesos`;
         console.log(operacionInteres)

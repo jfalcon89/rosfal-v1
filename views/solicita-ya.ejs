@@ -348,9 +348,11 @@
 
                                     <h1> RD $<span id="demo"></span></h1>
 
-                                    <div class="rangeslider">
-                                        <input name="montoSolicitado" type="range" min="2000" max="20000" value="2000" class="myslider" id="sliderRange" list="tickmarks">
-                                        <datalist id="tickmarks">
+                                    <div class="d-flex justify-content-center w-100">
+
+                                        <div class="rangeslider w-100">
+                                            <input style="width: 100%;" name="montoSolicitado" type="range" min="2000" max="20000" value="2000" class="myslider" id="sliderRange" list="tickmarks">
+                                            <datalist id="tickmarks">
                                              <option value="2000">
                                              <option value="3000">
                                              <option value="4000">
@@ -371,6 +373,7 @@
                                              <option value="19000">
                                              <option value="20000">
                                         </datalist>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -380,7 +383,7 @@
                                         <option value="Seleccione la frecuencia de pago que desea" selected>Seleccione la frecuencia de pagos que desea</option>
                                         <option value="pagos diarios">pagos diarios</option>
                                         <option value="pagos semanales">pagos semanales</option>
-                                        <option value="pagos quincinales">pagos quincinales</option>
+                                        <option value="pagos quincenales">pagos quincenales</option>
                                         <option value="pagos mensuales">pagos mensuales</option>
                                     </select>
 
@@ -452,6 +455,42 @@
                                             <option value="10">10 semanas</option>
                                             <option value="11">11 semanas</option>
                                             <option value="12">12 semanas</option>
+                                        </select>
+                                    </div>
+                                    <div id="labelQuincenas">
+                                        <select class="form-control  " name="cantidadPagosQuincenales" id="cuotaQuincenas">
+                                            <option value="Indique la cantidad de quincenas" selected>Indique la cantidad de quincenas</option>
+                                            <option value="1">1 quincena</option>
+                                            <option value="2">2 quincenas</option>
+                                            <option value="3">3 quincenas</option>
+                                            <option value="4">4 quincenas</option>
+                                            <option value="5">5 quincenas</option>
+                                            <option value="6">6 quincenas</option>
+                                            <option value="7">7 quincenas</option>
+                                            <option value="8">8 quincenas</option>
+                                            <option value="9">9 quincenas</option>
+                                            <option value="10">10 quincenas</option>
+                                            <option value="11">11 quincenas</option>
+                                            <option value="12">12 quincenas</option>
+                                            <option value="13">13 quincenas</option>
+                                            <option value="14">14 quincenas</option>
+                                        </select>
+                                    </div>
+                                    <div id="labelMeses">
+                                        <select class="form-control  " name="cantidadPagosMensuales" id="cuotaMeses">
+                                            <option value="Indique la cantidad de meses" selected>Indique la cantidad de meses</option>
+                                            <option value="1">1 mes</option>
+                                            <option value="2">2 meses</option>
+                                            <option value="3">3 meses</option>
+                                            <option value="4">4 meses</option>
+                                            <option value="5">5 meses</option>
+                                            <option value="6">6 meses</option>
+                                            <option value="7">7 meses</option>
+                                            <option value="8">8 meses</option>
+                                            <option value="9">9 meses</option>
+                                            <option value="10">10 meses</option>
+                                            <option value="11">11 meses</option>
+                                            <option value="12">12 meses</option>
                                         </select>
                                     </div>
                                 </div>
