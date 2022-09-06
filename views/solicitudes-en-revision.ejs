@@ -162,7 +162,7 @@
                                         <%= solicitud.cedula %>
                                     </td>
                                     <td>
-                                        <%= solicitud.fechaSolicitud.toLocaleString() %>
+                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
                                     </td>
                                     <td>
                                         <%= solicitud.montoSolicitado %>
@@ -200,7 +200,7 @@
         $(document).ready(function() {
             $('#datatable').DataTable({
                 order: [
-                    [3, 'desc']
+                    [0, 'desc']
                 ],
                 language: {
                     "decimal": "",

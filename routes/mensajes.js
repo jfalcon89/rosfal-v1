@@ -11,7 +11,7 @@ router.get('/mensajes', async(req, res) => {
     if (req.session.loggedin) {
 
 
-        const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ');
+        const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ORDER BY fechaMensaje DESC');
         const arrayMensajesLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
         const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
         // const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
@@ -51,7 +51,7 @@ router.get("/mensajes/ver-mensaje/:id", async(req, res) => {
             const arrayMensajesNuevosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ');
             const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
 
-            const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ');
+            const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ORDER BY fechaMensaje DESC');
             const mensajeDB = await pool.query("SELECT * FROM mensajes WHERE idMensaje = ?", [id]);
             console.log(mensajeDB[0]);
             res.render("ver-mensaje", {
@@ -125,7 +125,7 @@ router.get('/mensajes-no-leidos', async(req, res) => {
     if (req.session.loggedin) {
 
 
-        const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
+        const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ORDER BY fechaMensaje DESC');
         const arrayMensajesNuevosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ');
         const arrayMensajesLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
 
@@ -233,7 +233,7 @@ router.get('/mensajes-leidos', async(req, res) => {
     if (req.session.loggedin) {
 
 
-        const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
+        const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ORDER BY fechaMensaje DESC');
         const arrayMensajesNuevosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ');
         const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
 

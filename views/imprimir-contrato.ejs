@@ -72,7 +72,7 @@
             <div class="container mt-5 row justify-content-center d-flex">
                 <div class="col-10">
                     <h5 class="mt-3"><strong>Fecha de Solicitud:</strong> <strong></strong>
-                        <%= solicitud.fechaSolicitud.toLocaleString() %> <strong>Referencia</strong>
+                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %> <strong>Referencia</strong>
                             <%= solicitud.idSolicitud %>
                     </h5>
                     <h5 class="mt-3"><strong>ENTRE:</strong> De una parte <strong>ROSFAL SOLUCIONES DE PRESTAMOS</strong>, sociedad comercial organizada y existente de conformidad con las leyes de la República Dominicana, y Domicilio principal establecido en Sto Dgo.

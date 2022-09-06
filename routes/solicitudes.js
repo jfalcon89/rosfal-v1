@@ -14,7 +14,7 @@ router.get('/solicitudes-nuevas', async(req, res) => {
     if (req.session.loggedin) {
 
 
-        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva" ORDER BY fechaSolicitud ASC');
+        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva" ORDER BY fechaSolicitud DESC');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
         const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
@@ -190,7 +190,7 @@ router.get("/solicitudes-nuevas/:id", async(req, res) => {
 
         await pool.query("DELETE FROM solicitudes WHERE idSolicitud = ?", [id]);
         // req.flash('success', 'Link eliminado correctamente');
-        res.redirect("/solicitudes-aprobadas");
+        res.redirect("/solicitudes-nuevas");
 
     } catch (error) {
         console.log(error)

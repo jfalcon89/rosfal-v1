@@ -17,6 +17,12 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <!-- moment.js cdn -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <!-- css datatable -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
     <title>Panel Admistracion</title>
 </head>
 
@@ -135,9 +141,205 @@
     </div>
 
 
+    <div class="container-fluid d-lg-flex">
+        <!-- <div class="container-fluid container-todos-los-mensajes"> -->
+        <div class="container-fluid  mt-5 ">
+            <h3 class="text-secondary"><strong>ULTIMAS</strong> SOLICITUDES DE PRESTAMOS APROBADAS</h3>
+            <div class="container-fluid ">
+                <div class="container-table table-responsive">
+                    <table id="datatable" class="display responsive nowrap" style="width:100%">
+                        <thead class="thead-ligth">
+                            <tr>
+                                <!-- <th scope="col">Id</th> -->
+                                <th scope="col">ID Solicitud</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Monto Aprobado</th>
+                                <th scope="col">Fecha Solicitud</th>
+                                <th scope="col">Estado Solicitud</th>
+                                <th scope="col">Acciones</th>
+                                <!-- <th scope="col">Estatado solicitud</th> -->
+                                <!-- <th scope="col">T. desc</th> -->
+                                <!-- <th scope="col">Sueldo Neto</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% if (arraySolicitudesAprobadas.length > 0) { %>
+                                <% arraySolicitudesAprobadas.forEach(solicitud=> { %>
+
+
+                                    <tr>
+                                        <td>
+                                            <%= solicitud.idSolicitud %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.nombre %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.apellido %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.montoSolicitado %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.estadoSolicitud %>
+                                        </td>
+
+                                        <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a>
+                                            <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                            <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                        </td>
+                                    </tr>
+
+                                    <% }) %>
+                                        <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+        <div class="container-fluid mt-5 ">
+            <h3 class="text-secondary"><strong>ULTIMOS</strong> CONTRATOS DE PRESTAMOS FIRMADOS</h3>
+            <div class="container-fluid ">
+                <div class="container-table table-responsive">
+                    <table id="datatable2" class="display responsive nowrap" style="width:100%">
+                        <thead class="thead-ligth">
+                            <tr>
+                                <!-- <th scope="col">Id</th> -->
+                                <th scope="col">ID Solicitud</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+
+                                <th scope="col">Firma</th>
+                                <th scope="col">Fecha Solicitud</th>
+
+                                <th scope="col">Acciones</th>
+                                <!-- <th scope="col">Estatado solicitud</th> -->
+                                <!-- <th scope="col">T. desc</th> -->
+                                <!-- <th scope="col">Sueldo Neto</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <% if (arraySolicitudesAprobadasFirmadas.length > 0) { %>
+                                <% arraySolicitudesAprobadasFirmadas.forEach(solicitud=> { %>
+
+
+                                    <tr>
+                                        <td>
+                                            <%= solicitud.idSolicitud %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.nombre %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.apellido %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.firmaContrato %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                        </td>
+
+                                        <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a>
+                                            <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                            <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                        </td>
+                                    </tr>
+
+                                    <% }) %>
+                                        <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+    </div>
+    <div class="container-fluid p-4 mt-5 ">
+        <h3 class="text-secondary"><strong>PRESTAMOS </strong>APROBADOS POR RUTA</h3>
+
+        <p>aqui listado de prestamos por ruta</p>
+
+    </div>
+
+
+    </div>
 
 
 
+
+
+    <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable({
+                "lengthMenu": [5, 10, 25, 50, 100],
+                order: [
+                    [0, 'desc']
+                ],
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable2').DataTable({
+                "lengthMenu": [5, 10, 25, 50, 100],
+                order: [
+                    [0, 'desc']
+                ],
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+        });
+    </script>
 
 
 </body>

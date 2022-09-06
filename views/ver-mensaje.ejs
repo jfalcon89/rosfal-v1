@@ -181,7 +181,7 @@
                     </h3>
                     <div class="d-flex justify-content-md-end ">
                         <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
-                        <select class="" name="estadoMensaje" id="">
+                        <select class="" name="estadoMensaje" id="" autofocus>
                         <option value="Leido">Leido</option>
                         <option value="No Leido">No Leido</option>
                     </select>
@@ -241,6 +241,9 @@
     <script>
         $(document).ready(function() {
             $('#datatable').DataTable({
+                order: [
+                    [0, 'desc']
+                ],
                 language: {
                     "decimal": "",
                     "emptyTable": "No hay información",
