@@ -124,9 +124,9 @@
 
             <form class="" autocomplete="off" action="" method="POST">
 
-                <!-- <input id="pdfFile" type="file" class="form-control" accept="pdf">
+                <!-- <input id="pdfFile" type="file" name="contrato" class="form-control" accept="pdf"> -->
 
-                <div>
+                <!-- <div>
                     <embed id="pdfVista" type="application/pdf" name="contrato" width="400">
                 </div> -->
 
@@ -472,6 +472,21 @@
 
 
     <script src="/js/ver-solicitud-event.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <% if (typeof alert != "undefined")  { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '/<%= ruta %>'
+            })
+        </script>
+        <% } %>
 
 </body>
 
