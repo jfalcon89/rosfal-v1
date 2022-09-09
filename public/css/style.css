@@ -270,3 +270,11 @@ body {
 .efecto {
     visibility: hidden;
 }
+
+.whatsapp {
+    position: fixed;
+    right: 8px;
+    bottom: 5px;
+    z-index: 1;
+    width: 60px;
+}
