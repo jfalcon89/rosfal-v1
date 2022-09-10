@@ -70,7 +70,7 @@
             </div>
 
             <div class="container mt-5 row justify-content-center d-flex">
-                <div class="col-10">
+                <div class="col-11">
                     <h5 class="mt-3"><strong>Fecha de Solicitud:</strong> <strong></strong>
                         <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %> <strong>Referencia</strong>
                             <%= solicitud.idSolicitud %>
@@ -81,22 +81,36 @@
                         <strong><%= solicitud.nombre %>
                             <%= solicitud.apellido %></strong> , dominicano, mayor de edad, portador de la cedula de identidad y electoral No.
                         <strong><%= solicitud.cedula %></strong>, domiciliado y residente en
-                        <strong><%= solicitud.direccion %></strong> , persona que en lo adelante del presente contrato se denominará como EL DEUDOR o por su nombre completo;</h5>
-                    <h5 class="mt-3"><strong>POR CUANTO: EL DEUDOR</strong> ha solicitado a ROSFAL el otorgamiento de un préstamo por la suma de <strong>(RD$
+                        <strong><%= solicitud.direccion %></strong> , persona que en lo adelante del presente contrato se denominará como <strong>EL DEUDOR</strong> o por su nombre completo;</h5>
+                    <h5 class="mt-3"><strong>POR CUANTO: EL DEUDOR</strong> ha solicitado a <strong>ROSFAL</strong> el otorgamiento de un préstamo por la suma de <strong>(RD$
                         <%= solicitud.montoSolicitado %>)</strong> <strong>PESOS DOMINICANOS</strong>, moneda de curso legal.</h5>
-                    <h5 class="mt-3"><strong>POR CUANTO:</strong> ROSFAL ha manifestado su intención de otorgarle a EL DEUDOR el préstamo solicitado, sujeto a los términos y condiciones que se establecen en el presente contrato.</h5>
+                    <h5 class="mt-3"><strong>POR CUANTO: ROSFAL</strong> ha manifestado su intención de otorgarle a <strong>EL DEUDOR</strong> el préstamo solicitado, sujeto a los términos y condiciones que se establecen en el presente contrato.</h5>
                     <h5 class="mt-3"><strong>POR TANTO</strong>, y en el entendido de que el anterior preámbulo forma parte integrante del presente acto, las partes;</h5>
-                    <h5 class="mt-3"><strong>HAN CONVENIDO Y PACTADO LO SIGUIENTE: ARTÍCULO 1. OBJETO</strong>.- Por medio del presente contrato, ROSFAL otorga a favor de EL DEUDOR, quien acepta conforme lo establecido un préstamo por la suma más arriba descrita, suma
-                        que EL DEUDOR declara haber recibido a su entera satisfacción a la firma del presente acuerdo.</h5>
-                    <h5 class="mt-3"><strong>ARTÍCULO 2. INTERESES Y COMISIONES.- EL DEUDOR</strong> se compromete a pagar a ROSFAL intereses a razón del 10% por concepto de cada quincena.</h5>
-                    <h5 class="mt-3"><strong>ARTÍCULO 3. PAGO.- EL DEUDOR</strong> se obliga a pagar a ROSFAL la cuota establecidas en base a las condiciones del préstamo más los intereses generados a la fecha, suma que se compromete a pagar EL DEUDOR por concepto de
-                        cada quincena en el asiento social de ROSFAL, o en el medio de pago que se indique, sin necesidad de requerimientos.</h5>
-                    <h5 class="mt-3">La falta de pago de tres (3) cuotas consecutivas, hará perder al deudor el beneficio del término acordado y el pago de la obligación se hará exigible en su totalidad, después de ROSFAL haber cumplido con los procedimientos legales,
-                        judiciales o extrajudiciales establecidos por la ley para hacer exigible el pago de la deuda.</h5>
-                    <h5 class="mt-3"><strong>ARTICULO 4:</strong> Queda expresamente convenido entre las partes, que en caso de incumplimiento o retraso en el pago de las obligaciones asumidas por EL DEUDOR, este último deberá pagar, en adición, una penalidad por mora
-                        equivalente al cinco por ciento (5%) por cada cuota vencida.</h5>
-                    <h5 class="mt-3">_________________________ _________________________ </h5>
+                    <h5 class="mt-3"><strong>HAN CONVENIDO Y PACTADO LO SIGUIENTE: ARTÍCULO 1. OBJETO</strong>.- Por medio del presente contrato, <strong>ROSFAL</strong> otorga a favor de <strong>EL DEUDOR</strong>, quien acepta conforme lo establecido un préstamo por
+                        la suma más arriba descrita, suma que <strong>EL DEUDOR</strong> declara haber recibido a su entera satisfacción a la firma del presente acuerdo.</h5>
+                    <h5 class="mt-3"><strong>ARTÍCULO 2. FRECUENCIA DE CUOTA.- EL DEUDOR</strong> se compromete a pagar a <strong>ROSFAL</strong> en la frecuencia establecida por concepto de cada
+                        <%= solicitud.frecuenciaPagos %>.</h5>
+                    <h5 class="mt-3"><strong>ARTÍCULO 3. PAGO.- EL DEUDOR</strong> se compromete a pagar a <strong>ROSFAL</strong> la cuota establecidas en base a las condiciones del préstamo, cuota que se compromete a pagar <strong>EL DEUDOR</strong> por concepto de
+                        cada
+                        <%= solicitud.frecuenciaPagos %> en el asiento social de <strong>ROSFAL</strong>, o en el medio de pago que se indique, sin necesidad de requerimientos.</h5>
+                    <h5 class="mt-3">La falta de pago de tres (3) cuotas consecutivas, hará perder al <strong>EL DEUDOR</strong> el beneficio del término acordado y el pago de la obligación se hará exigible en su totalidad, después de <strong>ROSFAL</strong> haber cumplido
+                        con los procedimientos legales, judiciales o extrajudiciales establecidos por la ley para hacer exigible el pago de la deuda.</h5>
+                    <h5 class="mt-3 "><strong>ARTICULO 4:</strong> Queda expresamente convenido entre las partes, que en caso de incumplimiento o retraso en el pago de las obligaciones asumidas por <strong>EL DEUDOR</strong>, este último deberá pagar, en adición, una penalidad
+                        por mora equivalente al cinco por ciento (5%) por cada cuota vencida.</h5>
 
+                    <div class="d-flex justify-content-around">
+                        <div class="d-flex justify-content-around mt-0">
+
+                            <!-- <h5 class="mt-3">ROSFAL</h5> -->
+                            <img class="img-fluid" width="350px" src="/img/sello-contrato.png" alt="sello">
+                        </div>
+                        <div class="d-flex justify-content-center flex-column align-content-center align-items-center mt-3 pt-3">
+
+                            <!-- <h5 class="mt-3">_________________________</h5> -->
+                            <h5 class="mt-3">_________________________</h5>
+                            <h6 class="mt-3">EL DEUDOR</h6>
+                        </div>
+                    </div>
 
                 </div>
             </div>
