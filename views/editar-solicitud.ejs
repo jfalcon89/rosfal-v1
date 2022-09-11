@@ -17,7 +17,8 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <!-- moment.js cdn -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
-    <title>Editar solicitud</title>
+    <link rel="icon" href="/img/favicon/logo-favicon.png">
+    <title>Rosfal - Editar Solicitud</title>
 </head>
 
 <body>
@@ -473,20 +474,7 @@
 
     <script src="/js/ver-solicitud-event.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <% if (typeof alert != "undefined")  { %>
-        <script>
-            Swal.fire({
-                title: '<%= alertTitle %>',
-                text: '<%= alertMessage %>',
-                icon: '<%= alertIcon %>',
-                showConfirmButton: <%= showConfirmButton %>,
-                timer: <%= timer %>
-            }).then(() => {
-                window.location = '/<%= ruta %>'
-            })
-        </script>
-        <% } %>
+
 
 </body>
 
