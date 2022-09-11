@@ -75,27 +75,27 @@
                         <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %> <strong>Referencia</strong>
                             <%= solicitud.idSolicitud %>
                     </h5>
-                    <h5 class="mt-3"><strong>ENTRE:</strong> De una parte <strong>ROSFAL SOLUCIONES DE PRESTAMOS</strong>, sociedad comercial organizada y existente de conformidad con las leyes de la República Dominicana, y Domicilio principal establecido en Sto Dgo.
+                    <h5 class="mt-3" style="text-align: justify;"><strong>ENTRE:</strong> De una parte <strong>ROSFAL SOLUCIONES DE PRESTAMOS</strong>, sociedad comercial organizada y existente de conformidad con las leyes de la República Dominicana, y Domicilio principal establecido en Sto Dgo.
                         Oeste R.D.</h5>
-                    <h5 class="mt-3">Quien en lo adelante de este contrato se denominará <strong>ROSFAL</strong>, o por su nombre completo; Y de la otra parte, el/la señor/a:
+                    <h5 class="mt-3" style="text-align: justify;">Quien en lo adelante de este contrato se denominará <strong>ROSFAL</strong>, o por su nombre completo; Y de la otra parte, el/la señor/a:
                         <strong><%= solicitud.nombre %>
-                            <%= solicitud.apellido %></strong> , dominicano, mayor de edad, portador de la cedula de identidad y electoral No.
+                            <%= solicitud.apellido %></strong>, dominicano, mayor de edad, portador de la cedula de identidad y electoral No.
                         <strong><%= solicitud.cedula %></strong>, domiciliado y residente en
-                        <strong><%= solicitud.direccion %></strong> , persona que en lo adelante del presente contrato se denominará como <strong>EL DEUDOR</strong> o por su nombre completo;</h5>
-                    <h5 class="mt-3"><strong>POR CUANTO: EL DEUDOR</strong> ha solicitado a <strong>ROSFAL</strong> el otorgamiento de un préstamo por la suma de <strong>(RD$
+                        <strong><%= solicitud.direccion %></strong>, persona que en lo adelante del presente contrato se denominará como <strong>EL DEUDOR</strong> o por su nombre completo;</h5>
+                    <h5 class="mt-3" style="text-align: justify;"><strong>POR CUANTO: EL DEUDOR</strong> ha solicitado a <strong>ROSFAL</strong> el otorgamiento de un préstamo por la suma de <strong>(RD$
                         <%= solicitud.montoSolicitado %>)</strong> <strong>PESOS DOMINICANOS</strong>, moneda de curso legal.</h5>
-                    <h5 class="mt-3"><strong>POR CUANTO: ROSFAL</strong> ha manifestado su intención de otorgarle a <strong>EL DEUDOR</strong> el préstamo solicitado, sujeto a los términos y condiciones que se establecen en el presente contrato.</h5>
-                    <h5 class="mt-3"><strong>POR TANTO</strong>, y en el entendido de que el anterior preámbulo forma parte integrante del presente acto, las partes;</h5>
-                    <h5 class="mt-3"><strong>HAN CONVENIDO Y PACTADO LO SIGUIENTE: ARTÍCULO 1. OBJETO</strong>.- Por medio del presente contrato, <strong>ROSFAL</strong> otorga a favor de <strong>EL DEUDOR</strong>, quien acepta conforme lo establecido un préstamo por
+                    <h5 class="mt-3" style="text-align: justify;"><strong>POR CUANTO: ROSFAL</strong> ha manifestado su intención de otorgarle a <strong>EL DEUDOR</strong> el préstamo solicitado, sujeto a los términos y condiciones que se establecen en el presente contrato.</h5>
+                    <h5 class="mt-3" style="text-align: justify;"><strong>POR TANTO</strong>, y en el entendido de que el anterior preámbulo forma parte integrante del presente acto, las partes;</h5>
+                    <h5 class="mt-3" style="text-align: justify;"><strong>HAN CONVENIDO Y PACTADO LO SIGUIENTE: ARTÍCULO 1. OBJETO</strong>.- Por medio del presente contrato, <strong>ROSFAL</strong> otorga a favor de <strong>EL DEUDOR</strong>, quien acepta conforme lo establecido un préstamo por
                         la suma más arriba descrita, suma que <strong>EL DEUDOR</strong> declara haber recibido a su entera satisfacción a la firma del presente acuerdo.</h5>
-                    <h5 class="mt-3"><strong>ARTÍCULO 2. FRECUENCIA DE CUOTA.- EL DEUDOR</strong> se compromete a pagar a <strong>ROSFAL</strong> en la frecuencia establecida por concepto de cada
+                    <h5 class="mt-3" style="text-align: justify;"><strong>ARTÍCULO 2. FRECUENCIAS DE CUOTAS.- EL DEUDOR</strong> se compromete a pagar la cuota de su prestamo a <strong>ROSFAL</strong> en la frecuencia establecida por
                         <%= solicitud.frecuenciaPagos %>.</h5>
-                    <h5 class="mt-3"><strong>ARTÍCULO 3. PAGO.- EL DEUDOR</strong> se compromete a pagar a <strong>ROSFAL</strong> la cuota establecidas en base a las condiciones del préstamo, cuota que se compromete a pagar <strong>EL DEUDOR</strong> por concepto de
+                    <h5 class="mt-3" style="text-align: justify;"><strong>ARTÍCULO 3. PAGO.- EL DEUDOR</strong> se compromete a pagar a <strong>ROSFAL</strong> la cuota establecidas en base a las condiciones del préstamo, cuota que se compromete a pagar <strong>EL DEUDOR</strong> por concepto de
                         cada
-                        <%= solicitud.frecuenciaPagos %> en el asiento social de <strong>ROSFAL</strong>, o en el medio de pago que se indique, sin necesidad de requerimientos.</h5>
-                    <h5 class="mt-3">La falta de pago de tres (3) cuotas consecutivas, hará perder al <strong>EL DEUDOR</strong> el beneficio del término acordado y el pago de la obligación se hará exigible en su totalidad, después de <strong>ROSFAL</strong> haber cumplido
+                        <%= solicitud.frecuenciaPagos %>, en el asiento social de <strong>ROSFAL</strong>, o en el medio de pago que se indique, sin necesidad de requerimientos.</h5>
+                    <h5 class="mt-3" style="text-align: justify;">La falta de pago de tres (3) cuotas consecutivas, hará perder al <strong>EL DEUDOR</strong> el beneficio del término acordado y el pago de la obligación se hará exigible en su totalidad, después de <strong>ROSFAL</strong> haber cumplido
                         con los procedimientos legales, judiciales o extrajudiciales establecidos por la ley para hacer exigible el pago de la deuda.</h5>
-                    <h5 class="mt-3 "><strong>ARTICULO 4:</strong> Queda expresamente convenido entre las partes, que en caso de incumplimiento o retraso en el pago de las obligaciones asumidas por <strong>EL DEUDOR</strong>, este último deberá pagar, en adición, una penalidad
+                    <h5 class="mt-3" style="text-align: justify;"><strong>ARTICULO 4:</strong> Queda expresamente convenido entre las partes, que en caso de incumplimiento o retraso en el pago de las obligaciones asumidas por <strong>EL DEUDOR</strong>, este último deberá pagar, en adición, una penalidad
                         por mora equivalente al cinco por ciento (5%) por cada cuota vencida.</h5>
 
                     <div class="d-flex justify-content-around">
