@@ -192,14 +192,92 @@
         <div class="container d-lg-flex justify-content-center">
             <h5 class="text-secondary mb-3">En <strong style="color: #0B5496 ;">ROSFAL SOLUCIONES DE PRÉSTAMOS</strong> siempre nos preocupamos por que nuestros clientes tengan el mejor servicio pero sobre todo que se sientan 100% satisfechos. </h5>
         </div>
-        <div class="container d-lg-flex justify-content-center ">
+        <!-- <div class="container d-lg-flex justify-content-center ">
             <div class=" d-lg-flex justify-content-center ">
                 <img src="/img/historia-1.png" class=" " id="slide" alt="..." style="overflow: hidden; ">
 
             </div>
-        </div>
+        </div> -->
     </div>
 
+    <div class="container d-lg-flex justify-content-center ">
+
+        <div id="carouselExampleSlidesOnly" class="carousel slide col-lg-6 me-lg-3" data-bs-ride="carousel">
+            <div class="carousel-inner">
+
+                <div class="carousel-item active">
+
+
+                    <div class="conrainer-card bg-white " style="background-color: #e1dfdf; border-radius: 20px;">
+                        <h1><i class="bi bi-quote"></i></h1>
+                        <div>
+                            <h5 class="m-2 text-center" style="font-style: italic;">En menos de 3 horas ya tenia mi prestamo disponible en la cuenta</h5>
+                        </div>
+                        <h6 class="text-center mt-4" style="font-weight: 800;">Victor Cruz</h6>
+                        <h6 class="text-monospace text-center m-0">Testimonio</h6>
+                    </div>
+
+                </div>
+
+
+                <% if (arrayNuevoTestimonio.length > 0) { %>
+                    <% arrayNuevoTestimonio.forEach(testimonio=> { %>
+
+                        <div class="carousel-item ">
+
+                            <div class="conrainer-card bg-white " style="background-color: #e1dfdf; border-radius: 20px;">
+                                <h1><i class="bi bi-quote"></i></h1>
+                                <div>
+                                    <h5 class="m-2 text-center" style="font-style: italic;">
+                                        <%= testimonio.testimonio %>
+                                    </h5>
+                                </div>
+                                <h6 class="text-center mt-4" style="font-weight: 800;">
+                                    <%= testimonio.nombre %>
+                                </h6>
+                                <h6 class="text-monospace text-center m-0">Testimonio</h6>
+                            </div>
+                        </div>
+
+                        <% }) %>
+                            <% } %>
+
+            </div>
+        </div>
+
+        <div class="container mb-5 col-lg-6" style="background-color: #e1dfdf; border-radius: 20px;">
+
+            <!-- <h3 class="d-flex mt-5 mb-5" style="color: #0B5495;"><strong>Formulario de Contacto</strong></h3> -->
+            <!-- <div class="container d-lg-flex justify-content-center">
+                <h5 class="text-secondary mb-3 mt-3">En <strong style="color: #0B5496 ;">ROSFAL SOLUCIONES DE PRÉSTAMOS</strong> siempre nos preocupamos por que nuestros clientes tengan el mejor servicio pero sobre todo que se sientan 100% satisfechos. </h5>
+            </div> -->
+            <div class="container d-lg-flex justify-content-center">
+                <h4 class=" mb-3 mt-3"><strong style="color: #0B5496 ;">Coméntanos tu experiencia con Rosfal</strong></h4>
+            </div>
+            <form class="" autocomplete="off" action="" method="POST">
+                <!-- <input type="text" name="estadoMensaje" class="form-control " value="Nuevo"> -->
+
+                <div class="  d-lg-flex flex-lg-row">
+                    <div class="form-group me-lg-3 mb-3 w-100 ">
+                        <!-- <label for="nombre" class=" text-black-50 p-2"><strong>Nombre</strong></label> -->
+                        <input type="text" name="nombre" class="form-control p-2 " id="nombre" aria-describedby="" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group  mb-3 w-100 ">
+                        <!-- <label for="apellido" class="p-2">Apellido</label> -->
+                        <input type="text" name="ciudad" class="form-control p-2" id="telefono" aria-describedby="" placeholder="Ciudad" required>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <!-- <label for="email" class=" p-2">Email</label> -->
+                    <textarea maxlength="350" type="text" name="testimonio" class="form-control p-2" id="testiminio" aria-describedby="" placeholder="Tu Testimonio Aqui" required></textarea>
+                </div>
+
+                <button class="btn p-2 mt-5 mb-4 text-white" style="background-color: #0B5495;" type="submit"><i class="bi bi-check-lg me-lg-2"></i>ENVIAR</button>
+
+            </form>
+        </div>
+    </div>
 
 
     <div class="  justify-content-center d-lg-flex w-100" style="background-image: url(/img/img-inicio-seccion-7.png); background-repeat: no-repeat; background-size: cover; ">
@@ -315,6 +393,22 @@
             duration: 1000
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <% if (typeof alert != "undefined")  { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '/<%= ruta %>'
+            })
+        </script>
+        <% } %>
+
 </body>
 
 </html>

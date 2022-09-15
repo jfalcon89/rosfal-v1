@@ -18,6 +18,8 @@ router.get('/panel-administracion', async(req, res) => {
         const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arrayMensajesNuevosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo"');
         const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+        const arrayTestimoniosNuevosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
 
         const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" ORDER BY fechaSolicitud DESC');
         const arraySolicitudesAprobadasFirmadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND firmaContrato= "SI" ORDER BY fechaSolicitud DESC');
@@ -29,6 +31,7 @@ router.get('/panel-administracion', async(req, res) => {
             arrayRutas: arrayRutasDB,
             arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
             arraySolicitudesAprobadasFirmadas: arraySolicitudesAprobadasFirmadasDB,
+            arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
             login: true,
             name: req.session.name
 
