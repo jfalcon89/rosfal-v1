@@ -319,14 +319,15 @@ router.post('/mensajes-leidos/ver-mensaje/:id', async(req, res) => {
 //ELIMINAR MENSAJE LEIDO
 router.get("/mensajes-leidos/:id", async(req, res) => {
     const { id } = req.params;
-
     console.log(id)
 
     try {
 
+
         await pool.query("DELETE FROM mensajes WHERE idMensaje = ?", [id]);
-        // req.flash('success', 'Link eliminado correctamente');
+
         res.redirect("/mensajes-leidos");
+
 
     } catch (error) {
         console.log(error)
