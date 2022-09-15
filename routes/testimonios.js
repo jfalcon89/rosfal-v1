@@ -49,7 +49,7 @@ router.get("/testimonios/ver-testimonio/:id", async(req, res) => {
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
-            const arrayTestimoniosDB = await pool.query(`SELECT * FROM testimonios WHERE idTestimonio =${id} AND estadoTestimonio="Nuevo"  `);
+            const arrayTestimoniosDB = await pool.query(`SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo"  `);
             const testimonioDB = await pool.query(`SELECT * FROM testimonios WHERE idTestimonio =${id} AND estadoTestimonio="Nuevo" `);
             console.log(arrayTestimoniosDB[0]);
             res.render("ver-testimonio", {
@@ -160,7 +160,7 @@ router.get("/testimonios-activos/ver-testimonio/:id", async(req, res) => {
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
-            const arrayTestimoniosDB = await pool.query(`SELECT * FROM testimonios WHERE idTestimonio =${id} AND estadoTestimonio="Activo"  `);
+            const arrayTestimoniosDB = await pool.query(`SELECT * FROM testimonios WHERE estadoTestimonio="Activo"  `);
             const testimonioDB = await pool.query(`SELECT * FROM testimonios WHERE idTestimonio =${id} AND estadoTestimonio="Activo" `);
             console.log(testimonioDB[0]);
             res.render("ver-testimonio", {
@@ -271,7 +271,7 @@ router.get("/testimonios-inactivos/ver-testimonio/:id", async(req, res) => {
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
-            const arrayTestimoniosDB = await pool.query(`SELECT * FROM testimonios WHERE idTestimonio =${id} AND estadoTestimonio="Inactivo"  `);
+            const arrayTestimoniosDB = await pool.query(`SELECT * FROM testimonios WHERE  estadoTestimonio="Inactivo"  `);
             const testimonioDB = await pool.query(`SELECT * FROM testimonios WHERE idTestimonio =${id} AND estadoTestimonio="Inactivo"  `);
             console.log(testimonioDB[0]);
             res.render("ver-testimonio", {
