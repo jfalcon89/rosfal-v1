@@ -137,18 +137,22 @@
                         </div>
                     </div>
                     <div class="d-lg-flex row justify-content-between mt-3">
-                        <select class="form-control d-lg-flex mb-3 p-2 form-select" name="frecuenciaPagos" id="frecuenciaPago">
-                        <option value="Seleccione la frecuencia de pago que desea" selected>Seleccione la frecuencia de pagos que desea</option>
-                        <option value="pagos diarios">Pagos Diarios</option>
-                        <option value="pagos semanales">Pagos Semanales</option>
-                        <option value="pagos quincenales">Pagos Quincenales</option>
-                        <option value="pagos mensuales">Pagos Mensuales</option>
-                    </select>
-
+                        <div class="d-flex mt-3">
+                            <img style="width: 40px;" src="/img/img-icons/calendar-frecuencia.svg" alt="">
+                            <select style="background-color: rgba(0, 255, 255, 0); border: none;" class="form-control d-lg-flex  form-select" name="frecuenciaPagos" id="frecuenciaPago">
+                            <option value="Seleccione la frecuencia de pago que desea" selected>Seleccione la frecuencia de pagos que desea</option>
+                            <option value="pagos diarios">Pagos Diarios</option>
+                            <option value="pagos semanales">Pagos Semanales</option>
+                            <option value="pagos quincenales">Pagos Quincenales</option>
+                            <option value="pagos mensuales">Pagos Mensuales</option>
+                        </select>
+                        </div>
 
                         <!-- <label for="">Indique la cantidad de dias "max 46"</label> -->
                         <div id="labelDias">
-                            <select class="form-control  mb-3 p-2 form-select" name="cantidadPagosDiarios" id="cuotaDias">
+                            <div class="d-flex mt-3">
+                                <img style="width: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                <select style="background-color: rgba(0, 255, 255, 0); border: none;" class="form-control   form-select" name="cantidadPagosDiarios" id="cuotaDias">
                             <option value="Indique la cantidad de dias" selected>Indique la cantidad de días</option>
                             <option value="1">1 dia</option>
                             <option value="2">2 dias</option>
@@ -196,10 +200,13 @@
                             <option value="44">44 dias</option>
                             <option value="45">45 dias</option>
                             <option value="46">46 dias</option>
-                        </select>
+                            </select>
+                            </div>
                         </div>
                         <div id="labelSemanas">
-                            <select class="form-control form-select" name="cantidadPagosSemanales" id="cuotaSemanas">
+                            <div class="d-flex mt-3">
+                                <img style="width: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                <select style="background-color: rgba(0, 255, 255, 0); border: none;" class="form-control form-select" name="cantidadPagosSemanales" id="cuotaSemanas">
                             <option value="Indique la cantidad de semanas" selected>Indique la cantidad de semanas</option>
                             <option value="1">1 semana</option>
                             <option value="2">2 semanas</option>
@@ -214,9 +221,12 @@
                             <option value="11">11 semanas</option>
                             <option value="12">12 semanas</option>
                         </select>
+                            </div>
                         </div>
                         <div id="labelQuincenas">
-                            <select class="form-control form-select" name="cantidadPagosQuincenales" id="cuotaQuincenas">
+                            <div class="d-flex mt-3">
+                                <img style="width: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                <select style="background-color: rgba(0, 255, 255, 0); border: none;" class="form-control form-select" name="cantidadPagosQuincenales" id="cuotaQuincenas">
                             <option value="Indique la cantidad de quincenas" selected>Indique la cantidad de quincenas</option>
                             <option value="1">1 quincena</option>
                             <option value="2">2 quincenas</option>
@@ -235,9 +245,12 @@
                             <option value="15">15 quincenas</option>
                             <option value="16">16 quincenas</option>
                         </select>
+                            </div>
                         </div>
                         <div id="labelMeses">
-                            <select class="form-control form-select" name="cantidadPagosMensuales" id="cuotaMeses">
+                            <div class="d-flex mt-3">
+                                <img style="width: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                <select style="background-color: rgba(0, 255, 255, 0); border: none;" class="form-control form-select" name="cantidadPagosMensuales" id="cuotaMeses">
                             <option value="Indique la cantidad de meses" selected>Indique la cantidad de meses</option>
                             <option value="1">1 mes</option>
                             <option value="2">2 meses</option>
@@ -252,6 +265,7 @@
                             <option value="11">11 meses</option>
                             <option value="12">12 meses</option>
                         </select>
+                            </div>
                         </div>
                     </div>
 
