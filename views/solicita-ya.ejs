@@ -139,7 +139,7 @@
                     <div class="d-lg-flex row justify-content-between mt-3">
                         <div class="d-flex mt-3">
                             <img style="width: 40px; height: 40px;" src="/img/img-icons/calendar-frecuencia.svg" alt="">
-                            <select style="height: 40px;" class="form-control form-select border-0 bg-transparent" name="frecuenciaPagos" id="frecuenciaPago">
+                            <select class="form-control form-select border-0 bg-transparent" name="frecuenciaPagos" id="frecuenciaPago">
                             <option value="Seleccione la frecuencia de pago que desea" selected>Seleccione la frecuencia de pagos</option>
                             <option value="pagos diarios">Pagos Diarios</option>
                             <option value="pagos semanales">Pagos Semanales</option>
@@ -151,8 +151,8 @@
                         <!-- <label for="">Indique la cantidad de dias "max 46"</label> -->
                         <div id="labelDias">
                             <div class="d-flex mt-3">
-                                <img style="width: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select style="background-color: rgba(0, 255, 255, 0); border: none;" class="form-control   form-select" name="cantidadPagosDiarios" id="cuotaDias">
+                                <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosDiarios" id="cuotaDias">
                             <option value="Indique la cantidad de dias" selected>Indique la cantidad de días</option>
                             <option value="1">1 dia</option>
                             <option value="2">2 dias</option>
@@ -205,8 +205,8 @@
                         </div>
                         <div id="labelSemanas">
                             <div class="d-flex mt-3">
-                                <img style="width: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select style="background-color: rgba(0, 255, 255, 0); border: none;" class="form-control form-select" name="cantidadPagosSemanales" id="cuotaSemanas">
+                                <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosSemanales" id="cuotaSemanas">
                             <option value="Indique la cantidad de semanas" selected>Indique la cantidad de semanas</option>
                             <option value="1">1 semana</option>
                             <option value="2">2 semanas</option>
@@ -225,8 +225,8 @@
                         </div>
                         <div id="labelQuincenas">
                             <div class="d-flex mt-3">
-                                <img style="width: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select style="background-color: rgba(0, 255, 255, 0); border: none;" class="form-control form-select" name="cantidadPagosQuincenales" id="cuotaQuincenas">
+                                <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosQuincenales" id="cuotaQuincenas">
                             <option value="Indique la cantidad de quincenas" selected>Indique la cantidad de quincenas</option>
                             <option value="1">1 quincena</option>
                             <option value="2">2 quincenas</option>
@@ -249,8 +249,8 @@
                         </div>
                         <div id="labelMeses">
                             <div class="d-flex mt-3">
-                                <img style="width: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select style="background-color: rgba(0, 255, 255, 0); border: none;" class="form-control form-select" name="cantidadPagosMensuales" id="cuotaMeses">
+                                <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosMensuales" id="cuotaMeses">
                             <option value="Indique la cantidad de meses" selected>Indique la cantidad de meses</option>
                             <option value="1">1 mes</option>
                             <option value="2">2 meses</option>
@@ -269,13 +269,9 @@
                         </div>
                     </div>
 
-                    <!-- <input type="number" class="form-control m-3 p-2" name="cuota" id="cuota" placeholder="Cuota" required> -->
-
-                    <!-- <input type="number" class="form-control m-3 p-2" name="interes" id="interes" placeholder="Interes mensual" required> -->
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary m-3 p-2" id="btn">Calcular Cuota</button>
                     </div>
-                    <!-- <button type="submit" class="btn btn-secondary m-3 p-2" id="btnLimpiar">Limpiar Campos</button> -->
 
                     <div class=" justify-content-center d-lg-flex ">
                         <h4 class="me-lg-3" id="labelResul"></h4>
@@ -298,21 +294,7 @@
                             <!-- primera parte -->
                             <div class="container-datos-header ">
                                 <div class="datos-de-busqueda ">
-                                    <!-- <div class=" mb-4">
-                                        <div class="form-group d-flex justify-content-end  ">
-                                            <div class="form-group  ">
-                                                <div class="input-group ">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text">Estado Solicitud</span>
-                                                    </div>
-                                                    <select name="estadoSolicitud" class="form-control" id="estadoSolicitud">
-                                                        <option value="Nueva" selected>Nueva</option>
-                                                    </select>
-                                                </div>
-                                            </div>
 
-                                        </div>
-                                    </div> -->
 
                                     <div class="form-group  ">
                                         <label for="tipoPrestamo" class="  p-2">Tipo de Prestamo <span class="text-secondary fs-6">Obligatorio <span class="text-danger">*</span></span></label>
