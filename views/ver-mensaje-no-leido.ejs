@@ -159,9 +159,9 @@
                                             <%= mensaje.estadoMensaje %>
                                         </td>
 
-                                        <td class="w-0 "><a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%= mensaje.idMensaje %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a>
+                                        <td class="w-0 "><a id="eventoAct-Inact" href="/mensajes-no-leidos/ver-mensaje-no-leido/<%= mensaje.idMensaje %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a>
                                             <!-- <a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
-                                            <a href="/mensajes/ver-mensaje/<%= mensaje.idMensaje %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Mensaje"></i></a>
+                                            <!-- <a href="/mensajes/ver-mensaje/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Mensaje"></i></a> -->
                                         </td>
                                     </tr>
 
@@ -181,6 +181,7 @@
                         <%= mensaje.asunto %>
                     </h3>
                     <div class="d-flex justify-content-md-end ">
+                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="submit" class=" btn btn-danger me-lg-2">ELIMINAR MENSAJE</i></a>
                         <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
                         <select class="" name="estadoMensaje" id="" autofocus>
                         <option value="Leido">Leido</option>
@@ -233,7 +234,28 @@
     </div>
 
 
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="staticBackdropLabel">Seguro que quieres eliminar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
+                    <h5>
+                        <%= mensaje.nombre %>
+                    </h5>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <a href="/mensajes-no-leidos/eliminar-mensaje/<%= mensaje.idMensaje %>" type="button" class="btn btn-primary">Si Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

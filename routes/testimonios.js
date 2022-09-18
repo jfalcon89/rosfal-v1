@@ -12,11 +12,13 @@ router.get('/testimonios', async(req, res) => {
 
 
         const arrayTestimoniosNuevosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+        // const arrayTestimoniosNuevosDB2 = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
         res.render("testimonios", {
             arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
+            // arrayTestimoniosNuevos2: arrayTestimoniosNuevosDB2[0],
             arrayTestimoniosActivos: arrayTestimoniosActivosDB,
             arrayTestimoniosInactivos: arrayTestimoniosInactivosDB,
             login: true,
@@ -98,14 +100,16 @@ router.post('/testimonios/ver-testimonio/:id', async(req, res) => {
 });
 
 //ELIMINAR TESTIMONIO NUEVO
-router.get("/testimonios/:id", async(req, res) => {
+router.get("/testimonios/eliminar-testimonio/:id", async(req, res) => {
     const { id } = req.params;
 
     console.log(id)
 
     try {
 
+
         await pool.query("DELETE FROM testimonios WHERE idTestimonio = ?", [id]);
+
         // req.flash('success', 'Link eliminado correctamente');
         res.redirect("/testimonios");
 
@@ -148,7 +152,7 @@ router.get('/testimonios-activos', async(req, res) => {
 
 
 //VER TESTIMONIOS ACTIVOS ************
-router.get("/testimonios-activos/ver-testimonio/:id", async(req, res) => {
+router.get("/testimonios-activos/ver-testimonio-activo/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
@@ -163,7 +167,7 @@ router.get("/testimonios-activos/ver-testimonio/:id", async(req, res) => {
             const arrayTestimoniosDB = await pool.query(`SELECT * FROM testimonios WHERE estadoTestimonio="Activo"  `);
             const testimonioDB = await pool.query(`SELECT * FROM testimonios WHERE idTestimonio =${id} AND estadoTestimonio="Activo" `);
             console.log(testimonioDB[0]);
-            res.render("ver-testimonio", {
+            res.render("ver-testimonio-activo", {
                 testimonio: testimonioDB[0],
                 arrayTestimonios: arrayTestimoniosDB,
                 arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
@@ -175,7 +179,7 @@ router.get("/testimonios-activos/ver-testimonio/:id", async(req, res) => {
 
         } catch (error) {
             console.log(error)
-            res.render("ver-testimonio", {
+            res.render("ver-testimonio-activo", {
                 error: true,
                 mensaje: "no se encuentra el id seleccionado"
             });
@@ -191,7 +195,7 @@ router.get("/testimonios-activos/ver-testimonio/:id", async(req, res) => {
 
 
 //GUARDAR ACTUALIZACION DE TESTIMONIOS ACTIVOS
-router.post('/testimonios-activos/ver-testimonio/:id', async(req, res) => {
+router.post('/testimonios-activos/ver-testimonio-activo/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
@@ -204,12 +208,12 @@ router.post('/testimonios-activos/ver-testimonio/:id', async(req, res) => {
 
     await pool.query("UPDATE testimonios set ? WHERE idTestimonio = ?", [nuevoTestimonio, id]);
     // req.flash('success', 'Link actualizado correctamente');
-    res.redirect('/testimonios');
+    res.redirect('/testimonios-activos');
 });
 
 
 //ELIMINAR MENSAJE NO LEIDO
-router.get("/testimonios-activos/:id", async(req, res) => {
+router.get("/testimonios-activos/eliminar-testimonio:id", async(req, res) => {
     const { id } = req.params;
 
     console.log(id)
@@ -218,7 +222,7 @@ router.get("/testimonios-activos/:id", async(req, res) => {
 
         await pool.query("DELETE FROM testimonios WHERE idTestimonio = ?", [id]);
         // req.flash('success', 'Link eliminado correctamente');
-        res.redirect("/testimonios");
+        res.redirect("/testimonios-activos");
 
 
 
@@ -259,7 +263,7 @@ router.get('/testimonios-inactivos', async(req, res) => {
 
 
 //VER MENSAJE TESTIMONIO INACTIVO ************
-router.get("/testimonios-inactivos/ver-testimonio/:id", async(req, res) => {
+router.get("/testimonios-inactivos/ver-testimonio-inactivo/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
@@ -274,7 +278,7 @@ router.get("/testimonios-inactivos/ver-testimonio/:id", async(req, res) => {
             const arrayTestimoniosDB = await pool.query(`SELECT * FROM testimonios WHERE  estadoTestimonio="Inactivo"  `);
             const testimonioDB = await pool.query(`SELECT * FROM testimonios WHERE idTestimonio =${id} AND estadoTestimonio="Inactivo"  `);
             console.log(testimonioDB[0]);
-            res.render("ver-testimonio", {
+            res.render("ver-testimonio-inactivo", {
                 testimonio: testimonioDB[0],
                 arrayTestimonios: arrayTestimoniosDB,
                 arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
@@ -286,7 +290,7 @@ router.get("/testimonios-inactivos/ver-testimonio/:id", async(req, res) => {
 
         } catch (error) {
             console.log(error)
-            res.render("ver-testimonio", {
+            res.render("ver-testimonio-inactivo", {
                 error: true,
                 mensaje: "no se encuentra el id seleccionado"
             });
@@ -302,7 +306,7 @@ router.get("/testimonios-inactivos/ver-testimonio/:id", async(req, res) => {
 
 
 //GUARDAR ACTUALIZACION DE TESTIMONIO INACTIVO
-router.post('/testimonios-inactivos/ver-testimonio/:id', async(req, res) => {
+router.post('/testimonios-inactivos/ver-testimonio-inactivo/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
@@ -315,11 +319,11 @@ router.post('/testimonios-inactivos/ver-testimonio/:id', async(req, res) => {
 
     await pool.query("UPDATE testimonios set ? WHERE idTestimonio = ?", [nuevoTestimonio, id]);
     // req.flash('success', 'Link actualizado correctamente');
-    res.redirect('/testimonios');
+    res.redirect('/testimonios-inactivos');
 });
 
-//ELIMINAR MENSAJE LEIDO
-router.get("/testimonios-inactivos/:id", async(req, res) => {
+//ELIMINAR TESTIMONIO INACTIVO
+router.get("/testimonios-inactivos/eliminar-testimonio:id", async(req, res) => {
     const { id } = req.params;
 
     console.log(id)
@@ -328,7 +332,7 @@ router.get("/testimonios-inactivos/:id", async(req, res) => {
 
         await pool.query("DELETE FROM testimonios WHERE idTestimonio = ?", [id]);
         // req.flash('success', 'Link eliminado correctamente');
-        res.redirect("/testimonios");
+        res.redirect("/testimonios-inactivos");
 
 
 

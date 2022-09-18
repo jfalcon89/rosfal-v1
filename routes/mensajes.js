@@ -39,7 +39,7 @@ router.get('/mensajes', async(req, res) => {
 
 
 //VER MENSAJE NUEVO ************
-router.get("/mensajes/ver-mensaje/:id", async(req, res) => {
+router.get("/mensajes/ver-mensaje-nuevo/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
@@ -54,7 +54,7 @@ router.get("/mensajes/ver-mensaje/:id", async(req, res) => {
             const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ORDER BY fechaMensaje DESC');
             const mensajeDB = await pool.query("SELECT * FROM mensajes WHERE idMensaje = ?", [id]);
             console.log(mensajeDB[0]);
-            res.render("ver-mensaje", {
+            res.render("ver-mensaje-nuevo", {
                 mensaje: mensajeDB[0],
                 arrayMensajes: arrayMensajesDB,
                 arrayMensajesLeidos: arrayMensajesLeidosDB,
@@ -66,7 +66,7 @@ router.get("/mensajes/ver-mensaje/:id", async(req, res) => {
 
         } catch (error) {
             console.log(error)
-            res.render("ver-mensaje", {
+            res.render("ver-mensaje-nuevo", {
                 error: true,
                 mensaje: "no se encuentra el id seleccionado"
             });
@@ -82,7 +82,7 @@ router.get("/mensajes/ver-mensaje/:id", async(req, res) => {
 
 
 //GUARDAR ACTUALIZACION DE MENSAJE NUEVO
-router.post('/mensajes/ver-mensaje/:id', async(req, res) => {
+router.post('/mensajes/ver-mensaje-nuevo/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
@@ -99,7 +99,7 @@ router.post('/mensajes/ver-mensaje/:id', async(req, res) => {
 });
 
 //ELIMINAR MENSAJE NUEVO
-router.get("/mensajes/:id", async(req, res) => {
+router.get("/mensajes/eliminar-mensaje/:id", async(req, res) => {
     const { id } = req.params;
 
     console.log(id)
@@ -149,7 +149,7 @@ router.get('/mensajes-no-leidos', async(req, res) => {
 
 
 //VER MENSAJE NO LEIDO ************
-router.get("/mensajes-no-leidos/ver-mensaje/:id", async(req, res) => {
+router.get("/mensajes-no-leidos/ver-mensaje-no-leido/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
@@ -164,7 +164,7 @@ router.get("/mensajes-no-leidos/ver-mensaje/:id", async(req, res) => {
             const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
             const mensajeDB = await pool.query(`SELECT * FROM mensajes WHERE idMensaje =${id} AND estadoMensaje="No Leido"  `);
             console.log(mensajeDB[0]);
-            res.render("ver-mensaje", {
+            res.render("ver-mensaje-no-leido", {
                 mensaje: mensajeDB[0],
                 arrayMensajes: arrayMensajesDB,
                 arrayMensajesLeidos: arrayMensajesLeidosDB,
@@ -176,7 +176,7 @@ router.get("/mensajes-no-leidos/ver-mensaje/:id", async(req, res) => {
 
         } catch (error) {
             console.log(error)
-            res.render("ver-mensaje", {
+            res.render("ver-mensaje-no-leido", {
                 error: true,
                 mensaje: "no se encuentra el id seleccionado"
             });
@@ -192,7 +192,7 @@ router.get("/mensajes-no-leidos/ver-mensaje/:id", async(req, res) => {
 
 
 //GUARDAR ACTUALIZACION DE MENSAJE NO LEIDO
-router.post('/mensajes-no-leidos/ver-mensaje/:id', async(req, res) => {
+router.post('/mensajes-no-leidos/ver-mensaje-no-leido/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
@@ -209,7 +209,7 @@ router.post('/mensajes-no-leidos/ver-mensaje/:id', async(req, res) => {
 });
 
 //ELIMINAR MENSAJE NO LEIDO
-router.get("/mensajes-no-leidos/:id", async(req, res) => {
+router.get("/mensajes-no-leidos/eliminar-mensaje/:id", async(req, res) => {
     const { id } = req.params;
 
     console.log(id)
@@ -257,7 +257,7 @@ router.get('/mensajes-leidos', async(req, res) => {
 
 
 //VER MENSAJE LEIDO ************
-router.get("/mensajes-leidos/ver-mensaje/:id", async(req, res) => {
+router.get("/mensajes-leidos/ver-mensaje-leido/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
@@ -272,7 +272,7 @@ router.get("/mensajes-leidos/ver-mensaje/:id", async(req, res) => {
             const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
             const mensajeDB = await pool.query(`SELECT * FROM mensajes WHERE idMensaje =${id} AND estadoMensaje="Leido"  `);
             console.log(mensajeDB[0]);
-            res.render("ver-mensaje", {
+            res.render("ver-mensaje-leido", {
                 mensaje: mensajeDB[0],
                 arrayMensajes: arrayMensajesDB,
                 arrayMensajesLeidos: arrayMensajesLeidosDB,
@@ -284,7 +284,7 @@ router.get("/mensajes-leidos/ver-mensaje/:id", async(req, res) => {
 
         } catch (error) {
             console.log(error)
-            res.render("ver-mensaje", {
+            res.render("ver-mensaje-leido", {
                 error: true,
                 mensaje: "no se encuentra el id seleccionado"
             });
@@ -300,7 +300,7 @@ router.get("/mensajes-leidos/ver-mensaje/:id", async(req, res) => {
 
 
 //GUARDAR ACTUALIZACION DE MENSAJE LEIDO
-router.post('/mensajes-leidos/ver-mensaje/:id', async(req, res) => {
+router.post('/mensajes-leidos/ver-mensaje-leido/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
@@ -317,7 +317,7 @@ router.post('/mensajes-leidos/ver-mensaje/:id', async(req, res) => {
 });
 
 //ELIMINAR MENSAJE LEIDO
-router.get("/mensajes-leidos/:id", async(req, res) => {
+router.get("/mensajes-leidos/eliminar-mensaje/:id", async(req, res) => {
     const { id } = req.params;
     console.log(id)
 

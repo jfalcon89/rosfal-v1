@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
     <link rel="icon" href="/img/favicon/logo-favicon.png">
-    <title>Rosfal - Testimonios Inactivos</title>
+    <title>Rosfal - Ver Testimonio</title>
 </head>
 
 <body>
@@ -36,7 +36,7 @@
         <div class=" d-flex align-items-center justify-content-between">
             <div class="d-flex">
                 <a class="bg-info text-decoration-none text-light p-2" href="/panel-administracion">VOLVER ATRAS</a>
-                <h5 class="text-dark m-2" style="font-size: large;">PANEL DE TESTIMONIOS</h5>
+                <h5 class="text-dark m-2" style="font-size: large;">PANEL DE TESTIMONIO</h5>
             </div>
             <div class="btn-group">
                 <% if (login) { %>
@@ -55,9 +55,9 @@
                     </ul>
                     <%}  %>
             </div>
+
         </div>
     </div>
-
 
 
 
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid  d-flex d-flex mt-3 mb-3 " style="background-color: #d4d4d4;">
+        <div class="container-fluid bg-white  d-flex d-flex mt-3 mb-3 ">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-testimonio-inactivo.svg" alt="testimonio-inactivo">
@@ -107,13 +107,15 @@
                 </div>
             </div>
         </div>
+
     </div>
 
+    <!-- <h3>VER MENSAJE</h3> -->
 
-    <!-- <h3>BANDEJA MENSAJES LEIDOS</h3> -->
     <div class="container-fluid d-lg-flex">
+        <!-- <div class="container-fluid container-todos-los-mensajes"> -->
         <div class="container-fluid p-4 mt-5 ">
-            <h3 class="text-secondary"><strong>BANDEJA</strong> TESTIMONIOS INACTIVOS</h3>
+            <h3 class="text-secondary"><strong>BANDEJA</strong> TESTIMONIOS</h3>
             <div class="container-fluid p-4">
                 <div class="container-table table-responsive">
                     <table id="datatable" class="display responsive nowrap" style="width:100%">
@@ -129,8 +131,8 @@
                         </thead>
                         <tbody>
 
-                            <% if (arrayTestimoniosInactivos.length > 0) { %>
-                                <% arrayTestimoniosInactivos.forEach(testimonio=> { %>
+                            <% if (arrayTestimonios.length > 0) { %>
+                                <% arrayTestimonios.forEach(testimonio=> { %>
 
                                     <tr>
                                         <td>
@@ -145,14 +147,11 @@
                                         <td>
                                             <%= testimonio.estadoTestimonio %>
                                         </td>
-                                        <td class=""><a id="eventoAct-Inact" href="/testimonios-inactivos/ver-testimonio-inactivo/<%= testimonio.idTestimonio %>" class="btn " title="Ver Testimonio"><i class="bi bi-folder2-open "></i></a>
+                                        <td class=""><a id="eventoAct-Inact" href="/testimonios-activos/ver-testimonio-activo/<%= testimonio.idTestimonio %>" class="btn " title="Ver Testimonio"><i class="bi bi-folder2-open "></i></a>
                                             <!-- <a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%=  %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a> -->
-                                            <!-- <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Testimonio"></i></a> -->
+                                            <!-- <a href="/testimonios/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar empleado"></i></a> -->
                                         </td>
                                     </tr>
-
-
-
 
                                     <% }) %>
                                         <% } %>
@@ -161,17 +160,83 @@
                     </table>
                 </div>
             </div>
+            <!-- </div> -->
         </div>
-        <div class="container-fluid p-4 mt-5 d-flex justify-content-center ">
-            <div>
-                <h3 class="text-secondary">NINGUN TESTIMONIO SELECCIONADO</h3>
-                <img style="width: 200px;" src="/img/img-icons/img-testimonios-no-select.svg" alt="">
-            </div>
 
 
+        <div class="container-fluid container-ver-mensaje">
+            <form class="" autocomplete="off" action="" method="POST">
+                <div class="container-fluid p-4 mt-5 vh-100" style="background-color: #e8e7e7;">
+                    <h3 class="text-secondary"><strong>Ciudad:</strong>
+                        <%= testimonio.ciudad %>
+                    </h3>
+                    <div class="d-flex justify-content-md-end ">
+                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="submit" class=" btn btn-danger me-lg-2">ELIMINAR TESTIMONIO</i></a>
+                        <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
+                        <select class="" name="estadoTestimonio" id="" autofocus>
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                        </select>
+                    </div>
+
+                    <div class="container-fluid p-4">
+
+                        <div class="">
+                            <h6>
+                                <strong>Nombre:</strong>
+                                <%= testimonio.nombre %>
+                            </h6>
+                            <h6>
+                                <strong>Fecha:</strong>
+                                <%= testimonio.fechaTestimonio.toLocaleString() %>
+                            </h6>
+                            <h6>
+                                <strong>Estado:</strong>
+                                <%= testimonio.estadoTestimonio %>
+                            </h6>
+                        </div>
+                        <hr>
+
+                        <h5 class="text-secondary mt-4 mb-3">TESTIMONIO:</h5>
+                        <div class="container-fluid container-mensaje">
+                            <h3>
+                                <%= testimonio.testimonio %>
+                            </h3>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </form>
         </div>
+
+
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="staticBackdropLabel">Seguro que quieres eliminar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <h5>
+                        <%= testimonio.nombre %>
+                    </h5>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <a href="/testimonios-activos/eliminar-testimonio/<%= testimonio.idTestimonio %>" type="button" class="btn btn-primary">Si Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

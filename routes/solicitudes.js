@@ -5,11 +5,8 @@ const moment = require("moment");
 const pool = require("../database");
 const sharp = require("sharp");
 
-//SOLICITUDES VISTA POR ESTADOS
 
 //-----------------------NUEVAS----------------------//
-
-
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES NUEVAS********************
 router.get('/solicitudes-nuevas', async(req, res) => {
     if (req.session.loggedin) {
@@ -55,8 +52,6 @@ router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
-            // const contratoBuffer = sharp(solicitudDB.contrato.buffer).resize(300, 700);
-
 
             console.log(solicitudDB[0]);
             res.render("ver-solicitud", {
@@ -68,7 +63,6 @@ router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
                 arrayRutas: arrayRutasDB,
                 login: true,
                 name: req.session.name
-                    // contratoBuffer: sharp(solicitudDB.contrato.buffer)
             });
 
         } catch (error) {
@@ -138,10 +132,7 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
 
-
     const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, ocupacion, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta } = req.body;
-
-    // sharp(contrato.buffer).resize(300, 700);
 
     const nuevaSolicitud = {
         cedula,
@@ -189,7 +180,7 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
 
 
 //ELIMINAR SOLICITUD EN ESTADO NUEVA
-router.get("/solicitudes-nuevas/:id", async(req, res) => {
+router.get("/solicitudes/eliminar-solicitud/:id", async(req, res) => {
     const { id } = req.params;
 
     console.log(id)
@@ -210,7 +201,6 @@ router.get("/solicitudes-nuevas/:id", async(req, res) => {
 
 
 //-----------------------APROBADAS----------------------//
-
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES APROBADAS********************
 router.get('/solicitudes-aprobadas', async(req, res) => {
     if (req.session.loggedin) {
@@ -470,8 +460,6 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
 
 
 //-----------------------DECLINADAS----------------------//
-
-
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES DECLINADAS********************
 router.get('/solicitudes-declinadas', async(req, res) => {
     if (req.session.loggedin) {
@@ -643,8 +631,6 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
 
 
 //-----------------------EN REVISION----------------------//
-
-
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES NUEVAS********************
 router.get('/solicitudes-en-revision', async(req, res) => {
     if (req.session.loggedin) {
@@ -672,7 +658,7 @@ router.get('/solicitudes-en-revision', async(req, res) => {
 
 });
 
-//EDITAR SOLICITUD EN ESTADO DECLINADAS************
+//VER SOLICITUD EN ESTADO DECLINADAS************
 router.get("/Solicitudes-en-revision/ver-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
@@ -717,7 +703,7 @@ router.get("/Solicitudes-en-revision/ver-solicitud/:id", async(req, res) => {
 });
 
 
-//EDITAR SOLICITUD EN ESTADO DECLINADAS************
+//EDITAR SOLICITUD EN ESTADO EN REVISION************
 router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 

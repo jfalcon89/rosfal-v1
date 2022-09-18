@@ -15,11 +15,14 @@ router.get('/rutas', async(req, res) => {
 
 
         const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+        const rutaDB = await pool.query('SELECT * FROM rutas ');
         // const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
         // const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
         // const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+        console.log(arrayRutasDB)
         res.render("rutas", {
             arrayRutas: arrayRutasDB,
+            ruta: rutaDB[0],
             // arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
             // arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
             // arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
@@ -138,10 +141,12 @@ router.get("/rutas/editar-ruta/:id", async(req, res) => {
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const rutaDB = await pool.query("SELECT * FROM rutas WHERE idRuta = ?", [id]);
+            // const eliminarRutaDB = await pool.query("DELETE * FROM rutas WHERE idRuta = ?", [id]);
             console.log(rutaDB[0]);
             res.render("editar-ruta", {
                 ruta: rutaDB[0],
                 arrayRutas: arrayRutasDB,
+                // eliminarRuta: eliminarRutaDB[0],
                 // arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
                 // arraySolicitudesNuevas: arraySolicitudesNuevasDB,
                 // arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
@@ -188,7 +193,7 @@ router.post('/rutas/editar-ruta/:id', async(req, res) => {
 
 
 //ELIMINAR RUTA 
-router.get("/rutas/:id", async(req, res) => {
+router.get("/rutas/eliminar-ruta/:id", async(req, res) => {
     const { id } = req.params;
 
     console.log(id)

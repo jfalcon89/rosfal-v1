@@ -145,11 +145,13 @@
                                         <td>
                                             <%= testimonio.estadoTestimonio %>
                                         </td>
-                                        <td class=""><a id="eventoAct-Inact" href="/testimonios-activos/ver-testimonio/<%= testimonio.idTestimonio %>" class="btn " title="Ver Testimonio"><i class="bi bi-folder2-open "></i></a>
+                                        <td class=""><a id="eventoAct-Inact" href="/testimonios-activos/ver-testimonio-activo/<%= testimonio.idTestimonio %>" class="btn " title="Ver Testimonio"><i class="bi bi-folder2-open "></i></a>
                                             <!-- <a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%=  %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a> -->
-                                            <a href="/testimonios-activos/<%= testimonio.idTestimonio %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Testimonio"></i></a>
+                                            <!-- <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Testimonio"></i></a> -->
                                         </td>
                                     </tr>
+
+
 
                                     <% }) %>
                                         <% } %>

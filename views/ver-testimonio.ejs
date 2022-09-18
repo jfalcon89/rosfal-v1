@@ -147,9 +147,9 @@
                                         <td>
                                             <%= testimonio.estadoTestimonio %>
                                         </td>
-                                        <td class=""><a id="eventoAct-Inact" href="/testimonios/ver-testimonio/<%= testimonio.idTestimonio %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
+                                        <td class=""><a id="eventoAct-Inact" href="/testimonios/ver-testimonio/<%= testimonio.idTestimonio %>" class="btn " title="Ver Testimonio"><i class="bi bi-folder2-open "></i></a>
                                             <!-- <a id="eventoAct-Inact" href="/mensajes/ver-mensaje/<%=  %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a> -->
-                                            <a href="/testimonios/<%= testimonio.idTestimonio %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar empleado"></i></a>
+                                            <!-- <a href="/testimonios/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar empleado"></i></a> -->
                                         </td>
                                     </tr>
 
@@ -162,6 +162,8 @@
             </div>
             <!-- </div> -->
         </div>
+
+
         <div class="container-fluid container-ver-mensaje">
             <form class="" autocomplete="off" action="" method="POST">
                 <div class="container-fluid p-4 mt-5 vh-100" style="background-color: #e8e7e7;">
@@ -169,6 +171,7 @@
                         <%= testimonio.ciudad %>
                     </h3>
                     <div class="d-flex justify-content-md-end ">
+                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="submit" class=" btn btn-danger me-lg-2">ELIMINAR TESTIMONIO</i></a>
                         <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
                         <select class="" name="estadoTestimonio" id="" autofocus>
                             <option value="Activo">Activo</option>
@@ -212,8 +215,28 @@
 
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center" id="staticBackdropLabel">Seguro que quieres eliminar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
+                    <h5>
+                        <%= testimonio.nombre %>
+                    </h5>
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <a href="/testimonios/eliminar-testimonio/<%= testimonio.idTestimonio %>" type="button" class="btn btn-primary">Si Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
