@@ -217,20 +217,27 @@
 
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-center" id="staticBackdropLabel">Seguro que quieres eliminar</h5>
+                    <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel">Eliminar Testimonio</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
 
-                    <h5>
+                    <h5 class="text-center fw-bold">
                         <%= testimonio.nombre %>
                     </h5>
+                    <h5 class="text-center">
+                        <%= testimonio.ciudad %>
+                    </h5>
+                    <h5 class="text-center">
+                        <%= testimonio.testimonio %>
+                    </h5>
+
 
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <a href="/testimonios-inactivos/eliminar-testimonio/<%= testimonio.idTestimonio %>" type="button" class="btn btn-primary">Si Eliminar</a>
                 </div>
