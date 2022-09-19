@@ -171,9 +171,9 @@
                         <%= testimonio.ciudad %>
                     </h3>
                     <div class="d-flex justify-content-md-end ">
-                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="submit" class=" btn btn-danger me-lg-2">ELIMINAR TESTIMONIO</i></a>
+                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class=" btn btn-danger me-lg-2">ELIMINAR TESTIMONIO</i></a>
                         <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
-                        <select class="" name="estadoTestimonio" id="" autofocus>
+                        <select class="" name="estadoTestimonio" id="">
                             <option value="Activo">Activo</option>
                             <option value="Inactivo">Inactivo</option>
                         </select>
@@ -199,7 +199,7 @@
 
                         <h5 class="text-secondary mt-4 mb-3">TESTIMONIO:</h5>
                         <div class="container-fluid container-mensaje">
-                            <h3>
+                            <h3 autofocus>
                                 <%= testimonio.testimonio %>
                             </h3>
                         </div>
@@ -238,7 +238,7 @@
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <a href="/testimonios-activos/eliminar-testimonio/<%= testimonio.idTestimonio %>" type="button" class="btn btn-primary">Si Eliminar</a>
+                    <a href="/testimonios-activos/eliminar-testimonio/<%= testimonio.idTestimonio %>" class="btn btn-primary">Si Eliminar</a>
                 </div>
             </div>
         </div>

@@ -181,7 +181,7 @@
                     </select>
                     <div class="d-lg-flex justify-content-center mt-3">
                         <button id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 me-lg-3" type="submit">EDITAR RUTA</button>
-                        <a class="btn btn-danger btn-block p-2 mt-1 mb-3 w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="submit">ELIMINAR RUTA</a>
+                        <a class="btn btn-danger btn-block p-2 mt-1 mb-3 w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">ELIMINAR RUTA</a>
                     </div>
                 </div>
             </form>
@@ -206,7 +206,7 @@
                     </div>
                     <div class="modal-footer border-0">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <a href="/rutas/eliminar-ruta/<%= ruta.idRuta %>" type="button" class="btn btn-primary">Si Eliminar</a>
+                        <a href="/rutas/eliminar-ruta/<%= ruta.idRuta %>" class="btn btn-primary">Si Eliminar</a>
                     </div>
                 </div>
             </div>
