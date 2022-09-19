@@ -181,7 +181,7 @@
                         <%= mensaje.asunto %>
                     </h3>
                     <div class="d-flex justify-content-md-end ">
-                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="submit" class=" btn btn-danger me-lg-2">ELIMINAR MENSAJE</i></a>
+                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class=" btn btn-danger me-lg-2">ELIMINAR MENSAJE</i></a>
                         <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
                         <select class="" name="estadoMensaje" id="" autofocus>
                         <option value="Leido">Leido</option>
@@ -255,7 +255,7 @@
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <a href="/mensajes-leidos/eliminar-mensaje/<%= mensaje.idMensaje %>" type="button" class="btn btn-primary">Si Eliminar</a>
+                    <a href="/mensajes-leidos/eliminar-mensaje/<%= mensaje.idMensaje %>" class="btn btn-primary">Si Eliminar</a>
                 </div>
             </div>
         </div>
