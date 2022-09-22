@@ -36,7 +36,7 @@ router.get('/solicitudes-nuevas', async(req, res) => {
 });
 
 
-//VER SOLICITUD EN ESTADO NUEVA ************
+//VER SOLICITUD EN ESTADO NUEVA *************
 router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
