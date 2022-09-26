@@ -222,13 +222,14 @@ router.post('/Solicitudes-nuevas/ver-solicitud/:id', async(req, res) => {
 
 
 //ELIMINAR SOLICITUD EN ESTADO NUEVA
-router.delete("/solicitudes/eliminar-solicitud/:id", async(req, res) => {
+router.get("/solicitudes/eliminar-solicitud/:id", async(req, res) => {
     const { id } = req.params;
 
     console.log(id)
 
     try {
 
+        await pool.query(`DELETE FROM obs_por_solicitudes WHERE obs_por_solicitudes.idSolicitud = ${id} `);
         await pool.query("DELETE FROM solicitudes WHERE idSolicitud = ?", [id]);
         // req.alert('success', 'Link eliminado correctamente');
         res.redirect("/solicitudes-nuevas");
