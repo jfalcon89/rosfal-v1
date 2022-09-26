@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- css y js bootstrap cdn -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- linkeado css propio -->
@@ -30,10 +31,13 @@
             </div>
             <div class="btn-group">
                 <% if (login) { %>
-                    <button type="button" class="btn btn-info"><%= name %></button>
-                    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
+                    <button type="button" class="btn btn-info">
+                        <%= name %>
+                    </button>
+                    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Another action</a></li>
                         <li><a class="dropdown-item" href="/">Ir a ROSFAL PAGE</a></li>
@@ -43,7 +47,7 @@
                         <li><a class="dropdown-item" href="/logout">Cerrar Session</a></li>
 
                     </ul>
-                    <%}  %>
+                    <%} %>
             </div>
 
         </div>
@@ -61,14 +65,16 @@
                             <%= arraySolicitudesNuevas.length %>
                         </h3>
                     </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-nuevas">Solicitudes Nuevas</a></div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5"
+                            href="/solicitudes-nuevas">Solicitudes Nuevas</a></div>
                 </div>
             </div>
         </div>
         <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex ">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
-                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-aprobadas.svg" alt="Solicitudes Aprobadas">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-aprobadas.svg"
+                        alt="Solicitudes Aprobadas">
                 </div>
                 <div class="container-titulo">
                     <div class="indicador">
@@ -76,14 +82,16 @@
                             <%= arraySolicitudesAprobadas.length %>
                         </h3>
                     </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-aprobadas">Solicitudes Aprobadas</a></div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5"
+                            href="/solicitudes-aprobadas">Solicitudes Aprobadas</a></div>
                 </div>
             </div>
         </div>
         <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
-                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-declinadas.svg" alt="Solicitudes Declinadas">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-declinadas.svg"
+                        alt="Solicitudes Declinadas">
                 </div>
                 <div class="container-titulo">
                     <div class="indicador">
@@ -91,14 +99,16 @@
                             <%= arraySolicitudesDeclinadas.length %>
                         </h3>
                     </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-declinadas">Solicitudes Declinadas</a></div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5"
+                            href="/solicitudes-declinadas">Solicitudes Declinadas</a></div>
                 </div>
             </div>
         </div>
         <div class="container-fluid bg-white mt-3 mb-3 d-flex">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
-                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-en-revision.svg" alt="Solicitudes en Revision">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-en-revision.svg"
+                        alt="Solicitudes en Revision">
                 </div>
                 <div class="container-titulo">
                     <div class="indicador">
@@ -106,7 +116,8 @@
                             <%= arraySolicitudesEnRevision.length %>
                         </h3>
                     </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-en-revision">Solicitudes en Revision</a></div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5"
+                            href="/solicitudes-en-revision">Solicitudes en Revision</a></div>
                 </div>
             </div>
         </div>
@@ -122,30 +133,38 @@
 
 
         <div class="container mt-3">
-            
+
             <form class="" autocomplete="off" action="" method="POST">
-                
+
                 <!-- <input id="pdfFile" type="file" name="contrato" class="form-control" accept="pdf"> -->
-                
+
                 <!-- <div>
                     <embed id="pdfVista" type="application/pdf" name="contrato" width="400">
                     </div> -->
-                    
+
                 <div class="d-lg-flex justify-content-end">
-                    <img data-bs-toggle="modal" data-bs-target="#staticBackdrop2" src="/img/img-icons/btn-observaciones.svg" class="btn mb-2 p-0 me-lg-2" width="40px" alt="Observaciones" title="Observaciones">
-                    <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-danger btn-block p-2 mb-2 me-lg-2">ELIMINAR SOLICITUD</i></a>
-                    <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i class="bi bi-check-lg me-lg-2"></i>GUARDAR CAMBIOS</button>
-                    <a href="/solicitudes-nuevas" class="btn btn-warning btn-block p-2 mb-2"><i class="bi bi-arrow-left me-lg-2"></i>CANCELAR</a>
+                    <img data-bs-toggle="modal" data-bs-target="#staticBackdrop2"
+                        src="/img/img-icons/btn-observaciones.svg" class="btn mb-2 p-0 me-lg-2" width="40px"
+                        alt="Observaciones" title="Observaciones">
+                    <a data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                        class="btn btn-danger btn-block p-2 mb-2 me-lg-2">ELIMINAR SOLICITUD</i></a>
+                    <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i
+                            class="bi bi-check-lg me-lg-2"></i>GUARDAR CAMBIOS</button>
+                    <a href="/solicitudes-nuevas" class="btn btn-warning btn-block p-2 mb-2"><i
+                            class="bi bi-arrow-left me-lg-2"></i>CANCELAR</a>
                 </div>
 
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item border-0">
                         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                                aria-controls="panelsStayOpen-collapseOne">
                                 <strong>PASO 1 - DATOS PERSONALES </strong>
                             </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                            aria-labelledby="panelsStayOpen-headingOne">
                             <div class="accordion-body">
                                 <!-- primera parte -->
                                 <div class="container-datos-header ">
@@ -155,7 +174,8 @@
                                                 <div class="form-group mt-2 me-lg-2 ">
                                                     <div class="input-group ">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text">ID Solicitud: <%= solicitud.idSolicitud %>  </span>
+                                                            <span class="input-group-text">ID Solicitud: <%=
+                                                                    solicitud.idSolicitud %> </span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -164,10 +184,13 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Contrato Firmado</span>
                                                         </div>
-                                                        <select name="firmaContrato" class="form-control form-select " id="firmaContrato">
-                                                            <option  value="<%= solicitud.firmaContrato %>" selected><%= solicitud.firmaContrato %></option>
-                                                            <option  value="SI">SI</option>
-                                                            <option  value="NO">NO</option>
+                                                        <select name="firmaContrato" class="form-control form-select "
+                                                            id="firmaContrato">
+                                                            <option value="<%= solicitud.firmaContrato %>" selected>
+                                                                <%= solicitud.firmaContrato %>
+                                                            </option>
+                                                            <option value="SI">SI</option>
+                                                            <option value="NO">NO</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -177,15 +200,19 @@
                                                             <span class="input-group-text">Ruta</span>
                                                         </div>
                                                         <select name="ruta" class="form-control" id="">
-                                                            <option value="<%= solicitud.ruta %>" selected><%= solicitud.ruta %></option>
-                                                            <% if (arrayRutas.length > 0) { %>
+                                                            <option value="<%= solicitud.ruta %>" selected>
+                                                                <%= solicitud.ruta %>
+                                                            </option>
+                                                            <% if (arrayRutas.length> 0) { %>
                                                                 <% arrayRutas.forEach(ruta=> { %>
 
-                                                            <option value="<%= ruta.nombreRuta %>"><%= ruta.nombreRuta %></option>
-                                                           
-                                                            <% }) %>
-                                                            <% } %>
-                                                            
+                                                                    <option value="<%= ruta.nombreRuta %>">
+                                                                        <%= ruta.nombreRuta %>
+                                                                    </option>
+
+                                                                    <% }) %>
+                                                                        <% } %>
+
                                                         </select>
                                                     </div>
                                                 </div>
@@ -195,7 +222,9 @@
                                                             <span class="input-group-text">Estado Solicitud</span>
                                                         </div>
                                                         <select name="estadoSolicitud" class="form-control" id="">
-                                                            <option value="<%= solicitud.estadoSolicitud %>" selected><%= solicitud.estadoSolicitud %></option>
+                                                            <option value="<%= solicitud.estadoSolicitud %>" selected>
+                                                                <%= solicitud.estadoSolicitud %>
+                                                            </option>
                                                             <option value="Nueva">Nueva</option>
                                                             <option value="Aprobada">Aprobada</option>
                                                             <option value="Declinada">Declinada</option>
@@ -208,8 +237,11 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Tipo de Prestamo</span>
                                                         </div>
-                                                        <select name="tipoPrestamo" class="form-control" id="inputTipPrestamo">
-                                                            <option value="<%= solicitud.tipoPrestamo %>" selected><%= solicitud.tipoPrestamo %></option>
+                                                        <select name="tipoPrestamo" class="form-control"
+                                                            id="inputTipPrestamo">
+                                                            <option value="<%= solicitud.tipoPrestamo %>" selected>
+                                                                <%= solicitud.tipoPrestamo %>
+                                                            </option>
                                                             <option value="Personal">Personal</option>
                                                             <option value="Comercial">Comercial</option>
                                                         </select>
@@ -223,25 +255,31 @@
                                                 <div class="input-group ">
                                                     <div class=" me-lg-5">
                                                         <label class="p-2">Cedula</label>
-                                                        <input type="text" name="cedula" class="form-control " id="cedula" value="<%= solicitud.cedula %>">
+                                                        <input type="text" name="cedula" class="form-control "
+                                                            id="cedula" value="<%= solicitud.cedula %>">
                                                     </div>
                                                     <div class="me-lg-5">
                                                         <label for="sexo" class="p-2">Sexo</label>
                                                         <select name="sexo" class="form-control" id="sexo">
-                                                        <option value="<%= solicitud.sexo %>" selected><%= solicitud.sexo %></option>
-                                                        <option value="Hombre">Hombre</option>
-                                                        <option value="Mujer">Mujer</option>
-                                                    </select>
+                                                            <option value="<%= solicitud.sexo %>" selected>
+                                                                <%= solicitud.sexo %>
+                                                            </option>
+                                                            <option value="Hombre">Hombre</option>
+                                                            <option value="Mujer">Mujer</option>
+                                                        </select>
                                                         <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
                                                     </div>
                                                     <div class="me-lg-5">
                                                         <label for="sexo" class="p-2">Estado Civil</label>
-                                                        <select name="estadoCivil" class="form-control" id="estadoCivil">
-                                                        <option value="<%= solicitud.estadoCivil %>" selected><%= solicitud.estadoCivil %></option>
-                                                        <option value="Casado/a">Casado/a</option>
-                                                        <option value="Soltero/a">Soltero/a</option>
-                                                        <option value="Union Libre">Union Libre</option>
-                                                    </select>
+                                                        <select name="estadoCivil" class="form-control"
+                                                            id="estadoCivil">
+                                                            <option value="<%= solicitud.estadoCivil %>" selected>
+                                                                <%= solicitud.estadoCivil %>
+                                                            </option>
+                                                            <option value="Casado/a">Casado/a</option>
+                                                            <option value="Soltero/a">Soltero/a</option>
+                                                            <option value="Union Libre">Union Libre</option>
+                                                        </select>
                                                         <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
                                                     </div>
                                                 </div>
@@ -270,46 +308,57 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="nombre" class=" p-2">Nombre</label>
-                                    <input type="text" name="nombre" class="form-control p-2" id="nombre" aria-describedby="emailHelp" value="<%= solicitud.nombre %>">
+                                    <input type="text" name="nombre" class="form-control p-2" id="nombre"
+                                        aria-describedby="emailHelp" value="<%= solicitud.nombre %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="apellido" class="p-2">Apellido</label>
-                                    <input type="text" name="apellido" class="form-control p-2" id="apellido" aria-describedby="emailHelp" value="<%= solicitud.apellido %>">
+                                    <input type="text" name="apellido" class="form-control p-2" id="apellido"
+                                        aria-describedby="emailHelp" value="<%= solicitud.apellido %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="direccion" class="p-2">Direccion </label>
-                                    <input type="text" name="direccion" class="form-control p-2" id="direccion" aria-describedby="emailHelp" value="<%= solicitud.direccion %>">
+                                    <input type="text" name="direccion" class="form-control p-2" id="direccion"
+                                        aria-describedby="emailHelp" value="<%= solicitud.direccion %>">
                                 </div>
                                 <div class="form-group " id="labelDireccionNegocio">
                                     <label for="direccionNegocio" class=" p-2">Direccion del Negocio</label>
-                                    <input type="text" name="direccionNegocio" class="form-control p-2" id="direccionNegocio" aria-describedby="emailHelp" value="<%= solicitud.direccionNegocio %>">
+                                    <input type="text" name="direccionNegocio" class="form-control p-2"
+                                        id="direccionNegocio" aria-describedby="emailHelp"
+                                        value="<%= solicitud.direccionNegocio %>">
                                 </div>
                                 <div class="form-group " id="labelTiempoNegocio">
                                     <label for="tiempoNegocio" class=" p-2">Tiempo del Negocio</label>
-                                    <input type="text" name="tiempoNegocio" class="form-control p-2" id="tiempoNegocio" aria-describedby="emailHelp" value="<%= solicitud.tiempoNegocio %>">
+                                    <input type="text" name="tiempoNegocio" class="form-control p-2" id="tiempoNegocio"
+                                        aria-describedby="emailHelp" value="<%= solicitud.tiempoNegocio %>">
                                 </div>
 
                                 <div class="form-group ">
                                     <label for="email" class=" p-2">Email</label>
-                                    <input type="email" name="email" class="form-control p-2" id="email" aria-describedby="emailHelp" value="<%= solicitud.email %>">
+                                    <input type="email" name="email" class="form-control p-2" id="email"
+                                        aria-describedby="emailHelp" value="<%= solicitud.email %>">
                                 </div>
                                 <div class="d-flex">
                                     <div class="form-group me-lg-5">
                                         <label for="celular" class="  p-2">Celular</label>
-                                        <input type="number" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" value="<%= solicitud.celular %>">
+                                        <input type="number" name="celular" class="form-control p-2" id="celular"
+                                            aria-describedby="emailHelp" value="<%= solicitud.celular %>">
                                     </div>
                                     <div class="form-group me-lg-5 ">
                                         <label for="ocupacion" class=" p-2">Ocupacion</label>
-                                        <input type="text" name="ocupacion" class="form-control p-2" id="ocupacion" aria-describedby="emailHelp" value="<%= solicitud.ocupacion %>">
+                                        <input type="text" name="ocupacion" class="form-control p-2" id="ocupacion"
+                                            aria-describedby="emailHelp" value="<%= solicitud.ocupacion %>">
                                     </div>
                                     <div class="form-group me-lg-5 ">
                                         <label for="nacionadlidad" class="  p-2">Nacionadlidad</label>
                                         <!-- <input type="text" name="nacionadlidad" class="form-control p-2" id="nacionadlidad" aria-describedby="emailHelp" placeholder=""> -->
                                         <select name="nacionadlidad" class="form-control" id="nacionadlidad">
-                                        <option value="<%= solicitud.nacionadlidad %>" selected><%= solicitud.nacionadlidad %></option>
-                                        <option value="Dominicano/a">Dominicano/a</option>
-                                        <option value="Extranjero/a">Extranjero/a</option>
-                                    </select>
+                                            <option value="<%= solicitud.nacionadlidad %>" selected>
+                                                <%= solicitud.nacionadlidad %>
+                                            </option>
+                                            <option value="Dominicano/a">Dominicano/a</option>
+                                            <option value="Extranjero/a">Extranjero/a</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -318,72 +367,94 @@
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                      <strong>PASO 2 - DATOS DE UN FAMILIAR QUE NO VIVA CON USTED</strong>
-                    </button>
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseTwo">
+                                <strong>PASO 2 - DATOS DE UN FAMILIAR QUE NO VIVA CON USTED</strong>
+                            </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+                            aria-labelledby="panelsStayOpen-headingTwo">
                             <div class="accordion-body">
                                 <!-- segunda parte -->
                                 <div class="form-group  ">
                                     <label for="nombreFamilia" class="  p-2">Nombre </label>
-                                    <input type="text" name="nombreFamilia" class="form-control p-2" id="nombreFamilia" aria-describedby="emailHelp" value="<%= solicitud.nombreFamilia %>">
+                                    <input type="text" name="nombreFamilia" class="form-control p-2" id="nombreFamilia"
+                                        aria-describedby="emailHelp" value="<%= solicitud.nombreFamilia %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="direccionFamilia" class="  p-2">Direccion</label>
-                                    <input type="text" name="direccionFamilia" class="form-control p-2" id="direccionFamilia" aria-describedby="emailHelp" value="<%= solicitud.direccionFamilia %>">
+                                    <input type="text" name="direccionFamilia" class="form-control p-2"
+                                        id="direccionFamilia" aria-describedby="emailHelp"
+                                        value="<%= solicitud.direccionFamilia %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="parentescoFamilia" class="  p-2">Parentesco</label>
-                                    <input type="text" name="parentescoFamilia" class="form-control p-2" id="parentescoFamilia" aria-describedby="emailHelp" value="<%= solicitud.parentescoFamilia %>">
+                                    <input type="text" name="parentescoFamilia" class="form-control p-2"
+                                        id="parentescoFamilia" aria-describedby="emailHelp"
+                                        value="<%= solicitud.parentescoFamilia %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="telefonoFamilia" class="  p-2">Telefono</label>
-                                    <input type="text" name="telefonoFamilia" class="form-control p-2" id="telefonoFamilia" aria-describedby="emailHelp" value="<%= solicitud.telefonoFamilia %>">
+                                    <input type="text" name="telefonoFamilia" class="form-control p-2"
+                                        id="telefonoFamilia" aria-describedby="emailHelp"
+                                        value="<%= solicitud.telefonoFamilia %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="apodoFamilia" class=" p-2">Apodo</label>
-                                    <input type="text" name="apodoFamilia" class="form-control p-2" id="apodoFamilia" aria-describedby="emailHelp" value="<%= solicitud.apodoFamilia %>">
+                                    <input type="text" name="apodoFamilia" class="form-control p-2" id="apodoFamilia"
+                                        aria-describedby="emailHelp" value="<%= solicitud.apodoFamilia %>">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item" id="labelDatosLaborales">
                         <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                         <strong>PASO 3 - DATOS LABORALES</strong>
-                         </button>
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseThree">
+                                <strong>PASO 3 - DATOS LABORALES</strong>
+                            </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+                            aria-labelledby="panelsStayOpen-headingThree">
                             <div class="accordion-body">
                                 <!-- tercera parte -->
                                 <div class="form-group  ">
                                     <label for="empresa" class=" p-2">Empresa donde labora</label>
-                                    <input type="text" name="empresa" class="form-control p-2" id="empresa" aria-describedby="emailHelp" value="<%= solicitud.empresa %>">
+                                    <input type="text" name="empresa" class="form-control p-2" id="empresa"
+                                        aria-describedby="emailHelp" value="<%= solicitud.empresa %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="salario" class=" p-2">Salario</label>
-                                    <input type="text" name="salario" class="form-control p-2" id="salario" aria-describedby="emailHelp" value="<%= solicitud.salario %>">
+                                    <input type="text" name="salario" class="form-control p-2" id="salario"
+                                        aria-describedby="emailHelp" value="<%= solicitud.salario %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="puesto" class="  p-2">Puesto</label>
-                                    <input type="text" name="puesto" class="form-control p-2" id="puesto" aria-describedby="emailHelp" value="<%= solicitud.puesto %>">
+                                    <input type="text" name="puesto" class="form-control p-2" id="puesto"
+                                        aria-describedby="emailHelp" value="<%= solicitud.puesto %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="dir-empresa" class="  p-2">Dirreccion Empresa</label>
-                                    <input type="text" name="dirEmpresa" class="form-control p-2" id="dir-empresa" aria-describedby="emailHelp" value="<%= solicitud.dirEmpresa %>">
+                                    <input type="text" name="dirEmpresa" class="form-control p-2" id="dir-empresa"
+                                        aria-describedby="emailHelp" value="<%= solicitud.dirEmpresa %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="telefonoEmpresa" class="  p-2">Telefono Empresa</label>
-                                    <input type="text" name="telefonoEmpresa" class="form-control p-2" id="telefonoEmpresa" aria-describedby="emailHelp" value="<%= solicitud.telefonoEmpresa %>">
+                                    <input type="text" name="telefonoEmpresa" class="form-control p-2"
+                                        id="telefonoEmpresa" aria-describedby="emailHelp"
+                                        value="<%= solicitud.telefonoEmpresa %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="departamento" class="  p-2">Departamento</label>
-                                    <input type="text" name="departamento" class="form-control p-2" id="departamento" aria-describedby="emailHelp" value="<%= solicitud.departamento %>">
+                                    <input type="text" name="departamento" class="form-control p-2" id="departamento"
+                                        aria-describedby="emailHelp" value="<%= solicitud.departamento %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="tiempoEmpresa" class=" p-2">Tiempo en la Empresa</label>
-                                    <input type="text" name="tiempoEmpresa" class="form-control p-2" id="tiempoEmpresa" aria-describedby="emailHelp" value="<%= solicitud.tiempoEmpresa %>">
+                                    <input type="text" name="tiempoEmpresa" class="form-control p-2" id="tiempoEmpresa"
+                                        aria-describedby="emailHelp" value="<%= solicitud.tiempoEmpresa %>">
                                 </div>
                             </div>
                         </div>
@@ -391,29 +462,40 @@
 
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingFour">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
-                     <strong id="label_4">PASO 4 - REFERENCIAS PERSONALES</strong>
-                    </button>
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseFour">
+                                <strong id="label_4">PASO 4 - REFERENCIAS PERSONALES</strong>
+                            </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                        <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse"
+                            aria-labelledby="panelsStayOpen-headingFour">
                             <div class="accordion-body">
 
                                 <!-- cuarta parte -->
                                 <div class="form-group  ">
                                     <label for="nombreRefPers1" class=" p-2">Nombre Persona de Referencia 1</label>
-                                    <input type="text" name="nombreRefPers1" class="form-control p-2" id="nombreRefPers1" aria-describedby="emailHelp" value="<%= solicitud.nombreRefPers1 %>">
+                                    <input type="text" name="nombreRefPers1" class="form-control p-2"
+                                        id="nombreRefPers1" aria-describedby="emailHelp"
+                                        value="<%= solicitud.nombreRefPers1 %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="telefonoRefPer1" class="  p-2">Telefono Persona de Referencia 1</label>
-                                    <input type="text" name="telefonoRefPer1" class="form-control p-2" id="telefonoRefPer1" aria-describedby="emailHelp" value="<%= solicitud.telefonoRefPer1 %>">
+                                    <input type="text" name="telefonoRefPer1" class="form-control p-2"
+                                        id="telefonoRefPer1" aria-describedby="emailHelp"
+                                        value="<%= solicitud.telefonoRefPer1 %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="nombreRefPers2" class="  p-2">Nombre Persona de Referencia 2</label>
-                                    <input type="text" name="nombreRefPers2" class="form-control p-2" id="nombreRefPers2" aria-describedby="emailHelp" value="<%= solicitud.nombreRefPers2 %>">
+                                    <input type="text" name="nombreRefPers2" class="form-control p-2"
+                                        id="nombreRefPers2" aria-describedby="emailHelp"
+                                        value="<%= solicitud.nombreRefPers2 %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="telefonoRefPer2" class="  p-2">Telefono Persona de Referencia 2</label>
-                                    <input type="text" name="telefonoRefPer2" class="form-control p-2" id="telefonoRefPer2" aria-describedby="emailHelp" value="<%= solicitud.telefonoRefPer2 %>">
+                                    <input type="text" name="telefonoRefPer2" class="form-control p-2"
+                                        id="telefonoRefPer2" aria-describedby="emailHelp"
+                                        value="<%= solicitud.telefonoRefPer2 %>">
                                 </div>
                             </div>
                         </div>
@@ -421,46 +503,62 @@
 
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingFive">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
-                      <strong id="label_5">PASO 5 - DATOS DEL PRESTAMO</strong>
-                    </button>
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false"
+                                aria-controls="panelsStayOpen-collapseFive">
+                                <strong id="label_5">PASO 5 - DATOS DEL PRESTAMO</strong>
+                            </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
+                        <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse"
+                            aria-labelledby="panelsStayOpen-headingFive">
                             <div class="accordion-body">
                                 <!-- quinta parte -->
 
                                 <div class="form-group  ">
                                     <label for="banco" class="  p-2">Banco</label>
-                                    <input type="text" name="banco" class="form-control p-2" id="banco" aria-describedby="emailHelp" value="<%= solicitud.banco %>">
+                                    <input type="text" name="banco" class="form-control p-2" id="banco"
+                                        aria-describedby="emailHelp" value="<%= solicitud.banco %>">
                                 </div>
                                 <div class="form-group ">
                                     <label for="numeroCuenta" class="  p-2">Numero de Cuenta</label>
-                                    <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" value="<%= solicitud.numeroCuenta %>">
+                                    <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta"
+                                        aria-describedby="emailHelp" value="<%= solicitud.numeroCuenta %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="montoSolicitado" class="  p-2">Monto Solicitado</label>
-                                    <input type="number" name="montoSolicitado" class="form-control p-2" id="montoSolicitado" aria-describedby="emailHelp" value="<%= solicitud.montoSolicitado %>">
+                                    <input type="number" name="montoSolicitado" class="form-control p-2"
+                                        id="montoSolicitado" aria-describedby="emailHelp"
+                                        value="<%= solicitud.montoSolicitado %>">
                                 </div>
                                 <div class="form-group  ">
                                     <label for="" class="  p-2">Frecuencia de Pagos</label>
-                                    <input type="text" name="frecuenciaPagos" class="form-control p-2" id="frecuenciaPagos" aria-describedby="emailHelp" value="<%= solicitud.frecuenciaPagos %>">
+                                    <input type="text" name="frecuenciaPagos" class="form-control p-2"
+                                        id="frecuenciaPagos" aria-describedby="emailHelp"
+                                        value="<%= solicitud.frecuenciaPagos %>">
                                 </div>
                                 <div class="d-lg-flex justify-content-lg-between">
                                     <div class="form-group  ">
                                         <label for="" class="  p-2">Cantidad Pagos Semanales</label>
-                                        <input type="number" name="cantidadPagosSemanales" class="form-control p-2" id="" aria-describedby="emailHelp" value="<%= solicitud.cantidadPagosSemanales %>">
+                                        <input type="number" name="cantidadPagosSemanales" class="form-control p-2"
+                                            id="" aria-describedby="emailHelp"
+                                            value="<%= solicitud.cantidadPagosSemanales %>">
                                     </div>
                                     <div class="form-group  ">
                                         <label for="" class="  p-2">Cantidad Pagos Diarios</label>
-                                        <input type="number" name="cantidadPagosDiarios" class="form-control p-2" id="" aria-describedby="emailHelp" value="<%= solicitud.cantidadPagosDiarios %>">
+                                        <input type="number" name="cantidadPagosDiarios" class="form-control p-2" id=""
+                                            aria-describedby="emailHelp" value="<%= solicitud.cantidadPagosDiarios %>">
                                     </div>
                                     <div class="form-group  ">
                                         <label for="" class="  p-2">Cantidad Pagos Quincenales</label>
-                                        <input type="number" name="cantidadPagosQuincenales" class="form-control p-2" id="" aria-describedby="emailHelp" value="<%= solicitud.cantidadPagosQuincenales %>">
+                                        <input type="number" name="cantidadPagosQuincenales" class="form-control p-2"
+                                            id="" aria-describedby="emailHelp"
+                                            value="<%= solicitud.cantidadPagosQuincenales %>">
                                     </div>
                                     <div class="form-group  ">
                                         <label for="" class="  p-2">Cantidad Pagos Mensuales</label>
-                                        <input type="number" name="cantidadPagosMensuales" class="form-control p-2" id="" aria-describedby="emailHelp" value="<%= solicitud.cantidadPagosMensuales %>">
+                                        <input type="number" name="cantidadPagosMensuales" class="form-control p-2"
+                                            id="" aria-describedby="emailHelp"
+                                            value="<%= solicitud.cantidadPagosMensuales %>">
                                     </div>
                                 </div>
 
@@ -472,68 +570,79 @@
                 </div>
 
                 <!-- Modal 2 -->
-                
-                <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+                <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel">Observaciones</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-             
-                                
-                                    <div class="mb-3">
-                                         
-                                        <h6><%= solicitud.idSolicitud %> <%= solicitud.nombre %> <%= solicitud.apellido %>  </h6>
-                                       
-                                      <!-- <label for="message-text" class="col-form-label"></label>
+
+
+                                <div class="mb-3">
+
+                                    <h6>
+                                        <%= solicitud.idSolicitud %>
+                                            <%= solicitud.nombre %>
+                                                <%= solicitud.apellido %>
+                                    </h6>
+
+                                    <!-- <label for="message-text" class="col-form-label"></label>
                                         <div class="d-flex ">
                                             <textarea class="form-control" name="observacion" id="message-text" placeholder="Observaciones Aqui"></textarea>
                                             <button type="submit" class="btn btn-success">Agregar</button>
                                         </div> -->
- 
-                                       
- 
-                                                 <div class="container-table table-responsive">
-                                                     <table id="datatable" class="display responsive nowrap table-striped table table-success " style="width:100%">
-                                                         <thead class="thead-ligth">
-                                                             <tr>
-                                                                 <!-- <th scope="col">Id</th> -->
-                                                                 <!-- <th scope="col">ID Solicitud</th> -->
-                                                                 <th scope="col">Observacion</th>
-                                                                 <th scope="col">Fecha Observacion</th>
-                                                             </tr>
-                                                         </thead>
-                                                         <tbody>
-                                 
-                                                             <% if (arrayObservaciones.length > 0) { %>
-                                                                 <% arrayObservaciones.forEach(observacion=> { %>
-                                 
-                                                                     <tr>
-                                                                         <!-- <td>
+
+
+
+                                    <div class="container-table table-responsive">
+                                        <table id="datatable"
+                                            class="display responsive nowrap table-striped table table-success "
+                                            style="width:100%">
+                                            <thead class="thead-ligth">
+                                                <tr>
+                                                    <!-- <th scope="col">Id</th> -->
+                                                    <!-- <th scope="col">ID Solicitud</th> -->
+                                                    <th scope="col">Observacion</th>
+                                                    <th scope="col">Fecha Observacion</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <% if (arrayObservaciones.length> 0) { %>
+                                                    <% arrayObservaciones.forEach(observacion=> { %>
+
+                                                        <tr>
+                                                            <!-- <td>
                                                                              <%=  %>
                                                                          </td> -->
-                                                                         <td>
-                                                                             <%= observacion.observacion %>
-                                                                         </td>
-                                                                         <td>
-                                                                             <%= observacion.fechaObservacion.toLocaleString() %>
-                                                                         </td>
-                                                                       
-                                                                     </tr>
-                                 
-                                                                     <% }) %>
-                                                                     <% }else { %>
-                                                                         <div><strong>Sin observaciones</strong></div> 
-                                                                         <% } %>               
- 
+                                                            <td>
+                                                                <%= observacion.observacion %>
+                                                            </td>
+                                                            <td>
+                                                                <%= observacion.fechaObservacion.toLocaleString() %>
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <% }) %>
+                                                            <% }else { %>
+                                                                <div><strong>Sin observaciones</strong></div>
+                                                                <% } %>
+                                            </tbody>
+                                        </table>
+
                                     </div>
-                                
-             
-                            </div>
-                            <div class="modal-footer border-0">
-                                
+
+
+                                </div>
+                                <div class="modal-footer border-0">
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -547,7 +656,8 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -564,12 +674,13 @@
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <a href="/solicitudes/eliminar-solicitud/<%= solicitud.idSolicitud %>" class="btn btn-primary">Si Eliminar</a>
+                    <a href="/solicitudes/eliminar-solicitud/<%= solicitud.idSolicitud %>" class="btn btn-primary">Si
+                        Eliminar</a>
                 </div>
             </div>
         </div>
     </div>
-  
+
 
 
     <script src="/js/ver-solicitud-event.js"></script>
