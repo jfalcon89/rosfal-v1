@@ -125,11 +125,13 @@ btnCalculo.addEventListener("click", () => {
     let labelResul = document.getElementById("labelResul");
     let labelRespuesta = document.getElementById("labelRespuesta");
 
+    
 
     if (frecuenciaPago.value == "pagos diarios") {
         const interes = 0.01
         const operacionInteres = monto * interes;
         const operacionCuota = operacionInteres * cuotaDias;
+        // console.log(cuotaDias)
 
         const operacion = (operacionCuota + monto) / cuotaDias;
         labelResul.textContent = "Su cuota seria";
@@ -137,8 +139,13 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionInteres)
         console.log(operacionCuota)
 
-    }
+        if(labelRespuesta.textContent == "$NaN Pesos"){
+            alert("Indica la cantidad de dias")
+            labelRespuesta.textContent = `$0 Pesos`;
+        }
 
+    }
+    
     if (frecuenciaPago.value == "pagos semanales") {
         const interes = 0.035
         const operacionInteres = monto * interes;
@@ -149,6 +156,11 @@ btnCalculo.addEventListener("click", () => {
         labelRespuesta.textContent = `$${operacion.toFixed()} Pesos`;
         console.log(operacionInteres)
         console.log(operacionCuota)
+
+        if(labelRespuesta.textContent == "$NaN Pesos"){
+            alert("Indica la cantidad de semanas")
+            labelRespuesta.textContent = `$0 Pesos`;
+        }
 
     }
     if (frecuenciaPago.value == "pagos quincenales") {
@@ -162,6 +174,11 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionInteres)
         console.log(operacionCuota)
 
+        if(labelRespuesta.textContent == "$NaN Pesos"){
+            alert("Indica la cantidad de quincenas")
+            labelRespuesta.textContent = `$0 Pesos`;
+        }
+
     }
     if (frecuenciaPago.value == "pagos mensuales") {
         const interes = 0.08
@@ -174,9 +191,17 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionInteres)
         console.log(operacionCuota)
 
+        if(labelRespuesta.textContent == "$NaN Pesos"){
+            alert("Indica la cantidad de meses")
+            labelRespuesta.textContent = `$0 Pesos`;
+        }
+
     }
+  
 
 });
+
+
 
 
 // btnLimpiar.addEventListener("click", () => {
