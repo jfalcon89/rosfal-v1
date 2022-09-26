@@ -140,8 +140,8 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionCuota)
 
         if(labelRespuesta.textContent == "$NaN Pesos"){
-            alert("Indica la cantidad de dias")
-            labelRespuesta.textContent = `$0 Pesos`;
+            labelResul.textContent = "Indica la cantidad de dias";
+            labelRespuesta.textContent = ``;
         }
 
     }
@@ -158,8 +158,8 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionCuota)
 
         if(labelRespuesta.textContent == "$NaN Pesos"){
-            alert("Indica la cantidad de semanas")
-            labelRespuesta.textContent = `$0 Pesos`;
+            labelResul.textContent = "Indica la cantidad de semanas";
+            labelRespuesta.textContent = ``;
         }
 
     }
@@ -175,8 +175,8 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionCuota)
 
         if(labelRespuesta.textContent == "$NaN Pesos"){
-            alert("Indica la cantidad de quincenas")
-            labelRespuesta.textContent = `$0 Pesos`;
+            labelResul.textContent = "Indica la cantidad de quincenas";
+            labelRespuesta.textContent = ``;
         }
 
     }
@@ -192,8 +192,8 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionCuota)
 
         if(labelRespuesta.textContent == "$NaN Pesos"){
-            alert("Indica la cantidad de meses")
-            labelRespuesta.textContent = `$0 Pesos`;
+            labelResul.textContent = "Indica la cantidad de meses";
+            labelRespuesta.textContent = ``;
         }
 
     }
