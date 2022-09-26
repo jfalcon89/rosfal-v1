@@ -122,16 +122,17 @@
 
 
         <div class="container mt-3">
-
+            
             <form class="" autocomplete="off" action="" method="POST">
-
+                
                 <!-- <input id="pdfFile" type="file" name="contrato" class="form-control" accept="pdf"> -->
-
+                
                 <!-- <div>
                     <embed id="pdfVista" type="application/pdf" name="contrato" width="400">
-                </div> -->
-
-                <div class="d-flex justify-content-end">
+                    </div> -->
+                    
+                <div class="d-lg-flex justify-content-end">
+                    <img data-bs-toggle="modal" data-bs-target="#staticBackdrop2" src="/img/img-icons/btn-observaciones.svg" class="btn mb-2 p-0 me-lg-2" width="40px" alt="Observaciones" title="Observaciones">
                     <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-danger btn-block p-2 mb-2 me-lg-2">ELIMINAR SOLICITUD</i></a>
                     <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i class="bi bi-check-lg me-lg-2"></i>GUARDAR CAMBIOS</button>
                     <a href="/solicitudes-nuevas" class="btn btn-warning btn-block p-2 mb-2"><i class="bi bi-arrow-left me-lg-2"></i>CANCELAR</a>
@@ -469,6 +470,74 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal 2 -->
+                
+                <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel">Observaciones</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+             
+                                
+                                    <div class="mb-3">
+                                         
+                                        <h6><%= solicitud.idSolicitud %> <%= solicitud.nombre %> <%= solicitud.apellido %>  </h6>
+                                       
+                                      <!-- <label for="message-text" class="col-form-label"></label>
+                                        <div class="d-flex ">
+                                            <textarea class="form-control" name="observacion" id="message-text" placeholder="Observaciones Aqui"></textarea>
+                                            <button type="submit" class="btn btn-success">Agregar</button>
+                                        </div> -->
+ 
+                                       
+ 
+                                                 <div class="container-table table-responsive">
+                                                     <table id="datatable" class="display responsive nowrap table-striped table table-success " style="width:100%">
+                                                         <thead class="thead-ligth">
+                                                             <tr>
+                                                                 <!-- <th scope="col">Id</th> -->
+                                                                 <!-- <th scope="col">ID Solicitud</th> -->
+                                                                 <th scope="col">Observacion</th>
+                                                                 <th scope="col">Fecha Observacion</th>
+                                                             </tr>
+                                                         </thead>
+                                                         <tbody>
+                                 
+                                                             <% if (arrayObservaciones.length > 0) { %>
+                                                                 <% arrayObservaciones.forEach(observacion=> { %>
+                                 
+                                                                     <tr>
+                                                                         <!-- <td>
+                                                                             <%=  %>
+                                                                         </td> -->
+                                                                         <td>
+                                                                             <%= observacion.observacion %>
+                                                                         </td>
+                                                                         <td>
+                                                                             <%= observacion.fechaObservacion.toLocaleString() %>
+                                                                         </td>
+                                                                       
+                                                                     </tr>
+                                 
+                                                                     <% }) %>
+                                                                     <% }else { %>
+                                                                         <div><strong>Sin observaciones</strong></div> 
+                                                                         <% } %>               
+ 
+                                    </div>
+                                
+             
+                            </div>
+                            <div class="modal-footer border-0">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
 
@@ -500,6 +569,7 @@
             </div>
         </div>
     </div>
+  
 
 
     <script src="/js/ver-solicitud-event.js"></script>
