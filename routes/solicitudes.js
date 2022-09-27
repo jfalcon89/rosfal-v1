@@ -180,7 +180,7 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
     // req.flash('success', 'Link actualizado correctamente');
-    res.redirect('/solicitudes-nuevas');
+    res.redirect(`/Solicitudes-nuevas/editar-solicitud/${req.params.id}`);
 });
 
 // INSERTAR OBSERVACIONES SOLICITUDES NUEVAS
@@ -188,37 +188,19 @@ router.post('/Solicitudes-nuevas/ver-solicitud/:id', async(req, res) => {
        // const id = req.params.id;
        console.log(req.params.id)
 
-       const { idSolicitud, observacion } = req.body;
+       const { idSolicitud, observacion,name } = req.body;
    
        const nuevaObservacion = {
         idSolicitud,
-           observacion
+           observacion,
+           name
            
        };
                            
        await pool.query("INSERT INTO obs_por_solicitudes set ?", [nuevaObservacion]);
        // req.flash('success', 'Link actualizado correctamente');
-       res.redirect('/solicitudes-nuevas');
+       res.redirect(`/Solicitudes-nuevas/ver-solicitud/${req.params.id}`);
    });
-
-
-//INSERTAR UNA OBSERVACION EN SOLICITUD NUEVA
-// router.post('/Solicitudes-nuevas/ver-solicitud/:id', async(req, res) => {
-//     const id = req.params.id;
-//     console.log(req.params.id)
-
-//     const { observacion } = req.body;
-
-//     const nuevaObservacion = {
-        
-//         observacion
-        
-//     };
-
-//     await pool.query("INSERT INTO obs_por_solicitudes set ?", [nuevaObservacion, id]);
-//     // req.flash('success', 'Link actualizado correctamente');
-//     res.redirect('/solicitudes-nuevas');
-// });
 
 
 //ELIMINAR SOLICITUD EN ESTADO NUEVA
@@ -277,6 +259,7 @@ router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
 
         const id = req.params.id
         console.log(req.params)
+       
 
         try {
 
@@ -502,7 +485,7 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
     // req.flash('success', 'Link actualizado correctamente');
-    res.redirect('/solicitudes-aprobadas');
+    res.redirect(`/Solicitudes-aprobadas/editar-solicitud/${req.params.id}`);
 });
 
 // INSERTAR OBSERVACIONES SOLICITUDES APROBADAS
@@ -510,17 +493,18 @@ router.post('/Solicitudes-aprobadas/ver-solicitud/:id', async(req, res) => {
     // const id = req.params.id;
     console.log(req.params.id)
 
-    const { idSolicitud, observacion } = req.body;
-
+    const { idSolicitud, observacion,name } = req.body;
+   
     const nuevaObservacion = {
      idSolicitud,
-        observacion
+        observacion,
+        name
         
     };
                         
     await pool.query("INSERT INTO obs_por_solicitudes set ?", [nuevaObservacion]);
     // req.flash('success', 'Link actualizado correctamente');
-    res.redirect('/solicitudes-aprobadas');
+    res.redirect(`/Solicitudes-aprobadas/ver-solicitud/${req.params.id}`);
 });
 
 
@@ -696,7 +680,7 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
     // req.flash('success', 'Link actualizado correctamente');
-    res.redirect('/solicitudes-declinadas');
+    res.redirect(`/Solicitudes-declinadas/editar-solicitud/${req.params.id}`);
 });
 
 // INSERTAR OBSERVACIONES SOLICITUDES DECLINADAS
@@ -704,17 +688,18 @@ router.post('/Solicitudes-declinadas/ver-solicitud/:id', async(req, res) => {
     // const id = req.params.id;
     console.log(req.params.id)
 
-    const { idSolicitud, observacion } = req.body;
-
+    const { idSolicitud, observacion,name } = req.body;
+   
     const nuevaObservacion = {
      idSolicitud,
-        observacion
+        observacion,
+        name
         
     };
                         
     await pool.query("INSERT INTO obs_por_solicitudes set ?", [nuevaObservacion]);
     // req.flash('success', 'Link actualizado correctamente');
-    res.redirect('/solicitudes-declinadas');
+    res.redirect(`/Solicitudes-declinadas/ver-solicitud/${req.params.id}`);
 });
 
 
@@ -888,7 +873,7 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
     // req.flash('success', 'Link actualizado correctamente');
-    res.redirect('/solicitudes-en-revision');
+    res.redirect(`/Solicitudes-en-revision/editar-solicitud/${req.params.id}`);
 });
 
 // INSERTAR OBSERVACIONES SOLICITUDES EN REVISION
@@ -896,17 +881,18 @@ router.post('/Solicitudes-en-revision/ver-solicitud/:id', async(req, res) => {
     // const id = req.params.id;
     console.log(req.params.id)
 
-    const { idSolicitud, observacion } = req.body;
-
+    const { idSolicitud, observacion,name } = req.body;
+   
     const nuevaObservacion = {
      idSolicitud,
-        observacion
+        observacion,
+        name
         
     };
                         
     await pool.query("INSERT INTO obs_por_solicitudes set ?", [nuevaObservacion]);
     // req.flash('success', 'Link actualizado correctamente');
-    res.redirect('/solicitudes-en-revision');
+    res.redirect(`/Solicitudes-en-revision/ver-solicitud/${req.params.id}`);
 });
 
 

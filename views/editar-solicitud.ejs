@@ -605,9 +605,9 @@
                                             style="width:100%">
                                             <thead class="thead-ligth">
                                                 <tr>
-                                                    <!-- <th scope="col">Id</th> -->
-                                                    <!-- <th scope="col">ID Solicitud</th> -->
+                                                    
                                                     <th scope="col">Observacion</th>
+                                                    <th scope="col">Usuario</th>
                                                     <th scope="col">Fecha Observacion</th>
                                                 </tr>
                                             </thead>
@@ -617,11 +617,12 @@
                                                     <% arrayObservaciones.forEach(observacion=> { %>
 
                                                         <tr>
-                                                            <!-- <td>
-                                                                             <%=  %>
-                                                                         </td> -->
+                                                          
                                                             <td>
                                                                 <%= observacion.observacion %>
+                                                            </td>
+                                                            <td>
+                                                                <%= observacion.name %>
                                                             </td>
                                                             <td>
                                                                 <%= observacion.fechaObservacion.toLocaleString() %>

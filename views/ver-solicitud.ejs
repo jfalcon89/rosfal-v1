@@ -482,6 +482,7 @@
                                <!-- <form method="POST"> -->
                                    <div class="mb-3">
                                        <input class="d-none" name="idSolicitud" value="<%= solicitud.idSolicitud %>">   
+                                       <input class="d-none" name="name" value="<%= name %>">   
                                        <h6><%= solicitud.idSolicitud %> <%= solicitud.nombre %> <%= solicitud.apellido %>  </h6>
                                        <div class="d-flex ">
                                            <textarea class="form-control" name="observacion" id="message-text" placeholder="Observaciones Aqui"></textarea>
@@ -497,6 +498,7 @@
                                                                 <!-- <th scope="col">Id</th> -->
                                                                 <!-- <th scope="col">ID Solicitud</th> -->
                                                                 <th scope="col">Observacion</th>
+                                                                <th scope="col">Usuario</th>
                                                                 <th scope="col">Fecha Observacion</th>
                                                             </tr>
                                                         </thead>
@@ -511,6 +513,9 @@
                                                                         </td> -->
                                                                         <td>
                                                                             <%= observacion.observacion %>
+                                                                        </td>
+                                                                        <td>
+                                                                            <%= observacion.name %>
                                                                         </td>
                                                                         <td>
                                                                             <%= observacion.fechaObservacion.toLocaleString() %>
