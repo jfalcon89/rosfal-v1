@@ -35,7 +35,7 @@ app.listen(app.get("port"), () => {
 });
 
 
-//7- variables de session
+//7- variables de session 
 const session = require('express-session');
 app.use(session({
     secret: 'secret',
