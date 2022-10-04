@@ -16,9 +16,12 @@ pool.getConnection((err, connection) => {
             console.error("LA CONEXION DE LA BASE DE DATOS FUE RECHADADA")
         }
     }
-    if (connection) connection.release();
-    console.log("DB rosfal esta conectada a MySQL");
-   
+    if (connection) {
+        connection.release();
+        console.log("DB rosfal esta conectada a MySQL");
+
+    }
+    connection.destroy();
     
     
 });
