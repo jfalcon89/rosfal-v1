@@ -21,7 +21,7 @@ pool.getConnection((err, connection) => {
         console.log("DB rosfal esta conectada a MySQL");
 
     }
-    connection.destroy();
+    // connection.destroy();
     
     
 });

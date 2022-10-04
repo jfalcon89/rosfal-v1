@@ -15,10 +15,10 @@ router.get('/panel-administracion', async(req, res) => {
     if (req.session.loggedin) {
 
 
-        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
-        const arrayTestimoniosNuevosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+        const arraySolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevosDB = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayRutasDB = await pool.query('SELECT idRuta FROM rutas ');
+        const arrayTestimoniosNuevosDB = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
 
         const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" ORDER BY fechaSolicitud DESC');
