@@ -160,8 +160,8 @@
     </div>
 
 
-    <div class="container-fluid d-lg-flex">
-        <!-- <div class="container-fluid container-todos-los-mensajes"> -->
+    <!-- <div class="container-fluid d-lg-flex"> -->
+
         <div class="container-fluid  mt-5 ">
             <h3 class="text-secondary"><strong>ULTIMAS</strong> SOLICITUDES DE PRESTAMOS APROBADAS</h3>
             <div class="container-fluid ">
@@ -169,17 +169,16 @@
                     <table id="datatable" class="display responsive nowrap" style="width:100%">
                         <thead class="thead-ligth">
                             <tr>
-                                <!-- <th scope="col">Id</th> -->
+                               
                                 <th scope="col">ID Solicitud</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
-                                <th scope="col">Monto Aprobado</th>
+                                <th scope="col">Cedula</th>
                                 <th scope="col">Fecha Solicitud</th>
+                                <th scope="col">Monto Aprobado</th>
                                 <th scope="col">Estado Solicitud</th>
                                 <th scope="col">Acciones</th>
-                                <!-- <th scope="col">Estatado solicitud</th> -->
-                                <!-- <th scope="col">T. desc</th> -->
-                                <!-- <th scope="col">Sueldo Neto</th> -->
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -199,10 +198,13 @@
                                             <%= solicitud.apellido %>
                                         </td>
                                         <td>
-                                            <%= solicitud.montoSolicitado %>
+                                            <%= solicitud.cedula %>
                                         </td>
                                         <td>
                                             <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.montoSolicitado %>
                                         </td>
                                         <td>
                                             <%= solicitud.estadoSolicitud %>
@@ -221,7 +223,6 @@
                     </table>
                 </div>
             </div>
-            <!-- </div> -->
         </div>
         <div class="container-fluid mt-5 ">
             <h3 class="text-secondary"><strong>ULTIMOS</strong> CONTRATOS DE PRESTAMOS FIRMADOS</h3>
@@ -230,18 +231,16 @@
                     <table id="datatable2" class="display responsive nowrap" style="width:100%">
                         <thead class="thead-ligth">
                             <tr>
-                                <!-- <th scope="col">Id</th> -->
+                                
                                 <th scope="col">ID Solicitud</th>
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
-
-                                <th scope="col">Firma</th>
+                                <th scope="col">Cedula</th>
                                 <th scope="col">Fecha Solicitud</th>
-
+                                <th scope="col">Monto Aprobado</th>
+                                <th scope="col">Firma</th>
                                 <th scope="col">Acciones</th>
-                                <!-- <th scope="col">Estatado solicitud</th> -->
-                                <!-- <th scope="col">T. desc</th> -->
-                                <!-- <th scope="col">Sueldo Neto</th> -->
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -261,10 +260,16 @@
                                             <%= solicitud.apellido %>
                                         </td>
                                         <td>
-                                            <%= solicitud.firmaContrato %>
+                                            <%= solicitud.cedula %>
                                         </td>
                                         <td>
                                             <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.montoSolicitado %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.firmaContrato %>
                                         </td>
 
                                         <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
@@ -281,8 +286,9 @@
                 </div>
             </div>
         </div>
-        <!-- </div> -->
-    </div>
+        
+    <!-- </div> -->
+
     <div class="container-fluid p-4 mt-5 ">
         <h3 class="text-secondary"><strong>PRESTAMOS </strong>APROBADOS POR RUTA</h3>
 
