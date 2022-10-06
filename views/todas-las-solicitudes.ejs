@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
     <link rel="icon" href="/img/favicon/logo-favicon.png">
-    <title>Rosfal - Solicitudes Nuevas</title>
+    <title>Rosfal - Total Solicitudes</title>
 </head>
 
 <body>
@@ -74,7 +74,7 @@
 
 
     <div class=" p-2 d-lg-flex flex-sm-row mt-4 " style="background-color: #ececec;">
-        <div class="container-fluid mt-3 mb-3 me-lg-3 d-flex" style="background-color: #d4d4d4;">
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex" >
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-nuevas-solicitudes.svg" alt="Solicitudes Nuevas">
@@ -82,7 +82,7 @@
                 <div class="container-titulo">
                     <div class="indicador">
                         <h3>
-                            <%= arraySolicitudes.length %>
+                            <%= arraySolicitudesNuevas.length %>
                         </h3>
                     </div>
                     <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-nuevas">Solicitudes Nuevas</a></div>
@@ -119,7 +119,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 me-lg-3 mb-3 d-flex">
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-solicitudes-en-revision.svg" alt="Solicitudes en Revision">
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 mb-3 d-flex">
+        <div class="container-fluid mt-3 mb-3 d-flex" style="background-color: #d4d4d4;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-total-solicitudes.svg" alt="Solicitudes en Revision">
@@ -155,31 +155,33 @@
 
 
     <div class="container-fluid p-4 mt-5">
-        <h3 class="text-secondary">SOLICITUDES NUEVAS</h3>
+        <h3 class="text-secondary"><strong>REPORTES</strong> TOTAL DE SOLICITUDES</h3>
         <div class="container-fluid p-4">
             <div class="container-table table-responsive">
                 <table id="datatable" class="display responsive nowrap" style="width:100%">
                     <!-- <table id="datatable" class="display table table-sm table-hover  " style="width: 100%;"> -->
                     <thead class="thead-ligth">
                         <tr>
-                            <!-- <th scope="col">Id</th> -->
+                            
                             <th scope="col">ID Solicitud</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellido</th>
                             <th scope="col">Cedula</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Telefono</th>
                             <th scope="col">Fecha Solicitud</th>
                             <th scope="col">Monto Solicitud</th>
                             <th scope="col">Tipo de Prestamo</th>
+                            <th scope="col">Firma</th>
                             <th scope="col">Estado Solicitud</th>
-                            <!-- <th scope="col">T. desc</th> -->
-                            <!-- <th scope="col">Sueldo Neto</th> -->
                             <th scope="col">Acciones</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
 
-                        <% if (arraySolicitudes.length > 0) { %>
-                            <% arraySolicitudes.forEach(solicitud=> { %>
+                        <% if (arrayTotalSolicitudes.length > 0) { %>
+                            <% arrayTotalSolicitudes.forEach(solicitud=> { %>
 
                                 <tr>
 
@@ -196,6 +198,12 @@
                                         <%= solicitud.cedula %>
                                     </td>
                                     <td>
+                                        <%= solicitud.email %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.celular %>
+                                    </td>
+                                    <td>
                                         <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                     </td>
                                     <td>
@@ -203,6 +211,9 @@
                                     </td>
                                     <td>
                                         <%= solicitud.tipoPrestamo %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.firmaContrato %>
                                     </td>
                                     <td>
                                         <%= solicitud.estadoSolicitud %>
@@ -234,7 +245,20 @@
                     [0, 'desc']
                 ],
                 
-               
+                dom: 'Bfrtip',
+                buttons: [
+                {
+                extend: 'excel',
+                text: 'Exportar a Excel', 
+                },
+                {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                text: 'Exportar a PDF', 
+                }
+                 
+                ],
                 language: {
                     "decimal": "",
                     "emptyTable": "No hay información",
