@@ -152,7 +152,7 @@
                         <div id="labelDias">
                             <div class="d-flex mt-3">
                                 <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosDiarios" id="cuotaDias" required>
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosDiarios" id="cuotaDias" >
                             <option value="" selected>Seleccione la cantidad de días</option>
                             <option value="1">1 dia</option>
                             <option value="2">2 dias</option>
@@ -206,7 +206,7 @@
                         <div id="labelSemanas">
                             <div class="d-flex mt-3">
                                 <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosSemanales" id="cuotaSemanas" required>
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosSemanales" id="cuotaSemanas" >
                             <option value="" selected>Seleccione la cantidad de semanas</option>
                             <option value="1">1 semana</option>
                             <option value="2">2 semanas</option>
@@ -226,7 +226,7 @@
                         <div id="labelQuincenas">
                             <div class="d-flex mt-3">
                                 <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosQuincenales" id="cuotaQuincenas" required>
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosQuincenales" id="cuotaQuincenas" >
                             <option value="" selected>Seleccione la cantidad de quincenas</option>
                             <option value="1">1 quincena</option>
                             <option value="2">2 quincenas</option>
@@ -250,7 +250,7 @@
                         <div id="labelMeses">
                             <div class="d-flex mt-3">
                                 <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosMensuales" id="cuotaMeses" required>
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosMensuales" id="cuotaMeses" >
                             <option value="" selected>Seleccione la cantidad de meses</option>
                             <option value="1">1 mes</option>
                             <option value="2">2 meses</option>
@@ -298,13 +298,10 @@
 
                                     <div class="form-group  ">
                                         <label for="tipoPrestamo" class="  p-2">Tipo de Prestamo <span class="text-secondary fs-6">Obligatorio <span class="text-danger">*</span></span></label>
-                                        <!-- <input type="text" name="tipoPrestamo" class="form-control p-2" id="tipoPrestamo" aria-describedby="emailHelp" placeholder=""> -->
                                         <select name="tipoPrestamo" class="form-control form-select" id="inputTipPrestamo" required>
                                             <option value="">Seleccionar</option>
                                             <option value="Personal">Personal</option>
                                             <option value="Comercial">Comercial</option>
-                                            <!-- <option value="Vehiculo">Vehiculo</option>
-                                            <option value="Otro">Otro</option> -->
                                         </select>
                                     </div>
 
@@ -313,7 +310,7 @@
                                             <div class="input-group ">
                                                 <div class=" me-lg-5">
                                                     <label class="p-2">Cedula</label>
-                                                    <input type="number" name="cedula" class="form-control " id="cedula">
+                                                    <input type="text" name="cedula" class="form-control " id="cedula">
                                                 </div>
                                                 <div class="me-lg-5">
                                                     <label for="sexo" class="p-2">Sexo</label>
@@ -335,6 +332,7 @@
                                             </div>
                                         </div>
 
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -367,11 +365,11 @@
                                     <label for="celular" class="  p-2">Celular</label>
                                     <input type="tel" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" placeholder="">
                                 </div>
+                               
                                 <div class="form-group me-lg-5 ">
                                     <label for="nacionadlidad" class="  p-2">Nacionadlidad</label>
-                                    <!-- <input type="text" name="nacionadlidad" class="form-control p-2" id="nacionadlidad" aria-describedby="emailHelp" placeholder=""> -->
-                                    <select name="nacionadlidad" class="form-control p-2" id="nacionadlidad">
-                                        <option value="Seleccionar" selected>Seleccionar</option>
+                                    <select name="nacionadlidad" class="form-control" id="nacionadlidad">
+                                        <option value="Seleccionar">Seleccionar</option>
                                         <option value="Dominicano/a">Dominicano/a</option>
                                         <option value="Extranjero/a">Extranjero/a</option>
                                     </select>
@@ -500,9 +498,6 @@
                         <div class="accordion-body">
                             <!-- quinta parte -->
 
-
-
-
                             <div class="form-group  ">
                                 <label for="banco" class="  p-2">Banco</label>
                                 <input type="text" name="banco" class="form-control p-2" id="banco" aria-describedby="emailHelp" placeholder="">
@@ -511,10 +506,6 @@
                                 <label for="numeroCuenta" class="  p-2">Numero de Cuenta</label>
                                 <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" placeholder="">
                             </div>
-                            <!-- <div class="form-group  ">
-                                <label for="montoSolicitado" class="  p-2">Monto Solicitado</label>
-                                <input type="number" name="montoSolicitado" class="form-control p-2" id="montoSolicitado" aria-describedby="emailHelp" placeholder="">
-                            </div> -->
 
                             <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mt-4 mb-3" type="submit"><i class="bi bi-check-lg me-lg-2"></i>ENVIAR</button>
                             <a href="/" class="btn btn-danger btn-block p-2 mt-4 mb-3"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a>
