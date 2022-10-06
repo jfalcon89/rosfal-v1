@@ -131,10 +131,7 @@
             
             <form class="" autocomplete="off" action="" method="POST">
                 
-                <!-- <embed type="application/pdf" width="100%" height="600px" name="contrato" class="form-control" value="<%=  %>"> -->
-                    
-                    
-                    
+               
                 <div class="d-lg-flex justify-content-end">
                     <img height="40px" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" src="/img/img-icons/btn-observaciones.svg" class="btn mb-2 p-0 me-lg-2" width="40px" alt="Observaciones" title="Observaciones">
                     <a href="/solicitudes-aprobadas/imprimir-contato/<%= solicitud.idSolicitud %>" class="btn btn-secondary btn-block p-2 mb-2 me-lg-3"><i class="bi bi-printer me-lg-2"></i>IMPRIMIR CONTRATO</a>
@@ -169,7 +166,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Contrato Firmado</span>
                                                         </div>
-                                                        <select name="firmaContrato" class="form-control form-select " id="firmaContrato">
+                                                        <select name="firmaContrato" class="form-control " id="firmaContrato">
                                                             <option  value="<%= solicitud.firmaContrato %>" selected><%= solicitud.firmaContrato %></option>
                                                             
                                                         </select>
@@ -182,8 +179,6 @@
                                                         </div>
                                                         <select name="ruta" class="form-control" id="">
                                                             <option value="<%= solicitud.ruta %>" selected><%= solicitud.ruta %></option>
-                                                           
-                                                            
                                                         </select>
                                                     </div>
                                                 </div>
@@ -194,10 +189,6 @@
                                                         </div>
                                                         <select name="estadoSolicitud" class="form-control" id="">
                                                             <option value="<%= solicitud.estadoSolicitud %>" selected><%= solicitud.estadoSolicitud %></option>
-                                                            <!-- <option value="Nueva">Nueva</option>
-                                                            <option value="Aprobada">Aprobada</option>
-                                                            <option value="Declinada">Declinada</option>
-                                                            <option value="En Revision">En Revision</option> -->
                                                         </select>
                                                     </div>
                                                 </div>
@@ -208,8 +199,7 @@
                                                         </div>
                                                         <select name="tipoPrestamo" class="form-control" id="inputTipPrestamo">
                                                             <option value="<%= solicitud.tipoPrestamo %>" selected><%= solicitud.tipoPrestamo %></option>
-                                                            <!-- <option value="Personal">Personal</option>
-                                                            <option value="Comercial">Comercial</option> -->
+                                                           
                                                         </select>
                                                     </div>
                                                 </div>
@@ -230,7 +220,7 @@
                                                         <option value="Hombre">Hombre</option>
                                                         <option value="Mujer">Mujer</option>
                                                     </select>
-                                                        <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
+                                                      
                                                     </div>
                                                     <div class="me-lg-5">
                                                         <label for="sexo" class="p-2">Estado Civil</label>
@@ -240,29 +230,10 @@
                                                         <option value="Soltero/a">Soltero/a</option>
                                                         <option value="Union Libre">Union Libre</option>
                                                     </select>
-                                                        <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <!-- <div class="form-group  ">
-                                            <label for="sexo" class="p-2">Sexo</label>
-                                            <select name="sexo" class="form-control" id="sexo">
-                                            <option value="seleccionar" selected>Seleccionar</option>
-                                            <option value="hombre">Hombre</option>
-                                            <option value="mujer">Mujer</option>
-                                        </select>
-                                        </div> -->
-                                            <!-- <div class="form-group  ">
-                                            <label for="sexo" class="">Estado Civil</label>
-                                            <select name="estadoCivil" class="form-control" id="estadoCivil">
-                                            <option value="seleccionar" selected>Seleccionar</option>
-                                            <option value="hombre">Casado</option>
-                                            <option value="mujer">Soltero</option>
-                                            <option value="mujer">Union Libre</option>
-                                            
-                                        </select>
-                                        </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -296,17 +267,11 @@
                                         <label for="celular" class="  p-2">Celular</label>
                                         <input type="number" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" value="<%= solicitud.celular %>">
                                     </div>
-                                    <div class="form-group me-lg-5 ">
-                                        <label for="ocupacion" class=" p-2">Ocupacion</label>
-                                        <input type="text" name="ocupacion" class="form-control p-2" id="ocupacion" aria-describedby="emailHelp" value="<%= solicitud.ocupacion %>">
-                                    </div>
+                                    
                                     <div class="form-group me-lg-5 ">
                                         <label for="nacionadlidad" class="  p-2">Nacionadlidad</label>
-                                        <!-- <input type="text" name="nacionadlidad" class="form-control p-2" id="nacionadlidad" aria-describedby="emailHelp" placeholder=""> -->
-                                        <select name="nacionadlidad" class="form-control" id="nacionadlidad">
+                                        <select name="nacionadlidad" class="form-control p-2" id="nacionadlidad">
                                         <option value="<%= solicitud.nacionadlidad %>" selected><%= solicitud.nacionadlidad %></option>
-                                        <option value="Dominicano/a">Dominicano/a</option>
-                                        <option value="Extranjero/a">Extranjero/a</option>
                                     </select>
                                     </div>
                                 </div>
@@ -479,7 +444,6 @@
                            </div>
                            <div class="modal-body">
             
-                               <!-- <form method="POST"> -->
                                    <div class="mb-3">
                                        <input class="d-none" name="idSolicitud" value="<%= solicitud.idSolicitud %>">   
                                        <input class="d-none" name="name" value="<%= name %>">   
@@ -489,14 +453,10 @@
                                            <button type="submit" class="btn btn-success">Agregar</button>
                                        </div>
 
-                                      
-
                                                 <div class="container-table table-responsive">
                                                     <table id="datatable" class="display responsive nowrap table-striped table table-success " style="width:100%">
                                                         <thead class="thead-ligth">
                                                             <tr>
-                                                                <!-- <th scope="col">Id</th> -->
-                                                                <!-- <th scope="col">ID Solicitud</th> -->
                                                                 <th scope="col">Observacion</th>
                                                                 <th scope="col">Usuario</th>
                                                                 <th scope="col">Fecha Observacion</th>
@@ -508,9 +468,7 @@
                                                                 <% arrayObservaciones.forEach(observacion=> { %>
                                 
                                                                     <tr>
-                                                                        <!-- <td>
-                                                                            <%=  %>
-                                                                        </td> -->
+                                                                       
                                                                         <td>
                                                                             <%= observacion.observacion %>
                                                                         </td>
@@ -529,8 +487,6 @@
                                                                         <% } %>               
 
                                    </div>
-                                 <!-- </form> -->
-            
                            </div>
                            <div class="modal-footer border-0">
                                
@@ -538,12 +494,8 @@
                        </div>
                    </div>
                </div>
-
             </form>
         </div>
-
-
-
     </div>
 
 

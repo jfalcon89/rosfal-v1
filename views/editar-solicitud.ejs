@@ -136,12 +136,6 @@
 
             <form class="" autocomplete="off" action="" method="POST">
 
-                <!-- <input id="pdfFile" type="file" name="contrato" class="form-control" accept="pdf"> -->
-
-                <!-- <div>
-                    <embed id="pdfVista" type="application/pdf" name="contrato" width="400">
-                    </div> -->
-
                 <div class="d-lg-flex justify-content-end">
                     <img height="40px" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"
                         src="/img/img-icons/btn-observaciones.svg" class="btn mb-2 p-0 me-lg-2" width="40px"
@@ -184,7 +178,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Contrato Firmado</span>
                                                         </div>
-                                                        <select name="firmaContrato" class="form-control form-select "
+                                                        <select name="firmaContrato" class="form-control"
                                                             id="firmaContrato">
                                                             <option value="<%= solicitud.firmaContrato %>" selected>
                                                                 <%= solicitud.firmaContrato %>
@@ -255,7 +249,7 @@
                                                 <div class="input-group ">
                                                     <div class=" me-lg-5">
                                                         <label class="p-2">Cedula</label>
-                                                        <input type="text" name="cedula" class="form-control "
+                                                        <input type="number" name="cedula" class="form-control "
                                                             id="cedula" value="<%= solicitud.cedula %>">
                                                     </div>
                                                     <div class="me-lg-5">
@@ -267,7 +261,6 @@
                                                             <option value="Hombre">Hombre</option>
                                                             <option value="Mujer">Mujer</option>
                                                         </select>
-                                                        <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
                                                     </div>
                                                     <div class="me-lg-5">
                                                         <label for="sexo" class="p-2">Estado Civil</label>
@@ -280,29 +273,11 @@
                                                             <option value="Soltero/a">Soltero/a</option>
                                                             <option value="Union Libre">Union Libre</option>
                                                         </select>
-                                                        <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="form-group  ">
-                                            <label for="sexo" class="p-2">Sexo</label>
-                                            <select name="sexo" class="form-control" id="sexo">
-                                            <option value="seleccionar" selected>Seleccionar</option>
-                                            <option value="hombre">Hombre</option>
-                                            <option value="mujer">Mujer</option>
-                                        </select>
-                                        </div> -->
-                                            <!-- <div class="form-group  ">
-                                            <label for="sexo" class="">Estado Civil</label>
-                                            <select name="estadoCivil" class="form-control" id="estadoCivil">
-                                            <option value="seleccionar" selected>Seleccionar</option>
-                                            <option value="hombre">Casado</option>
-                                            <option value="mujer">Soltero</option>
-                                            <option value="mujer">Union Libre</option>
-                                            
-                                        </select>
-                                        </div> -->
+                                          
                                         </div>
                                     </div>
                                 </div>
@@ -344,15 +319,10 @@
                                         <input type="number" name="celular" class="form-control p-2" id="celular"
                                             aria-describedby="emailHelp" value="<%= solicitud.celular %>">
                                     </div>
-                                    <div class="form-group me-lg-5 ">
-                                        <label for="ocupacion" class=" p-2">Ocupacion</label>
-                                        <input type="text" name="ocupacion" class="form-control p-2" id="ocupacion"
-                                            aria-describedby="emailHelp" value="<%= solicitud.ocupacion %>">
-                                    </div>
+                                   
                                     <div class="form-group me-lg-5 ">
                                         <label for="nacionadlidad" class="  p-2">Nacionadlidad</label>
-                                        <!-- <input type="text" name="nacionadlidad" class="form-control p-2" id="nacionadlidad" aria-describedby="emailHelp" placeholder=""> -->
-                                        <select name="nacionadlidad" class="form-control" id="nacionadlidad">
+                                        <select name="nacionadlidad" class="form-control p-2" id="nacionadlidad">
                                             <option value="<%= solicitud.nacionadlidad %>" selected>
                                                 <%= solicitud.nacionadlidad %>
                                             </option>
@@ -590,13 +560,6 @@
                                             <%= solicitud.nombre %>
                                                 <%= solicitud.apellido %>
                                     </h6>
-
-                                    <!-- <label for="message-text" class="col-form-label"></label>
-                                        <div class="d-flex ">
-                                            <textarea class="form-control" name="observacion" id="message-text" placeholder="Observaciones Aqui"></textarea>
-                                            <button type="submit" class="btn btn-success">Agregar</button>
-                                        </div> -->
-
 
 
                                     <div class="container-table table-responsive">

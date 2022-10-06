@@ -139,8 +139,8 @@
                     <div class="d-lg-flex row justify-content-between mt-3">
                         <div class="d-flex mt-3">
                             <img style="width: 40px; height: 40px;" src="/img/img-icons/calendar-frecuencia.svg" alt="">
-                            <select class="form-control form-select border-0 bg-transparent" name="frecuenciaPagos" id="frecuenciaPago">
-                            <option value="Seleccione la frecuencia de pago que desea" selected>Seleccione la frecuencia de pagos</option>
+                            <select class="form-control form-select border-0 bg-transparent" name="frecuenciaPagos" id="frecuenciaPago" required>
+                            <option value="" selected>Seleccione la frecuencia de pagos</option>
                             <option value="pagos diarios">Pagos Diarios</option>
                             <option value="pagos semanales">Pagos Semanales</option>
                             <option value="pagos quincenales">Pagos Quincenales</option>
@@ -152,8 +152,8 @@
                         <div id="labelDias">
                             <div class="d-flex mt-3">
                                 <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosDiarios" id="cuotaDias">
-                            <option value="Indique la cantidad de dias" selected>Indique la cantidad de días</option>
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosDiarios" id="cuotaDias" required>
+                            <option value="" selected>Seleccione la cantidad de días</option>
                             <option value="1">1 dia</option>
                             <option value="2">2 dias</option>
                             <option value="3">3 dias</option>
@@ -206,8 +206,8 @@
                         <div id="labelSemanas">
                             <div class="d-flex mt-3">
                                 <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosSemanales" id="cuotaSemanas">
-                            <option value="Indique la cantidad de semanas" selected>Indique la cantidad de semanas</option>
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosSemanales" id="cuotaSemanas" required>
+                            <option value="" selected>Seleccione la cantidad de semanas</option>
                             <option value="1">1 semana</option>
                             <option value="2">2 semanas</option>
                             <option value="3">3 semanas</option>
@@ -226,8 +226,8 @@
                         <div id="labelQuincenas">
                             <div class="d-flex mt-3">
                                 <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosQuincenales" id="cuotaQuincenas">
-                            <option value="Indique la cantidad de quincenas" selected>Indique la cantidad de quincenas</option>
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosQuincenales" id="cuotaQuincenas" required>
+                            <option value="" selected>Seleccione la cantidad de quincenas</option>
                             <option value="1">1 quincena</option>
                             <option value="2">2 quincenas</option>
                             <option value="3">3 quincenas</option>
@@ -250,8 +250,8 @@
                         <div id="labelMeses">
                             <div class="d-flex mt-3">
                                 <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosMensuales" id="cuotaMeses">
-                            <option value="Indique la cantidad de meses" selected>Indique la cantidad de meses</option>
+                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosMensuales" id="cuotaMeses" required>
+                            <option value="" selected>Seleccione la cantidad de meses</option>
                             <option value="1">1 mes</option>
                             <option value="2">2 meses</option>
                             <option value="3">3 meses</option>
@@ -313,7 +313,7 @@
                                             <div class="input-group ">
                                                 <div class=" me-lg-5">
                                                     <label class="p-2">Cedula</label>
-                                                    <input type="text" name="cedula" class="form-control " id="cedula">
+                                                    <input type="number" name="cedula" class="form-control " id="cedula">
                                                 </div>
                                                 <div class="me-lg-5">
                                                     <label for="sexo" class="p-2">Sexo</label>
@@ -322,7 +322,6 @@
                                                         <option value="Hombre">Hombre</option>
                                                         <option value="Mujer">Mujer</option>
                                                     </select>
-                                                    <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
                                                 </div>
                                                 <div class="me-lg-5">
                                                     <label for="sexo" class="p-2">Estado Civil</label>
@@ -332,29 +331,10 @@
                                                         <option value="Soltero/a">Soltero/a</option>
                                                         <option value="Union Libre">Union Libre</option>
                                                     </select>
-                                                    <!-- <input type="text" name="cedula" class="form-control " id="cedula"> -->
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <!-- <div class="form-group  ">
-                                            <label for="sexo" class="p-2">Sexo</label>
-                                            <select name="sexo" class="form-control" id="sexo">
-                                            <option value="seleccionar" selected>Seleccionar</option>
-                                            <option value="hombre">Hombre</option>
-                                            <option value="mujer">Mujer</option>
-                                        </select>
-                                        </div> -->
-                                        <!-- <div class="form-group  ">
-                                            <label for="sexo" class="">Estado Civil</label>
-                                            <select name="estadoCivil" class="form-control" id="estadoCivil">
-                                            <option value="seleccionar" selected>Seleccionar</option>
-                                            <option value="hombre">Casado</option>
-                                            <option value="mujer">Soltero</option>
-                                            <option value="mujer">Union Libre</option>
-                                            
-                                        </select>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -388,14 +368,10 @@
                                     <input type="tel" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" placeholder="">
                                 </div>
                                 <div class="form-group me-lg-5 ">
-                                    <label for="ocupacion" class=" p-2">Ocupacion</label>
-                                    <input type="text" name="ocupacion" class="form-control p-2" id="ocupacion" aria-describedby="emailHelp" placeholder="">
-                                </div>
-                                <div class="form-group me-lg-5 ">
                                     <label for="nacionadlidad" class="  p-2">Nacionadlidad</label>
                                     <!-- <input type="text" name="nacionadlidad" class="form-control p-2" id="nacionadlidad" aria-describedby="emailHelp" placeholder=""> -->
-                                    <select name="nacionadlidad" class="form-control" id="nacionadlidad">
-                                        <option value="Seleccionar">Seleccionar</option>
+                                    <select name="nacionadlidad" class="form-control p-2" id="nacionadlidad">
+                                        <option value="Seleccionar" selected>Seleccionar</option>
                                         <option value="Dominicano/a">Dominicano/a</option>
                                         <option value="Extranjero/a">Extranjero/a</option>
                                     </select>
@@ -472,7 +448,13 @@
                             </div>
                             <div class="form-group ">
                                 <label for="tiempoEmpresa" class=" p-2">Tiempo en la Empresa</label>
-                                <input type="text" name="tiempoEmpresa" class="form-control p-2" id="tiempoEmpresa" aria-describedby="emailHelp" placeholder="">
+                                <select name="tiempoEmpresa" id="" class="form-control p-2">
+                                    <option value="Seleccionar" selected>Seleccionar</option>
+                                    <option value="Menos de 6 Meses">Menos de 6 Meses</option>
+                                    <option value="De 6 Meses a 1 Año">De 6 Meses a 1 Año</option>
+                                    <option value="Mas de 1 Año y Menos de 2 Años">Mas de 1 Año y Menos de 2 Años</option>
+                                    <option value="Mas de 2 Años">Mas de 2 Años</option>
+                                </select>
                             </div>
                         </div>
                     </div>
