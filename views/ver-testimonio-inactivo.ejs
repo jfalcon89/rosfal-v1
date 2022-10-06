@@ -142,7 +142,7 @@
                                             <%= testimonio.nombre %>
                                         </td>
                                         <td>
-                                            <%= testimonio.fechaTestimonio.toLocaleString() %>
+                                            <%= testimonio.fechaTestimonio.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                         </td>
                                         <td>
                                             <%= testimonio.estadoTestimonio %>
@@ -188,7 +188,7 @@
                             </h6>
                             <h6>
                                 <strong>Fecha:</strong>
-                                <%= testimonio.fechaTestimonio.toLocaleString() %>
+                                <%= testimonio.fechaTestimonio.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                             </h6>
                             <h6>
                                 <strong>Estado:</strong>

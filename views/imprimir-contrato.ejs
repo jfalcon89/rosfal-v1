@@ -73,14 +73,14 @@
             <div class="mt-5 row justify-content-center d-flex">
                 <div class="container">
                     <h5 class="mt-3"><strong>Fecha de Solicitud:</strong> <strong></strong>
-                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %> <strong>Referencia</strong>
+                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %> <strong>Referencia</strong>
                             <%= solicitud.idSolicitud %>
                     </h5>
                     <h5 class="mt-3" style="text-align: justify;"><strong>ENTRE:</strong> De una parte <strong>ROSFAL SOLUCIONES DE PRESTAMOS</strong>, sociedad comercial organizada y existente de conformidad con las leyes de la República Dominicana, y Domicilio principal establecido en Sto Dgo.
                         Oeste R.D.</h5>
                     <h5 class="mt-3" style="text-align: justify;">Quien en lo adelante de este contrato se denominará <strong>ROSFAL</strong>, o por su nombre completo; Y de la otra parte, el/la señor/a:
                         <strong><%= solicitud.nombre %>
-                            <%= solicitud.apellido %></strong>, dominicano, mayor de edad, portador de la cedula de identidad y electoral No.
+                            <%= solicitud.apellido %></strong>, dominicano/a, mayor de edad, portador de la cedula de identidad y electoral No.
                         <strong><%= solicitud.cedula %></strong>, domiciliado y residente en
                         <strong><%= solicitud.direccion %></strong>, persona que en lo adelante del presente contrato se denominará como <strong>EL DEUDOR</strong> o por su nombre completo;</h5>
                     <h5 class="mt-3" style="text-align: justify;"><strong>POR CUANTO: EL DEUDOR</strong> ha solicitado a <strong>ROSFAL</strong> el otorgamiento de un préstamo por la suma de <strong>(RD$

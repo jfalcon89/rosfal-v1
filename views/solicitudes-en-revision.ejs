@@ -163,7 +163,7 @@
                                         <%= solicitud.cedula %>
                                     </td>
                                     <td>
-                                        <%= solicitud.fechaSolicitud.toLocaleString() %>
+                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                     </td>
                                     <td>
                                         <%= solicitud.montoSolicitado %>

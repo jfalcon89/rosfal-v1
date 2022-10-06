@@ -150,7 +150,7 @@
                                             <%= mensaje.telefono %>
                                         </td>
                                         <td>
-                                            <%= mensaje.fechaMensaje.toLocaleString() %>
+                                            <%= mensaje.fechaMensaje.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                         </td>
                                         <td>
                                             <%= mensaje.estadoMensaje %>
