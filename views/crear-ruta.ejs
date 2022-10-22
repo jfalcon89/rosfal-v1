@@ -39,7 +39,9 @@
             </div>
             <div class="btn-group">
                 <% if (login) { %>
-                    <button type="button" class="btn btn-info"><%= name %></button>
+                    <button type="button" class="btn btn-info">
+                        <%= name %>
+                    </button>
                     <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="visually-hidden">Toggle Dropdown</span>
                     </button>
@@ -52,7 +54,7 @@
                         <li><a class="dropdown-item" href="/logout">Cerrar Session</a></li>
 
                     </ul>
-                    <%}  %>
+                    <%} %>
             </div>
 
         </div>
@@ -60,7 +62,7 @@
 
 
     <div class=" p-2 d-lg-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">
-        <div class="container-fluid bg-white   d-flex mt-3 mb-3 me-lg-3">
+        <div class="container-fluid bg-white  d-flex mt-3 mb-3 me-lg-3 shadow-sm">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/street-map-panel-administrativo.svg" alt="Rutas Creadas">
@@ -71,7 +73,8 @@
                             <%= arrayRutas.length %>
                         </h3>
                     </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/rutas">Rutas Creadas</a></div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/rutas">Rutas
+                            Creadas</a></div>
                 </div>
             </div>
         </div>
@@ -83,7 +86,7 @@
                 <div class="container-titulo">
                     <div class="indicador">
                         <h3>
-                            <%=  %>
+                            <%= %>
                         </h3>
                     </div>
                     <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/rutas/crear-ruta">Crear Nueva Ruta</a></div>
@@ -131,7 +134,7 @@
                         </thead>
                         <tbody>
 
-                            <% if (arrayRutas.length > 0) { %>
+                            <% if (arrayRutas.length> 0) { %>
                                 <% arrayRutas.forEach(ruta=> { %>
 
 
@@ -190,7 +193,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <% if (typeof alert != "undefined")  { %>
+    <% if (typeof alert !="undefined" ) { %>
         <script>
             Swal.fire({
                 title: '<%= alertTitle %>',

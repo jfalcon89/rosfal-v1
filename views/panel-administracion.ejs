@@ -61,9 +61,9 @@
 
 
 
-    <div class=" p-2 d-lg-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">
-        <div class="container-fluid mt-3 mb-3">
-            <div class="container-fluid d-flex p-3" style="background-color: #e28724;">
+    <div class=" p-2 d-xxl-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">
+        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #e28724; border-radius: 7px; ">
+            <div class="container-fluid d-flex p-3">
                 <div class="container-nuevas d-flex">
                     <div class="container-img m-2 me-lg-3">
                         <img style="width: 60px;" src="/img/img-icons/img-nuevas-solicitudes.svg" alt="Nuevas Solicitudes">
@@ -74,15 +74,17 @@
                                 <%= arraySolicitudes.length %>
                             </h1>
                         </div>
-                        <div class="titulo"><a class="text-decoration-none text-white fs-5" href="/mensajes">Nuevas Solicitudes</a></div>
+                        <div class="titulo"><a class="text-decoration-none text-white fs-5">Nuevas Solicitudes</a></div>
                     </div>
                 </div>
             </div>
-            <a href="/solicitudes-nuevas" class=" btn-secondary w-100 d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+            <div class="card-footer">
+                <a href="/solicitudes-nuevas" class="text-light text-decoration-none d-block  text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+            </div>
         </div>
 
-        <div class="container-fluid mt-3 mb-3">
-            <div class="container-fluid d-flex p-3 " style="background-color: #17b75f;">
+        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="border-radius: 7px; background-color: #17b75f; ">
+            <div class="container-fluid d-flex p-3 ">
                 <div class="container-nuevas d-flex">
                     <div class="container-img m-2 me-lg-3">
                         <img style="width: 60px;" src="/img/img-icons/img-nuevo-mensaje-inbox.svg" alt="NUevos Mensajes">
@@ -93,15 +95,17 @@
                                 <%= arrayMensajesNuevos.length %>
                             </h1>
                         </div>
-                        <div class="titulo"><a class="text-decoration-none text-white fs-5" href="/mensajes-no-leidos">Nuevos Mensajes</a></div>
+                        <div class="titulo"><a class="text-decoration-none text-white fs-5">Nuevos Mensajes</a></div>
                     </div>
                 </div>
             </div>
-            <a href="/mensajes" class=" btn-secondary w-100 d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+            <div class="card-footer">
+                <a href="/mensajes" class="text-light d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+            </div>
         </div>
 
-        <div class="container-fluid mt-3 mb-3">
-            <div class="container-fluid d-flex p-3" style="background-color: #17A1B7;">
+        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="border-radius: 7px; background-color: #17A1B7;">
+            <div class="container-fluid d-flex p-3">
                 <div class="container-nuevas d-flex">
                     <div class="container-img m-2 me-lg-3">
                         <img style="width: 60px;" src="/img/img-icons/img-usuarios.svg" alt="Usuarios">
@@ -112,14 +116,16 @@
                                 10
                             </h1>
                         </div>
-                        <div class="titulo"><a class="text-decoration-none text-white fs-5" href="/mensajes-leidos">Usuarios</a></div>
+                        <div class="titulo"><a class="text-decoration-none text-white fs-5">Usuarios</a></div>
                     </div>
                 </div>
             </div>
-            <a href="#" class=" btn-secondary w-100 d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+            <div class="card-footer">
+                <a href="#" class="  text-light d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+            </div>
         </div>
-        <div class="container-fluid mt-3 mb-3">
-            <div class="container-fluid d-flex p-3" style="background-color: #9ed181;">
+        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #9ed181; border-radius: 7px;">
+            <div class="container-fluid d-flex p-3">
                 <div class="container-nuevas d-flex">
                     <div class="container-img m-2 me-lg-3">
                         <img style="width: 60px;" src="/img/img-icons/street-map-panel-administrativo.svg" alt="rutas">
@@ -130,14 +136,16 @@
                                 <%= arrayRutas.length %>
                             </h1>
                         </div>
-                        <div class="titulo"><a class="text-decoration-none text-white fs-5" href="/rutas">Rutas</a></div>
+                        <div class="titulo"><a class="text-decoration-none text-white fs-5">Rutas</a></div>
                     </div>
                 </div>
             </div>
-            <a href="/rutas" class=" btn-secondary w-100 d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+            <div class="card-footer ">
+                <a href="/rutas" class=" text-light d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+            </div>
         </div>
-        <div class="container-fluid mt-3 mb-3">
-            <div class="container-fluid d-flex p-3" style="background-color: #aeaeae;">
+        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #aeaeae; border-radius: 7px;">
+            <div class="container-fluid d-flex p-3">
                 <div class="container-nuevas d-flex">
                     <div class="container-img m-2 me-lg-3">
                         <img style="width: 60px;" src="/img/img-icons/img-testimonios.svg" alt="rutas">
@@ -148,11 +156,13 @@
                                 <%= arrayTestimoniosNuevos.length %>
                             </h1>
                         </div>
-                        <div class="titulo"><a class="text-decoration-none text-white fs-5" href="/testimonios">Testimonios</a></div>
+                        <div class="titulo"><a class="text-decoration-none text-white fs-5">Testimonios</a></div>
                     </div>
                 </div>
             </div>
-            <a href="/testimonios" class=" btn-secondary w-100 d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+            <div class="card-footer">
+                <a href="/testimonios" class=" text-light d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+            </div>
         </div>
 
 
@@ -162,134 +172,134 @@
 
     <!-- <div class="container-fluid d-lg-flex"> -->
 
-        <div class="container-fluid  mt-5 ">
-            <h3 class="text-secondary"><strong>ULTIMAS</strong> SOLICITUDES DE PRESTAMOS APROBADAS</h3>
-            <div class="container-fluid ">
-                <div class="container-table table-responsive">
-                    <table id="datatable" class="display responsive nowrap" style="width:100%">
-                        <thead class="thead-ligth">
-                            <tr>
-                               
-                                <th scope="col">ID Solicitud</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
-                                <th scope="col">Cedula</th>
-                                <th scope="col">Fecha Solicitud</th>
-                                <th scope="col">Monto Aprobado</th>
-                                <th scope="col">Estado Solicitud</th>
-                                <th scope="col">Acciones</th>
-                               
-                            </tr>
-                        </thead>
-                        <tbody>
+    <div class="container-fluid  mt-5 shadow-sm ">
+        <h3 class="text-secondary"><strong>ULTIMAS</strong> SOLICITUDES DE PRESTAMOS APROBADAS</h3>
+        <div class="container-fluid ">
+            <div class="container-table table-responsive">
+                <table id="datatable" class="display responsive nowrap" style="width:100%">
+                    <thead class="thead-ligth">
+                        <tr>
 
-                            <% if (arraySolicitudesAprobadas.length > 0) { %>
-                                <% arraySolicitudesAprobadas.forEach(solicitud=> { %>
+                            <th scope="col">ID Solicitud</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Cedula</th>
+                            <th scope="col">Fecha Solicitud</th>
+                            <th scope="col">Monto Aprobado</th>
+                            <th scope="col">Estado Solicitud</th>
+                            <th scope="col">Acciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% if (arraySolicitudesAprobadas.length > 0) { %>
+                            <% arraySolicitudesAprobadas.forEach(solicitud=> { %>
 
 
-                                    <tr>
-                                        <td>
-                                            <%= solicitud.idSolicitud %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.nombre %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.apellido %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.cedula %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.montoSolicitado %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.estadoSolicitud %>
-                                        </td>
+                                <tr>
+                                    <td>
+                                        <%= solicitud.idSolicitud %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.nombre %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.apellido %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.cedula %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.montoSolicitado %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.estadoSolicitud %>
+                                    </td>
 
-                                        <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
-                                            <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
-                                            <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
-                                        </td>
-                                    </tr>
+                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
+                                        <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                        <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                    </td>
+                                </tr>
 
-                                    <% }) %>
-                                        <% } %>
+                                <% }) %>
+                                    <% } %>
 
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="container-fluid mt-5 ">
-            <h3 class="text-secondary"><strong>ULTIMOS</strong> CONTRATOS DE PRESTAMOS FIRMADOS</h3>
-            <div class="container-fluid ">
-                <div class="container-table table-responsive">
-                    <table id="datatable2" class="display responsive nowrap" style="width:100%">
-                        <thead class="thead-ligth">
-                            <tr>
-                                
-                                <th scope="col">ID Solicitud</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
-                                <th scope="col">Cedula</th>
-                                <th scope="col">Fecha Solicitud</th>
-                                <th scope="col">Monto Aprobado</th>
-                                <th scope="col">Firma</th>
-                                <th scope="col">Acciones</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
+    </div>
+    <div class="container-fluid mt-5 shadow-sm ">
+        <h3 class="text-secondary"><strong>ULTIMOS</strong> CONTRATOS DE PRESTAMOS FIRMADOS</h3>
+        <div class="container-fluid ">
+            <div class="container-table table-responsive">
+                <table id="datatable2" class="display responsive nowrap" style="width:100%">
+                    <thead class="thead-ligth">
+                        <tr>
 
-                            <% if (arraySolicitudesAprobadasFirmadas.length > 0) { %>
-                                <% arraySolicitudesAprobadasFirmadas.forEach(solicitud=> { %>
+                            <th scope="col">ID Solicitud</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Cedula</th>
+                            <th scope="col">Fecha Solicitud</th>
+                            <th scope="col">Monto Aprobado</th>
+                            <th scope="col">Firma</th>
+                            <th scope="col">Acciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% if (arraySolicitudesAprobadasFirmadas.length > 0) { %>
+                            <% arraySolicitudesAprobadasFirmadas.forEach(solicitud=> { %>
 
 
-                                    <tr>
-                                        <td>
-                                            <%= solicitud.idSolicitud %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.nombre %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.apellido %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.cedula %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.montoSolicitado %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.firmaContrato %>
-                                        </td>
+                                <tr>
+                                    <td>
+                                        <%= solicitud.idSolicitud %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.nombre %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.apellido %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.cedula %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.montoSolicitado %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.firmaContrato %>
+                                    </td>
 
-                                        <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
-                                            <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
-                                            <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
-                                        </td>
-                                    </tr>
+                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
+                                        <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                        <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                    </td>
+                                </tr>
 
-                                    <% }) %>
-                                        <% } %>
+                                <% }) %>
+                                    <% } %>
 
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
         </div>
-        
+    </div>
+
     <!-- </div> -->
 
-    <div class="container-fluid p-4 mt-5 ">
+    <div class="container-fluid p-4 mt-5 shadow-sm ">
         <h3 class="text-secondary"><strong>PRESTAMOS </strong>APROBADOS POR RUTA</h3>
 
         <p>aqui listado de prestamos por ruta</p>
@@ -365,6 +375,7 @@
 
         });
     </script>
+
 
 
 </body>
