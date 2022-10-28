@@ -141,12 +141,12 @@
         <h3 class="text-secondary">VER SOLICITUD</h3>
 
 
-        <div class="container mt-3">
-            
-            
+        <div class="container mt-3 ">
+
+
             <form class="" autocomplete="off" action="" method="POST">
-                
-               
+
+
                 <div class="d-lg-flex justify-content-end">
                     <img height="40px" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" src="/img/img-icons/btn-observaciones.svg" class="btn mb-2 p-0 me-lg-2" width="40px" alt="Observaciones" title="Observaciones">
                     <a href="/solicitudes-aprobadas/imprimir-contato/<%= solicitud.idSolicitud %>" class="btn btn-secondary btn-block p-2 mb-2 me-lg-3"><i class="bi bi-printer me-lg-2"></i>IMPRIMIR CONTRATO</a>
@@ -155,7 +155,7 @@
                 </div>
 
 
-                <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion shadow" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
@@ -235,7 +235,7 @@
                                                         <option value="Hombre">Hombre</option>
                                                         <option value="Mujer">Mujer</option>
                                                     </select>
-                                                      
+
                                                     </div>
                                                     <div class="me-lg-5">
                                                         <label for="sexo" class="p-2">Estado Civil</label>
@@ -245,7 +245,7 @@
                                                         <option value="Soltero/a">Soltero/a</option>
                                                         <option value="Union Libre">Union Libre</option>
                                                     </select>
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -282,7 +282,7 @@
                                         <label for="celular" class="  p-2">Celular</label>
                                         <input type="number" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" value="<%= solicitud.celular %>">
                                     </div>
-                                    
+
                                     <div class="form-group me-lg-5 ">
                                         <label for="nacionadlidad" class="  p-2">Nacionadlidad</label>
                                         <select name="nacionadlidad" class="form-control p-2" id="nacionadlidad">
@@ -449,74 +449,78 @@
                     </div>
                 </div>
                 <!-- Modal 2 -->
-                
+
                 <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                   <div class="modal-dialog modal-dialog modal-xl">
-                       <div class="modal-content">
-                           <div class="modal-header">
-                               <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel">Observaciones</h5>
-                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                           </div>
-                           <div class="modal-body">
-            
-                                   <div class="mb-3">
-                                       <input class="d-none" name="idSolicitud" value="<%= solicitud.idSolicitud %>">   
-                                       <input class="d-none" name="name" value="<%= name %>">   
-                                       <h6><%= solicitud.idSolicitud %> <%= solicitud.nombre %> <%= solicitud.apellido %>  </h6>
-                                       <div class="d-flex ">
-                                           <textarea class="form-control" name="observacion" id="message-text" placeholder="Observaciones Aqui"></textarea>
-                                           <button type="submit" class="btn btn-success">Agregar</button>
-                                       </div>
+                    <div class="modal-dialog modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel">Observaciones</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
 
-                                                <div class="container-table table-responsive">
-                                                    <table id="datatable" class="display responsive nowrap table-striped table table-success " style="width:100%">
-                                                        <thead class="thead-ligth">
-                                                            <tr>
-                                                                <th scope="col">Observacion</th>
-                                                                <th scope="col">Usuario</th>
-                                                                <th scope="col">Fecha Observacion</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                
-                                                            <% if (arrayObservaciones.length > 0) { %>
-                                                                <% arrayObservaciones.forEach(observacion=> { %>
-                                
-                                                                    <tr>
-                                                                       
-                                                                        <td>
-                                                                            <%= observacion.observacion %>
-                                                                        </td>
-                                                                        <td>
-                                                                            <%= observacion.name %>
-                                                                        </td>
-                                                                        <td>
-                                                                            <%= observacion.fechaObservacion.toLocaleString() %>
-                                                                        </td>
-                                                                      
-                                                                    </tr>
-                                
-                                                                    <% }) %>
-                                                                    <% }else { %>
-                                                                        <div>Sin observaciones</div>
-                                                                        <% } %>               
+                                <div class="mb-3">
+                                    <input class="d-none" name="idSolicitud" value="<%= solicitud.idSolicitud %>">
+                                    <input class="d-none" name="name" value="<%= name %>">
+                                    <h6>
+                                        <%= solicitud.idSolicitud %>
+                                            <%= solicitud.nombre %>
+                                                <%= solicitud.apellido %>
+                                    </h6>
+                                    <div class="d-flex ">
+                                        <textarea class="form-control" name="observacion" id="message-text" placeholder="Observaciones Aqui"></textarea>
+                                        <button type="submit" class="btn btn-success">Agregar</button>
+                                    </div>
 
-                                   </div>
-                           </div>
-                           <div class="modal-footer border-0">
-                               
-                           </div>
-                       </div>
-                   </div>
-               </div>
+                                    <div class="container-table table-responsive">
+                                        <table id="datatable" class="display responsive nowrap table-striped table table-success " style="width:100%">
+                                            <thead class="thead-ligth">
+                                                <tr>
+                                                    <th scope="col">Observacion</th>
+                                                    <th scope="col">Usuario</th>
+                                                    <th scope="col">Fecha Observacion</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <% if (arrayObservaciones.length > 0) { %>
+                                                    <% arrayObservaciones.forEach(observacion=> { %>
+
+                                                        <tr>
+
+                                                            <td>
+                                                                <%= observacion.observacion %>
+                                                            </td>
+                                                            <td>
+                                                                <%= observacion.name %>
+                                                            </td>
+                                                            <td>
+                                                                <%= observacion.fechaObservacion.toLocaleString() %>
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <% }) %>
+                                                            <% }else { %>
+                                                                <div>Sin observaciones</div>
+                                                                <% } %>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer border-0">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </form>
+            </div>
         </div>
-    </div>
 
 
 
 
-    <!-- <script>
+        <!-- <script>
         $(document).ready(function() {
             $('#datatable').DataTable({
                 order: [
@@ -547,7 +551,7 @@
     </script> -->
 
 
-    <script src="/js/ver-solicitud-event.js"></script>
+        <script src="/js/ver-solicitud-event.js"></script>
 
 </body>
 

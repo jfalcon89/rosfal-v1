@@ -125,10 +125,10 @@ btnCalculo.addEventListener("click", () => {
     let labelResul = document.getElementById("labelResul");
     let labelRespuesta = document.getElementById("labelRespuesta");
 
-    
+
 
     if (frecuenciaPago.value == "pagos diarios") {
-        const interes = 0.01
+        const interes = 0.006
         const operacionInteres = monto * interes;
         const operacionCuota = operacionInteres * cuotaDias;
         // console.log(cuotaDias)
@@ -139,13 +139,13 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionInteres)
         console.log(operacionCuota)
 
-        if(labelRespuesta.textContent == "$NaN Pesos"){
+        if (labelRespuesta.textContent == "$NaN Pesos") {
             labelResul.textContent = "Indica la cantidad de dias";
             labelRespuesta.textContent = ``;
         }
 
     }
-    
+
     if (frecuenciaPago.value == "pagos semanales") {
         const interes = 0.035
         const operacionInteres = monto * interes;
@@ -157,7 +157,7 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionInteres)
         console.log(operacionCuota)
 
-        if(labelRespuesta.textContent == "$NaN Pesos"){
+        if (labelRespuesta.textContent == "$NaN Pesos") {
             labelResul.textContent = "Indica la cantidad de semanas";
             labelRespuesta.textContent = ``;
         }
@@ -174,7 +174,7 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionInteres)
         console.log(operacionCuota)
 
-        if(labelRespuesta.textContent == "$NaN Pesos"){
+        if (labelRespuesta.textContent == "$NaN Pesos") {
             labelResul.textContent = "Indica la cantidad de quincenas";
             labelRespuesta.textContent = ``;
         }
@@ -191,13 +191,13 @@ btnCalculo.addEventListener("click", () => {
         console.log(operacionInteres)
         console.log(operacionCuota)
 
-        if(labelRespuesta.textContent == "$NaN Pesos"){
+        if (labelRespuesta.textContent == "$NaN Pesos") {
             labelResul.textContent = "Indica la cantidad de meses";
             labelRespuesta.textContent = ``;
         }
 
     }
-  
+
 
 });
 
