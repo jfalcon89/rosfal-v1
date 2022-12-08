@@ -147,8 +147,33 @@
                     <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-danger btn-block p-2 mb-2 me-lg-2">ELIMINAR SOLICITUD</i></a>
                     <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i
                             class="bi bi-check-lg me-lg-2"></i>GUARDAR CAMBIOS</button>
-                    <a href="/solicitudes-nuevas" class="btn btn-warning btn-block p-2 mb-2"><i
-                            class="bi bi-arrow-left me-lg-2"></i>CANCELAR</a>
+
+                    <button class="btn btn-primary p-2 mb-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                NOTIFICAR CLIENTE
+                              </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <a target="_blank" href="https://wa.me/1<%= solicitud.celular %>?text=
+
+%0A*NOTIFICACION SOLICITUD DE PRESTAMO*%0A
+
+%0AEstimad@ *<%= solicitud.nombre %> <%= solicitud.apellido %>* le informamos que su solicitud de préstamos No.<%= solicitud.idSolicitud %> realizada en fecha <%= solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10) %> se encuentra *<%= solicitud.estadoSolicitud %>*%0A
+
+----------------------------------
+
+%0A*Para mas informacion:* %0A
+
+*Email:* contacto@rosfal.com
+%0A*WhatsApp:* 829 856-0203%0A
+
+=================================
+
+        " class="dropdown-item">Estado Solicitud Ws</a>
+
+                        </li>
+
+
+                    </ul>
                 </div>
 
                 <div class="accordion shadow" id="accordionPanelsStayOpenExample">

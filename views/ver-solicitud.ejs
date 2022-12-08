@@ -152,27 +152,16 @@
                     <a href="/solicitudes-aprobadas/imprimir-contato/<%= solicitud.idSolicitud %>" class="btn btn-secondary btn-block p-2 mb-2 me-lg-3"><i class="bi bi-printer me-lg-2"></i>IMPRIMIR CONTRATO</a>
                     <a href="/solicitudes-aprobadas/imprimir-solicitud/<%= solicitud.idSolicitud %>" class="btn btn-warning btn-block p-2 mb-2 me-lg-3"><i class="bi bi-printer me-lg-2"></i>IMPRIMIR SOLICITUD</a>
 
-                    <a target="_blank" href="https://wa.me/1<%= solicitud.celular %>?text=
+                    <button class="btn btn-primary p-2 mb-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        NOTIFICAR CLIENTE
+                      </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <a target="_blank" href="https://wa.me/1<%= solicitud.celular %>?text=
 
-*NOTIFICACION SOLICITUD DE PRESTAMO*
-%0A----------------------------------%0A
+%0A*NOTIFICACION SOLICITUD DE PRESTAMO*%0A
 
-*ROSFAL SOLUCIONES DE PRESTAMOS*
-%0ACalle primera No. 59 Sector Enriquillo Herrera Sto. Dgo.%0A
-
-
-%0A*DETALLE*%0A
-----------------------------------
-
-%0AEstimad@ cliente le informamos que su solicitud 
-se encuenta  *<%= solicitud.estadoSolicitud %>*%0A
-
-%0A*Fecha de Solicitud:* <%= solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10) %>%0A
-
-%0A*Cliente:* <%= solicitud.nombre %> <%= solicitud.apellido %>%0A
-
-%0A*Numero de Solicitud:* <%= solicitud.idSolicitud %>%0A
-
+%0AEstimad@ *<%= solicitud.nombre %> <%= solicitud.apellido %>* le informamos que su solicitud de préstamos No.<%= solicitud.idSolicitud %> realizada en fecha <%= solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10) %> se encuentra *<%= solicitud.estadoSolicitud %>*%0A
 
 ----------------------------------
 
@@ -183,8 +172,12 @@ se encuenta  *<%= solicitud.estadoSolicitud %>*%0A
 
 =================================
 
-" class="btn btn-primary p-2 mb-2">NOTIFICAR CLIENTE</a>
+" class="dropdown-item">Estado Solicitud Ws</a>
 
+                        </li>
+
+
+                    </ul>
 
                 </div>
 
