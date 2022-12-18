@@ -26,6 +26,7 @@ const usuariosRoutes = require("./routes/usuarios");
 const rutasRoutes = require("./routes/rutas");
 const rutasTestimonios = require("./routes/testimonios");
 const rutasObservaciones = require("./routes/observaciones");
+const rutasConsulta_solicitud = require("./routes/consulta-solicitud");
 
 //--------------CONEXION AL SERVIDOR-----------------//
 app.set("port", process.env.PORT || 3005);
@@ -84,6 +85,7 @@ app.use("/", usuariosRoutes);
 app.use("/", rutasRoutes);
 app.use("/", rutasTestimonios);
 app.use("/", rutasObservaciones);
+app.use("/", rutasConsulta_solicitud);
 
 
 //motor de plantilla 
