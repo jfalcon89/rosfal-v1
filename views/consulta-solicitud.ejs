@@ -97,7 +97,7 @@
     <div class="container mt-5 mb-5">
         <form action="" method="get">
             <div class="d-flex">
-                <input class="form-control" type="text" placeholder="No. Cedula" name="id">
+                <input class="form-control" type="number" placeholder="No. Cedula" name="id">
                 <button class="btn btn-primary" type="submit">Buscar</button>
             </div>
 
@@ -105,49 +105,69 @@
 
         </form>
 
-        <% if(id != "Vacio") { %>
+        <% if (arraySolicitud.length > 0) { %>
 
-            <div class="container mt-2">
-                <table id="datatable" class="display responsive nowrap table table-sm-responsive table-hover" style="width:100%">
-                    <thead class="thead-ligth">
-                        <tr>
-                            <th scope="col">Tipo de prestamo</th>
-                            <th scope="col">Monto solicitud</th>
-                            <th scope="col">Fecha solicitud</th>
-                            <th scope="col">Estatus Solicitud</th>
+            <% if(id != "Vacio") { %>
 
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="mt-4 mb-5">
+                    <h6><strong>No. Solicitud:</strong>
+                        <%= arraySolicitud[0].idSolicitud %>
+                    </h6>
+                    <h6><strong>Cedula:</strong>
+                        <%= arraySolicitud[0].cedula %>
+                    </h6>
+                    <h6><strong>Nombre:</strong>
+                        <%= arraySolicitud[0].nombre %>
+                            <%= arraySolicitud[0].apellido %>
+                    </h6>
+                </div>
+
+                <div class="container mt-2 table-responsive">
+                    <table id="datatable" class="   table  table-hover">
+                        <thead class="thead-ligth">
+                            <tr>
+                                <th scope="col">Tipo de prestamo</th>
+                                <th scope="col">Monto solicitud</th>
+                                <th scope="col">Fecha solicitud</th>
+                                <th scope="col">Estatus Solicitud</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
 
 
-                        <% if (arraySolicitud.length > 0) { %>
-                            <% arraySolicitud.forEach(solicitud=> { %>
+                            <% if (arraySolicitud.length > 0) { %>
+                                <% arraySolicitud.forEach(solicitud=> { %>
 
-                                <tr>
-                                    <td>
-                                        <%= solicitud.tipoPrestamo %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.montoSolicitado %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.estadoSolicitud %>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <%= solicitud.tipoPrestamo %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.montoSolicitado %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.estadoSolicitud %>
+                                        </td>
+                                    </tr>
 
-                                <% }) %>
-                                    <% } %>
+                                    <% }) %>
+                                        <% } %>
 
-                                        <% }else{ %>
-                                            <h5 class="mt-5">Ningun Resultado</h5>
-                                            <% } %>
-                    </tbody>
-                </table>
-            </div>
+                                            <% }else{ %>
+                                                <h5 class="mt-5">Ningun Resultado</h5>
+                                                <% } %>
+
+                                                    <% }else{ %>
+                                                        <h5 class="mt-5">Ningun Resultado</h5>
+                                                        <% } %>
+
+                        </tbody>
+                    </table>
+                </div>
 
     </div>
 

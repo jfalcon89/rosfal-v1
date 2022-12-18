@@ -18,7 +18,7 @@ router.get('/consulta-solicitud', async(req, res) => {
     };
     console.log(id)
     console.log(req.url.slice(23))
-    const arraySolicitudDB = await pool.query("SELECT tipoPrestamo, montoSolicitado, fechaSolicitud, estadoSolicitud, nombre FROM solicitudes WHERE cedula= ?", [id]);
+    const arraySolicitudDB = await pool.query("SELECT tipoPrestamo, montoSolicitado, fechaSolicitud, estadoSolicitud, nombre, apellido, idSolicitud, cedula FROM solicitudes WHERE cedula= ?", [id]);
 
     console.log(arraySolicitudDB)
     res.render('consulta-solicitud', {
@@ -28,14 +28,14 @@ router.get('/consulta-solicitud', async(req, res) => {
 
     // } catch (error) {
 
-    //     const cedula = req.params
+    //     // const cedula = req.params
 
-    //     const arraySolicitudDB = await pool.query(`SELECT * FROM solicitudes WHERE cedula=${cedula} `);
+    //     // const arraySolicitudDB = await pool.query(`SELECT * FROM solicitudes WHERE cedula=${cedula} `);
     //     console.log(error)
     //     res.render('consulta-solicitud', {
     //         error: true,
     //         mensaje: "no se encuentra el id seleccionado",
-    //         arraySolicitud: arraySolicitudDB
+
     //     });
     // }
 
