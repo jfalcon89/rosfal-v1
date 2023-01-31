@@ -20,6 +20,7 @@
         "express-session": "^1.17.3",
         "moment": "^2.29.4",
         "mysql": "^2.18.1",
+        "node-fetch": "^2.6.7",
         "package.json": "^2.0.1",
         "path": "^0.12.7",
         "sharp": "^0.31.0"

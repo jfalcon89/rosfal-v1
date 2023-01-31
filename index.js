@@ -7,6 +7,8 @@ const dotenv = require('dotenv').config()
 const moment = require("moment");
 const bcrypt = require('bcryptjs');
 
+const fetch = require('node-fetch');
+
 // conexcion a la base de datos MySql
 const pool = require("./database");
 const { database } = require('./keys');

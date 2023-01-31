@@ -3,16 +3,19 @@ const express = require("express");
 const router = express.Router();
 const moment = require("moment");
 const pool = require("../database");
-
+const fetch = require("node-fetch");
 
 
 
 router.get('/', async(req, res) => {
 
+
     const arrayNuevoTestimonioDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ');
 
     res.render('inicio', {
         arrayNuevoTestimonio: arrayNuevoTestimonioDB
+
+
     });
 
 });
