@@ -171,7 +171,7 @@
     <!-- <div class="container-fluid d-lg-flex"> -->
 
     <div class="container-fluid  mt-5 shadow-sm ">
-        <h3 class="text-secondary"><strong>ULTIMAS</strong> SOLICITUDES DE PRESTAMOS APROBADAS</h3>
+        <h3 class="text-secondary"><strong>PRESTAMOS</strong> APROBADOS</h3>
         <div class="container-fluid ">
             <div class="container-table table-responsive">
                 <table id="datatable" class="display responsive nowrap" style="width:100%">
@@ -218,7 +218,7 @@
                                         <%= solicitud.estadoSolicitud %>
                                     </td>
 
-                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
+                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
                                         <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
                                         <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
                                     </td>
@@ -233,7 +233,7 @@
         </div>
     </div>
     <div class="container-fluid mt-5 shadow-sm ">
-        <h3 class="text-secondary"><strong>ULTIMOS</strong> CONTRATOS DE PRESTAMOS FIRMADOS</h3>
+        <h3 class="text-secondary"><strong>PRESTAMOS</strong> CONTRATOS FIRMADOS</h3>
         <div class="container-fluid ">
             <div class="container-table table-responsive">
                 <table id="datatable2" class="display responsive nowrap" style="width:100%">
@@ -280,7 +280,7 @@
                                         <%= solicitud.firmaContrato %>
                                     </td>
 
-                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
+                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
                                         <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
                                         <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
                                     </td>
@@ -298,9 +298,157 @@
     <!-- </div> -->
 
     <div class="container-fluid p-4 mt-5 shadow-sm ">
-        <h3 class="text-secondary"><strong>PRESTAMOS </strong>APROBADOS POR RUTA</h3>
+        <h3 class="text-secondary"><strong>PRESTAMOS </strong>EN ATRASOS</h3>
 
-        <p>aqui listado de prestamos por ruta</p>
+        <div class="container-fluid ">
+            <div class="container-table table-responsive">
+                <table id="datatable3" class="display responsive nowrap" style="width:100%">
+                    <thead class="thead-ligth">
+                        <tr>
+
+                            <th scope="col">ID Solicitud</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Cedula</th>
+                            <th scope="col">Fecha Solicitud</th>
+                            <th scope="col">Monto Aprobado</th>
+                            <th scope="col">Firma</th>
+                            <th scope="col">Atraso</th>
+                            <th scope="col">Ruta</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Acciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% if (arraySolicitudesAtrasadas.length > 0) { %>
+                            <% arraySolicitudesAtrasadas.forEach(solicitud=> { %>
+
+
+                                <tr>
+                                    <td>
+                                        <%= solicitud.idSolicitud %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.nombre %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.apellido %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.cedula %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.montoSolicitado %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.firmaContrato %>
+                                    </td>
+                                    <td class="text-danger">
+                                        <%= solicitud.atraso %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.ruta %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.celular %>
+                                    </td>
+
+                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+
+                                        <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                        <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                    </td>
+                                </tr>
+
+                                <% }) %>
+                                    <% } %>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="container-fluid p-4 mt-5 shadow-sm ">
+        <h3 class="text-secondary"><strong>PRESTAMOS </strong>LIQUIDADOS</h3>
+
+        <div class="container-fluid ">
+            <div class="container-table table-responsive">
+                <table id="datatable4" class="display responsive nowrap" style="width:100%">
+                    <thead class="thead-ligth">
+                        <tr>
+
+                            <th scope="col">ID Solicitud</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Cedula</th>
+                            <th scope="col">Fecha Solicitud</th>
+                            <th scope="col">Monto Aprobado</th>
+                            <th scope="col">Firma</th>
+                            <th scope="col">Atraso</th>
+                            <th scope="col">Ruta</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Acciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% if (arraySolicitudesLiquidadas.length > 0) { %>
+                            <% arraySolicitudesLiquidadas.forEach(solicitud=> { %>
+
+
+                                <tr>
+                                    <td>
+                                        <%= solicitud.idSolicitud %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.nombre %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.apellido %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.cedula %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.montoSolicitado %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.firmaContrato %>
+                                    </td>
+                                    <td class="text-danger">
+                                        <%= solicitud.atraso %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.ruta %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.celular %>
+                                    </td>
+
+                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+
+                                        <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                        <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                    </td>
+                                </tr>
+
+                                <% }) %>
+                                    <% } %>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
     </div>
 
@@ -345,6 +493,68 @@
     <script>
         $(document).ready(function() {
             $('#datatable2').DataTable({
+                "lengthMenu": [5, 10, 25, 50, 100],
+                order: [
+                    [0, 'desc']
+                ],
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable3').DataTable({
+                "lengthMenu": [5, 10, 25, 50, 100],
+                order: [
+                    [0, 'desc']
+                ],
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable4').DataTable({
                 "lengthMenu": [5, 10, 25, 50, 100],
                 order: [
                     [0, 'desc']

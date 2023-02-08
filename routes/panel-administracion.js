@@ -23,14 +23,16 @@ router.get('/panel-administracion', async(req, res) => {
 
         const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" ORDER BY fechaSolicitud DESC');
         const arraySolicitudesAprobadasFirmadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND firmaContrato= "SI" ORDER BY fechaSolicitud DESC');
-        // const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        // const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+        const arraySolicitudesAtrasadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND atraso > 0');
+        const arraySolicitudesLiquidadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Liquidado"');
         res.render("panel-administracion", {
             arraySolicitudes: arraySolicitudesDB,
             arrayMensajesNuevos: arrayMensajesNuevosDB,
             arrayRutas: arrayRutasDB,
             arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
             arraySolicitudesAprobadasFirmadas: arraySolicitudesAprobadasFirmadasDB,
+            arraySolicitudesAtrasadas: arraySolicitudesAtrasadasDB,
+            arraySolicitudesLiquidadas: arraySolicitudesLiquidadasDB,
             arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
             login: true,
             name: req.session.name
