@@ -21,36 +21,36 @@ router.get('/', async(req, res) => {
 });
 
 
-//INSERTAR NUEVA SOLICITUD A MYSQL****************
-router.post("/", async(req, res) => {
-    const { nombre, ciudad, testimonio } = req.body;
+//INSERTAR NUEVO TESTIMONIO****************
+// router.post("/", async(req, res) => {
+//     const { nombre, ciudad, testimonio } = req.body;
 
-    const nuevoTestimonio = {
-        nombre,
-        ciudad,
-        testimonio
+//     const nuevoTestimonio = {
+//         nombre,
+//         ciudad,
+//         testimonio
 
 
-    };
+//     };
 
-    const arrayNuevoTestimonioDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo"  ');
+//     const arrayNuevoTestimonioDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo"  ');
 
-    await pool.query('INSERT INTO testimonios set ?', [nuevoTestimonio]);
-    // req.flash('success', 'Link guardado correctamente');
-    // res.redirect('/contacto');
+//     await pool.query('INSERT INTO testimonios set ?', [nuevoTestimonio]);
+//     // req.flash('success', 'Link guardado correctamente');
+//     // res.redirect('/contacto');
 
-    res.render('inicio', {
-        arrayNuevoTestimonio: arrayNuevoTestimonioDB,
-        alert: true,
-        alertTitle: "Muchas Gracias",
-        alertMessage: "¡TESTIMONIO ENVIADO CORRECTAMENTE!",
-        alertIcon: 'success',
-        showConfirmButton: false,
-        timer: 2000,
-        ruta: ''
-    });
+//     res.render('inicio', {
+//         arrayNuevoTestimonio: arrayNuevoTestimonioDB,
+//         alert: true,
+//         alertTitle: "Muchas Gracias",
+//         alertMessage: "¡TESTIMONIO ENVIADO CORRECTAMENTE!",
+//         alertIcon: 'success',
+//         showConfirmButton: false,
+//         timer: 2000,
+//         ruta: ''
+//     });
 
-});
+// });
 
 
 

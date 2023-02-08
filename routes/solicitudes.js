@@ -13,7 +13,7 @@ router.get('/solicitudes-nuevas', async(req, res) => {
 
 
         const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva" ORDER BY fechaSolicitud DESC');
-        
+
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
@@ -44,7 +44,7 @@ router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-        
+
 
         try {
 
@@ -94,7 +94,7 @@ router.get("/Solicitudes-nuevas/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-        // console.log(req.params)
+            // console.log(req.params)
 
         try {
 
@@ -191,22 +191,22 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
 
 // INSERTAR OBSERVACIONES SOLICITUDES NUEVAS
 router.post('/Solicitudes-nuevas/ver-solicitud/:id', async(req, res) => {
-       // const id = req.params.id;
+    // const id = req.params.id;
     //    console.log(req.params.id)
 
-       const { idSolicitud, observacion,name } = req.body;
-   
-       const nuevaObservacion = {
+    const { idSolicitud, observacion, name } = req.body;
+
+    const nuevaObservacion = {
         idSolicitud,
-           observacion,
-           name
-           
-       };
-                           
-       await pool.query("INSERT INTO obs_por_solicitudes set ?", [nuevaObservacion]);
-       // req.flash('success', 'Link actualizado correctamente');
-       res.redirect(`/Solicitudes-nuevas/ver-solicitud/${req.params.id}`);
-   });
+        observacion,
+        name
+
+    };
+
+    await pool.query("INSERT INTO obs_por_solicitudes set ?", [nuevaObservacion]);
+    // req.flash('success', 'Link actualizado correctamente');
+    res.redirect(`/Solicitudes-nuevas/ver-solicitud/${req.params.id}`);
+});
 
 
 //ELIMINAR SOLICITUD EN ESTADO NUEVA
@@ -237,7 +237,7 @@ router.get('/solicitudes-aprobadas', async(req, res) => {
     if (req.session.loggedin) {
 
         const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada" ORDER BY fechaSolicitud DESC');
-        
+
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
@@ -267,8 +267,8 @@ router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-        // console.log(req.params)
-       
+            // console.log(req.params)
+
 
         try {
 
@@ -316,7 +316,7 @@ router.get("/Solicitudes-aprobadas/imprimir-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-        // console.log(req.params)
+            // console.log(req.params)
 
         try {
 
@@ -360,7 +360,7 @@ router.get("/Solicitudes-aprobadas/imprimir-contato/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-        // console.log(req.params)
+            // console.log(req.params)
 
         try {
 
@@ -405,7 +405,7 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-        // console.log(req.params)
+            // console.log(req.params)
 
         try {
 
@@ -454,7 +454,7 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     // console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, atraso } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -492,7 +492,8 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         estadoSolicitud,
         contrato,
         ruta,
-        firmaContrato
+        firmaContrato,
+        atraso
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -505,15 +506,15 @@ router.post('/Solicitudes-aprobadas/ver-solicitud/:id', async(req, res) => {
     // const id = req.params.id;
     // console.log(req.params.id)
 
-    const { idSolicitud, observacion,name } = req.body;
-   
+    const { idSolicitud, observacion, name } = req.body;
+
     const nuevaObservacion = {
-     idSolicitud,
+        idSolicitud,
         observacion,
         name
-        
+
     };
-                        
+
     await pool.query("INSERT INTO obs_por_solicitudes set ?", [nuevaObservacion]);
     // req.flash('success', 'Link actualizado correctamente');
     res.redirect(`/Solicitudes-aprobadas/ver-solicitud/${req.params.id}`);
@@ -526,7 +527,7 @@ router.get('/solicitudes-declinadas', async(req, res) => {
     if (req.session.loggedin) {
 
         const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada" ORDER BY fechaSolicitud DESC');
-        
+
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada"');
@@ -557,7 +558,7 @@ router.get("/Solicitudes-declinadas/ver-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-        // console.log(req.params)
+            // console.log(req.params)
 
         try {
 
@@ -607,7 +608,7 @@ router.get("/Solicitudes-declinadas/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-        // console.log(req.params)
+            // console.log(req.params)
 
         try {
 
@@ -655,7 +656,7 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     // console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular,  nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -706,15 +707,15 @@ router.post('/Solicitudes-declinadas/ver-solicitud/:id', async(req, res) => {
     // const id = req.params.id;
     // console.log(req.params.id)
 
-    const { idSolicitud, observacion,name } = req.body;
-   
+    const { idSolicitud, observacion, name } = req.body;
+
     const nuevaObservacion = {
-     idSolicitud,
+        idSolicitud,
         observacion,
         name
-        
+
     };
-                        
+
     await pool.query("INSERT INTO obs_por_solicitudes set ?", [nuevaObservacion]);
     // req.flash('success', 'Link actualizado correctamente');
     res.redirect(`/Solicitudes-declinadas/ver-solicitud/${req.params.id}`);
@@ -727,7 +728,7 @@ router.get('/solicitudes-en-revision', async(req, res) => {
     if (req.session.loggedin) {
 
         const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision" ORDER BY fechaSolicitud DESC');
-        
+
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada"');
@@ -757,7 +758,7 @@ router.get("/Solicitudes-en-revision/ver-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-        // console.log(req.params)
+            // console.log(req.params)
 
         try {
 
@@ -806,7 +807,7 @@ router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-        // console.log(req.params)
+            // console.log(req.params)
 
         try {
 
@@ -905,15 +906,15 @@ router.post('/Solicitudes-en-revision/ver-solicitud/:id', async(req, res) => {
     // const id = req.params.id;
     // console.log(req.params.id)
 
-    const { idSolicitud, observacion,name } = req.body;
-   
+    const { idSolicitud, observacion, name } = req.body;
+
     const nuevaObservacion = {
-     idSolicitud,
+        idSolicitud,
         observacion,
         name
-        
+
     };
-                        
+
     await pool.query("INSERT INTO obs_por_solicitudes set ?", [nuevaObservacion]);
     // req.flash('success', 'Link actualizado correctamente');
     res.redirect(`/Solicitudes-en-revision/ver-solicitud/${req.params.id}`);

@@ -159,18 +159,25 @@
 
 %0AEstimad@ *<%= solicitud.nombre %> <%= solicitud.apellido %>* le informamos que su solicitud de préstamos No.<%= solicitud.idSolicitud %> realizada en fecha <%= solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10) %> se encuentra *<%= solicitud.estadoSolicitud %>*%0A
 
-----------------------------------
-
-%0A*Para mas informacion:* %0A
+%0A*Para mas informacion:*%0A
 
 *Email:* contacto@rosfal.com
 %0A*WhatsApp:* 829 856-0203%0A
+%0A*Consultar Solicitud*  https://www.rosfal.com/consulta-solicitud %0A
 
 =================================
 
         " class="dropdown-item">Estado Solicitud Ws</a>
 
                         </li>
+                        <% if(solicitud.estadoSolicitud =="Aprobada"){ %>
+
+                            <li>
+                                <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModalAtraso" class="dropdown-item bg-danger text-light">Atrasos prestamo</a>
+
+                            </li>
+
+                            <% } %>
 
 
                     </ul>
@@ -272,7 +279,7 @@
                                                 <div class="input-group ">
                                                     <div class=" me-lg-5">
                                                         <label class="p-2">Cedula</label>
-                                                        <input type="text" name="cedula" class="form-control " id="cedula" value="<%= solicitud.cedula %>">
+                                                        <input type="number" name="cedula" class="form-control " id="cedula" value="<%= solicitud.cedula %>">
                                                     </div>
                                                     <div class="me-lg-5">
                                                         <label for="sexo" class="p-2">Sexo</label>
@@ -571,6 +578,60 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- modal atrasos -->
+                <div class="modal fade" id="exampleModalAtraso" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Notificacion de atraso</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">Monto atraso:</label>
+                                        <div class="d-flex">
+                                            <input type="text" class="form-control" id="recipient-name" name="atraso" value="<%= solicitud.atraso %> ">
+                                            <button type="submit" class="btn btn-primary text-nowrap">Cargar atraso</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                <% if(solicitud.atraso){ %>
+
+
+                                    <a target="_blank" href="https://wa.me/1<%= solicitud.celular %>?text=
+
+%0A*ROSFAL SOLUCIONES DE PRESTAMOS*%0A
+
+%0ASEÑOR (A):%0A
+*<%= solicitud.nombre %> <%= solicitud.apellido %>*
+
+%0A%0ADespués de un cordial saludo, le informamos que su prestamo No.*<%= solicitud.idSolicitud %>* realizado en fecha <%= solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10) %> presenta un atraso al dia de hoy de *%28 <%= solicitud.atraso %> %29* pesos. Le solicitamos poner al dia su prestamo para evitar mora por atraso.%0A%0A
+
+%0A*Para mas informacion:*%0A
+
+*Email:* contacto@rosfal.com
+%0A*WhatsApp:* 829 856-0203%0A
+
+
+=================================
+
+                                            " class="btn btn-primary">Enviar notificacion</a>
+                                    <% }else{ %>
+                                        <a class="btn btn-primary disabled">Enviar notificacion</a>
+
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </form>
         </div>
 
