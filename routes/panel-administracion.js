@@ -21,6 +21,7 @@ router.get('/panel-administracion', async(req, res) => {
         const arrayTestimoniosNuevosDB = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         const montoPrestadoDB = await pool.query("SELECT SUM(montoSolicitado) montoPrestado FROM solicitudes WHERE estadoSolicitud = 'Aprobada'")
+        const montoLiquidadoDB = await pool.query("SELECT SUM(montoSolicitado) montoLiquidado FROM solicitudes WHERE estadoSolicitud = 'Liquidado'")
         const cantPrestamosDB = await pool.query("SELECT COUNT(idSolicitud) cantPrestamos FROM solicitudes WHERE estadoSolicitud = 'Aprobada'")
         const prestamosAtrasosDB = await pool.query("SELECT SUM(atraso) prestamosAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
         const cantAtrasosDB = await pool.query("SELECT COUNT(idSolicitud) cantAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
@@ -43,6 +44,7 @@ router.get('/panel-administracion', async(req, res) => {
             cantPrestamos: cantPrestamosDB[0].cantPrestamos,
             prestamosAtrasos: prestamosAtrasosDB[0].prestamosAtrasos,
             cantAtrasos: cantAtrasosDB[0].cantAtrasos,
+            montoLiquidado: montoLiquidadoDB[0].montoLiquidado,
             login: true,
             name: req.session.name
 
