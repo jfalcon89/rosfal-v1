@@ -59,6 +59,43 @@
         </div>
     </div>
 
+    <div class="mt-4">
+        <div class="container-fluid d-xxl-flex justify-content-around" style="background-color: #ececec; border-radius: 15px;">
+
+            <div class="d-sm-flex">
+                <h3 class="me-3 font-weight-bold text-truncate">Prestado</h3>
+                <h3 class="text-success">
+                    <%= montoPrestado=Intl.NumberFormat('en-IN', { style: 'currency' , currency: 'USD'
+                    }).format(montoPrestado) %>
+                </h3>
+            </div>
+
+            <div class="d-sm-flex">
+                <h3 class="me-3 font-weight-bold text-truncate ">Atrasos</h3>
+                <h3 class="text-danger">
+                    <%= prestamosAtrasos=Intl.NumberFormat('en-IN', { style: 'currency' , currency: 'USD'
+                    }).format(prestamosAtrasos) %>
+                </h3>
+            </div>
+
+            <div class="d-sm-flex">
+                <h3 class="me-3 font-weight-bold text-truncate">Cant. Prestamos</h3>
+                <h3>
+                    <%= cantPrestamos %>
+                </h3>
+            </div>
+
+            <div class="d-sm-flex">
+                <h3 class="me-3 font-weight-bold text-truncate">Cant. Atrasos</h3>
+                <h3>
+                    <%= cantAtrasos %>
+                </h3>
+            </div>
+
+        </div>
+    </div>
+
+
     <div class=" p-2 d-xxl-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">
         <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #e28724; border-radius: 7px; ">
             <div class="container-fluid d-flex p-3">
