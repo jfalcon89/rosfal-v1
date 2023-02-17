@@ -105,6 +105,7 @@ router.get("/Solicitudes-nuevas/editar-solicitud/:id", async(req, res) => {
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
             const arrayObservacionesDB = await pool.query(`SELECT observacion, name, fechaObservacion FROM obs_por_solicitudes, solicitudes WHERE solicitudes.idSolicitud = obs_por_solicitudes.idSolicitud and obs_por_solicitudes.idSolicitud = ${id} `);
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+            const arrayNotificacionAtrasoDB = await pool.query(`SELECT * FROM novedades_atrasos WHERE idSolicitud = ${id}`);
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             // console.log(solicitudDB[0]);
@@ -117,6 +118,7 @@ router.get("/Solicitudes-nuevas/editar-solicitud/:id", async(req, res) => {
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
                 arrayObservaciones: arrayObservacionesDB,
                 arrayRutas: arrayRutasDB,
+                arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
                 login: true,
                 name: req.session.name
             });
@@ -416,6 +418,7 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
             const arrayObservacionesDB = await pool.query(`SELECT observacion, name, fechaObservacion FROM obs_por_solicitudes, solicitudes WHERE solicitudes.idSolicitud = obs_por_solicitudes.idSolicitud and obs_por_solicitudes.idSolicitud = ${id} `);
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+            const arrayNotificacionAtrasoDB = await pool.query(`SELECT * FROM novedades_atrasos WHERE idSolicitud = ${id} ORDER BY fechaNovedad DESC`);
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             // console.log(solicitudDB[0]);
@@ -428,6 +431,7 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
                 arrayObservaciones: arrayObservacionesDB,
                 arrayRutas: arrayRutasDB,
+                arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
                 login: true,
                 name: req.session.name
             });
@@ -452,7 +456,9 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
 //GUARDAR ACTUALIZACION DE SOLICITUD DESDE APROBADAS
 router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
-    // console.log(req.params.id)
+    // const idSolicitud = id;
+
+    // const data = {};
 
     const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, atraso } = req.body;
 
@@ -496,10 +502,31 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         atraso
     };
 
+    const atrasoDB = await pool.query(`SELECT novedades_atrasos.atraso FROM novedades_atrasos WHERE novedades_atrasos.idSolicitud = ${id}`);
+
+    // console.log(atrasoDB)
+    // const novedadAtraso = { idSolicitud, celular, ruta, atraso }
+
+    // if (nuevaSolicitud) {
+    //     data.nuevaSolicitud = nuevaSolicitud;
+    // }
+
+    // if (atraso > 0 && atraso != atrasoDB) {
+    //     data.novedadAtraso = novedadAtraso;
+    //     await pool.query("INSERT INTO novedades_atrasos set ?", [data.novedadAtraso, id]);
+    // }
+
+    // if (atraso != atrasoDB) {
+    //     data.novedadAtraso = novedadAtraso;
+    //     await pool.query("INSERT INTO novedades_atrasos set ?", [data.novedadAtraso, id]);
+    // }
+
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
     // req.flash('success', 'Link actualizado correctamente');
     res.redirect(`/Solicitudes-aprobadas/editar-solicitud/${req.params.id}`);
 });
+
+
 
 // INSERTAR OBSERVACIONES SOLICITUDES APROBADAS
 router.post('/Solicitudes-aprobadas/ver-solicitud/:id', async(req, res) => {
@@ -619,6 +646,8 @@ router.get("/Solicitudes-declinadas/editar-solicitud/:id", async(req, res) => {
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
             const arrayObservacionesDB = await pool.query(`SELECT observacion, name, fechaObservacion FROM obs_por_solicitudes, solicitudes WHERE solicitudes.idSolicitud = obs_por_solicitudes.idSolicitud and obs_por_solicitudes.idSolicitud = ${id} `);
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+            const arrayNotificacionAtrasoDB = await pool.query(`SELECT * FROM novedades_atrasos WHERE idSolicitud = ${id}`);
+
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             // console.log(solicitudDB[0]);
@@ -631,6 +660,7 @@ router.get("/Solicitudes-declinadas/editar-solicitud/:id", async(req, res) => {
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
                 arrayObservaciones: arrayObservacionesDB,
                 arrayRutas: arrayRutasDB,
+                arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
                 login: true,
                 name: req.session.name
             });
@@ -818,6 +848,8 @@ router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
             const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
             const arrayObservacionesDB = await pool.query(`SELECT observacion, name, fechaObservacion FROM obs_por_solicitudes, solicitudes WHERE solicitudes.idSolicitud = obs_por_solicitudes.idSolicitud and obs_por_solicitudes.idSolicitud = ${id} `);
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+            const arrayNotificacionAtrasoDB = await pool.query(`SELECT * FROM novedades_atrasos WHERE idSolicitud = ${id}`);
+
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             // console.log(solicitudDB[0]);
@@ -830,6 +862,7 @@ router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
                 arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
                 arrayObservaciones: arrayObservacionesDB,
                 arrayRutas: arrayRutasDB,
+                arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
                 login: true,
                 name: req.session.name
             });

@@ -629,9 +629,50 @@
 
                                         <% } %>
                             </div>
+                            <H6 class="text-center mt-3">HISTORIAL NOTIFICACIONES ATRASOS</H6>
+                            <div class="container-table table-responsive">
+                                <table id="" class="display responsive nowrap table-striped table table-success " style="width:100%">
+                                    <thead class="thead-ligth">
+                                        <tr>
+
+                                            <th scope="col">Id Registro</th>
+                                            <th scope="col">Monto notificado</th>
+                                            <th scope="col">Fecha Notificacion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <% if (arrayNotificacionAtraso.length> 0) { %>
+                                            <% arrayNotificacionAtraso.forEach(NotificacionAtraso=> { %>
+
+                                                <tr>
+
+                                                    <td>
+                                                        <%= NotificacionAtraso.idNovedadAtraso %>
+                                                    </td>
+                                                    <td>
+                                                        <%= NotificacionAtraso.atraso %>
+                                                    </td>
+                                                    <td>
+                                                        <%= NotificacionAtraso.fechaNovedad.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
+                                                    </td>
+
+                                                </tr>
+
+                                                <% }) %>
+                                                    <% }else { %>
+                                                        <div><strong>Sin Notificacion de atrasos</strong></div>
+                                                        <% } %>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
+
+
 
             </form>
         </div>

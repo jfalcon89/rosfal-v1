@@ -14,6 +14,7 @@ const pool = require("../database");
 router.get('/panel-administracion', async(req, res) => {
     if (req.session.loggedin) {
 
+        let i = 0
 
         const arraySolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arrayMensajesNuevosDB = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
@@ -25,6 +26,7 @@ router.get('/panel-administracion', async(req, res) => {
         const cantPrestamosDB = await pool.query("SELECT COUNT(idSolicitud) cantPrestamos FROM solicitudes WHERE estadoSolicitud = 'Aprobada'")
         const prestamosAtrasosDB = await pool.query("SELECT SUM(atraso) prestamosAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
         const cantAtrasosDB = await pool.query("SELECT COUNT(idSolicitud) cantAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
+        const arrayNotificacionAtrasoDB = await pool.query(`SELECT novedades_atrasos.idSolicitud, idNovedadAtraso, solicitudes.nombre, solicitudes.apellido, novedades_atrasos.celular, novedades_atrasos.ruta, novedades_atrasos.atraso, fechaNovedad  FROM novedades_atrasos, solicitudes WHERE novedades_atrasos.idSolicitud = solicitudes.idSolicitud ORDER BY fechaNovedad DESC`);
 
 
         const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" ORDER BY fechaSolicitud DESC');
@@ -45,6 +47,8 @@ router.get('/panel-administracion', async(req, res) => {
             prestamosAtrasos: prestamosAtrasosDB[0].prestamosAtrasos,
             cantAtrasos: cantAtrasosDB[0].cantAtrasos,
             montoLiquidado: montoLiquidadoDB[0].montoLiquidado,
+            arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
+            i,
             login: true,
             name: req.session.name
 
@@ -60,6 +64,21 @@ router.get('/panel-administracion', async(req, res) => {
 });
 
 
+
+router.post('/panel-administracion', async(req, res) => {
+    const idSolicitud = req.body.idSolicitud;
+    const celular = req.body.celular;
+    const ruta = req.body.ruta;
+    const atraso = req.body.atraso;
+
+    const novedadAtraso = { idSolicitud, celular, ruta, atraso }
+    console.log(novedadAtraso)
+
+    await pool.query("INSERT INTO novedades_atrasos set ?", [novedadAtraso]);
+
+
+    res.redirect(`panel-administracion`);
+});
 
 
 
