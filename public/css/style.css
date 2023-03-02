@@ -278,3 +278,29 @@ body {
     z-index: 1;
     width: 60px;
 }
+
+
+/* modal anuncio */
+
+.modal-anuncio {
+    position: fixed;
+    z-index: 10;
+    /* height: 300px;
+    width: 300px;
+    margin: 45%;
+    transition: 0.5s; */
+}
+
+.animated-div {
+    opacity: 0;
+    animation: aparecer 0.5s ease-in-out forwards;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

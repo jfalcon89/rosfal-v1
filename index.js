@@ -29,9 +29,11 @@ const rutasRoutes = require("./routes/rutas");
 const rutasTestimonios = require("./routes/testimonios");
 const rutasObservaciones = require("./routes/observaciones");
 const rutasConsulta_solicitud = require("./routes/consulta-solicitud");
+const controlesAnuncios = require("./routes/controles-anuncios");
+// const controlesCorreo = require("./routes/enviar-correo");
 
 //--------------CONEXION AL SERVIDOR-----------------//
-app.set("port", process.env.PORT || 3005);
+app.set("port", process.env.PORT || 3006);
 
 app.listen(app.get("port"), () => {
     console.log("servidor funcionando en el puerto", app.get("port"))
@@ -88,6 +90,8 @@ app.use("/", rutasRoutes);
 app.use("/", rutasTestimonios);
 app.use("/", rutasObservaciones);
 app.use("/", rutasConsulta_solicitud);
+app.use("/", controlesAnuncios);
+// app.use("/", controlesCorreo);
 
 
 //motor de plantilla 

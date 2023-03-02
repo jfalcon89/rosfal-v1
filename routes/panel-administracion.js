@@ -16,6 +16,8 @@ router.get('/panel-administracion', async(req, res) => {
 
         let i = 0
 
+
+
         const arraySolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arrayMensajesNuevosDB = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
         const arrayRutasDB = await pool.query('SELECT idRuta FROM rutas ');
@@ -79,6 +81,15 @@ router.post('/panel-administracion', async(req, res) => {
 
     res.redirect(`panel-administracion`);
 });
+
+
+
+// function miFuncion() {
+//     console.log("¡Hola en 5 segundos!");
+// }
+
+// setTimeout(miFuncion, 5000);
+
 
 
 

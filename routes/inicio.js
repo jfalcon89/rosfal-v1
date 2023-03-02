@@ -12,8 +12,16 @@ router.get('/', async(req, res) => {
 
     const arrayNuevoTestimonioDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ');
 
+    const modal_anuncio_salonDB = await pool.query("SELECT anuncio modal_anuncio_salon, estado FROM tab_anuncios WHERE idAnuncio = 1")
+    const modal_anuncio_peluqueriaDB = await pool.query("SELECT anuncio modal_anuncio_peluqueria, estado FROM tab_anuncios WHERE idAnuncio = 2")
+
+
+    // console.log(estadoAnuncioDB[0].estado)
+
     res.render('inicio', {
-        arrayNuevoTestimonio: arrayNuevoTestimonioDB
+        arrayNuevoTestimonio: arrayNuevoTestimonioDB,
+        modal_anuncio_salon: modal_anuncio_salonDB[0],
+        modal_anuncio_peluqueria: modal_anuncio_peluqueriaDB[0]
 
 
     });

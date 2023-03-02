@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css y js bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- linkeado css propio -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- icons bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- generador de pdf cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <!-- moment.js cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <!-- DATATABLE -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
+    <link rel="icon" href="/img/favicon/logo-favicon.png">
+    <title>Rosfal - Anuncios</title>
+</head>
+
+<body>
+
+
+
+
+    <div class="container-fluid " style="background-color: #ececec;">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div class="d-flex">
+                <a class="bg-info text-decoration-none text-light p-2" href="/panel-administracion">VOLVER ATRAS</a>
+                <h5 class="text-dark m-2" style="font-size: large;">CONTROLES ANUNCIOS</h5>
+            </div>
+            <div class="btn-group">
+                <% if (login) { %>
+                    <button type="button" class="btn btn-info"><%= name %></button>
+                    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="/">Ir a ROSFAL PAGE</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/logout">Cerrar Session</a></li>
+
+                    </ul>
+                    <%}  %>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container-fluid p-4 mt-5 shadow-sm ">
+        <h3 class="text-secondary"><strong>CONFIGURACION </strong>DE ANUNCIOS</h3>
+
+        <div class="container-fluid ">
+            <div class="container-table table-responsive">
+                <table id="datatable3" class="display responsive nowrap" style="width:100%">
+                    <thead class="thead-ligth">
+                        <tr>
+
+                            <th scope="col">ID Anuncio</th>
+                            <th scope="col">Descripcion</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                            <th scope="col">Vista previa</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% if (anuncio.length > 0) { %>
+                            <% anuncio.forEach(anuncio=> { %>
+
+                                <%= i++ %>
+
+                                    <tr>
+                                        <td>
+                                            <%= anuncio.idAnuncio %>
+                                        </td>
+                                        <td>
+                                            <%= anuncio.anuncio %>
+                                        </td>
+                                        <td>
+                                            <%= anuncio.estado %>
+                                        </td>
+                                        <td>
+                                            <a href="/controles-anuncios/<%= i %>" type="submit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalNovedad<%= i %>">MODIFICAR ANUNCIO</a>
+
+                                        </td>
+                                        <td>
+                                            <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModalImagen<%= i %>"><img src="/img/<%= anuncio.anuncio %>.jpg" style="width: 300px;" alt=""></a>
+
+                                        </td>
+                                    </tr>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalNovedad<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel">Modificacion Anuncio</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <form method="POST">
+                                                        <input class="form-control d-none" type="text" name="idAnuncio" value="<%= anuncio.idAnuncio%>">
+
+                                                        <div class="input-group mb-3">
+                                                            <span class="input-group-text" id="basic-addon1">Titulo</span>
+                                                            <input type="text" class="form-control" aria-label="Descripcion" name="" value="<%=  %>" aria-describedby="basic-addon1">
+                                                            <select name="" class="form-select" id="inputGroupSelect01">
+                                                                <option selected>Estado</option>
+                                                                <option value="Activo">Activo</option>
+                                                                <option value="Inactivo">Inactivo</option>
+                                                              </select>
+                                                        </div>
+
+                                                        <div class="input-group mb-3">
+                                                            <span class="input-group-text" id="basic-addon1">Descripcion</span>
+                                                            <input type="text" class="form-control" aria-label="Descripcion" name="anuncio" value="<%= anuncio.anuncio %>" aria-describedby="basic-addon1">
+                                                        </div>
+
+                                                        <div class="input-group mb-3">
+                                                            <label class="input-group-text" for="inputGroupSelect01">Estado</label>
+                                                            <select name="estado" class="form-select" id="inputGroupSelect01">
+                                                              <option selected><%= anuncio.estado %></option>
+                                                              <option value="Activo">Activo</option>
+                                                              <option value="Inactivo">Inactivo</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="modal-footer border-0">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                                        </div>
+
+                                                    </form>
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal imagen -->
+                                    <div class="modal fade" id="exampleModalImagen<%= i %>" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl modal-dialog-centered justify-content-center">
+                                            <div class="">
+                                                <!-- <button type="button" class="btn-close btn-danger " data-bs-dismiss="modal" aria-label="Close"></button> -->
+
+                                                <div class="d-lg-flex" style="box-shadow: 0px 0px 15px #2D8DBD">
+
+                                                    <div class="">
+                                                        <img class="img-fluid " src="/img/<%= anuncio.anuncio %>.jpg" alt="">
+                                                        <!-- <img src="/img/anuncio_peluqueria.jpg" alt="anuncio peluqueria" class="img-fluid"> -->
+                                                    </div>
+                                                    <div class="bg-light flex-column ">
+                                                        <div class="container-fluid">
+                                                            <h4 class="text-info mb-4 mt-lg-4">Solicitar Ahora</h4>
+                                                            <div class="input-group mb-3">
+                                                                <input class="form-control form-control-lg" type="text" placeholder="Nombre Completo" aria-label=".form-control-lg example">
+                                                            </div>
+                                                            <div class="input-group mb-3">
+                                                                <input class="form-control form-control-lg" type="text" placeholder="Telefono" aria-label=".form-control-lg example">
+                                                            </div>
+                                                            <div class="input-group mb-lg-5">
+                                                                <input class="form-control form-control-lg " type="text" placeholder="Monto" aria-label=".form-control-lg example">
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-grid m-3">
+                                                            <button class="btn btn-primary" style="margin-bottom: inherit;">SOLICITAR</button>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+            </div>
+
+            <% }) %>
+                <% } %>
+
+                    </tbody>
+                    </table>
+        </div>
+    </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#datatable3').DataTable({
+                "lengthMenu": [5, 10, 25, 50, 100],
+                order: [
+                    [0, 'desc']
+                ],
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+        });
+    </script>
+
+
+</body>
+
+</html>

@@ -32,10 +32,108 @@
     <title>Rosfal - Inicio</title>
 </head>
 
-<body>
+<body class="modal-open" data-aos-delay="0" data-aos-duration="1000">
+    <!-- <body style="overflow: scroll; padding-right: 23px;" class="modal-open" data-aos-delay="0" data-aos-duration="1000" data-aos-easing="ease"> -->
     <div class="whatsapp">
         <a class="btn-ws " href="https://bit.ly/3xzs0RV" target="_blank"><img class="img-fluid" src="/img/logo-ws.png" alt="logo ws"></a>
     </div>
+
+
+    <!-- anuncio salon -->
+    <input class="d-none estado_anuncio_salon" type="text" value="<%= modal_anuncio_salon.estado %>" id="<%= modal_anuncio_salon.estado %>">
+
+    <div class="d-flex justify-content-center" style="display: none;" id="container_anuncio_salon">
+        <div class="" style="display: none; margin-top: 10%;" id="modal_anuncio_salon">
+            <div class="d-flex justify-content-end " id="close_anuncio_salon"><i class="bi bi-x-square-fill fs-5 "></i></div>
+
+            <div class="d-lg-flex" style="box-shadow: 0px 0px 15px #2D8DBD">
+                <div class="">
+                    <img src="/img/anuncio_salon.jpg" alt="anuncio salon" class="img-fluid">
+                </div>
+                <div class="bg-light flex-column ">
+                    <div class="container-fluid">
+                        <h4 class="text-info mb-4 mt-lg-4">Solicitar Ahora</h4>
+                        <div class="input-group mb-3">
+                            <input class="form-control form-control-lg" type="text" placeholder="Nombre Completo" aria-label=".form-control-lg example">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input class="form-control form-control-lg" type="text" placeholder="Telefono" aria-label=".form-control-lg example">
+                        </div>
+                        <div class="input-group mb-lg-5">
+                            <input class="form-control form-control-lg " type="text" placeholder="Monto" aria-label=".form-control-lg example">
+                        </div>
+                    </div>
+                    <div class="d-grid m-3">
+
+                        <button class="btn btn-primary" style="margin-bottom: inherit;">SOLICITAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- anuncio peluqueria -->
+    <input class="d-none estado_anuncio_peluqueria" type="text" value="<%= modal_anuncio_peluqueria.estado %>" id="<%= modal_anuncio_peluqueria.estado %>">
+
+    <div class="d-flex justify-content-center " style="display: none;" id="container_anuncio_peluqueria">
+        <div class="" style="display: none; margin-top: 10%;" id="modal_anuncio_peluqueria">
+            <div class="d-flex justify-content-end " id="close_anuncio_peluqueria"><i class="bi bi-x-square-fill fs-5 "></i></div>
+            <div class="d-lg-flex" style="box-shadow: 0px 0px 15px #2D8DBD">
+                <div class="">
+                    <img src="/img/anuncio_peluqueria.jpg" alt="anuncio peluqueria" class="img-fluid">
+                </div>
+                <div class="bg-light flex-column ">
+                    <div class="container-fluid">
+                        <h4 class="text-info mb-4 mt-lg-4">Solicitar Ahora</h4>
+                        <div class="input-group mb-3">
+                            <input class="form-control form-control-lg" type="text" placeholder="Nombre Completo" aria-label=".form-control-lg example">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input class="form-control form-control-lg" type="text" placeholder="Telefono" aria-label=".form-control-lg example">
+                        </div>
+                        <div class="input-group mb-lg-5">
+                            <input class="form-control form-control-lg " type="text" placeholder="Monto" aria-label=".form-control-lg example">
+                        </div>
+                    </div>
+                    <div class="d-grid m-3">
+
+                        <button class="btn btn-primary" style="margin-bottom: inherit;">SOLICITAR</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <h5>ANUNCIO PELUQUERIA</h5> -->
+
+            <!-- <div style="background-color: #598AB6; height: 300px; width: 300px;"> -->
+
+        </div>
+    </div>
+    </div>
+
+    <!-- fin -->
+
+    <!-- Modal -->
+    <!-- <div class="modal fade show " style="display: block;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- fin -->
+
+
 
     <!-- <a href="https://bit.ly/3pUAZZq"><img src="/img/logo-ws.png" alt="logo ws" style="width: 60px; position: fixed; z-index: 100; margin-left: 80%; margin-top: 184;"></a>
     <a href="https://bit.ly/3pUAZZq"><img src="/img/logo-ws.png" alt="logo ws" style="width: 60px; position: fixed; z-index: 100; margin-left: 80%; margin-top: 120;"></a>
@@ -90,6 +188,28 @@
         </nav>
     </div>
 
+    <!-- ----------- -->
+
+    <!-- <P>Asunto: Confirmación de solicitud de préstamo</p><br>
+
+    <P>Estimado/a ${nombre} ${apellido},</p>
+
+    <P>Esperamos que se encuentre bien. Le escribimos para confirmar que hemos recibido su solicitud de préstamo.</p>
+
+    <P>Nos complace informarle que su solicitud estara siendo revisada. Nos pondremos en contacto con usted en breve para informarle si su solicitud ha sido aprobada.</p>
+
+    <P>Mientras tanto, si tiene alguna pregunta o inquietud, no dude en ponerse en contacto con nosotros.</p><br>
+
+    <P>Gracias por elegir nuestro servicio de préstamos.</p><br>
+
+    <P>Atentamente,</p><br>
+
+    <h4 style="color: #2D8DBD;">Rosfal Soluciones de Prestamos</h4>
+    <P><strong>T.</strong> 829-856-0203 <strong>EMAIL.</strong> contacto@rosfal.com </P>
+    <P>Síguenos en <strong>FB:</strong> Rosfalrd <strong>IG:</strong> @Rosfalrd WEB: <a href="www.rosfal.com">www.rosfal.com</a> </P>
+    <img style="width: 150px;" src="/img/LOGO-ROSFAL.png" alt="Logo-rosfal"><br> -->
+
+    <!-- ----------- -->
 
     <!-- <div class="hero justify-content-center d-flex " style=" ">
         <img class="w-100" src="/img/PORTADA2.jpg" alt="">
@@ -394,6 +514,7 @@
 
 
     <script src="/js/scriptSlide.js"></script>
+    <script src="/js/anuncios-inicio-event.js"></script>
 
     <script>
         AOS.init({
