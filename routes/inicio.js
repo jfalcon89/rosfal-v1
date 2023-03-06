@@ -23,18 +23,24 @@ router.get('/', async(req, res) => {
     console.log(browser)
 
 
-    try {
-        const response = await fetch(`https://ipapi.co/${ip}/json`);
-        const data = await response.json();
-        const { latitude, longitude, country_name, city, postal } = data;
+    // try {
+    //     const response = await fetch(`https://ipapi.co/${ip}/json`);
+    //     const data = await response.json();
+    //     const { latitude, longitude, country_name, city, postal } = data;
 
-        console.log(data)
+    //     console.log(data)
 
-        console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Country: ${country_name}, City: ${city}, Postal: ${postal}`);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error al obtener la ubicación');
-    }
+    //     console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Country: ${country_name}, City: ${city}, Postal: ${postal}`);
+    // } catch (error) {
+    //     console.error(error);
+    //     res.status(500).send('Error al obtener la ubicación');
+    // }
+
+    fetch('https://ipapi.co/8.8.8.8/json')
+        .then(response => response.json())
+        .then(data => console.log(data))
+
+
 
 
 
