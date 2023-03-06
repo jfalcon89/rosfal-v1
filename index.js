@@ -6,8 +6,9 @@ const path = require("path");
 const dotenv = require('dotenv').config()
 const moment = require("moment");
 const bcrypt = require('bcryptjs');
-
 const fetch = require('node-fetch');
+
+const useragent = require('express-useragent');
 
 // conexcion a la base de datos MySql
 const pool = require("./database");
@@ -68,6 +69,7 @@ app.get('/logout', function(req, res) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(useragent.express());
 
 //----------CONFIGURACION RUTAS ESTATICA-------------//
 app.use(express.static(path.join(__dirname, "public")));

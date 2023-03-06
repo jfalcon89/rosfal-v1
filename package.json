@@ -18,6 +18,8 @@
         "ejs": "^3.1.8",
         "express": "^4.18.1",
         "express-session": "^1.17.3",
+        "express-useragent": "^1.0.15",
+        "ipapi.co": "^0.3.0",
         "moment": "^2.29.4",
         "mysql": "^2.18.1",
         "node-fetch": "^2.6.7",
