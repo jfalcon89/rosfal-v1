@@ -25,8 +25,10 @@ router.post("/solicita-ya", async(req, res) => {
     const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, frecuenciaPagos, cantidadPagosSemanales, cantidadPagosDiarios, cantidadPagosQuincenales, cantidadPagosMensuales } = req.body;
 
     // OBTENCION DE PARAMAMETROS CLIENTE
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    // const ip = "152.0.12.42";
+    // const ipString = "152.0.12.42, 172.71.82.116";
+    const ipString = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    const ip = ipString.split(',')[0];
+
     const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     const browser = req.useragent.browser;
 
