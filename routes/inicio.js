@@ -44,7 +44,7 @@ router.get('/', async(req, res) => {
             };
 
             console.log(nuevaVisita)
-            console.log(fechaHoraSantoDomingo + "sto dgo")
+
 
             pool.query('INSERT INTO visitas set ?', [nuevaVisita]);
         })
