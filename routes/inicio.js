@@ -16,6 +16,8 @@ router.get('/', async(req, res) => {
     const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     const browser = req.useragent.browser;
 
+    const sistemaOperativo = req.useragent.os
+    const plataforma = req.useragent.platform
 
 
     fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=c48b62c0f8844a7c86cb0020ff90e0d3&ip_address=${ip}`)
@@ -36,6 +38,8 @@ router.get('/', async(req, res) => {
                 ip,
                 device,
                 browser,
+                sistemaOperativo,
+                plataforma,
                 latitud,
                 longitud,
                 fecha
@@ -46,7 +50,7 @@ router.get('/', async(req, res) => {
             console.log(nuevaVisita)
 
 
-            pool.query('INSERT INTO visitas set ?', [nuevaVisita]);
+            // pool.query('INSERT INTO visitas set ?', [nuevaVisita]);
         })
 
 
