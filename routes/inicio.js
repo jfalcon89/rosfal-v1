@@ -26,6 +26,8 @@ router.get('/', async(req, res) => {
             const ciudad = data.city;
             const latitud = data.latitude;
             const longitud = data.longitude;
+            const fecha = new Date().toLocaleString('en-US', { timeZone: 'America/Santo_Domingo' });
+
 
 
             const nuevaVisita = {
@@ -35,12 +37,14 @@ router.get('/', async(req, res) => {
                 device,
                 browser,
                 latitud,
-                longitud
+                longitud,
+                fecha
 
 
             };
 
             console.log(nuevaVisita)
+            console.log(fechaHoraSantoDomingo + "sto dgo")
 
             pool.query('INSERT INTO visitas set ?', [nuevaVisita]);
         })
