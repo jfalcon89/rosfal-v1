@@ -31,6 +31,9 @@ router.post("/solicita-ya", async(req, res) => {
 
     const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     const browser = req.useragent.browser;
+    const sistemaOperativo = req.useragent.os
+    const plataforma = req.useragent.platform
+    const fecha = new Date().toLocaleString('en-US', { timeZone: 'America/Santo_Domingo' });
 
     fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=c48b62c0f8844a7c86cb0020ff90e0d3&ip_address=${ip}`)
         .then(response => response.json())
@@ -80,6 +83,9 @@ router.post("/solicita-ya", async(req, res) => {
             <P><strong>Direccion ip</strong>: ${ip}</p>
             <P><strong>Dispositivo</strong>: ${device}</p>
             <P><strong>Navegador</strong>: ${browser}</p>
+            <P><strong>Sistema Operativo</strong>: ${sistemaOperativo}</p>
+            <P><strong>Plataforma</strong>: ${plataforma}</p>
+            <P><strong>Fecha</strong>: ${fecha}</p>
             <P><strong>Latitud</strong>: ${data.latitude} <strong>longitud</strong>: ${data.longitude}</p><br>
         
             <P>Atentamente,</p>
