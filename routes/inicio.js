@@ -50,7 +50,7 @@ router.get('/', async(req, res) => {
             console.log(nuevaVisita)
 
 
-            // pool.query('INSERT INTO visitas set ?', [nuevaVisita]);
+            pool.query('INSERT INTO visitas set ?', [nuevaVisita]);
         })
 
 
