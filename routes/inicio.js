@@ -16,7 +16,6 @@ router.get('/', async(req, res) => {
     const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     const bot = req.useragent.isBot ? 'true' : 'false';
     const browser = req.useragent.browser;
-
     const sistemaOperativo = req.useragent.os
     const plataforma = req.useragent.platform
 

@@ -132,7 +132,7 @@
                 <li class="nav-item me-md-4"><a class="nav-link d-flex" href="#"><i class="bi bi-sliders me-2"></i>Mantenimiento</a></li>
                 <li class="nav-item me-md-4"><a class="nav-link d-flex" href="register"><i class="bi bi-person-plus me-2"></i>Registro Usuarios</a></li>
                 <li class="nav-item me-md-4"><a class="nav-link d-flex" href="controles-anuncios"><i class="bi bi-info-square me-2"></i>Controles Anuncios</a></li>
-                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="/"><i class="bi bi-window-fullscreen me-2"></i>Visitas</a></li>
+                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="/visitas-web"><i class="bi bi-window-fullscreen me-2"></i>Visitas</a></li>
             </ul>
         </div>
     </nav>
@@ -295,7 +295,11 @@
 
 
     <div class="container-fluid p-4 mt-5">
-        <h3 class="text-secondary">VISITAS WEB</h3>
+        <div class="d-flex justify-content-between">
+            <h3 class="text-secondary">VISITAS WEB</h3>
+            <a href="/visitas-web" class="btn btn-success">ACTUALIZAR</a>
+
+        </div>
         <div class="container-fluid p-4">
             <div class="container-table table-responsive">
                 <table id="datatable" class="display responsive nowrap" style="width:100%">
@@ -314,6 +318,7 @@
                             <th scope="col">Fecha</th>
                             <th scope="col">Latitud</th>
                             <th scope="col">Longitud</th>
+                            <th scope="col">isBot</th>
 
 
                         </tr>
@@ -357,6 +362,9 @@
                                     </td>
                                     <td>
                                         <%= visita.longitud %>
+                                    </td>
+                                    <td>
+                                        <%= visita.bot %>
                                     </td>
 
                                 </tr>
