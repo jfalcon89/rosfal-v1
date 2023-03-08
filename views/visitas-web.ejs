@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- css y js bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!-- linkeado css propio -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- icons bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- generador de pdf cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <!-- moment.js cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <!-- css datatable -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+
+    <!-- <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script> -->
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
+    <link rel="icon" href="/img/favicon/logo-favicon.png">
+    <title>Rosfal - Visitas Web</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid  " style="background-color: #ececec;">
+
+            <div class="d-flex">
+                <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
+                <h5 class="text-dark m-2 d-flex align-items-center" style="font-size: large;">VISITAS</h5>
+            </div>
+            <button class="navbar-toggler  " type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon "></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="offcanvas-body ">
+
+                    <div class="d-flex">
+                        <div class="btn-group ">
+                            <button type="button" class=" border-0 dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-square me-2" style="font-size: 40px;"></i></button>
+                            <ul class="dropdown-menu ">
+                                <li> <a href="/register" class=" dropdown-item">Registrar Usuario</a></li>
+                                <li> <a href="/controles-anuncios" class=" dropdown-item">Controles Anuncios</a></li>
+                                <li><a class="dropdown-item" href="/">Ir a ROSFAL PAGE</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/logout">Cerrar Session</a></li>
+                            </ul>
+                        </div>
+                        <div class="user-container me-2 d-flex">
+                            <% if (login) { %>
+                                <div>
+                                    <h4 type="" class="" style="color: #aeaeae;">
+                                        <%= name %>
+                                    </h4>
+                                    <h6>ADMINISTRADOR</h6>
+                                </div>
+                                <%}  %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="navbarOffcanvasLabel">
+                <h5 class="text-dark m-2" style="font-size: large;">VISITAS</h5>
+            </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="user-container me-2 d-flex align-content-center" style="background-color: #ececec;">
+                <% if (login) { %>
+                    <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
+                    <div>
+                        <h4 type="" class="" style="color: #aeaeae;">
+                            <%= name %>
+                        </h4>
+                        <h6>ADMINISTRADOR</h6>
+                    </div>
+                    <%}  %>
+            </div>
+            <hr class="dropdown-divider">
+            <ul class="navbar-nav">
+                <li class="p-2"><a class="dropdown-item" href="panel-administracion"><i class="bi bi-house-door me-2"></i>Inicio</a></li>
+                <li class="p-2"><a class="dropdown-item" href="solicitudes-nuevas"><i class="bi bi-file-text me-2"></i>Solicitudes</a></li>
+                <li class="p-2"><a class="dropdown-item" href="mensajes"><i class="bi bi-envelope-paper me-2"></i>Bandeja Mensaje</a></li>
+                <li class="p-2"><a class="dropdown-item" href="rutas"><i class="bi bi-map me-2"></i>Rutas</a></li>
+                <li class="p-2"><a class="dropdown-item" href="testimonios"><i class="bi bi-chat-left-text me-2"></i>Testimonios</a></li>
+                <li class="p-2"><a class="dropdown-item" href="#"><i class="bi bi-sliders me-2"></i>Mantenimiento</a></li>
+                <li class="p-2"><a class="dropdown-item" href="register"><i class="bi bi-person-plus me-2"></i>Registro Usuarios</a></li>
+                <li class="p-2"><a class="dropdown-item" href="controles-anuncios"><i class="bi bi-info-square me-2"></i>Controles Anuncios</a></li>
+                <li class="p-2"><a class="dropdown-item" href="/"><i class="bi bi-window-fullscreen me-2"></i>Visitas</a></li>
+                <hr class="dropdown-divider">
+                <li class="p-2"><a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-left me-2"></i>Cerrar Session</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-lg-block ">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav d-flex justify-content-between " style="justify-content: space-around;">
+                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="panel-administracion"><i class="bi bi-house-door me-2"></i>Inicio</a></li>
+                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="solicitudes-nuevas"><i class="bi bi-file-text me-2"></i>Solicitudes</a></li>
+                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="mensajes"><i class="bi bi-envelope-paper me-2"></i>Bandeja Mensaje</a></li>
+                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="rutas"><i class="bi bi-map me-2"></i>Rutas</a></li>
+                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="testimonios"><i class="bi bi-chat-left-text me-2"></i>Testimonios</a></li>
+                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="#"><i class="bi bi-sliders me-2"></i>Mantenimiento</a></li>
+                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="register"><i class="bi bi-person-plus me-2"></i>Registro Usuarios</a></li>
+                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="controles-anuncios"><i class="bi bi-info-square me-2"></i>Controles Anuncios</a></li>
+                <li class="nav-item me-md-4"><a class="nav-link d-flex" href="/"><i class="bi bi-window-fullscreen me-2"></i>Visitas</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <!-- <div class=" p-2 d-lg-flex flex-sm-row mt-4 " style="background-color: #ececec;">
+        <div class="container-fluid mt-3 mb-3 me-lg-3 d-flex" style="background-color: #d4d4d4;">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-nuevas-solicitudes.svg" alt="Solicitudes Nuevas">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%=  %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-nuevas">Solicitudes Nuevas</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex ">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-aprobadas.svg" alt="Solicitudes Aprobadas">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%=  %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-aprobadas">Solicitudes Aprobadas</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-declinadas.svg" alt="Solicitudes Declinadas">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%=  %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-declinadas">Solicitudes Declinadas</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white mt-3 me-lg-3 mb-3 d-flex">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-en-revision.svg" alt="Solicitudes en Revision">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%=  %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-en-revision">Solicitudes en Revision</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white mt-3 mb-3 d-flex">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-total-solicitudes.svg" alt="Solicitudes en Revision">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%=  %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/todas-las-solicitudes">Todas las Solicitudes</a></div>
+                </div>
+            </div>
+        </div>
+
+
+    </div> -->
+
+    <!-- chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- chart1 -->
+    <div class="chart-container ">
+        <canvas id="myChart" style="position: relative; height:40vh; width:80vw"></canvas>
+    </div>
+    <div class="visually-hidden">
+        <p id="enero">
+            <%=  %>
+        </p>
+        <p id="febrero">
+            <%=  %>
+        </p>
+        <p id="marzo">
+            <%=  %>
+        </p>
+        <p id="abril">
+            <%=  %>
+        </p>
+        <p id="mayo">
+            <%=  %>
+        </p>
+        <p id="junio">
+            <%=  %>
+        </p>
+        <p id="julio">
+            <%=  %>
+        </p>
+        <p id="agosto">
+            <%=  %>
+        </p>
+        <p id="septiembre">
+            <%=  %>
+        </p>
+        <p id="octubre">
+            <%=  %>
+        </p>
+        <p id="noviembre">
+            <%=  %>
+        </p>
+        <p id="diciembre">
+            <%=  %>
+        </p>
+
+
+    </div>
+
+    <!-- chart2 -->
+    <div class="chart-container2 ">
+        <canvas id="myChart2" style="position: relative; height:40vh; width:80vw"></canvas>
+    </div>
+    <div class="visually-hidden">
+        <p id="pc">
+            <%= pc.pc %>
+        </p>
+        <p id="android">
+            <%= android.android %>
+        </p>
+        <p id="iphone">
+            <%= iphone.iphone %>
+        </p>
+        <p id="ipad">
+            <%= ipad.ipad %>
+        </p>
+
+
+    </div>
+
+    <script src="/js/chart.js"></script>
+    <script src="/js/chart2.js"></script>
+
+    <!-- chart end -->
+
+
+    <div class="container-fluid p-4 mt-5">
+        <h3 class="text-secondary">VISITAS WEB</h3>
+        <div class="container-fluid p-4">
+            <div class="container-table table-responsive">
+                <table id="datatable" class="display responsive nowrap" style="width:100%">
+                    <!-- <table id="datatable" class="display table table-sm table-hover  " style="width: 100%;"> -->
+                    <thead class="thead-ligth">
+                        <tr>
+                            <!-- <th scope="col">Id</th> -->
+                            <th scope="col">ID Visita</th>
+                            <th scope="col">Pais</th>
+                            <th scope="col">Ciudad</th>
+                            <th scope="col">ip</th>
+                            <th scope="col">Dispositivo</th>
+                            <th scope="col">Navegador</th>
+                            <th scope="col">Sistema</th>
+                            <th scope="col">Plataforma</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Latitud</th>
+                            <th scope="col">Longitud</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% if (arrayVisitas.length > 0) { %>
+                            <% arrayVisitas.forEach(visita=> { %>
+
+                                <tr>
+
+                                    <td>
+                                        <%= visita.idVisita %>
+                                    </td>
+                                    <td>
+                                        <%= visita.pais %>
+                                    </td>
+                                    <td>
+                                        <%= visita.ciudad %>
+                                    </td>
+                                    <td>
+                                        <%= visita.ip %>
+                                    </td>
+                                    <td>
+                                        <%= visita.device %>
+                                    </td>
+                                    <td>
+                                        <%= visita.browser %>
+                                    </td>
+                                    <td>
+                                        <%= visita.sistemaOperativo %>
+                                    </td>
+                                    <td>
+                                        <%= visita.plataforma %>
+                                    </td>
+                                    <td>
+                                        <%= visita.fecha.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
+                                    </td>
+                                    <td>
+                                        <%= visita.latitud %>
+                                    </td>
+                                    <td>
+                                        <%= visita.longitud %>
+                                    </td>
+
+                                </tr>
+
+                                <% }) %>
+                                    <% } %>
+
+                    </tbody>
+                    <!-- <button id="excel">descargar</button> -->
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable({
+                order: [
+                    [0, 'desc']
+                ],
+
+
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+        });
+    </script>
+
+
+
+</body>
+
+</html>

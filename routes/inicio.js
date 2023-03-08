@@ -14,6 +14,7 @@ router.get('/', async(req, res) => {
     const ip = ipString.split(',')[0];
 
     const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
+    const bot = req.useragent.isBot ? 'true' : 'false';
     const browser = req.useragent.browser;
 
     const sistemaOperativo = req.useragent.os
@@ -32,6 +33,7 @@ router.get('/', async(req, res) => {
 
 
 
+
             const nuevaVisita = {
                 pais,
                 ciudad,
@@ -42,7 +44,8 @@ router.get('/', async(req, res) => {
                 plataforma,
                 latitud,
                 longitud,
-                fecha
+                fecha,
+                bot
 
 
             };

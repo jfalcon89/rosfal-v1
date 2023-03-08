@@ -31,7 +31,7 @@ const rutasTestimonios = require("./routes/testimonios");
 const rutasObservaciones = require("./routes/observaciones");
 const rutasConsulta_solicitud = require("./routes/consulta-solicitud");
 const controlesAnuncios = require("./routes/controles-anuncios");
-// const controlesCorreo = require("./routes/enviar-correo");
+const visitasWeb = require("./routes/visitas-web");
 
 //--------------CONEXION AL SERVIDOR-----------------//
 app.set("port", process.env.PORT || 3006);
@@ -93,7 +93,7 @@ app.use("/", rutasTestimonios);
 app.use("/", rutasObservaciones);
 app.use("/", rutasConsulta_solicitud);
 app.use("/", controlesAnuncios);
-// app.use("/", controlesCorreo);
+app.use("/", visitasWeb);
 
 
 //motor de plantilla 
