@@ -18,6 +18,10 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <!-- moment.js cdn -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+
+    <!-- generador pdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.2/vfs_fonts.js"></script>
     <!-- css datatable -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
@@ -129,7 +133,6 @@
 
 
 
-
     <div class="mt-4">
         <div class="container-fluid d-xxl-flex justify-content-around" style="background-color: #ececec; ">
 
@@ -173,6 +176,121 @@
 
         </div>
     </div>
+
+
+
+    <!-- generador pdf -->
+
+
+    <button class="btn btn-secondary" id="generate-pdf">Generar PDF</button>
+
+    <script>
+        // Obtener el botón
+        var btn = document.getElementById('generate-pdf');
+        // var htmlContent = document.getElementById('html-content').innerHTML;
+
+        // Agregar un evento de clic al botón
+        btn.addEventListener('click', function() {
+
+            let fecha = new Date();
+            let fechaReporte = fecha.toLocaleString('es-US', {
+                timeZone: "America/Santo_Domingo"
+            }, );
+
+            // Definir el contenido del documento
+            var docDefinition = {
+                content: [{
+                        text: 'ROSFAL SOLUCIONES DE PRESTAMOS',
+                        fontSize: 20,
+                        margin: [80, 20, 0, 5],
+                    }, {
+                        text: `Fecha del reporte: `,
+                        margin: [370, 20, 0, 5],
+                        bold: true
+                    }, {
+                        text: `${fechaReporte}`,
+                        margin: [370, 0, 0, 5]
+                    }, {
+                        text: 'Reporte de estado de cartera',
+                        margin: [0, 10, 0, 5]
+                    },
+
+                    {
+                        // to treat a paragraph as a bulleted list, set an array of items under the ul key
+                        ul: [
+                            'Prestado <%= montoPrestado %>',
+                            'Liquidado <%= montoLiquidado %>',
+                            'Atrasos <%= prestamosAtrasos %>',
+                            'Cant. Prestamos <%= cantPrestamos %>',
+                            'Cant. Atrasos <%= cantAtrasos %>',
+
+                        ]
+                    }, {
+                        text: 'Listado de atratos',
+                        margin: [0, 20, 0, 5]
+                    }, {
+
+                        layout: 'headerLineOnly',
+                        table: {
+                            // headers are automatically repeated if the table spans over multiple pages
+                            // you can declare how many rows should be treated as headers
+                            headerRows: 1,
+                            // widths: ['*', 'auto', 100, '*'],
+
+                            body: [
+
+                                [{
+                                    text: 'Solicitud',
+                                    bold: true,
+                                    fontSize: 10
+                                }, {
+                                    text: 'Nombre',
+                                    bold: true
+                                }, {
+                                    text: 'Apellido',
+                                    bold: true
+                                }, {
+                                    text: 'Cedula',
+                                    bold: true
+                                }, {
+                                    text: 'Aprobado',
+                                    bold: true
+                                }, {
+                                    text: 'Firma',
+                                    bold: true
+                                }, {
+                                    text: 'Atraso',
+                                    bold: true
+                                }, {
+                                    text: 'Telefono',
+                                    bold: true
+                                }],
+
+                                <% if (arraySolicitudesAtrasadas.length > 0) { %>
+                                <% arraySolicitudesAtrasadas.forEach(solicitud=> { %>
+
+                                ['<%= solicitud.idSolicitud %>', '<%= solicitud.nombre %>', '<%= solicitud.apellido %>', '<%= solicitud.cedula %>', '<%= solicitud.montoSolicitado %>', '<%= solicitud.firmaContrato %>', '<%= solicitud.atraso %>', '<%= solicitud.celular %>'],
+
+                                <% }) %>
+                                <% } %>
+
+                            ]
+                        }
+                    }
+
+                ]
+            };
+
+            // Generar el documento PDF
+            pdfMake.createPdf(docDefinition).download('reporte estado cartera.pdf');
+        });
+    </script>
+
+
+
+
+    <!-- fin -->
+
 
 
     <div class=" p-2 d-xxl-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">

@@ -113,15 +113,13 @@
             <% if(id != "Vacio") { %>
 
                 <div class="mt-4 mb-5">
-                    <h6><strong>No. Solicitud:</strong>
-                        <%= arraySolicitud[0].idSolicitud %>
-                    </h6>
-                    <h6><strong>Cédula:</strong>
-                        <%= arraySolicitud[0].cedula %>
-                    </h6>
+
                     <h6><strong>Nombre:</strong>
                         <%= arraySolicitud[0].nombre %>
                             <%= arraySolicitud[0].apellido %>
+                    </h6>
+                    <h6><strong>Cédula:</strong>
+                        <%= arraySolicitud[0].cedula %>
                     </h6>
                 </div>
 
@@ -129,6 +127,7 @@
                     <table id="datatable" class="   table  table-hover">
                         <thead class="thead-ligth">
                             <tr>
+                                <th scope="col">No. Solicitud</th>
                                 <th scope="col">Tipo de Préstamo</th>
                                 <th scope="col">Monto Solicitud</th>
                                 <th scope="col">Fecha Solicitud</th>
@@ -143,6 +142,9 @@
                                 <% arraySolicitud.forEach(solicitud=> { %>
 
                                     <tr>
+                                        <td>
+                                            <%= solicitud.idSolicitud %>
+                                        </td>
                                         <td>
                                             <%= solicitud.tipoPrestamo %>
                                         </td>

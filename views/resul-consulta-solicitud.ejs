@@ -110,6 +110,7 @@
             <table id="datatable" class="display responsive nowrap" style="width:100%">
                 <thead class="thead-ligth">
                     <tr>
+                        <th scope="col">No. Solicitud</th>
                         <th scope="col">Tipo de prestamo</th>
                         <th scope="col">Monto solicitud</th>
                         <th scope="col">Fecha solicitud</th>
@@ -125,6 +126,9 @@
                             <% arraySolicitud.forEach(solicitud=> { %>
 
                                 <tr>
+                                    <td>
+                                        <%= solicitud.tipoPrestamo %>
+                                    </td>
                                     <td>
                                         <%= solicitud.tipoPrestamo %>
                                     </td>

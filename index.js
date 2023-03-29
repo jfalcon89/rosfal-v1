@@ -32,6 +32,7 @@ const rutasObservaciones = require("./routes/observaciones");
 const rutasConsulta_solicitud = require("./routes/consulta-solicitud");
 const controlesAnuncios = require("./routes/controles-anuncios");
 const visitasWeb = require("./routes/visitas-web");
+const mantenimiento = require("./routes/mantenimiento");
 
 //--------------CONEXION AL SERVIDOR-----------------//
 app.set("port", process.env.PORT || 3006);
@@ -94,6 +95,7 @@ app.use("/", rutasObservaciones);
 app.use("/", rutasConsulta_solicitud);
 app.use("/", controlesAnuncios);
 app.use("/", visitasWeb);
+app.use("/", mantenimiento);
 
 
 //motor de plantilla 
