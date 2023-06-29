@@ -341,26 +341,27 @@
                                             </div>
                                         </div>
 
-                                        <div class="">
-                                            <div class="form-group   ">
-                                                <div class="input-group ">
-                                                    <div class=" me-lg-5">
-                                                        <label class="p-2">Cedula</label>
-                                                        <input type="number" name="cedula" class="form-control " id="cedula" value="<%= solicitud.cedula %>">
-                                                    </div>
-                                                    <div class="me-lg-5">
-                                                        <label for="sexo" class="p-2">Sexo</label>
-                                                        <select name="sexo" class="form-control" id="sexo">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="">
+                                                <div class="form-group   ">
+                                                    <div class="input-group ">
+                                                        <div class=" me-lg-5">
+                                                            <label class="p-2">Cedula</label>
+                                                            <input type="number" name="cedula" class="form-control " id="cedula" value="<%= solicitud.cedula %>">
+                                                        </div>
+                                                        <div class="me-lg-5">
+                                                            <label for="sexo" class="p-2">Sexo</label>
+                                                            <select name="sexo" class="form-control" id="sexo">
                                                             <option value="<%= solicitud.sexo %>" selected>
                                                                 <%= solicitud.sexo %>
                                                             </option>
                                                             <option value="Hombre">Hombre</option>
                                                             <option value="Mujer">Mujer</option>
                                                         </select>
-                                                    </div>
-                                                    <div class="me-lg-5">
-                                                        <label for="sexo" class="p-2">Estado Civil</label>
-                                                        <select name="estadoCivil" class="form-control" id="estadoCivil">
+                                                        </div>
+                                                        <div class="me-lg-5">
+                                                            <label for="sexo" class="p-2">Estado Civil</label>
+                                                            <select name="estadoCivil" class="form-control" id="estadoCivil">
                                                             <option value="<%= solicitud.estadoCivil %>" selected>
                                                                 <%= solicitud.estadoCivil %>
                                                             </option>
@@ -368,6 +369,7 @@
                                                             <option value="Soltero/a">Soltero/a</option>
                                                             <option value="Union Libre">Union Libre</option>
                                                         </select>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
