@@ -139,7 +139,7 @@
             <div class="d-sm-flex">
                 <h3 class="me-3 font-weight-bold text-truncate">Prestado</h3>
                 <h3 class="text-success">
-                    <%= montoPrestado=Intl.NumberFormat('en-IN', { style: 'currency' , currency: 'USD'
+                    <%= montoPrestado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
                     }).format(montoPrestado) %>
                 </h3>
             </div>
@@ -147,7 +147,7 @@
             <div class="d-sm-flex">
                 <h3 class="me-3 font-weight-bold text-truncate">Liquidado</h3>
                 <h3 class="" style="color: #e28724;">
-                    <%= montoLiquidado=Intl.NumberFormat('en-IN', { style: 'currency' , currency: 'USD'
+                    <%= montoLiquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
                     }).format(montoLiquidado) %>
                 </h3>
             </div>
@@ -155,14 +155,15 @@
             <div class="d-sm-flex">
                 <h3 class="me-3 font-weight-bold text-truncate">En Legal</h3>
                 <h3 class="text-danger">
-                    $2,300.00
+                    <%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
+                    }).format(prestamosEnLegal) %>
                 </h3>
             </div>
 
             <div class="d-sm-flex">
                 <h3 class="me-3 font-weight-bold text-truncate ">Atrasos</h3>
                 <h3 class="text-danger">
-                    <%= prestamosAtrasos=Intl.NumberFormat('en-IN', { style: 'currency' , currency: 'USD'
+                    <%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
                     }).format(prestamosAtrasos) %>
                 </h3>
             </div>
@@ -599,7 +600,90 @@
                 </table>
             </div>
         </div>
+    </div>
 
+
+    <div class="container-fluid p-4 mt-5 shadow-sm ">
+        <h3 class="text-secondary"><strong>PRESTAMOS </strong>EN LEGAL</h3>
+
+        <div class="container-fluid ">
+            <div class="container-table table-responsive">
+                <table id="datatable3" class="display responsive nowrap" style="width:100%">
+                    <thead class="thead-ligth">
+                        <tr>
+
+                            <th scope="col">ID Solicitud</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Apellido</th>
+                            <th scope="col">Cedula</th>
+                            <th scope="col">Fecha Solicitud</th>
+                            <th scope="col">Monto Aprobado</th>
+                            <th scope="col">Firma</th>
+                            <th scope="col">Monto en Legal</th>
+                            <th scope="col">Ruta</th>
+                            <th scope="col">Telefono</th>
+                            <th scope="col">Acciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <% if (arraySolicitudesEnLegal.length > 0) { %>
+                            <% arraySolicitudesEnLegal.forEach(solicitud=> { %>
+
+                                <%= i++ %>
+
+
+                                    <tr>
+                                        <td>
+                                            <%= solicitud.idSolicitud %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.nombre %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.apellido %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.cedula %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.montoSolicitado %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.firmaContrato %>
+                                        </td>
+                                        <td class="text-danger">
+                                            <%= solicitud.legalMonto %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.ruta %>
+                                        </td>
+                                        <td>
+                                            <%= solicitud.celular %>
+                                        </td>
+
+                                        <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+
+
+
+                                            <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                            <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                        </td>
+                                    </tr>
+
+
+
+                                    <% }) %>
+                                        <% } %>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <div class="container-fluid p-4 mt-5 shadow-sm ">

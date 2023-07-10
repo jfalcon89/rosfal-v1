@@ -23,10 +23,11 @@ router.get('/panel-administracion', async(req, res) => {
         const arrayRutasDB = await pool.query('SELECT idRuta FROM rutas ');
         const arrayTestimoniosNuevosDB = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
-        const montoPrestadoDB = await pool.query("SELECT SUM(montoSolicitado) montoPrestado FROM solicitudes WHERE estadoSolicitud = 'Aprobada'")
+        const montoPrestadoDB = await pool.query("SELECT SUM(montoSolicitado) montoPrestado FROM solicitudes WHERE estadoSolicitud = 'Aprobada' OR estadoSolicitud = 'En Legal'")
         const montoLiquidadoDB = await pool.query("SELECT SUM(montoSolicitado) montoLiquidado FROM solicitudes WHERE estadoSolicitud = 'Liquidado'")
         const cantPrestamosDB = await pool.query("SELECT COUNT(idSolicitud) cantPrestamos FROM solicitudes WHERE estadoSolicitud = 'Aprobada'")
         const prestamosAtrasosDB = await pool.query("SELECT SUM(atraso) prestamosAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
+        const prestamosEnLegalDB = await pool.query("SELECT SUM(legalMonto) prestamosEnLegal FROM solicitudes WHERE estadoSolicitud = 'En Legal' AND legalMonto > 0")
         const cantAtrasosDB = await pool.query("SELECT COUNT(idSolicitud) cantAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
 
 
@@ -34,6 +35,7 @@ router.get('/panel-administracion', async(req, res) => {
         const arraySolicitudesAprobadasFirmadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND firmaContrato= "NO" ORDER BY fechaSolicitud DESC');
         const arraySolicitudesAtrasadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND atraso > 0');
         const arrayNotificacionAtrasoDB = await pool.query(`SELECT novedades_atrasos.idSolicitud, idNovedadAtraso, solicitudes.nombre, solicitudes.apellido, novedades_atrasos.celular, novedades_atrasos.ruta, novedades_atrasos.atraso, fechaNovedad  FROM novedades_atrasos, solicitudes WHERE novedades_atrasos.idSolicitud = solicitudes.idSolicitud ORDER BY fechaNovedad DESC`);
+        const arraySolicitudesEnLegalDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Legal"');
         const arraySolicitudesLiquidadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Liquidado"');
         res.render("panel-administracion", {
             arraySolicitudes: arraySolicitudesDB,
@@ -47,9 +49,11 @@ router.get('/panel-administracion', async(req, res) => {
             montoPrestado: montoPrestadoDB[0].montoPrestado,
             cantPrestamos: cantPrestamosDB[0].cantPrestamos,
             prestamosAtrasos: prestamosAtrasosDB[0].prestamosAtrasos,
+            prestamosEnLegal: prestamosEnLegalDB[0].prestamosEnLegal,
             cantAtrasos: cantAtrasosDB[0].cantAtrasos,
             montoLiquidado: montoLiquidadoDB[0].montoLiquidado,
             arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
+            arraySolicitudesEnLegal: arraySolicitudesEnLegalDB,
             i,
             login: true,
             name: req.session.name

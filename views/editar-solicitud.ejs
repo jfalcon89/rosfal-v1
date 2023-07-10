@@ -320,6 +320,7 @@
                                                             <option value="Aprobada">Aprobada</option>
                                                             <option value="Declinada">Declinada</option>
                                                             <option value="En Revision">En Revision</option>
+                                                            <option value="En Legal">En Legal</option>
                                                             <option value="Liquidado">Liquidado</option>
                                                         </select>
                                                     </div>
@@ -370,6 +371,16 @@
                                                             <option value="Union Libre">Union Libre</option>
                                                         </select>
                                                         </div>
+
+                                                        <% if(solicitud.estadoSolicitud == 'En Legal'){ %>
+
+                                                            <div class="me-lg-5">
+                                                                <label for="sexo" class="p-2 text-danger">Monto en Legal</label>
+                                                                <input type="number" name="legalMonto" class="form-control text-danger " id="legalMonto" value="<%= solicitud.legalMonto %>">
+
+                                                            </div>
+                                                            <% } %>
+
                                                     </div>
                                                 </div>
                                             </div>

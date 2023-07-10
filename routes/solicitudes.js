@@ -407,7 +407,7 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-            // console.log(req.params)
+
 
         try {
 
@@ -460,7 +460,7 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
 
     // const data = {};
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, atraso } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, atraso, legalMonto } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -499,7 +499,8 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         contrato,
         ruta,
         firmaContrato,
-        atraso
+        atraso,
+        legalMonto
     };
 
     const atrasoDB = await pool.query(`SELECT novedades_atrasos.atraso FROM novedades_atrasos WHERE novedades_atrasos.idSolicitud = ${id}`);
