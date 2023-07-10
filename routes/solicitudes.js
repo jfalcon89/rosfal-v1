@@ -15,7 +15,7 @@ router.get('/solicitudes-nuevas', async(req, res) => {
         const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva" ORDER BY fechaSolicitud DESC');
 
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada"');
+        const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
         const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
         res.render("solicitudes-nuevas", {
@@ -238,7 +238,7 @@ router.get("/solicitudes/eliminar-solicitud/:id", async(req, res) => {
 router.get('/solicitudes-aprobadas', async(req, res) => {
     if (req.session.loggedin) {
 
-        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada" ORDER BY fechaSolicitud DESC');
+        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal" ORDER BY fechaSolicitud DESC');
 
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
@@ -558,7 +558,7 @@ router.get('/solicitudes-declinadas', async(req, res) => {
 
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada"');
+        const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
         const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
         res.render("solicitudes-declinadas", {
             arraySolicitudes: arraySolicitudesDB,
@@ -762,7 +762,7 @@ router.get('/solicitudes-en-revision', async(req, res) => {
 
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada"');
+        const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
         res.render("solicitudes-en-revision", {
             arraySolicitudes: arraySolicitudesDB,
@@ -963,7 +963,7 @@ router.get('/todas-las-solicitudes', async(req, res) => {
         const arrayTotalSolicitudesDB = await pool.query('SELECT * FROM solicitudes  ORDER BY fechaSolicitud DESC');
 
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva" ');
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada"');
+        const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
         const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
         res.render("todas-las-solicitudes", {
