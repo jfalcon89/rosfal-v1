@@ -32,7 +32,7 @@ router.get('/panel-administracion', async(req, res) => {
 
 
         const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" OR estadoSolicitud = "En Legal" ORDER BY fechaSolicitud DESC');
-        const arraySolicitudesAprobadasFirmadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" OR estadoSolicitud = "En Legal" AND firmaContrato= "NO" ORDER BY fechaSolicitud DESC');
+        const arraySolicitudesAprobadasFirmadasDB = await pool.query('SELECT * FROM solicitudes WHERE firmaContrato="NO" AND (estadoSolicitud="Aprobada" OR estadoSolicitud ="En Legal")');
         const arraySolicitudesAtrasadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND atraso > 0');
         const arrayNotificacionAtrasoDB = await pool.query(`SELECT novedades_atrasos.idSolicitud, idNovedadAtraso, solicitudes.nombre, solicitudes.apellido, novedades_atrasos.celular, novedades_atrasos.ruta, novedades_atrasos.atraso, fechaNovedad  FROM novedades_atrasos, solicitudes WHERE novedades_atrasos.idSolicitud = solicitudes.idSolicitud ORDER BY fechaNovedad DESC`);
         const arraySolicitudesEnLegalDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Legal"');
