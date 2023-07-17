@@ -35,11 +35,11 @@
 <body>
 
 
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-xxl navbar-light">
         <div class="container-fluid  " style="background-color: #ececec;">
 
             <div class="d-flex">
-                <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
+                <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px; height: 70px;" class="me-2">
                 <h5 class="text-dark m-2 d-flex align-items-center" style="font-size: large;">ADMINISTRACION</h5>
             </div>
             <button class="navbar-toggler  " type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,7 +113,7 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-none d-lg-block ">
+    <nav class="navbar navbar-expand-xxl navbar-dark bg-dark d-none d-xxl-block ">
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
             <ul class="navbar-nav d-flex justify-content-between " style="justify-content: space-around;">
                 <li class="nav-item me-md-4"><a class="nav-link d-flex" href="/panel-administracion"><i class="bi bi-house-door me-2"></i>Inicio</a></li>
@@ -302,464 +302,562 @@
 
 
     <div class="container-fluid  mt-5 shadow-sm ">
-        <h3 class="text-secondary"><strong>PRESTAMOS</strong> APROBADOS</h3>
+
         <div class="container-fluid ">
-            <div class="container-table table-responsive">
-                <table id="datatable" class="display responsive nowrap" style="width:100%">
-                    <thead class="thead-ligth">
-                        <tr>
 
-                            <th scope="col">ID Solicitud</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Cedula</th>
-                            <th scope="col">Fecha Solicitud</th>
-                            <th scope="col">Monto Aprobado</th>
-                            <th scope="col">Estado Solicitud</th>
-                            <th scope="col">Acciones</th>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+                            <h3 class="text-secondary"><strong>PRESTAMOS</strong> APROBADOS</h3>
+                    </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
+                        <div class="accordion-body">
+                            <div class="container-table table-responsive">
+                                <table id="datatable" class="display responsive nowrap" style="width:100%">
+                                    <thead class="thead-ligth">
+                                        <tr>
 
-                        </tr>
-                    </thead>
-                    <tbody>
+                                            <th scope="col">ID Solicitud</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellido</th>
+                                            <th scope="col">Cedula</th>
+                                            <th scope="col">Fecha Solicitud</th>
+                                            <th scope="col">Monto Aprobado</th>
+                                            <th scope="col">Estado Solicitud</th>
+                                            <th scope="col">Acciones</th>
 
-                        <% if (arraySolicitudesAprobadas.length > 0) { %>
-                            <% arraySolicitudesAprobadas.forEach(solicitud=> { %>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <% if (arraySolicitudesAprobadas.length > 0) { %>
+                                            <% arraySolicitudesAprobadas.forEach(solicitud=> { %>
 
 
-                                <tr>
-                                    <td>
-                                        <%= solicitud.idSolicitud %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.nombre %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.apellido %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.cedula %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.montoSolicitado %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.estadoSolicitud %>
-                                    </td>
+                                                <tr>
+                                                    <td>
+                                                        <%= solicitud.idSolicitud %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.nombre %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.apellido %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.cedula %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.montoSolicitado %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.estadoSolicitud %>
+                                                    </td>
 
-                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
-                                        <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
-                                        <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
-                                    </td>
-                                </tr>
+                                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+                                                        <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                                        <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                                    </td>
+                                                </tr>
 
-                                <% }) %>
-                                    <% } %>
+                                                <% }) %>
+                                                    <% } %>
 
-                    </tbody>
-                </table>
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
+
+
         </div>
     </div>
-    <div class="container-fluid mt-5 shadow-sm ">
-        <h3 class="text-secondary"><strong>CONTRATOS</strong> PENDIENTE DE FIRMA</h3>
+    <div class="container-fluid mt-3 shadow-sm ">
+
         <div class="container-fluid ">
-            <div class="container-table table-responsive">
-                <table id="datatable2" class="display responsive nowrap" style="width:100%">
-                    <thead class="thead-ligth">
-                        <tr>
 
-                            <th scope="col">ID Solicitud</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Cedula</th>
-                            <th scope="col">Fecha Solicitud</th>
-                            <th scope="col">Monto Aprobado</th>
-                            <th scope="col">Firma</th>
-                            <th scope="col">Acciones</th>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
 
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                            <h3 class="text-secondary"><strong>CONTRATOS</strong> PENDIENTE DE FIRMA</h3>
+                    </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                        <div class="accordion-body">
+                            <div class="container-table table-responsive">
+                                <table id="datatable2" class="display responsive nowrap" style="width:100%">
+                                    <thead class="thead-ligth">
+                                        <tr>
 
-                        <% if (arraySolicitudesAprobadasFirmadas.length > 0) { %>
-                            <% arraySolicitudesAprobadasFirmadas.forEach(solicitud=> { %>
+                                            <th scope="col">ID Solicitud</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellido</th>
+                                            <th scope="col">Cedula</th>
+                                            <th scope="col">Fecha Solicitud</th>
+                                            <th scope="col">Monto Aprobado</th>
+                                            <th scope="col">Firma</th>
+                                            <th scope="col">Acciones</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <% if (arraySolicitudesAprobadasFirmadas.length > 0) { %>
+                                            <% arraySolicitudesAprobadasFirmadas.forEach(solicitud=> { %>
 
 
-                                <tr>
-                                    <td>
-                                        <%= solicitud.idSolicitud %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.nombre %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.apellido %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.cedula %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.montoSolicitado %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.firmaContrato %>
-                                    </td>
+                                                <tr>
+                                                    <td>
+                                                        <%= solicitud.idSolicitud %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.nombre %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.apellido %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.cedula %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.montoSolicitado %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.firmaContrato %>
+                                                    </td>
 
-                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
-                                        <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
-                                        <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
-                                    </td>
-                                </tr>
+                                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+                                                        <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                                        <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                                    </td>
+                                                </tr>
 
-                                <% }) %>
-                                    <% } %>
+                                                <% }) %>
+                                                    <% } %>
 
-                    </tbody>
-                </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+
+
         </div>
     </div>
 
-    <!-- </div> -->
 
-    <div class="container-fluid p-4 mt-5 shadow-sm ">
-        <h3 class="text-secondary"><strong>PRESTAMOS </strong>EN ATRASOS</h3>
+    <div class="container-fluid mt-3 shadow-sm ">
+
 
         <div class="container-fluid ">
-            <div class="container-table table-responsive">
-                <table id="datatable3" class="display responsive nowrap" style="width:100%">
-                    <thead class="thead-ligth">
-                        <tr>
 
-                            <th scope="col">ID Solicitud</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Cedula</th>
-                            <th scope="col">Fecha Solicitud</th>
-                            <th scope="col">Monto Aprobado</th>
-                            <th scope="col">Firma</th>
-                            <th scope="col">Atraso</th>
-                            <th scope="col">Ruta</th>
-                            <th scope="col">Telefono</th>
-                            <th scope="col">Acciones</th>
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                            <h3 class="text-secondary"><strong>PRESTAMOS </strong>EN ATRASOS</h3>
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                        <div class="accordion-body">
+                            <div class="container-table table-responsive">
+                                <table id="datatable3" class="display responsive nowrap" style="width:100%">
+                                    <thead class="thead-ligth">
+                                        <tr>
 
-                        </tr>
-                    </thead>
-                    <tbody>
+                                            <th scope="col">ID Solicitud</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellido</th>
+                                            <th scope="col">Cedula</th>
+                                            <th scope="col">Fecha Solicitud</th>
+                                            <th scope="col">Monto Aprobado</th>
+                                            <th scope="col">Firma</th>
+                                            <th scope="col">Atraso</th>
+                                            <th scope="col">Ruta</th>
+                                            <th scope="col">Telefono</th>
+                                            <th scope="col">Acciones</th>
 
-                        <% if (arraySolicitudesAtrasadas.length > 0) { %>
-                            <% arraySolicitudesAtrasadas.forEach(solicitud=> { %>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                <%= i++ %>
+                                        <% if (arraySolicitudesAtrasadas.length > 0) { %>
+                                            <% arraySolicitudesAtrasadas.forEach(solicitud=> { %>
+
+                                                <%= i++ %>
 
 
-                                    <tr>
-                                        <td>
-                                            <%= solicitud.idSolicitud %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.nombre %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.apellido %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.cedula %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.montoSolicitado %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.firmaContrato %>
-                                        </td>
-                                        <td class="text-danger">
-                                            <%= solicitud.atraso %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.ruta %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.celular %>
-                                        </td>
+                                                    <tr>
+                                                        <td>
+                                                            <%= solicitud.idSolicitud %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.nombre %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.apellido %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.cedula %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.montoSolicitado %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.firmaContrato %>
+                                                        </td>
+                                                        <td class="text-danger">
+                                                            <%= solicitud.atraso %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.ruta %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.celular %>
+                                                        </td>
 
-                                        <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+                                                        <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
 
-                                            <a href="/novedad-cliente/<%= i %>" type="submit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalNovedad<%= i %>">REGISTAR NOVEDAD</a>
+                                                            <a href="/novedad-cliente/<%= i %>" type="submit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalNovedad<%= i %>">REGISTAR NOVEDAD</a>
 
-                                            <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
-                                            <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
-                                        </td>
-                                    </tr>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModalNovedad<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel">Se notifico el cliente ?</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
+                                                            <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                                            <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="exampleModalNovedad<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel">Se notifico el cliente ?</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
 
-                                                    <form method="POST">
-                                                        <input type="text" name="idSolicitud" value="<%= solicitud.idSolicitud %>" class="d-none">
-                                                        <input type="text" name="celular" value="<%= solicitud.celular %>" class="d-none">
-                                                        <input type="text" name="ruta" value="<%= solicitud.ruta %>" class="d-none">
-                                                        <input type="text" name="atraso" value="<%= solicitud.atraso %>" class="d-none">
-                                                        <div class="modal-footer border-0">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                            <button type="submit" class="btn btn-primary">Si, Notificado</button>
+                                                                    <form method="POST">
+                                                                        <input type="text" name="idSolicitud" value="<%= solicitud.idSolicitud %>" class="d-none">
+                                                                        <input type="text" name="celular" value="<%= solicitud.celular %>" class="d-none">
+                                                                        <input type="text" name="ruta" value="<%= solicitud.ruta %>" class="d-none">
+                                                                        <input type="text" name="atraso" value="<%= solicitud.atraso %>" class="d-none">
+                                                                        <div class="modal-footer border-0">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                                            <button type="submit" class="btn btn-primary">Si, Notificado</button>
+                                                                        </div>
+                                                                    </form>
+
+
+
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </form>
+                                                    </div>
 
+                                                    <% }) %>
+                                                        <% } %>
 
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <% }) %>
-                                        <% } %>
-
-                    </tbody>
-                </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
     </div>
 
 
-    <div class="container-fluid p-4 mt-5 shadow-sm ">
-        <h3 class="text-secondary"><strong>HISTORIAL </strong>DE NOTIFICACIONES ATRASOS</h3>
+
+
+    <div class="container-fluid mt-3 shadow-sm ">
+
 
         <div class="container-fluid ">
-            <div class="container-table table-responsive">
-                <table id="datatable5" class="display responsive nowrap" style="width:100%">
-                    <thead class="thead-ligth">
-                        <tr>
 
-                            <th scope="col">ID Solicitud</th>
-                            <th scope="col">ID Novedad</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Celular</th>
-                            <th scope="col">Ruta</th>
-                            <th scope="col">Atraso Notificado</th>
-                            <th scope="col">Fecha Notificacion</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <% if (arrayNotificacionAtraso.length > 0) { %>
-                            <% arrayNotificacionAtraso.forEach(notificacionAtraso=> { %>
-
-
-                                <tr>
-                                    <td>
-                                        <%= notificacionAtraso.idSolicitud %>
-                                    </td>
-                                    <td>
-                                        <%= notificacionAtraso.idNovedadAtraso %>
-                                    </td>
-                                    <td>
-                                        <%= notificacionAtraso.nombre %>
-                                    </td>
-                                    <td>
-                                        <%= notificacionAtraso.apellido %>
-                                    </td>
-                                    <td>
-                                        <%= notificacionAtraso.celular %>
-                                    </td>
-                                    <td>
-                                        <%= notificacionAtraso.ruta %>
-                                    </td>
-                                    <td class="text-danger">
-                                        <%= notificacionAtraso.atraso %>
-                                    </td>
-
-                                    <td>
-                                        <%= notificacionAtraso.fechaNovedad.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
-                                    </td>
-
-
-                                </tr>
-
-                                <% }) %>
-                                    <% } %>
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container-fluid p-4 mt-5 shadow-sm ">
-        <h3 class="text-secondary"><strong>PRESTAMOS </strong>EN LEGAL</h3>
-
-        <div class="container-fluid ">
-            <div class="container-table table-responsive">
-                <table id="datatable3" class="display responsive nowrap" style="width:100%">
-                    <thead class="thead-ligth">
-                        <tr>
-
-                            <th scope="col">ID Solicitud</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Cedula</th>
-                            <th scope="col">Fecha Solicitud</th>
-                            <th scope="col">Monto Aprobado</th>
-                            <th scope="col">Firma</th>
-                            <th scope="col">Monto en Legal</th>
-                            <th scope="col">Ruta</th>
-                            <th scope="col">Telefono</th>
-                            <th scope="col">Acciones</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <% if (arraySolicitudesEnLegal.length > 0) { %>
-                            <% arraySolicitudesEnLegal.forEach(solicitud=> { %>
-
-                                <%= i++ %>
-
-
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                        <h3 class="text-secondary"><strong>HISTORIAL </strong>DE NOTIFICACIONES ATRASOS</h3>
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                    <div class="accordion-body">
+                        <div class="container-table table-responsive">
+                            <table id="datatable5" class="display responsive nowrap" style="width:100%">
+                                <thead class="thead-ligth">
                                     <tr>
-                                        <td>
-                                            <%= solicitud.idSolicitud %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.nombre %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.apellido %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.cedula %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.montoSolicitado %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.firmaContrato %>
-                                        </td>
-                                        <td class="text-danger">
-                                            <%= solicitud.legalMonto %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.ruta %>
-                                        </td>
-                                        <td>
-                                            <%= solicitud.celular %>
-                                        </td>
 
-                                        <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+                                        <th scope="col">ID Solicitud</th>
+                                        <th scope="col">ID Novedad</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
+                                        <th scope="col">Celular</th>
+                                        <th scope="col">Ruta</th>
+                                        <th scope="col">Atraso Notificado</th>
+                                        <th scope="col">Fecha Notificacion</th>
 
-
-
-                                            <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
-                                            <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
-                                        </td>
                                     </tr>
+                                </thead>
+                                <tbody>
+
+                                    <% if (arrayNotificacionAtraso.length > 0) { %>
+                                        <% arrayNotificacionAtraso.forEach(notificacionAtraso=> { %>
 
 
+                                            <tr>
+                                                <td>
+                                                    <%= notificacionAtraso.idSolicitud %>
+                                                </td>
+                                                <td>
+                                                    <%= notificacionAtraso.idNovedadAtraso %>
+                                                </td>
+                                                <td>
+                                                    <%= notificacionAtraso.nombre %>
+                                                </td>
+                                                <td>
+                                                    <%= notificacionAtraso.apellido %>
+                                                </td>
+                                                <td>
+                                                    <%= notificacionAtraso.celular %>
+                                                </td>
+                                                <td>
+                                                    <%= notificacionAtraso.ruta %>
+                                                </td>
+                                                <td class="text-danger">
+                                                    <%= notificacionAtraso.atraso %>
+                                                </td>
 
-                                    <% }) %>
-                                        <% } %>
+                                                <td>
+                                                    <%= notificacionAtraso.fechaNovedad.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
+                                                </td>
 
-                    </tbody>
-                </table>
+
+                                            </tr>
+
+                                            <% }) %>
+                                                <% } %>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
     </div>
 
-    <div class="container-fluid p-4 mt-5 shadow-sm ">
-        <h3 class="text-secondary"><strong>PRESTAMOS </strong>LIQUIDADOS</h3>
+
+    <div class="container-fluid mt-3 shadow-sm ">
+
 
         <div class="container-fluid ">
-            <div class="container-table table-responsive">
-                <table id="datatable4" class="display responsive nowrap" style="width:100%">
-                    <thead class="thead-ligth">
-                        <tr>
 
-                            <th scope="col">ID Solicitud</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
-                            <th scope="col">Cedula</th>
-                            <th scope="col">Fecha Solicitud</th>
-                            <th scope="col">Monto Aprobado</th>
-                            <th scope="col">Firma</th>
-                            <th scope="col">Atraso</th>
-                            <th scope="col">Ruta</th>
-                            <th scope="col">Telefono</th>
-                            <th scope="col">Acciones</th>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                    <h3 class="text-secondary"><strong>PRESTAMOS </strong>EN LEGAL</h3>
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
+                    <div class="accordion-body">
+                        <div class="container-table table-responsive">
+                            <table id="datatable6" class="display responsive nowrap" style="width:100%">
+                                <thead class="thead-ligth">
+                                    <tr>
 
-                        </tr>
-                    </thead>
-                    <tbody>
+                                        <th scope="col">ID Solicitud</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
+                                        <th scope="col">Cedula</th>
+                                        <th scope="col">Fecha Solicitud</th>
+                                        <th scope="col">Monto Aprobado</th>
+                                        <th scope="col">Firma</th>
+                                        <th scope="col">Monto en Legal</th>
+                                        <th scope="col">Ruta</th>
+                                        <th scope="col">Telefono</th>
+                                        <th scope="col">Acciones</th>
 
-                        <% if (arraySolicitudesLiquidadas.length > 0) { %>
-                            <% arraySolicitudesLiquidadas.forEach(solicitud=> { %>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <% if (arraySolicitudesEnLegal.length > 0) { %>
+                                        <% arraySolicitudesEnLegal.forEach(solicitud=> { %>
+
+                                            <%= i++ %>
 
 
-                                <tr>
-                                    <td>
-                                        <%= solicitud.idSolicitud %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.nombre %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.apellido %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.cedula %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.montoSolicitado %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.firmaContrato %>
-                                    </td>
-                                    <td class="text-danger">
-                                        <%= solicitud.atraso %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.ruta %>
-                                    </td>
-                                    <td>
-                                        <%= solicitud.celular %>
-                                    </td>
+                                                <tr>
+                                                    <td>
+                                                        <%= solicitud.idSolicitud %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.nombre %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.apellido %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.cedula %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.montoSolicitado %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.firmaContrato %>
+                                                    </td>
+                                                    <td class="text-danger">
+                                                        <%= solicitud.legalMonto %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.ruta %>
+                                                    </td>
+                                                    <td>
+                                                        <%= solicitud.celular %>
+                                                    </td>
 
-                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+                                                    <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
 
-                                        <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
-                                        <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
-                                    </td>
-                                </tr>
 
-                                <% }) %>
-                                    <% } %>
 
-                    </tbody>
-                </table>
+                                                        <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                                        <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                                    </td>
+                                                </tr>
+
+
+
+                                                <% }) %>
+                                                    <% } %>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
+        </div>
+    </div>
+
+    <div class="container-fluid mt-3 shadow-sm ">
+
+
+        <div class="container-fluid ">
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
+                    <h3 class="text-secondary"><strong>PRESTAMOS </strong>LIQUIDADOS</h3>
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingSix">
+                    <div class="accordion-body">
+                        <div class="container-table table-responsive">
+                            <table id="datatable4" class="display responsive nowrap" style="width:100%">
+                                <thead class="thead-ligth">
+                                    <tr>
+
+                                        <th scope="col">ID Solicitud</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
+                                        <th scope="col">Cedula</th>
+                                        <th scope="col">Fecha Solicitud</th>
+                                        <th scope="col">Monto Aprobado</th>
+                                        <th scope="col">Firma</th>
+                                        <th scope="col">Atraso</th>
+                                        <th scope="col">Ruta</th>
+                                        <th scope="col">Telefono</th>
+                                        <th scope="col">Acciones</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <% if (arraySolicitudesLiquidadas.length > 0) { %>
+                                        <% arraySolicitudesLiquidadas.forEach(solicitud=> { %>
+
+
+                                            <tr>
+                                                <td>
+                                                    <%= solicitud.idSolicitud %>
+                                                </td>
+                                                <td>
+                                                    <%= solicitud.nombre %>
+                                                </td>
+                                                <td>
+                                                    <%= solicitud.apellido %>
+                                                </td>
+                                                <td>
+                                                    <%= solicitud.cedula %>
+                                                </td>
+                                                <td>
+                                                    <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                                </td>
+                                                <td>
+                                                    <%= solicitud.montoSolicitado %>
+                                                </td>
+                                                <td>
+                                                    <%= solicitud.firmaContrato %>
+                                                </td>
+                                                <td class="text-danger">
+                                                    <%= solicitud.atraso %>
+                                                </td>
+                                                <td>
+                                                    <%= solicitud.ruta %>
+                                                </td>
+                                                <td>
+                                                    <%= solicitud.celular %>
+                                                </td>
+
+                                                <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+
+                                                    <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                                    <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                                </td>
+                                            </tr>
+
+                                            <% }) %>
+                                                <% } %>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
 
     </div>
@@ -898,6 +996,37 @@
     <script>
         $(document).ready(function() {
             $('#datatable5').DataTable({
+                "lengthMenu": [5, 10, 25, 50, 100],
+                order: [
+                    [1, 'desc']
+                ],
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#datatable6').DataTable({
                 "lengthMenu": [5, 10, 25, 50, 100],
                 order: [
                     [1, 'desc']
