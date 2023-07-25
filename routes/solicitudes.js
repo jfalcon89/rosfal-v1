@@ -10,6 +10,147 @@ const nodemailer = require("nodemailer");
 const useragent = require('express-useragent');
 
 
+//FUNCION PARA ENVIAR NOTIFICACION DE ATRASO AUTOMATICO POR CORREO
+
+async function notificacionCorreoAtrasos() {
+
+    // Coloca aquí el código que deseas que se ejecute cada minuto
+    const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND  solicitudes.atraso > 0; ");
+    console.log(solicitudDB);
+    console.log("¡Ejecutando función cada minuto!");
+
+    // iteracion de los resultados
+    if (solicitudDB.length > 0) {
+        solicitudDB.forEach(solicitud => {
+            console.log(solicitud.atraso)
+
+            if (solicitud.email) {
+                async function notificacionCorreo() {
+                    try {
+                        const from = "cobros@rosfal.com"
+                        const toNotificacion = solicitud.email + `,mrosario@rosfal.com`
+
+                        // console.log(nombre + " en enviar correo");
+                        // console.log(apellido + " en enviar correo");
+
+                        // Configurar la conexión SMTP con el servidor de correo personalizado
+                        let transporter = nodemailer.createTransport({
+                            host: "mail.privateemail.com",
+                            port: 465, // El puerto puede variar según la configuración de su servidor
+                            secure: true, // Si utiliza SSL/TLS, establezca este valor en true
+                            tls: {
+                                rejectUnauthorized: false
+                            },
+                            auth: {
+                                user: process.env.USERCORREO,
+                                pass: process.env.PASSCORREO,
+                            },
+                        });
+
+                        // Configurar los detalles del correo electrónico
+                        let info = await transporter.sendMail({
+                            from: `${from} ROSFAL SOLUCIONES DE PRESTAMOS`,
+                            to: `${toNotificacion}`,
+                            subject: `Notificacion Prestamo en Atraso ${solicitud.nombre} ${solicitud.apellido} `,
+                            html: `
+            
+             Hola! Si ya pagaste, favor desestimar.</p><br><br>
+        
+             <strong>SEÑOR (A):</strong><br>
+             ${solicitud.nombre}  ${solicitud.apellido} <br><br>
+            
+            Después de un cordial saludo, le informamos que su prestamo No.<strong> ${solicitud.idSolicitud}</strong> realizado en fecha <strong>${solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10)}</strong> presenta un atraso al dia de hoy de <strong>*${solicitud.atraso} Pesos.</strong><br>
+            Le solicitamos poner al dia su prestamo para evitar mora por atraso.<br><br>
+            
+            Llámanos al Teléfono 829-432-0547 si necesitas cualquier tipo de ayuda por favor.<br><br>
+            
+            <strong>COMO PUEDO REALIZAR EL PAGO DE MI CUOTA DE PRÉSTAMO</strong> ?<br><br>
+            Puedes realizar tu pago en cualquier sucursal del Banco Popular, BHD Leon o BanReservas, también puedes realizar transferencias desde tu banco através de internet banking, recuerda que para confirmar su pago debe incluir siempre como referencia su número de cédula.<br><br>
+            
+            <strong>Banco Popular</strong> <br>
+            Numero de cuenta: 786408559<br>
+            Titular de la cuenta: Jose Miguel Falcon<br><br>
+
+            <strong>BHD Leon</strong> <br>
+            Numero de cuenta: 12113510016<br>
+            Titular de la cuenta: Jose Miguel Falcon<br><br>
+
+            <strong>BanReservas</strong> <br>
+            Numero de cuenta: 9606036287<br>
+            Titular de la cuenta: Magdelin M. Rosario<br><br>
+
+            <strong>NOTA:</strong> Es imprescindible colocar referencia de su cédula al realizar su pago vía depósito o transferencia<br><br>
+        
+            <P>Atentamente,</p>
+        
+            <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRESTAMOS</h4>
+            <P><strong>T.</strong> 829-856-0203 <strong>EMAIL.</strong> contacto@rosfal.com </P>
+            <P>Síguenos en <strong>FB:</strong> Rosfalrd <strong>IG:</strong> @Rosfalrd </P>
+            <a href="www.rosfal.com">www.rosfal.com</a>
+            `
+
+                        });
+
+                        console.log("Correo enviado: %s", info.messageId);
+
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
+                notificacionCorreo()
+
+            }
+        })
+    }
+
+
+
+
+}
+
+// notificacionCorreoAtrasos()
+
+setInterval(notificacionCorreoAtrasos, 86400000);
+
+
+// function ejecutarAccionALas8AM() {
+//     const ahora = new Date();
+//     const horaActual = ahora.getHours();
+//     const minutosActuales = ahora.getMinutes();
+//     const segundosActuales = ahora.getSeconds();
+//     const milisegundosActuales = ahora.getMilliseconds();
+
+//     console.log(ahora)
+//     console.log(horaActual)
+//     console.log(minutosActuales)
+//     console.log(segundosActuales)
+//     console.log(milisegundosActuales)
+
+
+//     // Calcular el tiempo restante hasta las 8:00 AM
+//     const tiempoRestante = new Date();
+//     tiempoRestante.setHours(0, 36, 0, 0);
+//     const tiempoHasta8AM = tiempoRestante.getTime() - ahora.getTime();
+
+//     console.log(tiempoHasta8AM)
+
+//     // Verificar si ya son las 8:00 AM
+//     if (horaActual === 0 && minutosActuales === 36 && segundosActuales === 0 && milisegundosActuales === 0) {
+//         notificacionCorreoAtrasos();
+//     } else {
+//         // Configurar el setTimeout para ejecutar tu función a las 8:00 AM
+//         setTimeout(notificacionCorreoAtrasos, tiempoHasta8AM);
+//     }
+// }
+
+// // Iniciar la función para que se ejecute automáticamente a las 8:00 AM
+// ejecutarAccionALas8AM();
+
+
+// -----------------------FIN---------------------------------
+
+
 //-----------------------NUEVAS----------------------//
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES NUEVAS********************
 router.get('/solicitudes-nuevas', async(req, res) => {
@@ -269,6 +410,7 @@ router.get('/solicitudes-aprobadas', async(req, res) => {
 });
 
 
+
 //VER SOLICITUD EN ESTADO APROBADAS************
 router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
@@ -289,6 +431,8 @@ router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
             // console.log(solicitudDB[0]);
+
+
             res.render("ver-solicitud", {
                 solicitud: solicitudDB[0],
                 arrayTotalSolicitudes: arrayTotalSolicitudesDB,
