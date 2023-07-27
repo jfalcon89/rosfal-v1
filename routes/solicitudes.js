@@ -10,6 +10,33 @@ const nodemailer = require("nodemailer");
 const useragent = require('express-useragent');
 
 
+// // Inicializar la biblioteca SMS
+// const { Vonage } = require('@vonage/server-sdk')
+
+// const vonage = new Vonage({
+//     apiKey: process.env.APIKEYSMS,
+//     apiSecret: process.env.APISECRETSMS
+// })
+
+// const from = "Rosfal Soluciones"
+// const to = "18298560203"
+// const text = 'Hola, Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar cargos por mora. Mas inf. llamar al 829-432-0547. Si ya realizo el pago, Desestimar.'
+
+// async function sendSMS() {
+//     await vonage.sms.send({ to, from, text })
+//         .then(resp => {
+//             console.log('Message sent successfully');
+//             console.log(resp);
+//         })
+//         .catch(err => {
+//             console.log('There was an error sending the messages.');
+//             console.error(err);
+//         });
+// }
+
+// sendSMS();
+
+
 //FUNCION PARA ENVIAR NOTIFICACION DE ATRASO AUTOMATICO POR CORREO
 
 async function notificacionCorreoAtrasos() {
@@ -111,41 +138,31 @@ async function notificacionCorreoAtrasos() {
 
 // notificacionCorreoAtrasos()
 
-setInterval(notificacionCorreoAtrasos, 86400000);
+// setInterval(notificacionCorreoAtrasos, 86400000);
 
 
-// function ejecutarAccionALas8AM() {
-//     const ahora = new Date();
-//     const horaActual = ahora.getHours();
-//     const minutosActuales = ahora.getMinutes();
-//     const segundosActuales = ahora.getSeconds();
-//     const milisegundosActuales = ahora.getMilliseconds();
+// Calcular el tiempo hasta la próxima ejecución a las 8:00 AM
+function calcularTiempoHasta8AM() {
+    const ahora = new Date();
+    const tiempoRestante = new Date(ahora);
+    tiempoRestante.setHours(8, 0, 0, 0);
 
-//     console.log(ahora)
-//     console.log(horaActual)
-//     console.log(minutosActuales)
-//     console.log(segundosActuales)
-//     console.log(milisegundosActuales)
+    if (ahora > tiempoRestante) {
+        tiempoRestante.setDate(tiempoRestante.getDate() + 1); // Pasar al día siguiente si ya pasó las 8:00 AM
+
+    }
+
+    return tiempoRestante.getTime() - ahora.getTime();
+}
 
 
-//     // Calcular el tiempo restante hasta las 8:00 AM
-//     const tiempoRestante = new Date();
-//     tiempoRestante.setHours(0, 36, 0, 0);
-//     const tiempoHasta8AM = tiempoRestante.getTime() - ahora.getTime();
+// Ejecutar la función inicialmente
+notificacionCorreoAtrasos();
 
-//     console.log(tiempoHasta8AM)
-
-//     // Verificar si ya son las 8:00 AM
-//     if (horaActual === 0 && minutosActuales === 36 && segundosActuales === 0 && milisegundosActuales === 0) {
-//         notificacionCorreoAtrasos();
-//     } else {
-//         // Configurar el setTimeout para ejecutar tu función a las 8:00 AM
-//         setTimeout(notificacionCorreoAtrasos, tiempoHasta8AM);
-//     }
-// }
-
-// // Iniciar la función para que se ejecute automáticamente a las 8:00 AM
-// ejecutarAccionALas8AM();
+// Ejecutar la función cada 24 horas (86400000 milisegundos)
+setInterval(function() {
+    notificacionCorreoAtrasos();
+}, 86400000); // 24 horas en milisegundos
 
 
 // -----------------------FIN---------------------------------
