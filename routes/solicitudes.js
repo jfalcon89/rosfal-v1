@@ -10,8 +10,8 @@ const nodemailer = require("nodemailer");
 const useragent = require('express-useragent');
 
 
-// // Inicializar la biblioteca SMS
-// const { Vonage } = require('@vonage/server-sdk')
+// Inicializar la biblioteca SMS
+const { Vonage } = require('@vonage/server-sdk')
 
 // const vonage = new Vonage({
 //     apiKey: process.env.APIKEYSMS,
@@ -39,47 +39,77 @@ const useragent = require('express-useragent');
 
 //FUNCION PARA ENVIAR NOTIFICACION DE ATRASO AUTOMATICO POR CORREO
 
-async function notificacionCorreoAtrasos() {
+router.get('/notificacionCorreoAtrasos', async(req, res) => {
 
-    // Coloca aquí el código que deseas que se ejecute cada minuto
-    const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND  solicitudes.atraso > 0; ");
-    console.log(solicitudDB);
-    console.log("¡Ejecutando función cada minuto!");
+    async function notificacionCorreoAtrasos() {
 
-    // iteracion de los resultados
-    if (solicitudDB.length > 0) {
-        solicitudDB.forEach(solicitud => {
-            console.log(solicitud.atraso)
+        // Coloca aquí el código que deseas que se ejecute cada minuto
+        const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND  solicitudes.atraso > 0; ");
+        console.log(solicitudDB);
+        console.log("¡Ejecutando función cada minuto!");
 
-            if (solicitud.email) {
-                async function notificacionCorreo() {
-                    try {
-                        const from = "cobros@rosfal.com"
-                        const toNotificacion = solicitud.email + `,mrosario@rosfal.com`
+        // iteracion de los resultados
+        if (solicitudDB.length > 0) {
+            solicitudDB.forEach(solicitud => {
+                console.log(solicitud.atraso)
 
-                        // console.log(nombre + " en enviar correo");
-                        // console.log(apellido + " en enviar correo");
+                // // ENVIO DE SMS MASIVO
+                // const vonage = new Vonage({
+                //     apiKey: process.env.APIKEYSMS,
+                //     apiSecret: process.env.APISECRETSMS
+                // })
 
-                        // Configurar la conexión SMTP con el servidor de correo personalizado
-                        let transporter = nodemailer.createTransport({
-                            host: "mail.privateemail.com",
-                            port: 465, // El puerto puede variar según la configuración de su servidor
-                            secure: true, // Si utiliza SSL/TLS, establezca este valor en true
-                            tls: {
-                                rejectUnauthorized: false
-                            },
-                            auth: {
-                                user: process.env.USERCORREO,
-                                pass: process.env.PASSCORREO,
-                            },
-                        });
+                // const from = "Rosfal Soluciones"
+                // const celularCliente = '1' + solicitud.celular;
+                // const to = '18298560203' //celularCliente.toString()
+                // console.log(to)
+                //     // const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547. Si ya realizo el pago, Desestimar'
+                // const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora.'
 
-                        // Configurar los detalles del correo electrónico
-                        let info = await transporter.sendMail({
-                            from: `${from} ROSFAL SOLUCIONES DE PRESTAMOS`,
-                            to: `${toNotificacion}`,
-                            subject: `Notificacion Prestamo en Atraso ${solicitud.nombre} ${solicitud.apellido} `,
-                            html: `
+                // async function sendSMS() {
+                //     await vonage.sms.send({ to, from, text })
+                //         .then(resp => {
+                //             console.log('Message sent successfully');
+                //             console.log(resp);
+                //         })
+                //         .catch(err => {
+                //             console.log('There was an error sending the messages.');
+                //             console.error(err);
+                //         });
+                // }
+
+                // sendSMS();
+
+                if (solicitud.email) {
+                    async function notificacionCorreo() {
+                        try {
+                            const from = "cobros@rosfal.com"
+                            const toNotificacion = solicitud.email + `,mrosario@rosfal.com`
+
+
+                            // console.log(nombre + " en enviar correo");
+                            // console.log(apellido + " en enviar correo");
+
+                            // Configurar la conexión SMTP con el servidor de correo personalizado
+                            let transporter = nodemailer.createTransport({
+                                host: "mail.privateemail.com",
+                                port: 465, // El puerto puede variar según la configuración de su servidor
+                                secure: true, // Si utiliza SSL/TLS, establezca este valor en true
+                                tls: {
+                                    rejectUnauthorized: false
+                                },
+                                auth: {
+                                    user: process.env.USERCORREO,
+                                    pass: process.env.PASSCORREO,
+                                },
+                            });
+
+                            // Configurar los detalles del correo electrónico
+                            let info = await transporter.sendMail({
+                                from: `${from} ROSFAL SOLUCIONES DE PRESTAMOS`,
+                                to: `${toNotificacion}`,
+                                subject: `Notificacion Prestamo en Atraso ${solicitud.nombre} ${solicitud.apellido} `,
+                                html: `
             
              Hola! Si ya pagaste, favor desestimar.</p><br><br>
         
@@ -116,53 +146,30 @@ async function notificacionCorreoAtrasos() {
             <a href="www.rosfal.com">www.rosfal.com</a>
             `
 
-                        });
+                            });
 
-                        console.log("Correo enviado: %s", info.messageId);
+                            console.log("Correo enviado: %s", info.messageId);
 
-                    } catch (error) {
-                        console.log(error);
+                        } catch (error) {
+                            console.log(error);
+                        }
                     }
+
+                    notificacionCorreo()
                 }
 
-                notificacionCorreo()
-
-            }
-        })
-    }
 
 
-
-
-}
-
-// notificacionCorreoAtrasos()
-
-// setInterval(notificacionCorreoAtrasos, 86400000);
-
-
-// Calcular el tiempo hasta la próxima ejecución a las 8:00 AM
-function calcularTiempoHasta8AM() {
-    const ahora = new Date();
-    const tiempoRestante = new Date(ahora);
-    tiempoRestante.setHours(8, 0, 0, 0);
-
-    if (ahora > tiempoRestante) {
-        tiempoRestante.setDate(tiempoRestante.getDate() + 1); // Pasar al día siguiente si ya pasó las 8:00 AM
+            })
+        }
 
     }
 
-    return tiempoRestante.getTime() - ahora.getTime();
-}
 
 
-// Ejecutar la función inicialmente
-notificacionCorreoAtrasos();
 
-// Ejecutar la función cada 24 horas (86400000 milisegundos)
-setInterval(function() {
-    notificacionCorreoAtrasos();
-}, 86400000); // 24 horas en milisegundos
+    notificacionCorreoAtrasos()
+});
 
 
 // -----------------------FIN---------------------------------

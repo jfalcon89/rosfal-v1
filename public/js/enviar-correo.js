@@ -1,31 +1,21 @@
-// // Obtenga el botón de enviar correo electrónico por su ID
-// const enviarCorreoBtn = document.getElementById('btnGuardarDatos');
+// Asignar el evento click al botón
+document.getElementById('notificarAtrasosBtn').addEventListener('click', notificarAtrasos);
 
-// // Agregue un controlador de eventos para el botón de enviar correo electrónico
-// enviarCorreoBtn.addEventListener('click', () => {
-//     console.log("entro a la funcion js")
+// Función que notifica los atrasos
+async function notificarAtrasos() {
+    try {
+        console.log("diste click enviar correo")
+            // alert('Enviara un correo masivo')
+            // confirm("Seguro que desea enviar Notificacion de atrasos masivos")
 
-//     // fetch('/solicita-ya.js')
-//     //     .then(response => response.text())
-//     //     .then(data => {
-//     //         // Aquí puedes ejecutar el contenido de miArchivo.js
-//     //         console.log(response + " en el evento")
-//     //         enviarCorreo()
-//     //             // setTimeout(enviarCorreo(), 5000);
+        // Hacer una petición al servidor para notificar atrasos
+        const response = await fetch('/notificacionCorreoAtrasos', { method: 'GET' });
+        const message = await response.text();
+        alert(message);
+        // console.log(message)
 
-//     //         // eval(data);
-//     //     })
-//     //     .catch(error => console.error(error));
-//     fetch('/solicita-ya.js')
-//     enviarCorreo()
-
-//     // .then(response => response.text())
-//     // .then(data => {
-//     //     // Aquí puedes ejecutar el contenido de miArchivo.js
-//     //     console.log(" en el evento")
-//     //         // setTimeout(enviarCorreo(), 5000);
-
-//     //     // eval(data);
-//     // })
-//     // .catch(error => console.error(error));
-// });
+    } catch (error) {
+        console.error('Error al enviar las notificaciones:', error);
+        // alert('Error al enviar las notificaciones.');
+    }
+}
