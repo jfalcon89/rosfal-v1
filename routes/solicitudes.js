@@ -54,31 +54,31 @@ router.get('/notificacionCorreoAtrasos', async(req, res) => {
                 console.log(solicitud.atraso)
 
                 // // ENVIO DE SMS MASIVO
-                // const vonage = new Vonage({
-                //     apiKey: process.env.APIKEYSMS,
-                //     apiSecret: process.env.APISECRETSMS
-                // })
+                const vonage = new Vonage({
+                    apiKey: process.env.APIKEYSMS,
+                    apiSecret: process.env.APISECRETSMS
+                })
 
-                // const from = "Rosfal Soluciones"
-                // const celularCliente = '1' + solicitud.celular;
-                // const to = '18298560203' //celularCliente.toString()
-                // console.log(to)
-                //     // const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547. Si ya realizo el pago, Desestimar'
-                // const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora.'
+                const from = "Rosfal Soluciones"
+                const celularCliente = '1' + solicitud.celular;
+                const to = celularCliente
+                console.log(to)
+                    // const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547. Si ya realizo el pago, Desestimar'
+                const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547'
 
-                // async function sendSMS() {
-                //     await vonage.sms.send({ to, from, text })
-                //         .then(resp => {
-                //             console.log('Message sent successfully');
-                //             console.log(resp);
-                //         })
-                //         .catch(err => {
-                //             console.log('There was an error sending the messages.');
-                //             console.error(err);
-                //         });
-                // }
+                async function sendSMS() {
+                    await vonage.sms.send({ to, from, text })
+                        .then(resp => {
+                            console.log('Message sent successfully');
+                            console.log(resp);
+                        })
+                        .catch(err => {
+                            console.log('There was an error sending the messages.');
+                            console.error(err);
+                        });
+                }
 
-                // sendSMS();
+                sendSMS();
 
                 if (solicitud.email) {
                     async function notificacionCorreo() {
