@@ -13,28 +13,67 @@ const useragent = require('express-useragent');
 // Inicializar la biblioteca SMS
 const { Vonage } = require('@vonage/server-sdk')
 
-// const vonage = new Vonage({
-//     apiKey: process.env.APIKEYSMS,
-//     apiSecret: process.env.APISECRETSMS
-// })
 
-// const from = "Rosfal Soluciones"
-// const to = "18298560203"
-// const text = 'Hola, Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar cargos por mora. Mas inf. llamar al 829-432-0547. Si ya realizo el pago, Desestimar.'
+// ----------------------FUNCION PARA ENVIAR SMS POR CLIENTE--------------------
 
-// async function sendSMS() {
-//     await vonage.sms.send({ to, from, text })
-//         .then(resp => {
-//             console.log('Message sent successfully');
-//             console.log(resp);
-//         })
-//         .catch(err => {
-//             console.log('There was an error sending the messages.');
-//             console.error(err);
-//         });
-// }
+router.get('/notificacionSmsAtrasos/:id', async(req, res) => {
 
-// sendSMS();
+    const id = req.params.id
+    console.log(id)
+    console.log(req.body)
+        // console.log(req)
+
+    async function notificacionSmsAtrasos() {
+
+        // Coloca aquí el código que deseas que se ejecute cada minuto
+        const solicitudDB = await pool.query(`SELECT * FROM solicitudes WHERE idSolicitud = ${id} AND estadoSolicitud = 'Aprobada' AND  solicitudes.atraso > 0; `);
+        console.log(solicitudDB);
+        // console.log("¡Ejecutando función cada minuto!");
+
+        // iteracion de los resultados
+        if (solicitudDB.length > 0) {
+            solicitudDB.forEach(solicitud => {
+                console.log(solicitud.atraso)
+
+                // // ENVIO DE SMS MASIVO
+                const vonage = new Vonage({
+                    apiKey: process.env.APIKEYSMS,
+                    apiSecret: process.env.APISECRETSMS
+                })
+
+                const from = "Rosfal Soluciones"
+                const celularCliente = '1' + solicitud.celular;
+                const to = celularCliente
+                console.log(to)
+                    // const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547. Si ya realizo el pago, Desestimar'
+                const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547'
+
+                async function sendSMS() {
+                    await vonage.sms.send({ to, from, text })
+                        .then(resp => {
+                            console.log('Message sent successfully');
+                            console.log(resp);
+                        })
+                        .catch(err => {
+                            console.log('There was an error sending the messages.');
+                            console.error(err);
+                        });
+                }
+
+                sendSMS();
+
+            })
+        }
+
+    }
+
+
+
+
+    notificacionSmsAtrasos()
+});
+
+
 
 
 //FUNCION PARA ENVIAR NOTIFICACION DE ATRASO AUTOMATICO POR CORREO
