@@ -330,6 +330,7 @@
                                                             <option value="En Revision">En Revision</option>
                                                             <option value="En Legal">En Legal</option>
                                                             <option value="Liquidado">Liquidado</option>
+                                                            <option value="Incobrable">Incobrable</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -388,6 +389,15 @@
 
                                                             </div>
                                                             <% } %>
+
+                                                                <% if(solicitud.estadoSolicitud == 'Incobrable'){ %>
+
+                                                                    <div class="me-lg-5">
+                                                                        <label for="sexo" class="p-2 text-danger">Monto Incobrable</label>
+                                                                        <input type="number" name="incobrableMonto" class="form-control text-danger " id="legalMonto" value="<%= solicitud.incobrableMonto %>">
+
+                                                                    </div>
+                                                                    <% } %>
 
                                                     </div>
                                                 </div>

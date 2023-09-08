@@ -20,8 +20,7 @@ router.get('/notificacionSmsAtrasos/:id', async(req, res) => {
 
     const id = req.params.id
     console.log(id)
-    console.log(req.body)
-        // console.log(req)
+
 
     async function notificacionSmsAtrasos() {
 
@@ -672,7 +671,7 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
 
     // const data = {};
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, atraso, legalMonto } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, atraso, legalMonto, incobrableMonto } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -712,7 +711,8 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         ruta,
         firmaContrato,
         atraso,
-        legalMonto
+        legalMonto,
+        incobrableMonto
     };
 
     const atrasoDB = await pool.query(`SELECT novedades_atrasos.atraso FROM novedades_atrasos WHERE novedades_atrasos.idSolicitud = ${id}`);
