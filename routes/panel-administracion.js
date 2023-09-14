@@ -31,6 +31,16 @@ router.get('/panel-administracion', async(req, res) => {
         const prestamosEnLegalDB = await pool.query("SELECT SUM(legalMonto) prestamosEnLegal FROM solicitudes WHERE estadoSolicitud = 'En Legal' AND legalMonto > 0")
         const cantAtrasosDB = await pool.query("SELECT COUNT(idSolicitud) cantAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
 
+        // porcentajes
+        const porcentajeAprobacionesDB = await pool.query("SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal', 'Incobrable', 'Liquidado') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeAprobaciones FROM solicitudes;")
+        const porcentajeDeclinacionesDB = await pool.query("SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Declinada') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeDeclinaciones FROM solicitudes;")
+        const porcentajeEnRevisionDB = await pool.query("SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('En Revision') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeEnRevision FROM solicitudes;")
+        const porcentajeNuevasDB = await pool.query("SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Nueva') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeNuevas FROM solicitudes;")
+        const porcentajeLiquidadoDB = await pool.query("SELECT left((SUM(CASE WHEN estadoSolicitud IN ('Liquidado') THEN montoSolicitado ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'Incobrable', 'En Legal') THEN montoSolicitado ELSE 0 END)) * 100, 5 ) AS porcentajeLiquidado FROM solicitudes;")
+        const porcentajeEnLegalDB = await pool.query("SELECT left((SUM(CASE WHEN legalMonto > 0 THEN legalMonto ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeEnLegal FROM solicitudes;")
+        const porcentajeAtrasoDB = await pool.query("SELECT left((SUM(CASE WHEN atraso > 0 THEN atraso ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeAtraso FROM solicitudes;")
+        const porcentajeIncobrableDB = await pool.query("SELECT left((SUM(CASE WHEN incobrableMonto > 0 THEN incobrableMonto ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeIncobrable FROM solicitudes;")
+
 
         const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" OR estadoSolicitud = "En Legal" ORDER BY fechaSolicitud DESC');
         const arraySolicitudesAprobadasFirmadasDB = await pool.query('SELECT * FROM solicitudes WHERE firmaContrato="NO" AND (estadoSolicitud="Aprobada" OR estadoSolicitud ="En Legal")');
@@ -58,6 +68,14 @@ router.get('/panel-administracion', async(req, res) => {
             arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
             arraySolicitudesEnLegal: arraySolicitudesEnLegalDB,
             arraySolicitudesIncobrables: arraySolicitudesIncobrablesDB,
+            porcentajeAprobaciones: porcentajeAprobacionesDB[0].porcentajeAprobaciones,
+            porcentajeDeclinaciones: porcentajeDeclinacionesDB[0].porcentajeDeclinaciones,
+            porcentajeEnRevision: porcentajeEnRevisionDB[0].porcentajeEnRevision,
+            porcentajeNuevas: porcentajeNuevasDB[0].porcentajeNuevas,
+            porcentajeLiquidado: porcentajeLiquidadoDB[0].porcentajeLiquidado,
+            porcentajeEnLegal: porcentajeEnLegalDB[0].porcentajeEnLegal,
+            porcentajeAtraso: porcentajeAtrasoDB[0].porcentajeAtraso,
+            porcentajeIncobrable: porcentajeIncobrableDB[0].porcentajeIncobrable,
             i,
             login: true,
             name: req.session.name
