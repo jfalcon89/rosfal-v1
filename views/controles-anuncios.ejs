@@ -134,13 +134,11 @@
                 <table id="datatable3" class="display responsive nowrap" style="width:100%">
                     <thead class="thead-ligth">
                         <tr>
-
                             <th scope="col">ID Anuncio</th>
                             <th scope="col">Descripcion</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Acciones</th>
                             <th scope="col">Vista previa</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -162,11 +160,9 @@
                                         </td>
                                         <td>
                                             <a href="/controles-anuncios/<%= i %>" type="submit" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModalNovedad<%= i %>">MODIFICAR ANUNCIO</a>
-
                                         </td>
                                         <td>
-                                            <a style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModalImagen<%= i %>"><img src="https://onedrive.live.com/embed?resid=C31F9C66E8BCAAC9%211893&authkey=%21AErwcvCelJD4T4g&height=660" style="width: 300px;" alt=""></a>
-
+                                            <img src="<%= anuncio.url_imagen %> " style="width: 300px;" alt="">
                                         </td>
                                     </tr>
 
@@ -179,25 +175,16 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-
                                                     <form method="POST">
                                                         <input class="form-control d-none" type="text" name="idAnuncio" value="<%= anuncio.idAnuncio%>">
-
-                                                        <div class="input-group mb-3">
-                                                            <span class="input-group-text" id="basic-addon1">Titulo</span>
-                                                            <input type="text" class="form-control" aria-label="Descripcion" name="" value="<%=  %>" aria-describedby="basic-addon1">
-                                                            <select name="" class="form-select" id="inputGroupSelect01">
-                                                                <option selected>Estado</option>
-                                                                <option value="Activo">Activo</option>
-                                                                <option value="Inactivo">Inactivo</option>
-                                                              </select>
-                                                        </div>
-
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text" id="basic-addon1">Descripcion</span>
                                                             <input type="text" class="form-control" aria-label="Descripcion" name="anuncio" value="<%= anuncio.anuncio %>" aria-describedby="basic-addon1">
                                                         </div>
-
+                                                        <div class="input-group mb-3">
+                                                            <span class="input-group-text" id="basic-addon1">Url Imagen</span>
+                                                            <input type="text" class="form-control" aria-label="url_imagen" name="url_imagen" value="<%= anuncio.url_imagen %>" aria-describedby="basic-addon1">
+                                                        </div>
                                                         <div class="input-group mb-3">
                                                             <label class="input-group-text" for="inputGroupSelect01">Estado</label>
                                                             <select name="estado" class="form-select" id="inputGroupSelect01">
@@ -206,67 +193,25 @@
                                                               <option value="Inactivo">Inactivo</option>
                                                             </select>
                                                         </div>
-
                                                         <div class="modal-footer border-0">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                                             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                                         </div>
-
                                                     </form>
-
-
-
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- Modal imagen -->
-                                    <div class="modal fade" id="exampleModalImagen<%= i %>" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-xl modal-dialog-centered justify-content-center">
-                                            <div class="">
-                                                <!-- <button type="button" class="btn-close btn-danger " data-bs-dismiss="modal" aria-label="Close"></button> -->
-
-                                                <div class="d-lg-flex" style="box-shadow: 0px 0px 15px #2D8DBD">
-
-                                                    <div class="">
-                                                        <img class="img-fluid " src="/img/<%= anuncio.anuncio %>.jpg" alt="">
-                                                        <!-- <img src="/img/anuncio_peluqueria.jpg" alt="anuncio peluqueria" class="img-fluid"> -->
-                                                    </div>
-                                                    <div class="bg-light flex-column ">
-                                                        <div class="container-fluid">
-                                                            <h4 class="text-info mb-4 mt-lg-4">Solicitar Ahora</h4>
-                                                            <div class="input-group mb-3">
-                                                                <input class="form-control form-control-lg" type="text" placeholder="Nombre Completo" aria-label=".form-control-lg example">
-                                                            </div>
-                                                            <div class="input-group mb-3">
-                                                                <input class="form-control form-control-lg" type="text" placeholder="Telefono" aria-label=".form-control-lg example">
-                                                            </div>
-                                                            <div class="input-group mb-lg-5">
-                                                                <input class="form-control form-control-lg " type="text" placeholder="Monto" aria-label=".form-control-lg example">
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-grid m-3">
-                                                            <button class="btn btn-primary" style="margin-bottom: inherit;">SOLICITAR</button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-            </div>
-
-            <% }) %>
-                <% } %>
-
                     </tbody>
-                    </table>
+                    <% }) %>
+                        <% } %>
+
+
+                </table>
+            </div>
         </div>
     </div>
-    </div>
+
 
 
     <script>

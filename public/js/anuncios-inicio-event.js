@@ -1,70 +1,83 @@
-// console.log('estoy en el inicio');
+// mira los estados de cada anuncio 
+const estado_prestamos_quincenales = document.querySelector(".estado_prestamos_quincenales").value
+const estado_prestamos_semanales = document.querySelector(".estado_prestamos_semanales").value
+const estado_anuncios_generales = document.querySelector(".estado_anuncios_generales").value
 
-// function miFuncion() {
-//     console.log("¡Hola cada 3 segundos!");
-// }
+// prestamos quincenales
+const container_prestamos_quincenales = document.getElementById("container_prestamos_quincenales");
+const modal_prestamos_quincenales = document.getElementById("modal_prestamos_quincenales");
+const close_prestamos_quincenales = document.getElementById("close_prestamos_quincenales");
 
-// setInterval(miFuncion, 3000);
+// prestamos semanales
+const container_prestamos_semanales = document.getElementById("container_prestamos_semanales");
+const modal_prestamos_semanales = document.getElementById("modal_prestamos_semanales");
+const close_prestamos_semanales = document.getElementById("close_prestamos_semanales");
 
-// const anuncio = addEventListener("load", () => {
+// anuncios generales
+const container_anuncios_generales = document.getElementById("container_anuncios_generales");
+const modal_anuncios_generales = document.getElementById("modal_anuncios_generales");
+const close_anuncios_generales = document.getElementById("close_anuncios_generales");
 
-// })
-
-const estado_anuncio_salon = document.querySelector(".estado_anuncio_salon").value
-const estado_anuncio_peluqueria = document.querySelector(".estado_anuncio_peluqueria").value
-
-console.log(estado_anuncio_salon + " salon")
-console.log(estado_anuncio_peluqueria + " peluqueria")
-
-const container_anuncio_salon = document.getElementById("container_anuncio_salon");
-const modal_anuncio_salon = document.getElementById("modal_anuncio_salon");
-const close_anuncio_salon = document.getElementById("close_anuncio_salon");
-
-const container_anuncio_peluqueria = document.getElementById("container_anuncio_peluqueria");
-const modal_anuncio_peluqueria = document.getElementById("modal_anuncio_peluqueria");
-const close_anuncio_peluqueria = document.getElementById("close_anuncio_peluqueria");
-
-// anuncio salon
-function anuncioSalonFuncion() {
+// anuncio prestamos quincenales funcion
+function anuncioQuincenalesFuncion() {
     console.log("¡anuncio en 5 segundos!");
-    container_anuncio_salon.style.display = "block"
-    modal_anuncio_salon.style.display = "block"
-    modal_anuncio_salon.classList.add("modal-anuncio");
-    modal_anuncio_salon.classList.add("animated-div");
+    container_prestamos_quincenales.style.display = "block"
+    modal_prestamos_quincenales.style.display = "block"
+    modal_prestamos_quincenales.classList.add("modal-anuncio");
+    modal_prestamos_quincenales.classList.add("animated-div");
 
 }
 
-close_anuncio_salon.addEventListener("click", () => {
+close_prestamos_quincenales.addEventListener("click", () => {
     console.log("¡anuncio en 5 segundos CERRADO!");
-    container_anuncio_salon.style.display = "none"
-    modal_anuncio_salon.classList.remove("modal-anuncio");
-    modal_anuncio_salon.style.display = "none"
+    container_prestamos_quincenales.style.display = "none"
+    modal_prestamos_quincenales.classList.remove("modal-anuncio");
+    modal_prestamos_quincenales.style.display = "none"
 })
 
-if (estado_anuncio_salon == "Activo") {
+if (estado_prestamos_quincenales == "Activo") {
 
-    setTimeout(anuncioSalonFuncion, 3000);
+    setTimeout(anuncioQuincenalesFuncion, 3000);
 }
 
-// anuncio peluqueria
-function anuncioPeluqueriaFuncion() {
-    console.log("¡anuncio peluqueria en 5 segundos!");
-    container_anuncio_peluqueria.style.display = "block"
-    modal_anuncio_peluqueria.style.display = "block"
-    modal_anuncio_peluqueria.classList.add("modal-anuncio");
-    modal_anuncio_peluqueria.classList.add("animated-div");
-    // container_anuncio_peluqueria.setAttribute("data-aos", "fade-down");
-
+// anuncio prestamos semanales funcion
+function anuncioSemanalesFuncion() {
+    console.log("¡anuncio semanales en 5 segundos!");
+    container_prestamos_semanales.style.display = "block"
+    modal_prestamos_semanales.style.display = "block"
+    modal_prestamos_semanales.classList.add("modal-anuncio");
+    modal_prestamos_semanales.classList.add("animated-div");
 }
 
-close_anuncio_peluqueria.addEventListener("click", () => {
+close_prestamos_semanales.addEventListener("click", () => {
     console.log("¡anuncio en 5 segundos CERRADO!");
-    container_anuncio_peluqueria.style.display = "none"
-    modal_anuncio_peluqueria.classList.remove("modal-anuncio");
-    modal_anuncio_peluqueria.style.display = "none"
+    container_prestamos_semanales.style.display = "none"
+    modal_prestamos_semanales.classList.remove("modal-anuncio");
+    modal_prestamos_semanales.style.display = "none"
 })
 
-if (estado_anuncio_peluqueria == "Activo") {
+if (estado_prestamos_semanales == "Activo") {
 
-    setTimeout(anuncioPeluqueriaFuncion, 3000);
+    setTimeout(anuncioSemanalesFuncion, 3000);
+}
+
+// anuncio generales funcion
+function anuncioGeneralesFuncion() {
+    console.log("¡anuncio generales en 5 segundos!");
+    container_anuncios_generales.style.display = "block"
+    modal_anuncios_generales.style.display = "block"
+    modal_anuncios_generales.classList.add("modal-anuncio");
+    modal_anuncios_generales.classList.add("animated-div");
+}
+
+close_anuncios_generales.addEventListener("click", () => {
+    console.log("¡anuncio en 5 segundos CERRADO!");
+    container_anuncios_generales.style.display = "none"
+    modal_anuncios_generales.classList.remove("modal-anuncio");
+    modal_anuncios_generales.style.display = "none"
+})
+
+if (estado_anuncios_generales == "Activo") {
+
+    setTimeout(anuncioGeneralesFuncion, 3000);
 }

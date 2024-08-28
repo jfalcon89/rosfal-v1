@@ -39,89 +39,64 @@
     </div>
 
 
-    <!-- anuncio salon -->
-    <input class="d-none estado_anuncio_salon" type="text" value="<%= modal_anuncio_salon.estado %>" id="<%= modal_anuncio_salon.estado %>">
+    <!-- anuncio prestamos quincenales -->
+    <input class="d-none estado_prestamos_quincenales" type="text" value="<%= modal_prestamos_quincenales.estado %>" id="<%= modal_prestamos_quincenales.estado %>">
 
-    <div class="d-flex justify-content-center" style="display: none;" id="container_anuncio_salon">
-        <div class="" style="display: none; margin-top: 10%;" id="modal_anuncio_salon">
-            <div class="d-flex justify-content-end " id="close_anuncio_salon"><i class="bi bi-x-square-fill fs-5 "></i></div>
+    <div class="d-flex justify-content-center" style="display: none;" id="container_prestamos_quincenales">
+        <div class="" style="display: none; margin-top: 9%;" id="modal_prestamos_quincenales">
+            <div class="d-flex justify-content-end " id="close_prestamos_quincenales"><i class="bi bi-x-square-fill fs-5 "></i></div>
 
             <div class="" style="box-shadow: 0px 0px 15px #2D8DBD">
                 <div class="">
-                    <img src="https://onedrive.live.com/embed?resid=C31F9C66E8BCAAC9%211894&authkey=%21AEef5zMqTsA5ZKE&height=860" alt="Prestamos quincenales" class="img-fluid">
+                    <img src="<%= modal_prestamos_quincenales.url_imagen %>" alt="Prestamos quincenales" class="img-fluid">
+                    <% console.log(modal_prestamos_quincenales) %>
                 </div>
                 <div>
                     <a href="/solicita-ya" class="btn btn-primary" style="margin-bottom: inherit; display: block;">SOLICITAR PRESTAMO</a>
-
                 </div>
-
             </div>
         </div>
     </div>
-    </div>
 
-    <!-- anuncio peluqueria -->
-    <input class="d-none estado_anuncio_peluqueria" type="text" value="<%= modal_anuncio_peluqueria.estado %>" id="<%= modal_anuncio_peluqueria.estado %>">
 
-    <div class="d-flex justify-content-center " style="display: none;" id="container_anuncio_peluqueria">
-        <div class="" style="display: none; margin-top: 10%;" id="modal_anuncio_peluqueria">
-            <div class="d-flex justify-content-end " id="close_anuncio_peluqueria"><i class="bi bi-x-square-fill fs-5 "></i></div>
+    <!-- anuncio prestamos semanales -->
+    <input class="d-none estado_prestamos_semanales" type="text" value="<%= modal_prestamos_semanales.estado %>" id="<%= modal_prestamos_semanales.estado %>">
+
+    <div class="d-flex justify-content-center " style="display: none;" id="container_prestamos_semanales">
+        <div class="" style="display: none; margin-top: 9%;" id="modal_prestamos_semanales">
+            <div class="d-flex justify-content-end " id="close_prestamos_semanales"><i class="bi bi-x-square-fill fs-5 "></i></div>
             <div class="" style="box-shadow: 0px 0px 15px #2D8DBD">
                 <div class="d-block">
-                    <img src="https://onedrive.live.com/embed?resid=C31F9C66E8BCAAC9%211893&authkey=%21AErwcvCelJD4T4g&height=860" alt="Prestamos semanales" class="img-fluid">
+                    <img src="<%= modal_prestamos_semanales.url_imagen %>" alt="Prestamos semanales" class="img-fluid">
                 </div>
                 <div>
                     <a href="/solicita-ya" class="btn btn-primary" style="margin-bottom: inherit; display: block;">SOLICITAR PRESTAMO</a>
-
-                </div>
-                <!-- <div class="bg-light flex-column ">
-                    <div class="container-fluid">
-                        <h4 class="text-info mb-4 mt-lg-4">Solicitar Ahora</h4>
-                        <div class="input-group mb-3">
-                            <input class="form-control form-control-lg" type="text" placeholder="Nombre Completo" aria-label=".form-control-lg example">
-                        </div>
-                        <div class="input-group mb-3">
-                            <input class="form-control form-control-lg" type="text" placeholder="Telefono" aria-label=".form-control-lg example">
-                        </div>
-                        <div class="input-group mb-lg-5">
-                            <input class="form-control form-control-lg " type="text" placeholder="Monto" aria-label=".form-control-lg example">
-                        </div>
-                    </div>
-                    <div class="d-grid m-3">
-
-                    </div>
-                </div> -->
-            </div>
-
-            <!-- <h5>ANUNCIO PELUQUERIA</h5> -->
-
-            <!-- <div style="background-color: #598AB6; height: 300px; width: 300px;"> -->
-
-        </div>
-    </div>
-    </div>
-
-    <!-- fin -->
-
-    <!-- Modal -->
-    <!-- <div class="modal fade show " style="display: block;" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
+
+    <!-- anuncio generales -->
+    <input class="d-none estado_anuncios_generales" type="text" value="<%= modal_anuncios_generales.estado %>" id="<%= modal_anuncios_generales.estado %>">
+
+    <div class="d-flex justify-content-center " style="display: none;" id="container_anuncios_generales">
+        <div class="" style="display: none; margin-top: 9%;" id="modal_anuncios_generales">
+            <div class="d-flex justify-content-end " id="close_anuncios_generales"><i class="bi bi-x-square-fill fs-5 "></i></div>
+            <div class="" style="box-shadow: 0px 0px 15px #2D8DBD">
+                <div class="d-block">
+                    <img src="<%= modal_anuncios_generales.url_imagen %>" alt="anuncios_generales" class="img-fluid">
+                </div>
+                <div>
+                    <a href="/solicita-ya" class="btn btn-primary" style="margin-bottom: inherit; display: block;">SOLICITAR PRESTAMO</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- fin -->
+
+
 
 
 

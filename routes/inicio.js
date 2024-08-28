@@ -64,16 +64,18 @@ router.get('/', async(req, res) => {
 
     const arrayNuevoTestimonioDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ');
 
-    const modal_anuncio_salonDB = await pool.query("SELECT anuncio modal_anuncio_salon, estado FROM tab_anuncios WHERE idAnuncio = 1")
-    const modal_anuncio_peluqueriaDB = await pool.query("SELECT anuncio modal_anuncio_peluqueria, estado FROM tab_anuncios WHERE idAnuncio = 2")
+    const modal_prestamos_quincenalesDB = await pool.query("SELECT * FROM tab_anuncios WHERE idAnuncio = 1")
+    const modal_prestamos_semanalesDB = await pool.query("SELECT * FROM tab_anuncios WHERE idAnuncio = 2")
+    const modal_anuncios_generalesDB = await pool.query("SELECT * FROM tab_anuncios WHERE idAnuncio = 3")
 
 
     // console.log(estadoAnuncioDB[0].estado)
 
     res.render('inicio', {
         arrayNuevoTestimonio: arrayNuevoTestimonioDB,
-        modal_anuncio_salon: modal_anuncio_salonDB[0],
-        modal_anuncio_peluqueria: modal_anuncio_peluqueriaDB[0]
+        modal_prestamos_quincenales: modal_prestamos_quincenalesDB[0],
+        modal_prestamos_semanales: modal_prestamos_semanalesDB[0],
+        modal_anuncios_generales: modal_anuncios_generalesDB[0]
 
 
     });
