@@ -9,8 +9,8 @@ const useragent = require('express-useragent');
 
 router.get('/', async(req, res) => {
 
-    const ipString = "148.0.27.34, 172.71.82.116";
-    // const ipString = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    // const ipString = "148.0.27.34, 172.71.82.116";
+    const ipString = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     const ip = ipString.split(',')[0];
 
     console.log('ip ' + ip);
