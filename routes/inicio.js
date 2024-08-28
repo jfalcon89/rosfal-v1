@@ -9,9 +9,11 @@ const useragent = require('express-useragent');
 
 router.get('/', async(req, res) => {
 
-    // const ipString = "152.0.12.42, 172.71.82.116";
-    const ipString = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    const ipString = "148.0.27.34, 172.71.82.116";
+    // const ipString = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
     const ip = ipString.split(',')[0];
+
+    console.log('ip ' + ip);
 
     const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     const bot = req.useragent.isBot ? 'true' : 'false';
@@ -20,7 +22,7 @@ router.get('/', async(req, res) => {
     const plataforma = req.useragent.platform
 
 
-    fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=c48b62c0f8844a7c86cb0020ff90e0d3&ip_address=${ip}`)
+    fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=174a3d4da2a14777ab66bef79388279b&ip_address=${ip}`)
         .then(response => response.json())
         .then(data => {
 

@@ -35,7 +35,7 @@ router.post("/solicita-ya", async(req, res) => {
     const plataforma = req.useragent.platform
     const fecha = new Date().toLocaleString('en-US', { timeZone: 'America/Santo_Domingo' });
 
-    fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=c48b62c0f8844a7c86cb0020ff90e0d3&ip_address=${ip}`)
+    fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=174a3d4da2a14777ab66bef79388279b&ip_address=${ip}`)
         .then(response => response.json())
         .then(data => {
 
