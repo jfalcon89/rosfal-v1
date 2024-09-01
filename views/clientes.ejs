@@ -179,8 +179,6 @@
                                     <td>
                                         <%= solicitud.direccion %>
                                     </td>
-
-
                                     <td>
                                         <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %>
                                     </td>
@@ -188,7 +186,27 @@
                                         <%= solicitud.idSolicitud %>
                                     </td>
                                     <td>
-                                        <%= solicitud.clasificacionCliente %>
+                                        <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                            <p style="background-color: gray; color: white;">
+                                                <%= solicitud.clasificacionCliente %>
+                                            </p>
+                                            <% } else if (solicitud.clasificacionCliente == 'A-Bueno') { %>
+                                                <p style="background-color: green; color: white;">
+                                                    <%= solicitud.clasificacionCliente %>
+                                                </p>
+                                                <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                    <p style="background-color: yellow; ">
+                                                        <%= solicitud.clasificacionCliente %>
+                                                    </p>
+                                                    <% } else if (solicitud.clasificacionCliente == 'C-Malo') { %>
+                                                        <p style="background-color: lightcoral;">
+                                                            <%= solicitud.clasificacionCliente %>
+                                                        </p>
+                                                        <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                            <p style="background-color: darkred; color: white;">
+                                                                <%= solicitud.clasificacionCliente %>
+                                                            </p>
+                                                            <% } %>
                                     </td>
                                     <td>
 

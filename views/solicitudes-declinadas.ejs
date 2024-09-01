@@ -260,7 +260,27 @@
                                         <%= solicitud.estadoSolicitud %>
                                     </td>
                                     <td>
-                                        <%= solicitud.clasificacionCliente %>
+                                        <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                            <p style="background-color: gray; color: white;">
+                                                <%= solicitud.clasificacionCliente %>
+                                            </p>
+                                            <% } else if (solicitud.clasificacionCliente == 'A-Bueno') { %>
+                                                <p style="background-color: green; color: white;">
+                                                    <%= solicitud.clasificacionCliente %>
+                                                </p>
+                                                <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                    <p style="background-color: yellow; ">
+                                                        <%= solicitud.clasificacionCliente %>
+                                                    </p>
+                                                    <% } else if (solicitud.clasificacionCliente == 'C-Malo') { %>
+                                                        <p style="background-color: lightcoral;">
+                                                            <%= solicitud.clasificacionCliente %>
+                                                        </p>
+                                                        <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                            <p style="background-color: darkred; color: white;">
+                                                                <%= solicitud.clasificacionCliente %>
+                                                            </p>
+                                                            <% } %>
                                     </td>
 
                                     <td class="w-0 "><a href="/solicitudes-declinadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>
