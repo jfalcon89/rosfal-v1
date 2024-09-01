@@ -221,6 +221,7 @@
                             <th scope="col">Monto Solicitud</th>
                             <th scope="col">Tipo de Prestamo</th>
                             <th scope="col">Estatado solicitud</th>
+                            <th scope="col">Clasificacion</th>
                             <th scope="col">Acciones</th>
                             <!-- <th scope="col">T. desc</th> -->
                             <!-- <th scope="col">Sueldo Neto</th> -->
@@ -256,6 +257,9 @@
                                     </td>
                                     <td>
                                         <%= solicitud.estadoSolicitud %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.clasificacionCliente %>
                                     </td>
 
                                     <td class="w-0 "><a href="/solicitudes-en-revision/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>

@@ -242,6 +242,7 @@
                             <th scope="col">Tipo de Prestamo</th>
                             <th scope="col">Firma</th>
                             <th scope="col">Estado Solicitud</th>
+                            <th scope="col">Clasificacion</th>
                             <th scope="col">Acciones</th>
 
                         </tr>
@@ -285,6 +286,9 @@
                                     </td>
                                     <td>
                                         <%= solicitud.estadoSolicitud %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.clasificacionCliente %>
                                     </td>
                                     <td class="w-0 "><a href="/solicitudes-nuevas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>
                                         <a id="eventoAct-Inact" href="/solicitudes-nuevas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>

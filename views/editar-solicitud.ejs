@@ -250,6 +250,10 @@
                                         <a id="notificarAtrasosClienteBtn" type="button" class="dropdown-item ">Notificar sms Atraso</a>
 
                                     </li>
+                                    <li>
+                                        <a id="notificarAtrasosClienteBtnCorreo" type="button" class="dropdown-item ">Notificar Email Atraso</a>
+
+                                    </li>
 
                                     <% } %>
 
@@ -378,6 +382,18 @@
                                                             <option value="Casado/a">Casado/a</option>
                                                             <option value="Soltero/a">Soltero/a</option>
                                                             <option value="Union Libre">Union Libre</option>
+                                                        </select>
+                                                        </div>
+                                                        <div class="me-lg-5">
+                                                            <label for="sexo" class="p-2">Clasificacion</label>
+                                                            <select name="clasificacionCliente" class="form-control" id="clasificacionCliente">
+                                                            <option value="<%= solicitud.clasificacionCliente %>" selected>
+                                                                <%= solicitud.clasificacionCliente %>
+                                                            </option>
+                                                            <option value="A-Bueno">A-Bueno</option>
+                                                            <option value="B-Regular">B-Regular</option>
+                                                            <option value="C-Malo">C-Malo</option>
+                                                            <option value="D-Desestimado">D-Desestimado</option>
                                                         </select>
                                                         </div>
 
@@ -808,6 +824,7 @@
 
     <script src="/js/ver-solicitud-event.js"></script>
     <script src="/js/enviar-sms-cliente.js"></script>
+    <script src="/js/enviar-email-cliente.js"></script>
 
 
 

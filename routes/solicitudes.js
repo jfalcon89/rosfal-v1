@@ -45,7 +45,7 @@ router.get('/notificacionSmsAtrasos/:id', async(req, res) => {
                 const to = celularCliente
                 console.log(to)
                     // const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547. Si ya realizo el pago, Desestimar'
-                const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547'
+                const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-856-0203'
 
                 async function sendSMS() {
                     await vonage.sms.send({ to, from, text })
@@ -73,9 +73,117 @@ router.get('/notificacionSmsAtrasos/:id', async(req, res) => {
 });
 
 
+//FUNCION PARA ENVIAR NOTIFICACION DE ATRASO POR CORREO A CLIENTE
+
+router.get('/notificacionCorreoAtrasosCliente/:id', async(req, res) => {
+
+    const id = req.params.id
+
+    async function notificacionCorreoAtrasosCliente() {
+
+        // Coloca aquí el código que deseas que se ejecute cada minuto
+        const solicitudDB = await pool.query(`SELECT * FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND  solicitudes.atraso > 0 AND solicitudes.idSolicitud = ${id} `);
+        const solicitud = solicitudDB[0];
+        console.log(solicitud);
+        console.log("¡Ejecutando función cada minuto!");
+
+        // iteracion de los resultados
+
+        console.log(solicitud.atraso)
+
+        if (solicitud.email) {
+            async function notificacionCorreo() {
+                try {
+                    const from = "cobros@rosfal.com"
+                    const toNotificacion = solicitud.email + `,mrosario@rosfal.com`
 
 
-//FUNCION PARA ENVIAR NOTIFICACION DE ATRASO AUTOMATICO POR CORREO
+                    // console.log(nombre + " en enviar correo");
+                    // console.log(apellido + " en enviar correo");
+
+                    // Configurar la conexión SMTP con el servidor de correo personalizado
+                    let transporter = nodemailer.createTransport({
+                        host: "mail.privateemail.com",
+                        port: 465, // El puerto puede variar según la configuración de su servidor
+                        secure: true, // Si utiliza SSL/TLS, establezca este valor en true
+                        tls: {
+                            rejectUnauthorized: false
+                        },
+                        auth: {
+                            user: process.env.USERCORREO,
+                            pass: process.env.PASSCORREO,
+                        },
+                    });
+
+                    // Configurar los detalles del correo electrónico
+                    let info = await transporter.sendMail({
+                        from: `${from} ROSFAL SOLUCIONES DE PRESTAMOS`,
+                        to: `${toNotificacion}`,
+                        subject: `Notificacion Prestamo en Atraso ${solicitud.nombre} ${solicitud.apellido} `,
+                        html: `
+            
+             Hola! Si ya pagaste, favor desestimar.</p><br><br>
+        
+             <strong>SEÑOR (A):</strong><br>
+             ${solicitud.nombre}  ${solicitud.apellido} <br><br>
+            
+            Después de un cordial saludo, le informamos que su prestamo No.<strong> ${solicitud.idSolicitud}</strong> realizado en fecha <strong>${solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10)}</strong> presenta un atraso al dia de hoy de <strong>*${solicitud.atraso} Pesos.</strong><br>
+            Le solicitamos poner al dia su prestamo para evitar mora por atraso.<br><br>
+            
+            Llámanos al Teléfono 829-856-0203 si necesitas cualquier tipo de ayuda.<br><br>
+            
+            <strong>COMO PUEDO REALIZAR EL PAGO DE MI CUOTA DE PRÉSTAMO</strong> ?<br><br>
+            Puedes realizar tu pago en cualquier sucursal del Banco Popular, BHD Leon o BanReservas, también puedes realizar transferencias desde tu banco através de internet banking, recuerda que para confirmar su pago debe incluir siempre como referencia su número de cédula.<br><br>
+            
+            <strong>Banco Popular</strong> <br>
+            Numero de cuenta: 786408559<br>
+            Titular de la cuenta: Jose Miguel Falcon<br><br>
+
+            <strong>BHD Leon</strong> <br>
+            Numero de cuenta: 12113510016<br>
+            Titular de la cuenta: Jose Miguel Falcon<br><br>
+
+            <strong>BanReservas</strong> <br>
+            Numero de cuenta: 9606036287<br>
+            Titular de la cuenta: Magdelin M. Rosario<br><br>
+
+            <strong>NOTA:</strong> Es imprescindible colocar referencia de su cédula al realizar su pago vía depósito o transferencia<br><br>
+        
+            <P>Atentamente,</p>
+        
+            <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRESTAMOS</h4>
+            <P><strong>T.</strong> 829-856-0203 <strong>EMAIL.</strong> contacto@rosfal.com </P>
+            <P>Síguenos en <strong>FB:</strong> Rosfalrd <strong>IG:</strong> @Rosfalrd </P>
+            <a href="www.rosfal.com">www.rosfal.com</a>
+            `
+
+                    });
+
+                    console.log("Correo enviado: %s", info.messageId);
+
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            notificacionCorreo()
+        }
+
+
+
+
+
+    }
+
+
+
+
+    notificacionCorreoAtrasosCliente()
+});
+
+
+
+//FUNCION PARA ENVIAR NOTIFICACION DE ATRASO AUTOMATICO POR CORREO Y SMS 
 
 router.get('/notificacionCorreoAtrasos', async(req, res) => {
 
@@ -102,7 +210,7 @@ router.get('/notificacionCorreoAtrasos', async(req, res) => {
                 const to = celularCliente
                 console.log(to)
                     // const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547. Si ya realizo el pago, Desestimar'
-                const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547'
+                const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-856-0203'
 
                 async function sendSMS() {
                     await vonage.sms.send({ to, from, text })
@@ -157,7 +265,7 @@ router.get('/notificacionCorreoAtrasos', async(req, res) => {
             Después de un cordial saludo, le informamos que su prestamo No.<strong> ${solicitud.idSolicitud}</strong> realizado en fecha <strong>${solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10)}</strong> presenta un atraso al dia de hoy de <strong>*${solicitud.atraso} Pesos.</strong><br>
             Le solicitamos poner al dia su prestamo para evitar mora por atraso.<br><br>
             
-            Llámanos al Teléfono 829-432-0547 si necesitas cualquier tipo de ayuda por favor.<br><br>
+            Llámanos al Teléfono 829-856-0203 si necesitas cualquier tipo de ayuda.<br><br>
             
             <strong>COMO PUEDO REALIZAR EL PAGO DE MI CUOTA DE PRÉSTAMO</strong> ?<br><br>
             Puedes realizar tu pago en cualquier sucursal del Banco Popular, BHD Leon o BanReservas, también puedes realizar transferencias desde tu banco através de internet banking, recuerda que para confirmar su pago debe incluir siempre como referencia su número de cédula.<br><br>
@@ -352,7 +460,7 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     // console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, clasificacionCliente } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -390,7 +498,8 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
         estadoSolicitud,
         contrato,
         ruta,
-        firmaContrato
+        firmaContrato,
+        clasificacionCliente
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -671,7 +780,7 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
 
     // const data = {};
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, atraso, legalMonto, incobrableMonto } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, atraso, legalMonto, incobrableMonto, clasificacionCliente } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -712,7 +821,8 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         firmaContrato,
         atraso,
         legalMonto,
-        incobrableMonto
+        incobrableMonto,
+        clasificacionCliente
     };
 
     const atrasoDB = await pool.query(`SELECT novedades_atrasos.atraso FROM novedades_atrasos WHERE novedades_atrasos.idSolicitud = ${id}`);
@@ -899,7 +1009,7 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     // console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, clasificacionCliente } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -937,7 +1047,8 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
         estadoSolicitud,
         contrato,
         ruta,
-        firmaContrato
+        firmaContrato,
+        clasificacionCliente
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -1101,7 +1212,7 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
     const id = req.params.id;
     // console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato } = req.body;
+    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, clasificacionCliente } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -1139,7 +1250,8 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
         estadoSolicitud,
         contrato,
         ruta,
-        firmaContrato
+        firmaContrato,
+        clasificacionCliente
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
