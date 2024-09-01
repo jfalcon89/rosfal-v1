@@ -190,16 +190,16 @@
                                             <p style="background-color: gray; color: white;">
                                                 <%= solicitud.clasificacionCliente %>
                                             </p>
-                                            <% } else if (solicitud.clasificacionCliente == 'A-Bueno') { %>
+                                            <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
                                                 <p style="background-color: green; color: white;">
                                                     <%= solicitud.clasificacionCliente %>
                                                 </p>
                                                 <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
-                                                    <p style="background-color: yellow; ">
+                                                    <p style="background-color: yellow; color: black;">
                                                         <%= solicitud.clasificacionCliente %>
                                                     </p>
-                                                    <% } else if (solicitud.clasificacionCliente == 'C-Malo') { %>
-                                                        <p style="background-color: lightcoral;">
+                                                    <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
+                                                        <p style="background-color: orange; color: black;">
                                                             <%= solicitud.clasificacionCliente %>
                                                         </p>
                                                         <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>

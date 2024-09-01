@@ -355,6 +355,7 @@
                                             <th scope="col">Fecha Solicitud</th>
                                             <th scope="col">Monto Aprobado</th>
                                             <th scope="col">Estado Solicitud</th>
+                                            <th scope="col">Clasificacion</th>
                                             <th scope="col">Acciones</th>
 
                                         </tr>
@@ -386,6 +387,29 @@
                                                     </td>
                                                     <td>
                                                         <%= solicitud.estadoSolicitud %>
+                                                    </td>
+                                                    <td>
+                                                        <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                                            <p style="background-color: gray; color: white;">
+                                                                <%= solicitud.clasificacionCliente %>
+                                                            </p>
+                                                            <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
+                                                                <p style="background-color: green; color: white;">
+                                                                    <%= solicitud.clasificacionCliente %>
+                                                                </p>
+                                                                <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                                    <p style="background-color: yellow; color: black;">
+                                                                        <%= solicitud.clasificacionCliente %>
+                                                                    </p>
+                                                                    <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
+                                                                        <p style="background-color: orange; color: black;">
+                                                                            <%= solicitud.clasificacionCliente %>
+                                                                        </p>
+                                                                        <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                                            <p style="background-color: darkred; color: white;">
+                                                                                <%= solicitud.clasificacionCliente %>
+                                                                            </p>
+                                                                            <% } %>
                                                     </td>
 
                                                     <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
@@ -526,6 +550,7 @@
                                             <th scope="col">Atraso</th>
                                             <th scope="col">Ruta</th>
                                             <th scope="col">Telefono</th>
+                                            <th scope="col">Clasificacion</th>
                                             <th scope="col">Acciones</th>
 
                                         </tr>
@@ -568,6 +593,29 @@
                                                         </td>
                                                         <td>
                                                             <%= solicitud.celular %>
+                                                        </td>
+                                                        <td>
+                                                            <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                                                <p style="background-color: gray; color: white;">
+                                                                    <%= solicitud.clasificacionCliente %>
+                                                                </p>
+                                                                <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
+                                                                    <p style="background-color: green; color: white;">
+                                                                        <%= solicitud.clasificacionCliente %>
+                                                                    </p>
+                                                                    <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                                        <p style="background-color: yellow; color: black;">
+                                                                            <%= solicitud.clasificacionCliente %>
+                                                                        </p>
+                                                                        <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
+                                                                            <p style="background-color: orange; color: black;">
+                                                                                <%= solicitud.clasificacionCliente %>
+                                                                            </p>
+                                                                            <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                                                <p style="background-color: darkred; color: white;">
+                                                                                    <%= solicitud.clasificacionCliente %>
+                                                                                </p>
+                                                                                <% } %>
                                                         </td>
 
                                                         <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
@@ -730,6 +778,7 @@
                                         <th scope="col">Monto en Legal</th>
                                         <th scope="col">Ruta</th>
                                         <th scope="col">Telefono</th>
+                                        <th scope="col">Clasificacion</th>
                                         <th scope="col">Acciones</th>
 
                                     </tr>
@@ -772,6 +821,29 @@
                                                     </td>
                                                     <td>
                                                         <%= solicitud.celular %>
+                                                    </td>
+                                                    <td>
+                                                        <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                                            <p style="background-color: gray; color: white;">
+                                                                <%= solicitud.clasificacionCliente %>
+                                                            </p>
+                                                            <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
+                                                                <p style="background-color: green; color: white;">
+                                                                    <%= solicitud.clasificacionCliente %>
+                                                                </p>
+                                                                <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                                    <p style="background-color: yellow; color: black;">
+                                                                        <%= solicitud.clasificacionCliente %>
+                                                                    </p>
+                                                                    <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
+                                                                        <p style="background-color: orange; color: black;">
+                                                                            <%= solicitud.clasificacionCliente %>
+                                                                        </p>
+                                                                        <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                                            <p style="background-color: darkred; color: white;">
+                                                                                <%= solicitud.clasificacionCliente %>
+                                                                            </p>
+                                                                            <% } %>
                                                     </td>
 
                                                     <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
@@ -828,6 +900,7 @@
                                         <th scope="col">Atraso</th>
                                         <th scope="col">Ruta</th>
                                         <th scope="col">Telefono</th>
+                                        <th scope="col">Clasificacion</th>
                                         <th scope="col">Acciones</th>
 
                                     </tr>
@@ -868,6 +941,29 @@
                                                 </td>
                                                 <td>
                                                     <%= solicitud.celular %>
+                                                </td>
+                                                <td>
+                                                    <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                                        <p style="background-color: gray; color: white;">
+                                                            <%= solicitud.clasificacionCliente %>
+                                                        </p>
+                                                        <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
+                                                            <p style="background-color: green; color: white;">
+                                                                <%= solicitud.clasificacionCliente %>
+                                                            </p>
+                                                            <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                                <p style="background-color: yellow; color: black;">
+                                                                    <%= solicitud.clasificacionCliente %>
+                                                                </p>
+                                                                <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
+                                                                    <p style="background-color: orange; color: black;">
+                                                                        <%= solicitud.clasificacionCliente %>
+                                                                    </p>
+                                                                    <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                                        <p style="background-color: darkred; color: white;">
+                                                                            <%= solicitud.clasificacionCliente %>
+                                                                        </p>
+                                                                        <% } %>
                                                 </td>
 
                                                 <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
@@ -921,6 +1017,7 @@
                                         <th scope="col">Incobrable</th>
                                         <th scope="col">Ruta</th>
                                         <th scope="col">Telefono</th>
+                                        <th scope="col">Clasificacion</th>
                                         <th scope="col">Acciones</th>
 
                                     </tr>
@@ -961,6 +1058,29 @@
                                                 </td>
                                                 <td>
                                                     <%= solicitud.celular %>
+                                                </td>
+                                                <td>
+                                                    <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                                        <p style="background-color: gray; color: white;">
+                                                            <%= solicitud.clasificacionCliente %>
+                                                        </p>
+                                                        <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
+                                                            <p style="background-color: green; color: white;">
+                                                                <%= solicitud.clasificacionCliente %>
+                                                            </p>
+                                                            <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                                <p style="background-color: yellow; color: black;">
+                                                                    <%= solicitud.clasificacionCliente %>
+                                                                </p>
+                                                                <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
+                                                                    <p style="background-color: orange; color: black;">
+                                                                        <%= solicitud.clasificacionCliente %>
+                                                                    </p>
+                                                                    <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                                        <p style="background-color: darkred; color: white;">
+                                                                            <%= solicitud.clasificacionCliente %>
+                                                                        </p>
+                                                                        <% } %>
                                                 </td>
 
                                                 <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
