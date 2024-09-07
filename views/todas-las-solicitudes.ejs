@@ -239,6 +239,7 @@
                             <th scope="col">Telefono</th>
                             <th scope="col">Fecha Solicitud</th>
                             <th scope="col">Monto Solicitud</th>
+                            <th scope="col">Saldo Final</th>
                             <th scope="col">Tipo de Prestamo</th>
                             <th scope="col">Firma</th>
                             <th scope="col">Estado Solicitud</th>
@@ -277,6 +278,17 @@
                                     </td>
                                     <td>
                                         <%= solicitud.montoSolicitado %>
+                                    </td>
+                                    <td>
+                                        <% if(solicitud.saldoFinal){ %>
+                                            <span style="color: green;">
+                                                <%= solicitud.saldoFinal %>
+                                            </span>
+                                            <% }else if(solicitud.estadoSolicitud == 'Declinada'){ %>
+                                                <span style="color: rgb(148, 3, 3);">No Aprobado</span>
+                                                <% }else { %>
+                                                    <span style="color: rgb(200, 130, 0);">Pendiente</span>
+                                                    <% } %>
                                     </td>
                                     <td>
                                         <%= solicitud.tipoPrestamo %>
