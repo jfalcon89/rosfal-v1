@@ -25,7 +25,7 @@ const myChart = new Chart(ctx, {
     data: {
         labels: meses,
         datasets: [{
-            label: 'Pagos por Meses',
+            label: 'Visitas por Mese',
             data: pagos,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
