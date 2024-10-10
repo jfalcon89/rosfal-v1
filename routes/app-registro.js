@@ -102,44 +102,60 @@ router.post('/app-registro', async(req, res) => {
     }
     const telefonoDB = await pool.query(`SELECT * FROM app_clientes WHERE telefono = "${telefono}"`);
 
-    // inicio envio de correo
-    const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
-    const browser = req.useragent.browser;
-    const sistemaOperativo = req.useragent.os
-    const plataforma = req.useragent.platform
-    const fecha = new Date().toLocaleString('en-US', { timeZone: 'America/Santo_Domingo' });
 
-    var callback = function(res) {
+    if (telefonoDB.length > 0) {
+        // Respuesta JSON para error
+        return res.json({
+            success: false,
+            alertTitle: "Favor verificar",
+            alertMessage: "¡Este número ya está registrado!",
+            alertIcon: 'warning',
+            showConfirmButton: true,
+            confirmButtonText: "Reintentar",
+            showCancelButton: true, // Mostrar el botón "Iniciar sesión"
+            cancelButtonText: "Iniciar sesión",
+            ruta: 'login'
+        });
+    } else {
+        pool.query('INSERT INTO app_clientes set ?', [nuevoCliente]);
+        // inicio envio de correo
+        const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
+        const browser = req.useragent.browser;
+        const sistemaOperativo = req.useragent.os
+        const plataforma = req.useragent.platform
+        const fecha = new Date().toLocaleString('en-US', { timeZone: 'America/Santo_Domingo' });
 
-        // #1 FUNCION QUE ENVIA AL CORREO NOTIFICACION DE SOLICITUD DE PRESTAMOS A ROSFAL
-        async function notificacionCorreo() {
-            try {
-                const from = "contacto@rosfal.com"
-                const toNotificacion = "jfalcon@rosfal.com"
+        var callback = function(res) {
 
-                // console.log(nombre + " en enviar correo");
-                // console.log(apellido + " en enviar correo");
+            // #1 FUNCION QUE ENVIA AL CORREO NOTIFICACION DE SOLICITUD DE PRESTAMOS A ROSFAL
+            async function notificacionCorreo() {
+                try {
+                    const from = "contacto@rosfal.com"
+                    const toNotificacion = "jfalcon@rosfal.com"
 
-                // Configurar la conexión SMTP con el servidor de correo personalizado
-                let transporter = nodemailer.createTransport({
-                    host: "mail.privateemail.com",
-                    port: 465, // El puerto puede variar según la configuración de su servidor
-                    secure: true, // Si utiliza SSL/TLS, establezca este valor en true
-                    tls: {
-                        rejectUnauthorized: false
-                    },
-                    auth: {
-                        user: process.env.USERCORREO,
-                        pass: process.env.PASSCORREO,
-                    },
-                });
+                    // console.log(nombre + " en enviar correo");
+                    // console.log(apellido + " en enviar correo");
 
-                // Configurar los detalles del correo electrónico
-                let info = await transporter.sendMail({
-                    from: `${from} ROSFAL SOLUCIONES DE PRESTAMOS`,
-                    to: `${toNotificacion}`,
-                    subject: `Nuevo registro de cliente ${telefono} ${origen}`,
-                    html: `
+                    // Configurar la conexión SMTP con el servidor de correo personalizado
+                    let transporter = nodemailer.createTransport({
+                        host: "mail.privateemail.com",
+                        port: 465, // El puerto puede variar según la configuración de su servidor
+                        secure: true, // Si utiliza SSL/TLS, establezca este valor en true
+                        tls: {
+                            rejectUnauthorized: false
+                        },
+                        auth: {
+                            user: process.env.USERCORREO,
+                            pass: process.env.PASSCORREO,
+                        },
+                    });
+
+                    // Configurar los detalles del correo electrónico
+                    let info = await transporter.sendMail({
+                        from: `${from} ROSFAL SOLUCIONES DE PRESTAMOS`,
+                        to: `${toNotificacion}`,
+                        subject: `Nuevo registro de cliente ${telefono} ${origen}`,
+                        html: `
             
             <P><strong>Asunto</strong>: Confirmación registro de cliente</p><br>
 
@@ -164,35 +180,19 @@ router.post('/app-registro', async(req, res) => {
             <a href="www.rosfal.com">www.rosfal.com</a>
             `
 
-                });
+                    });
 
-                console.log("Correo enviado: %s", info.messageId);
+                    console.log("Correo enviado: %s", info.messageId);
 
-            } catch (error) {
-                console.log(error);
+                } catch (error) {
+                    console.log(error);
+                }
             }
-        }
-        notificacionCorreo()
-    };
-    ipapi.location(callback, `${ip_app_cliente}`)
-        // fin envio de correo
-
-    if (telefonoDB.length > 0) {
-        // Respuesta JSON para error
-        return res.json({
-            success: false,
-            alertTitle: "Favor verificar",
-            alertMessage: "¡Este número ya está registrado!",
-            alertIcon: 'warning',
-            showConfirmButton: true,
-            confirmButtonText: "Reintentar",
-            showCancelButton: true, // Mostrar el botón "Iniciar sesión"
-            cancelButtonText: "Iniciar sesión",
-            ruta: 'login'
-        });
-    } else {
-        pool.query('INSERT INTO app_clientes set ?', [nuevoCliente]);
-        // Respuesta JSON para éxito
+            notificacionCorreo()
+        };
+        ipapi.location(callback, `${ip_app_cliente}`)
+            // fin envio de correo
+            // Respuesta JSON para éxito
         return res.json({
             success: true,
             alertTitle: "Excelente",
@@ -262,7 +262,7 @@ router.post('/app-validacion-registro', async(req, res) => {
 
 // app-validacion-registro 2
 router.get('/app-validacion-registro-2/:id', async(req, res) => {
-
+    const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     const cliente_id = req.params.id;
 
     const token_registro_sms = req.body.token_registro_sms
@@ -287,7 +287,8 @@ router.get('/app-validacion-registro-2/:id', async(req, res) => {
 
     // Validación del token: Si no coinciden, muestra alerta de error
     res.render('app-validacion-registro-2', {
-        app_cliente: app_clienteDB[0]
+        app_cliente: app_clienteDB[0],
+        device
 
 
     })
@@ -295,7 +296,7 @@ router.get('/app-validacion-registro-2/:id', async(req, res) => {
 
 // app-validacion-registro 2
 router.post('/app-validacion-registro-2/:id', async(req, res) => {
-
+    const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     const cliente_id = req.params.id;
     const pass = req.body.pass
     let passwordHash = await bcrypt.hash(pass, 8);
@@ -330,6 +331,7 @@ router.post('/app-validacion-registro-2/:id', async(req, res) => {
             console.log(error);
         } else {
             res.render('login', {
+                device,
                 alert: true,
                 alertTitle: "Listo !! Ya Estas Registrado",
                 alertMessage: "¡Successful Registration!",
@@ -550,7 +552,7 @@ router.post('/app-update-pass-validacion', async(req, res) => {
 
 // app-validacion-registro 2
 router.get('/app-update-pass-validacion-registro-2/:id', async(req, res) => {
-
+    const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     const cliente_id = req.params.id;
 
     const token_registro_sms = req.body.token_registro_sms
@@ -575,14 +577,15 @@ router.get('/app-update-pass-validacion-registro-2/:id', async(req, res) => {
 
     // Validación del token: Si no coinciden, muestra alerta de error
     res.render('app-update-pass-validacion-registro-2', {
-        app_cliente: app_clienteDB[0]
-
+        app_cliente: app_clienteDB[0],
+        device
 
     })
 });
 
 // app-validacion-registro 2
 router.post('/app-update-pass-validacion-registro-2/:id', async(req, res) => {
+    const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     const cliente_id = req.params.id;
     const pass = req.body.pass;
     let passwordHash = await bcrypt.hash(pass, 8);
@@ -620,6 +623,7 @@ router.post('/app-update-pass-validacion-registro-2/:id', async(req, res) => {
 
         // Renderiza la respuesta
         res.render('login', {
+            device,
             alert: true,
             alertTitle: "¡Listo! Contraseña actualizada",
             alertMessage: "¡Successful Registration!",

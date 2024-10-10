@@ -131,7 +131,7 @@
             </div>
         </div>
 
-        <div class="m-4 mt-4">
+        <!-- <div class="m-4 mt-4">
             <h6 class="fw-bold text-secondary">PREST. ATRASOS</h6>
             <div class="d-flex justify-content-center ">
                 <img src="/img/reportes/pdf.png" style="width: 120px; height: 110px;" alt="Estado Cartera">
@@ -243,24 +243,24 @@
             <div class="d-flex justify-content-center">
                 <button class="btn btn-secondary mt-3" id="generate-pdf">Generar PDF</button>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <hr>
 
     <div class="p-lg-3">
-        <h4>ARCHIVOS SUBIDOS RELACIONADOS A PRÉSTAMOS</h4>
+        <h6 class="m-1">ARCHIVOS RELACIONADOS A CLIENTES</h6>
 
         <div class="text-end mb-3">
             <% if(rol == permiso_A || rol == permiso_B){ %>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-secondary " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#exampleModal">
             ENVIAR ATRASOS SMS/EMAIL
             </button>
-                <button class="btn btn-secondary  "><a class="text-decoration-none text-white" href="/clientes">LISTADO DE CLIENTES</a></button>
+                <button class="btn btn-secondary  m-1"><a class="text-decoration-none text-white" href="/clientes">LISTADO DE CLIENTES</a></button>
                 <% } %>
                     <!-- Button trigger modal -->
-                    <button style="text-align: left;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                    <button style="text-align: left;" type="button" class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#exampleModal2">
          SUBIR DOCUMENTOS
             </button>
         </div>
@@ -295,7 +295,7 @@
                             <td>
                                 <%= archivo.tipo_documento %>
                             </td>
-                            <td>
+                            <td class="text-break">
                                 <%= archivo.nombre_archivo %>
                             </td>
                             <td>

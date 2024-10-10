@@ -29,14 +29,16 @@
 </head>
 
 <body style="height: 100vh; background-size: cover; background-position: center; background-repeat: no-repeat; background-image: url(/img/app_registro.png)">
-
+    <div class="whatsapp">
+        <a class="btn-ws " href="https://bit.ly/3xzs0RV" target="_blank"><img class="img-fluid" src="/img/logo-ws.png" alt="logo ws"></a>
+    </div>
 
     <div class="" style=" width: 100%; padding-top: 200px; ">
 
         <form id="form-validacion" autocomplete="off" action="/app-update-pass-validacion" method="POST" style="padding: 15px;">
-            <p>app-update-pass-validacion</p>
+
             <div class="form-group">
-                <label for="token_registro_sms" class=" ">Ingresa el codigo de validacion que fue enviado al numero <strong>+1 <%= app_cliente.telefono %></strong></label>
+                <label for="token_registro_sms" class=" ">Ingresa el codigo de validacion que fue enviado al numero <strong>+1 <%= app_cliente.telefono %></strong> para actualizar su contraseña</label>
                 <input type="password" name="token_registro_sms" class="form-control p-2" id="token_registro_sms" aria-describedby="" placeholder="Ingresar Codigo" required>
                 <input style="display: none;" name="telefono" class="form-control p-2" id="telefono" value="<%= app_cliente.telefono %>">
             </div>

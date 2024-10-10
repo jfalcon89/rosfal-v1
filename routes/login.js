@@ -5,16 +5,20 @@ const router = express.Router();
 const moment = require("moment");
 const pool = require("../database");
 const bcrypt = require('bcryptjs');
-
+const useragent = require('express-useragent');
 
 //9 - establecemos las rutas
 router.get('/login', (req, res) => {
-    res.render('login');
+    const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
+    res.render('login', {
+        device
+    });
 })
 
 
 //11 - Metodo para la autenticacion
 router.post('/auth', async(req, res) => {
+    const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     const user = req.body.user;
     const pass = req.body.pass;
     let passwordHash = await bcrypt.hash(pass, 8);
@@ -22,6 +26,7 @@ router.post('/auth', async(req, res) => {
         pool.query('SELECT * FROM users WHERE user = ?', [user], async(error, results, fields) => {
             if (results.length == 0 || !(await bcrypt.compare(pass, results[0].pass))) {
                 res.render('login', {
+                    device,
                     alert: true,
                     alertTitle: "Error",
                     alertMessage: "USUARIO y/o PASSWORD incorrectas",
@@ -40,6 +45,7 @@ router.post('/auth', async(req, res) => {
                 req.session.name = results[0].name;
                 req.session.rol = results[0].rol;
                 res.render('login', {
+                    device,
                     alert: true,
                     alertTitle: "Conexión exitosa",
                     alertMessage: "¡LOGIN CORRECTO!",

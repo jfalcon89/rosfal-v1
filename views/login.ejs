@@ -22,20 +22,27 @@
 </head>
 
 <body>
-    <div class="login-form mt-5 bg-white">
-        <DIv class="d-flex justify-content-center mb-2 ">
+    <div class="whatsapp">
+        <a class="btn-ws " href="https://bit.ly/3xzs0RV" target="_blank"><img class="img-fluid" src="/img/logo-ws.png" alt="logo ws"></a>
+    </div>
+    <div style="border-radius: 15px;" class="login-form mt-5 bg-white">
+        <DIv class="d-flex justify-content-center mb-4 ">
             <a class="" href="/"><img src="/img/LOGO-ROSFAL.png" style="width: 120px;" alt=""></a>
         </DIv>
-        <h6 class="text-secondary d-flex justify-content-center">INICIAL SESSION</h6>
+
         <!-- <h1>ROSFAL v.1</h1> -->
         <form action="auth" method="POST">
-            <input style="border-radius: 5px" type="text" name="user" placeholder="Usuario o celular registrado" autofocus required>
-            <input style="border-radius: 5px" type="password" name="pass" placeholder="Password" required>
+            <% if(device == 'Mobile'){ %>
+                <input class="form-control" style="margin-bottom: 20px; border-radius: 5px" type="number" name="user" placeholder="Celular Registrado" autofocus required>
+                <% }else{ %>
+                    <input class="form-control" style="margin-bottom: 20px; border-radius: 5px" type="text" name="user" placeholder="Usuario o celular registrado" autofocus required>
+                    <% } %>
+                        <input class="form-control" style="margin-bottom: 20px; border-radius: 5px" type="Contraseña" name="pass" placeholder="Password" required>
 
-            <input type="submit" class="btn btn-login" value="Login" style="background-color: #014c90;">
+                        <input type="submit" class="btn btn-login" value="Iniciar Sesion" style="background-color: #014c90;">
         </form>
 
-        <div class="d-flex justify-content-center w-100">
+        <div class="d-flex justify-content-center w-100 mt-4">
 
             <a href="/app-update-pass" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info">Olvidar contraseña</a>
         </div>
