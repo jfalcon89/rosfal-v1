@@ -29,12 +29,20 @@
         <h6 class="text-secondary d-flex justify-content-center">INICIAL SESSION</h6>
         <!-- <h1>ROSFAL v.1</h1> -->
         <form action="auth" method="POST">
-            <input type="text" name="user" placeholder="User" autofocus required>
-            <input type="password" name="pass" placeholder="Password" required>
-            <input type="submit" class="btn-login" value="Login" style="background-color: #0B5495;">
+            <input style="border-radius: 5px" type="text" name="user" placeholder="Usuario o celular registrado" autofocus required>
+            <input style="border-radius: 5px" type="password" name="pass" placeholder="Password" required>
+
+            <input type="submit" class="btn btn-login" value="Login" style="background-color: #014c90;">
         </form>
 
-        <a href="/">Regresar</a>
+        <div class="d-flex justify-content-center w-100">
+
+            <a href="/app-update-pass" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info">Olvidar contraseña</a>
+        </div>
+        <div class="d-flex justify-content-center w-100">
+
+            <a href="/" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar</a>
+        </div>
 
 
 

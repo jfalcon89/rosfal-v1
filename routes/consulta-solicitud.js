@@ -8,7 +8,7 @@ const pool = require("../database");
 
 
 router.get('/consulta-solicitud', async(req, res) => {
-
+    const permiso_C = 'Cliente App'
 
     // try {
     let id = req.url.slice(23)
@@ -23,7 +23,9 @@ router.get('/consulta-solicitud', async(req, res) => {
     console.log(arraySolicitudDB)
     res.render('consulta-solicitud', {
         arraySolicitud: arraySolicitudDB,
-        id
+        id,
+        rol: req.session.rol,
+        permiso_C
     });
 
     // } catch (error) {

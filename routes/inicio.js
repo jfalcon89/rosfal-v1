@@ -27,50 +27,65 @@ router.get('/', async(req, res) => {
 
     // const bot = 'true';
     // const browser = 'curl';
+    // const device = 'Mobile';
+
+    console.log(device)
 
     if (browser !== 'python-requests' && browser !== 'Go-http-client' && browser !== 'unknown' && browser !== 'curl' && bot !== 'true') {
 
-        var callback = function(res) {
-            // console.log(res);
+        if (device == 'Mobile') {
 
-            const pais = res.country_name;
-            const ciudad = res.city;
-            const latitud = res.latitude;
-            const longitud = res.longitude;
 
-            const nuevaVisita = {
-                pais,
-                ciudad,
-                ip,
-                device,
-                browser,
-                sistemaOperativo,
-                plataforma,
-                latitud,
-                longitud,
-                fecha,
-                bot
+
+            res.redirect('/app-inicio');
+
+        } else {
+
+
+
+            var callback = function(res) {
+                // console.log(res);
+
+                const pais = res.country_name;
+                const ciudad = res.city;
+                const latitud = res.latitude;
+                const longitud = res.longitude;
+
+                const nuevaVisita = {
+                    pais,
+                    ciudad,
+                    ip,
+                    device,
+                    browser,
+                    sistemaOperativo,
+                    plataforma,
+                    latitud,
+                    longitud,
+                    fecha,
+                    bot
+                };
+
+                console.log(nuevaVisita)
+
+                pool.query('INSERT INTO visitas set ?', [nuevaVisita]);
             };
 
-            console.log(nuevaVisita)
-
-            pool.query('INSERT INTO visitas set ?', [nuevaVisita]);
-        };
-
-        ipapi.location(callback, `${ip}`)
+            ipapi.location(callback, `${ip}`)
 
 
-        const arrayNuevoTestimonioDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ');
-        const modal_prestamos_quincenalesDB = await pool.query("SELECT * FROM tab_anuncios WHERE idAnuncio = 1")
-        const modal_prestamos_semanalesDB = await pool.query("SELECT * FROM tab_anuncios WHERE idAnuncio = 2")
-        const modal_anuncios_generalesDB = await pool.query("SELECT * FROM tab_anuncios WHERE idAnuncio = 3")
+            const arrayNuevoTestimonioDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ');
+            const modal_prestamos_quincenalesDB = await pool.query("SELECT * FROM tab_anuncios WHERE idAnuncio = 1")
+            const modal_prestamos_semanalesDB = await pool.query("SELECT * FROM tab_anuncios WHERE idAnuncio = 2")
+            const modal_anuncios_generalesDB = await pool.query("SELECT * FROM tab_anuncios WHERE idAnuncio = 3")
 
-        res.render('inicio', {
-            arrayNuevoTestimonio: arrayNuevoTestimonioDB,
-            modal_prestamos_quincenales: modal_prestamos_quincenalesDB[0],
-            modal_prestamos_semanales: modal_prestamos_semanalesDB[0],
-            modal_anuncios_generales: modal_anuncios_generalesDB[0]
-        });
+            res.render('inicio', {
+                arrayNuevoTestimonio: arrayNuevoTestimonioDB,
+                modal_prestamos_quincenales: modal_prestamos_quincenalesDB[0],
+                modal_prestamos_semanales: modal_prestamos_semanalesDB[0],
+                modal_anuncios_generales: modal_anuncios_generalesDB[0]
+            });
+
+        }
 
     } else {
         res.render('404', {});

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css y js bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!-- linkeado css propio -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- icons bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- generador de pdf cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <!-- moment.js cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <!-- DATATABLE -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
+    <link rel="icon" href="/img/favicon/logo-favicon.png">
+    <title>Rosfal - Adm Usuario</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid  " style="background-color: #ececec;">
+
+            <div class="d-flex">
+                <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
+                <h5 class="text-dark m-2 d-flex align-items-center" style="font-size: large;">USUARIOS</h5>
+            </div>
+            <button class="navbar-toggler  " type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon "></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="offcanvas-body ">
+
+                    <div class="d-flex">
+                        <div class="btn-group ">
+                            <button type="button" class="hola navbar-toggler d-block me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon show "></span>
+                            </button>
+                            <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
+                        </div>
+                        <div class="user-container me-2 d-flex">
+                            <% if (login) { %>
+                                <div>
+                                    <h4 type="" class="" style="color: #aeaeae;">
+                                        <%= name %>
+                                    </h4>
+                                    <h6>
+                                        <%= rol %>
+                                    </h6>
+                                </div>
+                                <%}  %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="navbarOffcanvasLabel">
+                <h5 class="text-dark m-2" style="font-size: large;">USUARIOS</h5>
+            </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="user-container me-2 d-flex align-content-center" style="background-color: #ececec;">
+                <% if (login) { %>
+                    <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
+                    <div>
+                        <h4 type="" class="" style="color: #aeaeae;">
+                            <%= name %>
+                        </h4>
+                        <h6>
+                            <%= rol %>
+                        </h6>
+                    </div>
+                    <%}  %>
+            </div>
+            <hr class="dropdown-divider">
+            <%- include('template/navbar-menu') %>
+        </div>
+    </div>
+
+    <div class=" p-2 d-lg-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">
+        <div class="container-fluid bg-white d-flex mt-3 mb-3 me-lg-3 " style="background-color: #d4d4d4;">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/app-clientes.png" alt="Clientes">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%= arrayClientesV.length %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/app-clientes">Clientes</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white  d-flex mt-3 mb-3 me-lg-3 shadow-sm " style="background-color: #d4d4d4;">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/adm-usuarios.png" alt="Usuarios">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%= arrayUsuariosV.length %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/adm-usuarios">Usuarios</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid  d-flex mt-3 mb-3 me-lg-3 shadow-sm" style="background-color: #d4d4d4;">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/agregar-usuario.png" alt="Crear Nuevo Usuario">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%=  %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/adm-usuarios/crear-usuario">Crear Usuario</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid d-lg-flex">
+        <div class="container-fluid d-lg-flex">
+            <div class="container-fluid p-4 mt-5 ">
+                <h3 class="text-secondary"><strong>LISTADO</strong> USUARIOS</h3>
+                <div class="container-fluid p-4">
+                    <div class="container-table table-responsive">
+                        <table id="datatable" class="display responsive nowrap" style="width:100%">
+                            <thead class="thead-ligth">
+                                <tr>
+                                    <th scope="col">Usuario Id</th>
+                                    <th scope="col">Identificacion Usuario</th>
+                                    <th scope="col">Nombre Usuario</th>
+                                    <th scope="col">Password</th>
+                                    <th scope="col">Rol</th>
+                                    <th scope="col">Fecha Creacion</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (arrayUsuariosV.length > 0) { %>
+                                    <% arrayUsuariosV.forEach(usuario=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= usuario.idUsuario %>
+                                            </td>
+                                            <td>
+                                                <%= usuario.user %>
+                                            </td>
+                                            <td>
+                                                <%= usuario.name %>
+                                            </td>
+                                            <td>
+                                                <%= usuario.pass %>
+                                            </td>
+                                            <td>
+                                                <%= usuario.rol %>
+                                            </td>
+                                            <td>
+                                                <%= usuario.fecha_creacion.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
+                                            </td>
+                                            <td>
+                                                <%= usuario.estado_usuario %>
+                                            </td>
+
+                                            <td class="w-0 "><a id="eventoAct-Inact" href="/adm-usuarios/editar-Usuario/<%= usuario.idUsuario %>" class="btn " title="Editar Usuario"><i class="bi bi-pencil-square "></i></a>
+                                            </td>
+                                        </tr>
+
+                                        <% }) %>
+                                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container-fluid p-4 mt-5 ">
+            <h3 class="text-secondary"><strong>CREAR </strong>NUEVO USUARIO</h3>
+            <form id="form-validacion" class="" autocomplete="off" action="/adm-usuarios/crear-usuario" method="POST">
+                <div class="container bg-white mt-5 mb-5 pb-5 pt-5">
+                    <input class="form-control mt-3 mb-3" type="text" name="user" id="user" placeholder="Identificacion Usuario">
+                    <input class="form-control mt-3 mb-3" type="text" name="name" id="name" placeholder="Nombre Completo">
+                    <input class="form-control mt-3 mb-3" type="password" name="pass" placeholder="Password">
+                    <select class="form-control mt-3 mb-3" name="rol" id="rol">
+                    <option value="Seleccionar" selected>Seleccionar</option>
+                    <option value="Representante" >Representante</option>
+                    <option value="Administrador">Administrador</option>
+                </select>
+                    <select class="form-control" name="estado_usuario" id="estado_usuario">
+                    <option value="Activo" selected>Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+
+                    <div class="d-flex justify-content-center">
+                        <button id="btn" class="btn btn-success btn-block p-2 mt-4 mb-3 w-100" style="background-color: #0B5496;" type="submit">CREAR USUARIO</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+    <script>
+        // Captura el envío del formulario
+        document.getElementById('form-validacion').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita la recarga de la página
+
+
+            const user = document.getElementById('user').value;
+            const name = document.getElementById('name').value;
+            const pass = document.querySelector('input[name="pass"]').value;
+            const rol = document.querySelector('select[name="rol"]').value;
+            const estado_usuario = document.querySelector('select[name="estado_usuario"]').value;
+
+
+            // Enviar datos al backend sin recargar la página usando fetch
+            fetch('/adm-usuarios/crear-usuario', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        // token_registro_sms: token,
+                        user: user,
+                        name: name,
+                        pass: pass,
+                        rol: rol,
+                        estado_usuario: estado_usuario
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Usar SweetAlert2 para mostrar la alerta
+                    Swal.fire({
+                        title: data.alertTitle,
+                        text: data.alertMessage,
+                        icon: data.alertIcon,
+                        confirmButtonText: data.success ? 'Continuar' : 'Reintentar',
+                        cancelButtonText: 'Ver Usuarios',
+                        showConfirmButton: true,
+                        showCancelButton: !data.success && data.showCancelButton,
+                        // Eliminar el temporizador para asegurar la redirección manual
+                        timer: data.success ? null : null, // Sin temporizador en caso de éxito
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Si el registro fue exitoso, redirigir a 'app-validacion-registro'
+                            if (data.success) {
+                                window.location.href = data.ruta; // Redirigir a la ruta de éxito
+                            } else {
+                                // Si hubo un error, limpiar el campo 'telefono'
+                                document.getElementById('user').value = '';
+                            }
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            // Si el usuario hace clic en "Iniciar sesión"
+                            window.location.href = data.ruta; // Redirigir a la página de inicio de sesión
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ocurrió un error inesperado.',
+                        icon: 'error',
+                        confirmButtonText: 'Reintentar'
+                    });
+                });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <% if (typeof alert !="undefined" ) { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '/<%= ruta %>'
+            })
+        </script>
+        <% } %>
+
+
+
+            <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
+                <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+            </div>
+
+
+            <script>
+                $(document).ready(function() {
+                    $('#datatable').DataTable({
+                        language: {
+                            "decimal": "",
+                            "emptyTable": "No hay información",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar _MENU_ Entradas",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscar:",
+                            "zeroRecords": "Sin resultados encontrados",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            }
+                        }
+                    });
+                });
+            </script>
+
+
+
+</body>
+
+</html>

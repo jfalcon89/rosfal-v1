@@ -25,7 +25,7 @@
     <div class="register-form">
         <h1 class="d-flex justify-content-center text-secondary">REGISTRO</h1>
         <form action="/register" method="POST">
-            <label for="user">User</label>
+            <label for="user">Usuario</label>
             <input type="text" name="user" required tabindex="1" autofocus>
             <label for="user">Full Name</label >
             <input type="text" name="name" required tabindex="2" >
@@ -34,12 +34,23 @@
             <br>
             <label for="pass">Password</label>
             <input type="password" name="pass" required tabindex="4">
+            <label class="p-2">Rol</label>
+            <select class="form-control form-select p-2 mb-2 text-secondary" name="rol" id="rol" required>
+                <option value="" selected>Seleccionar</option>
+                <option value="Cliente App">Cliente</option>
+                <option value="Representante">Representante</option>
+                <option value="Administrador">Administrador</option>
+            </select>
             <div style="display: inline;">
                 <a href="/login" class="btn-cancel">Cancel</a><input type="submit" class="btn-save" value="Save">
             </div>
         </form>
-    </div>
 
+        <div style="padding-top: 20px;" class="d-flex justify-content-center w-100"></div>
+
+        <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+    </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 

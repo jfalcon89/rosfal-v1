@@ -13,6 +13,18 @@ const useragent = require('express-useragent');
 // Inicializar la biblioteca SMS
 const { Vonage } = require('@vonage/server-sdk')
 
+// const permiso_A = 'Administrador'
+// const permiso_B = 'Representante'
+// const permiso_C = 'Cliente App'
+// const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+// const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+// const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+// const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+// const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+// const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+// const arrayRutas = await pool.query('SELECT * FROM rutas ');
+
+
 
 // ----------------------FUNCION PARA ENVIAR SMS POR CLIENTE--------------------
 
@@ -326,21 +338,42 @@ router.get('/notificacionCorreoAtrasos', async(req, res) => {
 router.get('/solicitudes-nuevas', async(req, res) => {
     if (req.session.loggedin) {
 
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
-        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva" ORDER BY fechaSolicitud DESC');
+
+        // Vista
+        const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva" ORDER BY fechaSolicitud DESC');
 
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
         const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
         res.render("solicitudes-nuevas", {
-            arraySolicitudes: arraySolicitudesDB,
-            arrayTotalSolicitudes: arrayTotalSolicitudesDB,
+            arraySolicitudesNuevas: arraySolicitudesNuevasDB,
             arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
             arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
             arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+            arrayTotalSolicitudes: arrayTotalSolicitudesDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
         });
 
@@ -360,6 +393,15 @@ router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
 
         const id = req.params.id
 
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         try {
 
@@ -372,6 +414,7 @@ router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where prestamo_id = ${solicitudDB[0].idSolicitud} `);
 
             // console.log(solicitudDB[0]);
             res.render("ver-solicitud", {
@@ -384,7 +427,18 @@ router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
                 arrayObservaciones: arrayObservacionesDB,
                 arrayRutas: arrayRutasDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                documentosCliente: documentosClienteDB
             });
 
         } catch (error) {
@@ -409,7 +463,16 @@ router.get("/Solicitudes-nuevas/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-            // console.log(req.params)
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
 
         try {
 
@@ -423,6 +486,7 @@ router.get("/Solicitudes-nuevas/editar-solicitud/:id", async(req, res) => {
             const arrayNotificacionAtrasoDB = await pool.query(`SELECT * FROM novedades_atrasos WHERE idSolicitud = ${id}`);
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where prestamo_id = ${solicitudDB[0].idSolicitud} `);
             // console.log(solicitudDB[0]);
             res.render("editar-solicitud", {
                 solicitud: solicitudDB[0],
@@ -435,7 +499,18 @@ router.get("/Solicitudes-nuevas/editar-solicitud/:id", async(req, res) => {
                 arrayRutas: arrayRutasDB,
                 arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                documentosCliente: documentosClienteDB
             });
 
         } catch (error) {
@@ -460,7 +535,52 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     // console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, clasificacionCliente, saldoFinal } = req.body;
+    const {
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos,
+        cedula,
+        nombre,
+        apellido,
+        sexo,
+        estadoCivil,
+        direccion,
+        direccionNegocio,
+        tiempoNegocio,
+        email,
+        telefono,
+        celular,
+        nacionadlidad,
+        nombreFamilia,
+        direccionFamilia,
+        parentescoFamilia,
+        telefonoFamilia,
+        apodoFamilia,
+        empresa,
+        salario,
+        puesto,
+        dirEmpresa,
+        telefonoEmpresa,
+        departamento,
+        tiempoEmpresa,
+        nombreRefPers1,
+        nombreRefPers2,
+        telefonoRefPer1,
+        telefonoRefPer2,
+        tipoPrestamo,
+        banco,
+        numeroCuenta,
+        montoSolicitado,
+        estadoSolicitud,
+        contrato,
+        ruta,
+        firmaContrato,
+        clasificacionCliente,
+        saldoFinal
+    } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -500,7 +620,13 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
         ruta,
         firmaContrato,
         clasificacionCliente,
-        saldoFinal
+        saldoFinal,
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -555,20 +681,39 @@ router.get("/solicitudes/eliminar-solicitud/:id", async(req, res) => {
 router.get('/solicitudes-aprobadas', async(req, res) => {
     if (req.session.loggedin) {
 
-        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal" ORDER BY fechaSolicitud DESC');
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
+        const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal" ORDER BY fechaSolicitud DESC');
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
         const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
         res.render("solicitudes-aprobadas", {
-            arraySolicitudes: arraySolicitudesDB,
+            arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
             arrayTotalSolicitudes: arrayTotalSolicitudesDB,
             arraySolicitudesNuevas: arraySolicitudesNuevasDB,
             arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
             arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
         });
 
@@ -588,7 +733,15 @@ router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-            // console.log(req.params)
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
 
         try {
@@ -602,6 +755,7 @@ router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where prestamo_id = ${solicitudDB[0].idSolicitud} `);
             // console.log(solicitudDB[0]);
 
 
@@ -615,7 +769,18 @@ router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
                 arrayObservaciones: arrayObservacionesDB,
                 arrayRutas: arrayRutasDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                documentosCliente: documentosClienteDB
             });
 
         } catch (error) {
@@ -639,7 +804,15 @@ router.get("/Solicitudes-aprobadas/imprimir-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-            // console.log(req.params)
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         try {
 
@@ -653,13 +826,19 @@ router.get("/Solicitudes-aprobadas/imprimir-solicitud/:id", async(req, res) => {
             // console.log(solicitudDB[0]);
             res.render("imprimir-solicitud", {
                 solicitud: solicitudDB[0],
-                // arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-                // arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-                // arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-                // arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
                 arrayRutas: arrayRutasDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos
             });
 
         } catch (error) {
@@ -683,7 +862,15 @@ router.get("/Solicitudes-aprobadas/imprimir-contato/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-            // console.log(req.params)
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         try {
 
@@ -697,13 +884,19 @@ router.get("/Solicitudes-aprobadas/imprimir-contato/:id", async(req, res) => {
             // console.log(solicitudDB[0]);
             res.render("imprimir-contrato", {
                 solicitud: solicitudDB[0],
-                // arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-                // arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-                // arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-                // arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
                 arrayRutas: arrayRutasDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos
             });
 
         } catch (error) {
@@ -728,7 +921,15 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         try {
 
@@ -742,6 +943,7 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
             const arrayNotificacionAtrasoDB = await pool.query(`SELECT * FROM novedades_atrasos WHERE idSolicitud = ${id} ORDER BY fechaNovedad DESC`);
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where prestamo_id = ${solicitudDB[0].idSolicitud} `);
             // console.log(solicitudDB[0]);
             res.render("editar-solicitud", {
                 solicitud: solicitudDB[0],
@@ -754,7 +956,18 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
                 arrayRutas: arrayRutasDB,
                 arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                documentosCliente: documentosClienteDB
             });
 
         } catch (error) {
@@ -781,7 +994,55 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
 
     // const data = {};
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, atraso, legalMonto, incobrableMonto, clasificacionCliente, saldoFinal } = req.body;
+    const {
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos,
+        cedula,
+        nombre,
+        apellido,
+        sexo,
+        estadoCivil,
+        direccion,
+        direccionNegocio,
+        tiempoNegocio,
+        email,
+        telefono,
+        celular,
+        nacionadlidad,
+        nombreFamilia,
+        direccionFamilia,
+        parentescoFamilia,
+        telefonoFamilia,
+        apodoFamilia,
+        empresa,
+        salario,
+        puesto,
+        dirEmpresa,
+        telefonoEmpresa,
+        departamento,
+        tiempoEmpresa,
+        nombreRefPers1,
+        nombreRefPers2,
+        telefonoRefPer1,
+        telefonoRefPer2,
+        tipoPrestamo,
+        banco,
+        numeroCuenta,
+        montoSolicitado,
+        estadoSolicitud,
+        contrato,
+        ruta,
+        firmaContrato,
+        atraso,
+        legalMonto,
+        incobrableMonto,
+        clasificacionCliente,
+        saldoFinal
+    } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -824,27 +1085,18 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         legalMonto,
         incobrableMonto,
         clasificacionCliente,
-        saldoFinal
+        saldoFinal,
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos
     };
 
     const atrasoDB = await pool.query(`SELECT novedades_atrasos.atraso FROM novedades_atrasos WHERE novedades_atrasos.idSolicitud = ${id}`);
 
-    // console.log(atrasoDB)
-    // const novedadAtraso = { idSolicitud, celular, ruta, atraso }
 
-    // if (nuevaSolicitud) {
-    //     data.nuevaSolicitud = nuevaSolicitud;
-    // }
-
-    // if (atraso > 0 && atraso != atrasoDB) {
-    //     data.novedadAtraso = novedadAtraso;
-    //     await pool.query("INSERT INTO novedades_atrasos set ?", [data.novedadAtraso, id]);
-    // }
-
-    // if (atraso != atrasoDB) {
-    //     data.novedadAtraso = novedadAtraso;
-    //     await pool.query("INSERT INTO novedades_atrasos set ?", [data.novedadAtraso, id]);
-    // }
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
     // req.flash('success', 'Link actualizado correctamente');
@@ -878,20 +1130,39 @@ router.post('/Solicitudes-aprobadas/ver-solicitud/:id', async(req, res) => {
 router.get('/solicitudes-declinadas', async(req, res) => {
     if (req.session.loggedin) {
 
-        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada" ORDER BY fechaSolicitud DESC');
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
+        const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada" ORDER BY fechaSolicitud DESC');
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
         const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
         res.render("solicitudes-declinadas", {
-            arraySolicitudes: arraySolicitudesDB,
+            arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
             arrayTotalSolicitudes: arrayTotalSolicitudesDB,
             arraySolicitudesNuevas: arraySolicitudesNuevasDB,
             arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
             arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
         });
 
@@ -910,7 +1181,15 @@ router.get("/Solicitudes-declinadas/ver-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-            // console.log(req.params)
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         try {
 
@@ -923,6 +1202,7 @@ router.get("/Solicitudes-declinadas/ver-solicitud/:id", async(req, res) => {
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where prestamo_id = ${solicitudDB[0].idSolicitud} `);
             // console.log(solicitudDB[0]);
             res.render("ver-solicitud", {
                 solicitud: solicitudDB[0],
@@ -934,7 +1214,18 @@ router.get("/Solicitudes-declinadas/ver-solicitud/:id", async(req, res) => {
                 arrayObservaciones: arrayObservacionesDB,
                 arrayRutas: arrayRutasDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                documentosCliente: documentosClienteDB
             });
 
         } catch (error) {
@@ -960,7 +1251,15 @@ router.get("/Solicitudes-declinadas/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-            // console.log(req.params)
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         try {
 
@@ -975,6 +1274,7 @@ router.get("/Solicitudes-declinadas/editar-solicitud/:id", async(req, res) => {
 
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where prestamo_id = ${solicitudDB[0].idSolicitud} `);
             // console.log(solicitudDB[0]);
             res.render("editar-solicitud", {
                 solicitud: solicitudDB[0],
@@ -987,12 +1287,24 @@ router.get("/Solicitudes-declinadas/editar-solicitud/:id", async(req, res) => {
                 arrayRutas: arrayRutasDB,
                 arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                documentosCliente: documentosClienteDB
+
             });
 
         } catch (error) {
             console.log(error)
-            res.render("editar-solicitud", {
+            res.render("404", {
                 error: true,
                 mensaje: "no se encuentra el id seleccionado"
             });
@@ -1011,7 +1323,52 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;
     // console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, clasificacionCliente, saldoFinal } = req.body;
+    const {
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos,
+        cedula,
+        nombre,
+        apellido,
+        sexo,
+        estadoCivil,
+        direccion,
+        direccionNegocio,
+        tiempoNegocio,
+        email,
+        telefono,
+        celular,
+        nacionadlidad,
+        nombreFamilia,
+        direccionFamilia,
+        parentescoFamilia,
+        telefonoFamilia,
+        apodoFamilia,
+        empresa,
+        salario,
+        puesto,
+        dirEmpresa,
+        telefonoEmpresa,
+        departamento,
+        tiempoEmpresa,
+        nombreRefPers1,
+        nombreRefPers2,
+        telefonoRefPer1,
+        telefonoRefPer2,
+        tipoPrestamo,
+        banco,
+        numeroCuenta,
+        montoSolicitado,
+        estadoSolicitud,
+        contrato,
+        ruta,
+        firmaContrato,
+        clasificacionCliente,
+        saldoFinal
+    } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -1051,7 +1408,13 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
         ruta,
         firmaContrato,
         clasificacionCliente,
-        saldoFinal
+        saldoFinal,
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -1084,20 +1447,39 @@ router.post('/Solicitudes-declinadas/ver-solicitud/:id', async(req, res) => {
 router.get('/solicitudes-en-revision', async(req, res) => {
     if (req.session.loggedin) {
 
-        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision" ORDER BY fechaSolicitud DESC');
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
+        const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision" ORDER BY fechaSolicitud DESC');
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
         res.render("solicitudes-en-revision", {
-            arraySolicitudes: arraySolicitudesDB,
+            arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
             arrayTotalSolicitudes: arrayTotalSolicitudesDB,
             arraySolicitudesNuevas: arraySolicitudesNuevasDB,
             arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
             arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
         });
 
@@ -1115,7 +1497,15 @@ router.get("/Solicitudes-en-revision/ver-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-            // console.log(req.params)
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         try {
 
@@ -1128,6 +1518,7 @@ router.get("/Solicitudes-en-revision/ver-solicitud/:id", async(req, res) => {
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where prestamo_id = ${solicitudDB[0].idSolicitud} `);
             // console.log(solicitudDB[0]);
             res.render("ver-solicitud", {
                 solicitud: solicitudDB[0],
@@ -1139,7 +1530,18 @@ router.get("/Solicitudes-en-revision/ver-solicitud/:id", async(req, res) => {
                 arrayObservaciones: arrayObservacionesDB,
                 arrayRutas: arrayRutasDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                documentosCliente: documentosClienteDB
             });
 
         } catch (error) {
@@ -1164,7 +1566,15 @@ router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-            // console.log(req.params)
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         try {
 
@@ -1179,6 +1589,7 @@ router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
 
 
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+            const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where prestamo_id = ${solicitudDB[0].idSolicitud} `);
             // console.log(solicitudDB[0]);
             res.render("editar-solicitud", {
                 solicitud: solicitudDB[0],
@@ -1191,7 +1602,18 @@ router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
                 arrayRutas: arrayRutasDB,
                 arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                documentosCliente: documentosClienteDB
             });
 
         } catch (error) {
@@ -1215,7 +1637,52 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
     const id = req.params.id;
     // console.log(req.params.id)
 
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, estadoSolicitud, contrato, ruta, firmaContrato, clasificacionCliente, saldoFinal } = req.body;
+    const {
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos,
+        cedula,
+        nombre,
+        apellido,
+        sexo,
+        estadoCivil,
+        direccion,
+        direccionNegocio,
+        tiempoNegocio,
+        email,
+        telefono,
+        celular,
+        nacionadlidad,
+        nombreFamilia,
+        direccionFamilia,
+        parentescoFamilia,
+        telefonoFamilia,
+        apodoFamilia,
+        empresa,
+        salario,
+        puesto,
+        dirEmpresa,
+        telefonoEmpresa,
+        departamento,
+        tiempoEmpresa,
+        nombreRefPers1,
+        nombreRefPers2,
+        telefonoRefPer1,
+        telefonoRefPer2,
+        tipoPrestamo,
+        banco,
+        numeroCuenta,
+        montoSolicitado,
+        estadoSolicitud,
+        contrato,
+        ruta,
+        firmaContrato,
+        clasificacionCliente,
+        saldoFinal
+    } = req.body;
 
     const nuevaSolicitud = {
         cedula,
@@ -1255,7 +1722,13 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
         ruta,
         firmaContrato,
         clasificacionCliente,
-        saldoFinal
+        saldoFinal,
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -1288,8 +1761,17 @@ router.post('/Solicitudes-en-revision/ver-solicitud/:id', async(req, res) => {
 router.get('/todas-las-solicitudes', async(req, res) => {
     if (req.session.loggedin) {
 
-        const arrayTotalSolicitudesDB = await pool.query('SELECT * FROM solicitudes  ORDER BY fechaSolicitud DESC');
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
+        const arrayTotalSolicitudesDB = await pool.query('SELECT * FROM solicitudes  ORDER BY fechaSolicitud DESC');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva" ');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
@@ -1301,7 +1783,17 @@ router.get('/todas-las-solicitudes', async(req, res) => {
             arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
             arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
         });
 
@@ -1323,20 +1815,32 @@ router.get('/todas-las-solicitudes', async(req, res) => {
 router.get('/clientes', async(req, res) => {
     if (req.session.loggedin) {
 
-        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes ');
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
-        // const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
-        // const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        // const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
-        // const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
+        const arraySolicitudesClientesDB = await pool.query('SELECT * FROM solicitudes ');
+
         res.render("clientes", {
-            arraySolicitudes: arraySolicitudesDB,
-            // arrayTotalSolicitudes: arrayTotalSolicitudesDB,
-            // arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-            // arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-            // arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
+            arraySolicitudesClientes: arraySolicitudesClientesDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
         });
 
@@ -1356,27 +1860,36 @@ router.get("/clientes/ver-cliente/:id", async(req, res) => {
     if (req.session.loggedin) {
 
         const id = req.params.id
-            // console.log(req.params)
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         try {
 
-            // const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada"');
-            // const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-            // const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
-            // const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
-
             const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
-            // console.log(solicitudDB[0]);
+
             res.render("ver-cliente", {
                 solicitud: solicitudDB[0],
-                // arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-                // arraySolicitudesNuevas: arraySolicitudesNuevasDB,
-                // arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-                // arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
                 arrayRutas: arrayRutasDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos
             });
 
         } catch (error) {
@@ -1402,7 +1915,17 @@ router.post("/clientes/ver-cliente/:id", async(req, res) => {
 
         const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, frecuenciaPagos, cantidadPagosSemanales, cantidadPagosDiarios, cantidadPagosQuincenales, cantidadPagosMensuales } = req.body;
 
-        const arraySolicitudesDB = await pool.query('SELECT * FROM solicitudes ');
+        const arraySolicitudesClientesDB = await pool.query('SELECT * FROM solicitudes ');
+
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         // OBTENCION DE PARAMAMETROS CLIENTE
         // const ipString = "152.0.12.42, 172.71.82.116";
@@ -1612,7 +2135,17 @@ router.post("/clientes/ver-cliente/:id", async(req, res) => {
             ruta: '',
             login: true,
             name: req.session.name,
-            arraySolicitudes: arraySolicitudesDB,
+            rol: req.session.rol,
+            arraySolicitudesClientes: arraySolicitudesClientesDB,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
         });
 

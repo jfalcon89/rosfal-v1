@@ -46,16 +46,10 @@
 
                     <div class="d-flex">
                         <div class="btn-group ">
-                            <button type="button" class=" border-0 dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-square me-2" style="font-size: 40px;"></i></button>
-                            <ul class="dropdown-menu ">
-                                <li> <a href="register" class=" dropdown-item">Registrar Usuario</a></li>
-                                <li> <a href="controles-anuncios" class=" dropdown-item">Controles Anuncios</a></li>
-                                <li><a class="dropdown-item" href="/">Ir a ROSFAL PAGE</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="/logout">Cerrar Session</a></li>
-                            </ul>
+                            <button type="button" class="hola navbar-toggler d-block me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon show "></span>
+                            </button>
+                            <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
                         </div>
                         <div class="user-container me-2 d-flex">
                             <% if (login) { %>

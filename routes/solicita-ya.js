@@ -15,14 +15,19 @@ const useragent = require('express-useragent');
 
 //RENDERIZANDO LA VISTA SOLICITA YA
 router.get('/solicita-ya', (req, res) => {
+    const permiso_C = 'Cliente App'
 
-
-    res.render('solicita-ya');
+    res.render('solicita-ya', {
+        rol: req.session.rol,
+        permiso_C
+    });
 })
 
 //INSERTAR NUEVA SOLICITUD A MYSQL****************
 router.post("/solicita-ya", async(req, res) => {
     const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, frecuenciaPagos, cantidadPagosSemanales, cantidadPagosDiarios, cantidadPagosQuincenales, cantidadPagosMensuales } = req.body;
+
+    const permiso_C = 'Cliente App'
 
     // OBTENCION DE PARAMAMETROS CLIENTE
     // const ipString = "201.229.238.223, 172.71.82.116";
@@ -41,8 +46,7 @@ router.post("/solicita-ya", async(req, res) => {
 
     var callback = function(res) {
 
-        // FUNCION QUE ENVIA AL CORREO NOTIFICACION DE SOLICITUD DE PRESTAMOS A ROSFAL
-
+        // #1 FUNCION QUE ENVIA AL CORREO NOTIFICACION DE SOLICITUD DE PRESTAMOS A ROSFAL
         async function notificacionCorreo() {
             try {
                 const from = "contacto@rosfal.com"
@@ -114,7 +118,7 @@ router.post("/solicita-ya", async(req, res) => {
     ipapi.location(callback, `${ip}`)
 
 
-    // FUNCION QUE ENVIA NOTIFICACION DE SOLICITUD DE PRESTAMOS AL CLIENTE
+    // #2 FUNCION QUE ENVIA NOTIFICACION DE SOLICITUD DE PRESTAMOS AL CLIENTE
     if (email) {
         async function enviarCorreo() {
             try {
@@ -225,16 +229,37 @@ router.post("/solicita-ya", async(req, res) => {
     // req.flash('success', 'Link guardado correctamente');
     // res.redirect('/');
 
-    res.render('solicita-ya', {
-        alert: true,
-        alertTitle: "Muchas Gracias",
-        alertMessage: "¡SOLICITUD ENVIADA CORRECTAMENTE!",
-        alertIcon: 'success',
-        showConfirmButton: false,
-        timer: 2000,
-        ruta: ''
+    if (req.session.rol == 'Cliente App') {
 
-    });
+        return res.render('solicita-ya', {
+            alert: true,
+            alertTitle: "Muchas Gracias",
+            alertMessage: "¡SOLICITUD ENVIADA CORRECTAMENTE!",
+            alertIcon: 'success',
+            showConfirmButton: false,
+            timer: 2000,
+            ruta: 'panel-administracion',
+            rol: req.session.rol,
+            permiso_C
+
+        });
+    } else {
+
+
+        return res.render('solicita-ya', {
+            alert: true,
+            alertTitle: "Muchas Gracias",
+            alertMessage: "¡SOLICITUD ENVIADA CORRECTAMENTE!",
+            alertIcon: 'success',
+            showConfirmButton: false,
+            timer: 2000,
+            ruta: '',
+            rol: req.session.rol,
+            permiso_C
+
+        });
+    };
+
 
 });
 

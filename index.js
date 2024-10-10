@@ -26,6 +26,7 @@ const panel_administracionRoutes = require("./routes/panel-administracion");
 const solicitudesRoutes = require("./routes/solicitudes");
 const mensajesRoutes = require("./routes/mensajes");
 const usuariosRoutes = require("./routes/usuarios");
+const clientesRoutes = require("./routes/clientes");
 const rutasRoutes = require("./routes/rutas");
 const rutasTestimonios = require("./routes/testimonios");
 const rutasObservaciones = require("./routes/observaciones");
@@ -33,6 +34,10 @@ const rutasConsulta_solicitud = require("./routes/consulta-solicitud");
 const controlesAnuncios = require("./routes/controles-anuncios");
 const visitasWeb = require("./routes/visitas-web");
 const mantenimiento = require("./routes/mantenimiento");
+
+// rutas app movil
+const appRegistro = require("./routes/app-registro");
+
 
 //--------------CONEXION AL SERVIDOR-----------------//
 app.set("port", process.env.PORT || 3006);
@@ -89,6 +94,7 @@ app.use("/", panel_administracionRoutes);
 app.use("/", solicitudesRoutes);
 app.use("/", mensajesRoutes);
 app.use("/", usuariosRoutes);
+app.use("/", clientesRoutes);
 app.use("/", rutasRoutes);
 app.use("/", rutasTestimonios);
 app.use("/", rutasObservaciones);
@@ -96,6 +102,9 @@ app.use("/", rutasConsulta_solicitud);
 app.use("/", controlesAnuncios);
 app.use("/", visitasWeb);
 app.use("/", mantenimiento);
+
+//------------ VISTAS APP MOVIL-----------------------//
+app.use("/", appRegistro);
 
 
 //motor de plantilla 

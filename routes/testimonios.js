@@ -10,19 +10,36 @@ const pool = require("../database");
 router.get('/testimonios', async(req, res) => {
     if (req.session.loggedin) {
 
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
-        const arrayTestimoniosNuevosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
-        // const arrayTestimoniosNuevosDB2 = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+        const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
         res.render("testimonios", {
-            arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
-            // arrayTestimoniosNuevos2: arrayTestimoniosNuevosDB2[0],
+            arrayTestimoniosNuevosV: arrayTestimoniosNuevosVDB,
             arrayTestimoniosActivos: arrayTestimoniosActivosDB,
             arrayTestimoniosInactivos: arrayTestimoniosInactivosDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
 
         });
@@ -47,7 +64,17 @@ router.get("/testimonios/ver-testimonio/:id", async(req, res) => {
 
         try {
 
-            const arrayTestimoniosNuevosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+            const permiso_A = 'Administrador'
+            const permiso_B = 'Representante'
+            const permiso_C = 'Cliente App'
+            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
+            const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
@@ -57,11 +84,21 @@ router.get("/testimonios/ver-testimonio/:id", async(req, res) => {
             res.render("ver-testimonio", {
                 arrayTestimonios: arrayTestimoniosDB,
                 testimonio: testimonioDB[0],
-                arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
+                arrayTestimoniosNuevosV: arrayTestimoniosNuevosVDB,
                 arrayTestimoniosActivos: arrayTestimoniosActivosDB,
                 arrayTestimoniosInactivos: arrayTestimoniosInactivosDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos
 
             });
 
@@ -128,16 +165,36 @@ router.get('/testimonios-activos', async(req, res) => {
     if (req.session.loggedin) {
 
 
-        const arrayTestimoniosNuevosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
+        const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
         res.render("testimonios-activos", {
-            arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
+            arrayTestimoniosNuevosV: arrayTestimoniosNuevosVDB,
             arrayTestimoniosActivos: arrayTestimoniosActivosDB,
             arrayTestimoniosInactivos: arrayTestimoniosInactivosDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
         });
 
@@ -160,7 +217,18 @@ router.get("/testimonios-activos/ver-testimonio-activo/:id", async(req, res) => 
 
         try {
 
-            const arrayTestimoniosNuevosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
+            const permiso_A = 'Administrador'
+            const permiso_B = 'Representante'
+            const permiso_C = 'Cliente App'
+            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
+            const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
@@ -170,11 +238,21 @@ router.get("/testimonios-activos/ver-testimonio-activo/:id", async(req, res) => 
             res.render("ver-testimonio-activo", {
                 testimonio: testimonioDB[0],
                 arrayTestimonios: arrayTestimoniosDB,
-                arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
+                arrayTestimoniosNuevosV: arrayTestimoniosNuevosVDB,
                 arrayTestimoniosActivos: arrayTestimoniosActivosDB,
                 arrayTestimoniosInactivos: arrayTestimoniosInactivosDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos
             });
 
         } catch (error) {
@@ -239,16 +317,37 @@ router.get('/testimonios-inactivos', async(req, res) => {
     if (req.session.loggedin) {
 
 
-        const arrayTestimoniosNuevosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
+        const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
         res.render("testimonios-inactivos", {
-            arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
+            arrayTestimoniosNuevosV: arrayTestimoniosNuevosVDB,
             arrayTestimoniosActivos: arrayTestimoniosActivosDB,
             arrayTestimoniosInactivos: arrayTestimoniosInactivosDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
+
 
         });
 
@@ -271,7 +370,17 @@ router.get("/testimonios-inactivos/ver-testimonio-inactivo/:id", async(req, res)
 
         try {
 
-            const arrayTestimoniosNuevosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+            const permiso_A = 'Administrador'
+            const permiso_B = 'Representante'
+            const permiso_C = 'Cliente App'
+            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
+            const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
@@ -281,11 +390,21 @@ router.get("/testimonios-inactivos/ver-testimonio-inactivo/:id", async(req, res)
             res.render("ver-testimonio-inactivo", {
                 testimonio: testimonioDB[0],
                 arrayTestimonios: arrayTestimoniosDB,
-                arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
+                arrayTestimoniosNuevosV: arrayTestimoniosNuevosVDB,
                 arrayTestimoniosActivos: arrayTestimoniosActivosDB,
                 arrayTestimoniosInactivos: arrayTestimoniosInactivosDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos
             });
 
         } catch (error) {

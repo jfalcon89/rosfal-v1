@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css y js bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+    <!-- linkeado css propio -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- icons bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- generador de pdf cdn -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- moment.js cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <link rel="icon" href="/img/favicon/logo-favicon.png">
+    <title>Rosfal - Registrar</title>
+</head>
+
+<body style="height: 100vh; background-size: cover; background-position: center; background-repeat: no-repeat; background-image: url(/img/app_registro.png)">
+
+
+    <div class="" style=" width: 100%; padding-top: 200px; ">
+
+        <form id="form-validacion" autocomplete="off" action="/app-validacion-registro" method="POST" style="padding: 15px;">
+
+            <div class="form-group">
+                <label for="token_registro_sms" class=" ">Ingresa el codigo de validacion que fue enviado al numero <strong>+1 <%= app_cliente.telefono %></strong></label>
+                <input type="password" name="token_registro_sms" class="form-control p-2" id="token_registro_sms" aria-describedby="" placeholder="Ingresar Codigo" required>
+                <input style="display: none;" name="telefono" class="form-control p-2" id="telefono" value="<%= app_cliente.telefono %>">
+            </div>
+            <br>
+            <div class="d-flex justify-content-center">
+
+                <button style="background-color: #014c90; border-color: #639cc9;" href="/app-validacion-registro-2/<%= app_cliente.cliente_id %>" class="btn btn-primary m-3 p-2 w-100">Verificar</button>
+            </div>
+        </form>
+    </div>
+
+    <div style="padding-top: 200px;" class="d-flex justify-content-center w-100"></div>
+
+    <a href="/app-registro" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Cambiar numero</a>
+    </div>
+
+    <script>
+        // Captura el envío del formulario
+        document.getElementById('form-validacion').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita la recarga de la página
+
+            const token = document.getElementById('token_registro_sms').value;
+            const telefono = document.getElementById('telefono').value;
+
+            // Enviar datos al backend sin recargar la página usando fetch
+            fetch('/app-validacion-registro', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        token_registro_sms: token,
+                        telefono: telefono
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Usar SweetAlert2 para mostrar la alerta
+                    Swal.fire({
+                        title: data.alertTitle,
+                        text: data.alertMessage,
+                        icon: data.alertIcon,
+                        confirmButtonText: data.success ? 'Continuar' : 'Reintentar',
+                        timer: data.success ? 1500 : null,
+                        showConfirmButton: true
+                    }).then(() => {
+                        // Si el token es correcto, redirigir
+                        if (data.success) {
+                            window.location.href = data.ruta;
+                        } else {
+                            // Si el token es incorrecto, limpiar el campo del token
+                            document.getElementById('token_registro_sms').value = '';
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ocurrió un error inesperado.',
+                        icon: 'error',
+                        confirmButtonText: 'Reintentar'
+                    });
+                });
+        });
+    </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="">
+                    <h5 class="modal-title d-flex justify-content-center" id="exampleModalLongTitle"><i class=" bi bi-x-lg"></i></h5>
+
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+
+                    <button type="submit" id="btn" type="button" class="btn btn-primary">Aceptar1</button>
+                    <button id="btnDenegar" type="button" class="btn btn-primary">Aceptar</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="/js/app-validacion.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <% if (typeof alert != "undefined")  { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '/<%= ruta %>'
+            })
+        </script>
+        <% } %>
+            </div>
+
+</body>
+
+</html>

@@ -10,19 +10,37 @@ const pool = require("../database");
 router.get('/mensajes', async(req, res) => {
     if (req.session.loggedin) {
 
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ORDER BY fechaMensaje DESC');
         const arrayMensajesLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
         const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
-        // const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-        // const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        // const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
+
         res.render("mensajes", {
             arrayMensajes: arrayMensajesDB,
             arrayMensajesLeidos: arrayMensajesLeidosDB,
             arrayMensajesNoLeidos: arrayMensajesNoLeidosDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
+
 
 
         });
@@ -47,8 +65,17 @@ router.get("/mensajes/ver-mensaje-nuevo/:id", async(req, res) => {
 
         try {
 
+            const permiso_A = 'Administrador'
+            const permiso_B = 'Representante'
+            const permiso_C = 'Cliente App'
+            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
             const arrayMensajesLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
-            const arrayMensajesNuevosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ');
             const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
 
             const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ORDER BY fechaMensaje DESC');
@@ -58,10 +85,19 @@ router.get("/mensajes/ver-mensaje-nuevo/:id", async(req, res) => {
                 mensaje: mensajeDB[0],
                 arrayMensajes: arrayMensajesDB,
                 arrayMensajesLeidos: arrayMensajesLeidosDB,
-                arrayMensajesNuevos: arrayMensajesNuevosDB,
                 arrayMensajesNoLeidos: arrayMensajesNoLeidosDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos
             });
 
         } catch (error) {
@@ -125,16 +161,35 @@ router.get('/mensajes-no-leidos', async(req, res) => {
     if (req.session.loggedin) {
 
 
+
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
         const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ORDER BY fechaMensaje DESC');
-        const arrayMensajesNuevosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ');
         const arrayMensajesLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
 
         res.render("mensajes-no-leidos", {
             arrayMensajes: arrayMensajesDB,
-            arrayMensajesNuevos: arrayMensajesNuevosDB,
             arrayMensajesLeidos: arrayMensajesLeidosDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
         });
 
@@ -157,8 +212,17 @@ router.get("/mensajes-no-leidos/ver-mensaje-no-leido/:id", async(req, res) => {
 
         try {
 
+            const permiso_A = 'Administrador'
+            const permiso_B = 'Representante'
+            const permiso_C = 'Cliente App'
+            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
             const arrayMensajesLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
-            const arrayMensajesNuevosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ');
             const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
 
             const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
@@ -168,10 +232,19 @@ router.get("/mensajes-no-leidos/ver-mensaje-no-leido/:id", async(req, res) => {
                 mensaje: mensajeDB[0],
                 arrayMensajes: arrayMensajesDB,
                 arrayMensajesLeidos: arrayMensajesLeidosDB,
-                arrayMensajesNuevos: arrayMensajesNuevosDB,
                 arrayMensajesNoLeidos: arrayMensajesNoLeidosDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos
             });
 
         } catch (error) {
@@ -232,17 +305,34 @@ router.get("/mensajes-no-leidos/eliminar-mensaje/:id", async(req, res) => {
 router.get('/mensajes-leidos', async(req, res) => {
     if (req.session.loggedin) {
 
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ORDER BY fechaMensaje DESC');
-        const arrayMensajesNuevosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ');
         const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
 
         res.render("mensajes-leidos", {
             arrayMensajes: arrayMensajesDB,
-            arrayMensajesNuevos: arrayMensajesNuevosDB,
             arrayMensajesNoLeidos: arrayMensajesNoLeidosDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            arrayUsuarios,
+            arrayClientes,
+            arraySolicitudes,
+            arrayMensajesNuevos,
+            arrayVisitas,
+            arrayTestimoniosNuevos
 
         });
 
@@ -265,8 +355,17 @@ router.get("/mensajes-leidos/ver-mensaje-leido/:id", async(req, res) => {
 
         try {
 
+            const permiso_A = 'Administrador'
+            const permiso_B = 'Representante'
+            const permiso_C = 'Cliente App'
+            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
             const arrayMensajesLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
-            const arrayMensajesNuevosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ');
             const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
 
             const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
@@ -276,10 +375,19 @@ router.get("/mensajes-leidos/ver-mensaje-leido/:id", async(req, res) => {
                 mensaje: mensajeDB[0],
                 arrayMensajes: arrayMensajesDB,
                 arrayMensajesLeidos: arrayMensajesLeidosDB,
-                arrayMensajesNuevos: arrayMensajesNuevosDB,
                 arrayMensajesNoLeidos: arrayMensajesNoLeidosDB,
                 login: true,
-                name: req.session.name
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos
             });
 
         } catch (error) {
@@ -334,11 +442,6 @@ router.get("/mensajes-leidos/eliminar-mensaje/:id", async(req, res) => {
     }
 
 });
-
-
-
-
-
 
 
 

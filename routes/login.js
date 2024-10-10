@@ -36,7 +36,9 @@ router.post('/auth', async(req, res) => {
             } else {
                 //creamos una var de session y le asignamos true si INICIO SESSION       
                 req.session.loggedin = true;
+                req.session.user = results[0].user;
                 req.session.name = results[0].name;
+                req.session.rol = results[0].rol;
                 res.render('login', {
                     alert: true,
                     alertTitle: "Conexión exitosa",
