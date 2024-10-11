@@ -264,57 +264,59 @@
          SUBIR DOCUMENTOS
             </button>
         </div>
-        <table id="datatable" class="display responsive nowrap" style="width:100%">
-            <thead class="thead-dark">
-                <tr>
-                    <th>ID del Archivo</th>
-                    <th>ID del Préstamo</th>
-                    <th>Telefono asociado</th>
-                    <th>Tipo de documento</th>
-                    <th>Nombre del Archivo</th>
-                    <th>Fecha de Subida</th>
-                    <th>Tamaño del archivo</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="archivos-table-body">
-                <!-- Las filas de archivos se agregarán aquí dinámicamente -->
-                <% if (arrayArchivos.length > 0) { %>
-                    <% arrayArchivos.forEach(archivo=> { %>
+        <div class="container-table table-responsive">
+            <table id="datatable" class="display responsive nowrap" style="width:100%">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID del Archivo</th>
+                        <th>ID del Préstamo</th>
+                        <th>Telefono asociado</th>
+                        <th>Tipo de documento</th>
+                        <th>Nombre del Archivo</th>
+                        <th>Fecha de Subida</th>
+                        <th>Tamaño del archivo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="archivos-table-body">
+                    <!-- Las filas de archivos se agregarán aquí dinámicamente -->
+                    <% if (arrayArchivos.length > 0) { %>
+                        <% arrayArchivos.forEach(archivo=> { %>
 
-                        <tr>
-                            <td>
-                                <%= archivo.archivo_id %>
-                            </td>
-                            <td>
-                                <%= archivo.prestamo_id %>
-                            </td>
-                            <td>
-                                <%= archivo.celular %>
-                            </td>
-                            <td>
-                                <%= archivo.tipo_documento %>
-                            </td>
-                            <td class="text-break">
-                                <%= archivo.nombre_archivo %>
-                            </td>
-                            <td>
-                                <%= archivo.fecha_subida.toLocaleString('es-US', { timeZone: 'America/Santo_Domingo'}) %>
-                            </td>
-                            <td>
-                                <%= archivo.tamano_archivo_kb %> KB
-                            </td>
-                            <td>
+                            <tr>
+                                <td>
+                                    <%= archivo.archivo_id %>
+                                </td>
+                                <td>
+                                    <%= archivo.prestamo_id %>
+                                </td>
+                                <td>
+                                    <%= archivo.celular %>
+                                </td>
+                                <td>
+                                    <%= archivo.tipo_documento %>
+                                </td>
+                                <td class="text-break">
+                                    <%= archivo.nombre_archivo %>
+                                </td>
+                                <td>
+                                    <%= archivo.fecha_subida.toLocaleString('es-US', { timeZone: 'America/Santo_Domingo'}) %>
+                                </td>
+                                <td>
+                                    <%= archivo.tamano_archivo_kb %> KB
+                                </td>
+                                <td>
 
-                                <a id="eventoAct-Inact" href="/download/<%= archivo.archivo_id %>" class="btn " title="descargar archivo"><i class="bi bi-folder2-open "></i></a>
+                                    <a id="eventoAct-Inact" href="/download/<%= archivo.archivo_id %>" class="btn " title="descargar archivo"><i class="bi bi-folder2-open "></i></a>
 
-                            </td>
+                                </td>
 
-                        </tr>
-                        <% }) %>
-                            <% } %>
-            </tbody>
-        </table>
+                            </tr>
+                            <% }) %>
+                                <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 

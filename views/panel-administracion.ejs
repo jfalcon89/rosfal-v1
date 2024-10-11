@@ -171,51 +171,52 @@
                                     <h6>
                                         <%= porcentajeLiquidado %>% Liquidados <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje del total de prestamos saldados"></i></h6>
                                 </div>
-
-                                <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                                    <h3 class="me-1 font-weight-bold text-truncate">En Legal</h3>
-                                    <h3 class="text-danger">
-                                        <%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
-                            }).format(prestamosEnLegal) %>
-                                    </h3>
-                                    <h6>
-                                        <%= porcentajeEnLegal %>% Monto En Legal <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en legal"></i></h6>
-                                </div>
-
-                                <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                                    <h3 class="me-1 font-weight-bold text-truncate ">Atrasos</h3>
-                                    <h3 class="text-danger">
-                                        <%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
-                            }).format(prestamosAtrasos) %>
-                                    </h3>
-                                    <h6>
-                                        <%= porcentajeAtraso %>% Monto En Atraso <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en atrasos"></i></h6>
-                                </div>
-
-                                <% if(rol == permiso_A || rol == permiso_B){ %>
+                                <% if(prestamosEnLegalValidacion > 0){ %>
                                     <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                                        <h3 class="me-1 font-weight-bold text-truncate ">Incobrables</h3>
+                                        <h3 class="me-1 font-weight-bold text-truncate">En Legal</h3>
                                         <h3 class="text-danger">
-                                            <%= prestamosIncobrables=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
-                            }).format(prestamosIncobrables) %>
+                                            <%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
+                            }).format(prestamosEnLegal) %>
                                         </h3>
                                         <h6>
-                                            <%= porcentajeIncobrable %>% Incobrable <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de prestamos que no fueron pagados"></i></h6>
+                                            <%= porcentajeEnLegal %>% Monto En Legal <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en legal"></i></h6>
                                     </div>
                                     <% } %>
-                                        <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                                            <h3 class="me-1 font-weight-bold text-truncate">Cant. Activo</h3>
-                                            <h3>
-                                                <%= cantPrestamos %>
-                                            </h3>
-                                        </div>
 
                                         <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                                            <h3 class="me-1 font-weight-bold text-truncate">Cant. Atrasos</h3>
-                                            <h3>
-                                                <%= cantAtrasos %>
+                                            <h3 class="me-1 font-weight-bold text-truncate ">Atrasos</h3>
+                                            <h3 class="text-danger">
+                                                <%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
+                            }).format(prestamosAtrasos) %>
                                             </h3>
+                                            <h6>
+                                                <%= porcentajeAtraso %>% Monto En Atraso <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en atrasos"></i></h6>
                                         </div>
+
+                                        <% if(rol == permiso_A || rol == permiso_B){ %>
+                                            <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                                <h3 class="me-1 font-weight-bold text-truncate ">Incobrables</h3>
+                                                <h3 class="text-danger">
+                                                    <%= prestamosIncobrables=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
+                            }).format(prestamosIncobrables) %>
+                                                </h3>
+                                                <h6>
+                                                    <%= porcentajeIncobrable %>% Incobrable <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de prestamos que no fueron pagados"></i></h6>
+                                            </div>
+                                            <% } %>
+                                                <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                                    <h3 class="me-1 font-weight-bold text-truncate">Cant. Activo</h3>
+                                                    <h3>
+                                                        <%= cantPrestamos %>
+                                                    </h3>
+                                                </div>
+
+                                                <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                                    <h3 class="me-1 font-weight-bold text-truncate">Cant. Atrasos</h3>
+                                                    <h3>
+                                                        <%= cantAtrasos %>
+                                                    </h3>
+                                                </div>
 
                             </div>
                         </div>
@@ -231,86 +232,113 @@
 
 
         <% }else{ %>
-            <div class="mt-4 container-fluid">
-                <div class="container-fluid d-xxl-flex justify-content-between" style="background-color: #ececec; border-radius: 15px; padding: 20px; ">
+            <!-- Button trigger modal -->
+            <div style="background-color: #ececec; border-radius: 15px; margin: 15px;" class="d-flex justify-content-center mt-4" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
+                <img width="60px" src="/img/reporte-de-negocios.png" alt="">
 
-                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                        <h3 class="me-1 font-weight-bold text-truncate">Resumen</h3>
+                <h4 class="d-flex align-items-center">Resumen Prestamos</h4>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div style="display: contents;" class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Resumen</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mt-4 container-fluid">
+                                <div class="container-fluid d-xxl-flex justify-content-between" style="background-color: #ececec; border-radius: 15px; padding: 20px; ">
 
-                        <h6>
-                            <%= porcentajeDeclinaciones %>% Declinadas <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes declinadas vs todas las solicitudes recibidas"></i></h6>
-                        <h6>
-                            <%= porcentajeEnRevision %>% En Revision <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes en revision vs todas las solicitudes recibidas"></i></h6>
-                        <h6>
-                            <%= porcentajeNuevas %>% Nuevas <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes nuevas vs todas las solicitudes recibidas"></i></h6>
-                    </div>
-                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                        <h3 class="me-1 font-weight-bold text-truncate">Prestamos Activo</h3>
-                        <h3 class="text-success">
-                            <%= montoPrestado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
+                                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                        <h3 class="me-1 font-weight-bold text-truncate">Resumen</h3>
+
+                                        <h6>
+                                            <%= porcentajeDeclinaciones %>% Declinadas <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes declinadas vs todas las solicitudes recibidas"></i></h6>
+                                        <h6>
+                                            <%= porcentajeEnRevision %>% En Revision <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes en revision vs todas las solicitudes recibidas"></i></h6>
+                                        <h6>
+                                            <%= porcentajeNuevas %>% Nuevas <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes nuevas vs todas las solicitudes recibidas"></i></h6>
+                                    </div>
+                                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                        <h3 class="me-1 font-weight-bold text-truncate">Prestamos Activo</h3>
+                                        <h3 class="text-success">
+                                            <%= montoPrestado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
                 }).format(montoPrestado) %>
-                        </h3>
-                        <h6>
-                            <%= porcentajeAprobaciones %>% Aprobaciones <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes aprobadas vs todas las solicitudes recibidas"></i></h6>
-                    </div>
+                                        </h3>
+                                        <h6>
+                                            <%= porcentajeAprobaciones %>% Aprobaciones <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes aprobadas vs todas las solicitudes recibidas"></i></h6>
+                                    </div>
 
 
-                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                        <h3 class="me-1 font-weight-bold text-truncate">Liquidado</h3>
-                        <h3 class="" style="color: #e28724;">
-                            <%= montoLiquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
+                                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                        <h3 class="me-1 font-weight-bold text-truncate">Liquidado</h3>
+                                        <h3 class="" style="color: #e28724;">
+                                            <%= montoLiquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
                 }).format(montoLiquidado) %>
-                        </h3>
-                        <h6>
-                            <%= porcentajeLiquidado %>% Liquidados <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje del total de prestamos saldados"></i></h6>
-                    </div>
+                                        </h3>
+                                        <h6>
+                                            <%= porcentajeLiquidado %>% Liquidados <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje del total de prestamos saldados"></i></h6>
+                                    </div>
 
-                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                        <h3 class="me-1 font-weight-bold text-truncate">En Legal</h3>
-                        <h3 class="text-danger">
-                            <%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
+                                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                        <h3 class="me-1 font-weight-bold text-truncate">En Legal</h3>
+                                        <h3 class="text-danger">
+                                            <%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
                 }).format(prestamosEnLegal) %>
-                        </h3>
-                        <h6>
-                            <%= porcentajeEnLegal %>% Monto En Legal <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en legal"></i></h6>
-                    </div>
+                                        </h3>
+                                        <h6>
+                                            <%= porcentajeEnLegal %>% Monto En Legal <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en legal"></i></h6>
+                                    </div>
 
-                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                        <h3 class="me-1 font-weight-bold text-truncate ">Atrasos</h3>
-                        <h3 class="text-danger">
-                            <%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
+                                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                        <h3 class="me-1 font-weight-bold text-truncate ">Atrasos</h3>
+                                        <h3 class="text-danger">
+                                            <%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
                 }).format(prestamosAtrasos) %>
-                        </h3>
-                        <h6>
-                            <%= porcentajeAtraso %>% Monto En Atraso <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en atrasos"></i></h6>
-                    </div>
+                                        </h3>
+                                        <h6>
+                                            <%= porcentajeAtraso %>% Monto En Atraso <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en atrasos"></i></h6>
+                                    </div>
 
-                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                        <h3 class="me-1 font-weight-bold text-truncate ">Incobrables</h3>
-                        <h3 class="text-danger">
-                            <%= prestamosIncobrables=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
+                                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                        <h3 class="me-1 font-weight-bold text-truncate ">Incobrables</h3>
+                                        <h3 class="text-danger">
+                                            <%= prestamosIncobrables=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD'
                 }).format(prestamosIncobrables) %>
-                        </h3>
-                        <h6>
-                            <%= porcentajeIncobrable %>% Incobrable <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de prestamos que no fueron pagados"></i></h6>
-                    </div>
+                                        </h3>
+                                        <h6>
+                                            <%= porcentajeIncobrable %>% Incobrable <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de prestamos que no fueron pagados"></i></h6>
+                                    </div>
 
-                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                        <h3 class="me-1 font-weight-bold text-truncate">Cant. Activo</h3>
-                        <h3>
-                            <%= cantPrestamos %>
-                        </h3>
-                    </div>
+                                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                        <h3 class="me-1 font-weight-bold text-truncate">Cant. Activo</h3>
+                                        <h3>
+                                            <%= cantPrestamos %>
+                                        </h3>
+                                    </div>
 
-                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
-                        <h3 class="me-1 font-weight-bold text-truncate">Cant. Atrasos</h3>
-                        <h3>
-                            <%= cantAtrasos %>
-                        </h3>
-                    </div>
+                                    <div class="flex-column" style="border-left: 7px solid #cbcbcb; padding-left: 16px">
+                                        <h3 class="me-1 font-weight-bold text-truncate">Cant. Atrasos</h3>
+                                        <h3>
+                                            <%= cantAtrasos %>
+                                        </h3>
+                                    </div>
 
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
             <% } %>
 
                 <% if (rol == permiso_A){ %>
@@ -544,9 +572,17 @@
                                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                                             <div style="border-radius: 15px;" class="modal-content">
                                                                                 <div class="modal-header">
-                                                                                    <h5 class="modal-title" id="prestamosAprobadosModalLongTitle">Datelle de Prestamo
-                                                                                        <%= solicitud.idSolicitud %>
-                                                                                    </h5>
+                                                                                    <div>
+                                                                                        <h5 class="modal-title" id="prestamosAprobadosModalLongTitle"><strong>Datelle de Prestamo</strong>
+
+                                                                                        </h5>
+                                                                                        <h6>
+                                                                                            <%= solicitud.idSolicitud %>
+                                                                                                <%= solicitud.nombre%>
+                                                                                                    <%= solicitud.apellido %>
+
+                                                                                        </h6>
+                                                                                    </div>
                                                                                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -613,35 +649,34 @@
                                                                                             Balance atraso
                                                                                             <span class="badge badge-primary badge-pill text-black"><%= solicitud.atraso=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(solicitud.atraso) %></span>
                                                                                         </li>
-                                                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                                            Prestamo en Legal
-                                                                                            <% if(solicitud.legalMonto > 0){ %>
-                                                                                                <span class="badge badge-primary badge-pill text-black">SI</span>
-                                                                                                <% }else{ %>
-                                                                                                    <span class="badge badge-primary badge-pill text-black">NO</span>
-                                                                                                    <% } %>
-                                                                                        </li>
                                                                                         <% if(solicitud.legalMonto > 0){ %>
-                                                                                            <li class="list-group-item d-flex justify-content-between align-items-center text-danger">
-                                                                                                Monto Penalizado
-                                                                                                <span class="badge badge-primary badge-pill text-danger"><%= solicitud.legalMonto=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(solicitud.legalMonto) %></span>
+                                                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                                Prestamo en Legal
+                                                                                                <span class="badge badge-primary badge-pill text-black">SI</span>
+
                                                                                             </li>
                                                                                             <% } %>
-                                                                                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                                                    Contrato Firmado
-                                                                                                    <span class="badge badge-primary badge-pill text-black"><%= solicitud.firmaContrato %></span>
-                                                                                                </li>
-                                                                                                <% if(rol == permiso_C){ %>
-                                                                                                    <li class="list-group-item d-flex justify-content-between align-items-center text-success">
-                                                                                                        Prestamos Liquidados
-                                                                                                        <span class="badge badge-primary badge-pill text-success"><%= montoLiquidado %></span>
+                                                                                                <% if(solicitud.legalMonto > 0){ %>
+                                                                                                    <li class="list-group-item d-flex justify-content-between align-items-center text-danger">
+                                                                                                        Monto Penalizado
+                                                                                                        <span class="badge badge-primary badge-pill text-danger"><%= solicitud.legalMonto=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(solicitud.legalMonto) %></span>
                                                                                                     </li>
-                                                                                                    <% }else{ %>
-                                                                                                        <li class="list-group-item d-flex justify-content-between align-items-center text-success">
-                                                                                                            Prestamos Liquidados
-                                                                                                            <span class="badge badge-primary badge-pill text-success"><%= solicitud.prestamosLiquidadosCliente=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(solicitud.prestamosLiquidadosCliente) %></span>
+                                                                                                    <% } %>
+                                                                                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                                                            Contrato Firmado
+                                                                                                            <span class="badge badge-primary badge-pill text-black"><%= solicitud.firmaContrato %></span>
                                                                                                         </li>
-                                                                                                        <% } %>
+                                                                                                        <% if(rol == permiso_C){ %>
+                                                                                                            <li class="list-group-item d-flex justify-content-between align-items-center text-success">
+                                                                                                                Prestamos Liquidados
+                                                                                                                <span class="badge badge-primary badge-pill text-success"><%= montoLiquidado %></span>
+                                                                                                            </li>
+                                                                                                            <% }else{ %>
+                                                                                                                <li class="list-group-item d-flex justify-content-between align-items-center text-success">
+                                                                                                                    Prestamos Liquidados
+                                                                                                                    <span class="badge badge-primary badge-pill text-success"><%= solicitud.prestamosLiquidadosCliente=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(solicitud.prestamosLiquidadosCliente) %></span>
+                                                                                                                </li>
+                                                                                                                <% } %>
                                                                                     </ul>
 
 
@@ -1120,280 +1155,22 @@
                                             </div>
                                         </div>
 
-
-                                        <div class="container-fluid mt-3  ">
-
-
-                                            <div class="container-fluid ">
-
-                                                <div style="border-radius: 15px;" class="accordion-item">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-headingFive">
-                                                        <button style="border-radius: 15px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
-                    <h4 class="text-secondary"><strong>PRESTAMOS </strong>EN LEGAL</h4>
-                  </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
-                                                        <div class="accordion-body">
-                                                            <div class="container-table table-responsive">
-                                                                <table id="datatable6" class="display responsive nowrap" style="width:100%">
-                                                                    <thead class="thead-ligth">
-                                                                        <tr>
-
-                                                                            <th scope="col">ID Solicitud</th>
-                                                                            <th scope="col">Nombre</th>
-                                                                            <th scope="col">Apellido</th>
-                                                                            <th scope="col">Cedula</th>
-                                                                            <th scope="col">Fecha Solicitud</th>
-                                                                            <th scope="col">Monto Aprobado</th>
-                                                                            <th scope="col">Saldo Final</th>
-                                                                            <th scope="col">Firma</th>
-                                                                            <th scope="col">Monto en Legal</th>
-                                                                            <th scope="col">Ruta</th>
-                                                                            <th scope="col">Telefono</th>
-                                                                            <th scope="col">Clasificacion</th>
-                                                                            <% if(rol == permiso_A || rol == permiso_B){ %>
-                                                                                <th scope="col">Acciones</th>
-                                                                                <% } %>
-
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-
-                                                                        <% if (arraySolicitudesEnLegal.length > 0) { %>
-                                                                            <% arraySolicitudesEnLegal.forEach(solicitud=> { %>
-
-                                                                                <%= i++ %>
-
-
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <%= solicitud.idSolicitud %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.nombre %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.apellido %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.cedula %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.montoSolicitado %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <% if(solicitud.saldoFinal){ %>
-                                                                                                <span style="color: green;">
-                                                                <%= solicitud.saldoFinal %>
-                                                            </span>
-                                                                                                <% }else { %>
-                                                                                                    <span style="color: rgb(200, 130, 0);">Pendiente</span>
-                                                                                                    <% } %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.firmaContrato %>
-                                                                                        </td>
-                                                                                        <td class="text-danger">
-                                                                                            <%= solicitud.legalMonto %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.ruta %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.celular %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
-                                                                                                <p style="background-color: gray; color: white;">
-                                                                                                    <%= solicitud.clasificacionCliente %>
-                                                                                                </p>
-                                                                                                <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
-                                                                                                    <p style="background-color: green; color: white;">
-                                                                                                        <%= solicitud.clasificacionCliente %>
-                                                                                                    </p>
-                                                                                                    <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
-                                                                                                        <p style="background-color: yellow; color: black;">
-                                                                                                            <%= solicitud.clasificacionCliente %>
-                                                                                                        </p>
-                                                                                                        <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
-                                                                                                            <p style="background-color: orange; color: black;">
-                                                                                                                <%= solicitud.clasificacionCliente %>
-                                                                                                            </p>
-                                                                                                            <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
-                                                                                                                <p style="background-color: darkred; color: white;">
-                                                                                                                    <%= solicitud.clasificacionCliente %>
-                                                                                                                </p>
-                                                                                                                <% } %>
-                                                                                        </td>
-                                                                                        <% if(rol == permiso_A || rol == permiso_B){ %>
-                                                                                            <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
-                                                                                            </td>
-                                                                                            <% } %>
-                                                                                    </tr>
-
-
-
-                                                                                    <% }) %>
-                                                                                        <% } %>
-
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-
-
-                                        <div class="container-fluid mt-3  ">
-
-
-                                            <div class="container-fluid ">
-
-                                                <div style="border-radius: 15px;" class="accordion-item">
-                                                    <h2 class="accordion-header" id="panelsStayOpen-headingSix">
-                                                        <button style="border-radius: 15px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
-                    <h4 style="text-wrap: nowrap;" class="text-secondary"><strong>PRESTAMOS </strong>LIQUIDADOS</h4>
-                  </button>
-                                                    </h2>
-                                                    <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingSix">
-                                                        <div class="accordion-body">
-                                                            <div class="container-table table-responsive">
-                                                                <table id="datatable4" class="display responsive nowrap" style="width:100%">
-                                                                    <thead class="thead-ligth">
-                                                                        <tr>
-
-                                                                            <th scope="col">ID Solicitud</th>
-                                                                            <th scope="col">Nombre</th>
-                                                                            <th scope="col">Apellido</th>
-                                                                            <th scope="col">Cedula</th>
-                                                                            <th scope="col">Fecha Solicitud</th>
-                                                                            <th scope="col">Monto Aprobado</th>
-                                                                            <th scope="col">Saldo Final</th>
-                                                                            <th scope="col">Firma</th>
-                                                                            <th scope="col">Atraso</th>
-                                                                            <th scope="col">Ruta</th>
-                                                                            <th scope="col">Telefono</th>
-                                                                            <th scope="col">Clasificacion</th>
-                                                                            <% if(rol == permiso_A || rol == permiso_B){ %>
-                                                                                <th scope="col">Acciones</th>
-                                                                                <% } %>
-
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-
-                                                                        <% if (arraySolicitudesLiquidadas.length > 0) { %>
-                                                                            <% arraySolicitudesLiquidadas.forEach(solicitud=> { %>
-
-
-                                                                                <tr>
-                                                                                    <td>
-                                                                                        <%= solicitud.idSolicitud %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <%= solicitud.nombre %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <%= solicitud.apellido %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <%= solicitud.cedula %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <%= solicitud.montoSolicitado %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <% if(solicitud.saldoFinal){ %>
-                                                                                            <span style="color: green;">
-                                                            <%= solicitud.saldoFinal %>
-                                                        </span>
-                                                                                            <% }else { %>
-                                                                                                <span style="color: rgb(200, 130, 0);">Pendiente</span>
-                                                                                                <% } %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <%= solicitud.firmaContrato %>
-                                                                                    </td>
-                                                                                    <td class="text-danger">
-                                                                                        <%= solicitud.atraso %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <%= solicitud.ruta %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <%= solicitud.celular %>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
-                                                                                            <p style="background-color: gray; color: white;">
-                                                                                                <%= solicitud.clasificacionCliente %>
-                                                                                            </p>
-                                                                                            <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
-                                                                                                <p style="background-color: green; color: white;">
-                                                                                                    <%= solicitud.clasificacionCliente %>
-                                                                                                </p>
-                                                                                                <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
-                                                                                                    <p style="background-color: yellow; color: black;">
-                                                                                                        <%= solicitud.clasificacionCliente %>
-                                                                                                    </p>
-                                                                                                    <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
-                                                                                                        <p style="background-color: orange; color: black;">
-                                                                                                            <%= solicitud.clasificacionCliente %>
-                                                                                                        </p>
-                                                                                                        <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
-                                                                                                            <p style="background-color: darkred; color: white;">
-                                                                                                                <%= solicitud.clasificacionCliente %>
-                                                                                                            </p>
-                                                                                                            <% } %>
-                                                                                    </td>
-                                                                                    <% if(rol == permiso_A || rol == permiso_B){ %>
-                                                                                        <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
-                                                                                        </td>
-                                                                                        <% } %>
-
-                                                                                </tr>
-
-                                                                                <% }) %>
-                                                                                    <% } %>
-
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-
-                                        </div>
-
-                                        <% if(rol == permiso_A || rol == permiso_B){ %>
+                                        <% if(prestamosEnLegalValidacion > 0){ %>
                                             <div class="container-fluid mt-3  ">
 
 
                                                 <div class="container-fluid ">
 
                                                     <div style="border-radius: 15px;" class="accordion-item">
-                                                        <h2 class="accordion-header" id="panelsStayOpen-headingSeven">
-                                                            <button style="border-radius: 15px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="false" aria-controls="panelsStayOpen-collapseSeven">
-                    <h4 class="text-secondary"><strong>PRESTAMOS </strong>INCOBRABLES</h4>
+                                                        <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+                                                            <button style="border-radius: 15px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                    <h4 class="text-secondary"><strong>PRESTAMOS </strong>EN LEGAL</h4>
                   </button>
                                                         </h2>
-                                                        <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingSeven">
+                                                        <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
                                                             <div class="accordion-body">
                                                                 <div class="container-table table-responsive">
-                                                                    <table id="datatable7" class="display responsive nowrap" style="width:100%">
+                                                                    <table id="datatable6" class="display responsive nowrap" style="width:100%">
                                                                         <thead class="thead-ligth">
                                                                             <tr>
 
@@ -1405,93 +1182,97 @@
                                                                                 <th scope="col">Monto Aprobado</th>
                                                                                 <th scope="col">Saldo Final</th>
                                                                                 <th scope="col">Firma</th>
-                                                                                <th scope="col">Incobrable</th>
+                                                                                <th scope="col">Monto en Legal</th>
                                                                                 <th scope="col">Ruta</th>
                                                                                 <th scope="col">Telefono</th>
                                                                                 <th scope="col">Clasificacion</th>
-                                                                                <th scope="col">Acciones</th>
+                                                                                <% if(rol == permiso_A || rol == permiso_B){ %>
+                                                                                    <th scope="col">Acciones</th>
+                                                                                    <% } %>
 
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
 
-                                                                            <% if (arraySolicitudesIncobrables.length > 0) { %>
-                                                                                <% arraySolicitudesIncobrables.forEach(solicitud=> { %>
+                                                                            <% if (arraySolicitudesEnLegal.length > 0) { %>
+                                                                                <% arraySolicitudesEnLegal.forEach(solicitud=> { %>
+
+                                                                                    <%= i++ %>
 
 
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <%= solicitud.idSolicitud %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.nombre %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.apellido %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.cedula %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.montoSolicitado %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <% if(solicitud.saldoFinal){ %>
-                                                                                                <span style="color: green;">
-                                                            <%= solicitud.saldoFinal %>
-                                                        </span>
-                                                                                                <% }else { %>
-                                                                                                    <span style="color: rgb(200, 130, 0);">Pendiente</span>
-                                                                                                    <% } %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.firmaContrato %>
-                                                                                        </td>
-                                                                                        <td class="text-danger">
-                                                                                            <%= solicitud.incobrableMonto %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.ruta %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <%= solicitud.celular %>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
-                                                                                                <p style="background-color: gray; color: white;">
-                                                                                                    <%= solicitud.clasificacionCliente %>
-                                                                                                </p>
-                                                                                                <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
-                                                                                                    <p style="background-color: green; color: white;">
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <%= solicitud.idSolicitud %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.nombre %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.apellido %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.cedula %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo" },) %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.montoSolicitado %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <% if(solicitud.saldoFinal){ %>
+                                                                                                    <span style="color: green;">
+                                                                <%= solicitud.saldoFinal %>
+                                                            </span>
+                                                                                                    <% }else { %>
+                                                                                                        <span style="color: rgb(200, 130, 0);">Pendiente</span>
+                                                                                                        <% } %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.firmaContrato %>
+                                                                                            </td>
+                                                                                            <td class="text-danger">
+                                                                                                <%= solicitud.legalMonto %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.ruta %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.celular %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                                                                                    <p style="background-color: gray; color: white;">
                                                                                                         <%= solicitud.clasificacionCliente %>
                                                                                                     </p>
-                                                                                                    <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
-                                                                                                        <p style="background-color: yellow; color: black;">
+                                                                                                    <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
+                                                                                                        <p style="background-color: green; color: white;">
                                                                                                             <%= solicitud.clasificacionCliente %>
                                                                                                         </p>
-                                                                                                        <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
-                                                                                                            <p style="background-color: orange; color: black;">
+                                                                                                        <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                                                                            <p style="background-color: yellow; color: black;">
                                                                                                                 <%= solicitud.clasificacionCliente %>
                                                                                                             </p>
-                                                                                                            <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
-                                                                                                                <p style="background-color: darkred; color: white;">
+                                                                                                            <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
+                                                                                                                <p style="background-color: orange; color: black;">
                                                                                                                     <%= solicitud.clasificacionCliente %>
                                                                                                                 </p>
-                                                                                                                <% } %>
-                                                                                        </td>
+                                                                                                                <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                                                                                    <p style="background-color: darkred; color: white;">
+                                                                                                                        <%= solicitud.clasificacionCliente %>
+                                                                                                                    </p>
+                                                                                                                    <% } %>
+                                                                                            </td>
+                                                                                            <% if(rol == permiso_A || rol == permiso_B){ %>
+                                                                                                <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+                                                                                                </td>
+                                                                                                <% } %>
+                                                                                        </tr>
 
-                                                                                        <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
 
-                                                                                            <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
-                                                                                            <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
-                                                                                        </td>
-                                                                                    </tr>
 
-                                                                                    <% }) %>
-                                                                                        <% } %>
+                                                                                        <% }) %>
+                                                                                            <% } %>
 
                                                                         </tbody>
                                                                     </table>
@@ -1502,238 +1283,493 @@
 
 
                                                 </div>
-
                                             </div>
                                             <% } %>
 
+
+                                                <div class="container-fluid mt-3  ">
+
+
+                                                    <div class="container-fluid ">
+
+                                                        <div style="border-radius: 15px;" class="accordion-item">
+                                                            <h2 class="accordion-header" id="panelsStayOpen-headingSix">
+                                                                <button style="border-radius: 15px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSix" aria-expanded="false" aria-controls="panelsStayOpen-collapseSix">
+                    <h4 style="text-wrap: nowrap;" class="text-secondary"><strong>PRESTAMOS </strong>LIQUIDADOS</h4>
+                  </button>
+                                                            </h2>
+                                                            <div id="panelsStayOpen-collapseSix" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingSix">
+                                                                <div class="accordion-body">
+                                                                    <div class="container-table table-responsive">
+                                                                        <table id="datatable4" class="display responsive nowrap" style="width:100%">
+                                                                            <thead class="thead-ligth">
+                                                                                <tr>
+
+                                                                                    <th scope="col">ID Solicitud</th>
+                                                                                    <th scope="col">Nombre</th>
+                                                                                    <th scope="col">Apellido</th>
+                                                                                    <th scope="col">Cedula</th>
+                                                                                    <th scope="col">Fecha Solicitud</th>
+                                                                                    <th scope="col">Monto Aprobado</th>
+                                                                                    <th scope="col">Saldo Final</th>
+                                                                                    <th scope="col">Firma</th>
+                                                                                    <th scope="col">Atraso</th>
+                                                                                    <th scope="col">Ruta</th>
+                                                                                    <th scope="col">Telefono</th>
+                                                                                    <th scope="col">Clasificacion</th>
+                                                                                    <% if(rol == permiso_A || rol == permiso_B){ %>
+                                                                                        <th scope="col">Acciones</th>
+                                                                                        <% } %>
+
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+
+                                                                                <% if (arraySolicitudesLiquidadas.length > 0) { %>
+                                                                                    <% arraySolicitudesLiquidadas.forEach(solicitud=> { %>
+
+
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <%= solicitud.idSolicitud %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.nombre %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.apellido %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.cedula %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.montoSolicitado %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <% if(solicitud.saldoFinal){ %>
+                                                                                                    <span style="color: green;">
+                                                            <%= solicitud.saldoFinal %>
+                                                        </span>
+                                                                                                    <% }else { %>
+                                                                                                        <span style="color: rgb(200, 130, 0);">Pendiente</span>
+                                                                                                        <% } %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.firmaContrato %>
+                                                                                            </td>
+                                                                                            <td class="text-danger">
+                                                                                                <%= solicitud.atraso %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.ruta %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <%= solicitud.celular %>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                                                                                    <p style="background-color: gray; color: white;">
+                                                                                                        <%= solicitud.clasificacionCliente %>
+                                                                                                    </p>
+                                                                                                    <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
+                                                                                                        <p style="background-color: green; color: white;">
+                                                                                                            <%= solicitud.clasificacionCliente %>
+                                                                                                        </p>
+                                                                                                        <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                                                                            <p style="background-color: yellow; color: black;">
+                                                                                                                <%= solicitud.clasificacionCliente %>
+                                                                                                            </p>
+                                                                                                            <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
+                                                                                                                <p style="background-color: orange; color: black;">
+                                                                                                                    <%= solicitud.clasificacionCliente %>
+                                                                                                                </p>
+                                                                                                                <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                                                                                    <p style="background-color: darkred; color: white;">
+                                                                                                                        <%= solicitud.clasificacionCliente %>
+                                                                                                                    </p>
+                                                                                                                    <% } %>
+                                                                                            </td>
+                                                                                            <% if(rol == permiso_A || rol == permiso_B){ %>
+                                                                                                <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+                                                                                                </td>
+                                                                                                <% } %>
+
+                                                                                        </tr>
+
+                                                                                        <% }) %>
+                                                                                            <% } %>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
                                                 </div>
 
+                                                <% if(rol == permiso_A || rol == permiso_B){ %>
+                                                    <div class="container-fluid mt-3  ">
+
+
+                                                        <div class="container-fluid ">
+
+                                                            <div style="border-radius: 15px;" class="accordion-item">
+                                                                <h2 class="accordion-header" id="panelsStayOpen-headingSeven">
+                                                                    <button style="border-radius: 15px;" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseSeven" aria-expanded="false" aria-controls="panelsStayOpen-collapseSeven">
+                    <h4 class="text-secondary"><strong>PRESTAMOS </strong>INCOBRABLES</h4>
+                  </button>
+                                                                </h2>
+                                                                <div id="panelsStayOpen-collapseSeven" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingSeven">
+                                                                    <div class="accordion-body">
+                                                                        <div class="container-table table-responsive">
+                                                                            <table id="datatable7" class="display responsive nowrap" style="width:100%">
+                                                                                <thead class="thead-ligth">
+                                                                                    <tr>
+
+                                                                                        <th scope="col">ID Solicitud</th>
+                                                                                        <th scope="col">Nombre</th>
+                                                                                        <th scope="col">Apellido</th>
+                                                                                        <th scope="col">Cedula</th>
+                                                                                        <th scope="col">Fecha Solicitud</th>
+                                                                                        <th scope="col">Monto Aprobado</th>
+                                                                                        <th scope="col">Saldo Final</th>
+                                                                                        <th scope="col">Firma</th>
+                                                                                        <th scope="col">Incobrable</th>
+                                                                                        <th scope="col">Ruta</th>
+                                                                                        <th scope="col">Telefono</th>
+                                                                                        <th scope="col">Clasificacion</th>
+                                                                                        <th scope="col">Acciones</th>
+
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+
+                                                                                    <% if (arraySolicitudesIncobrables.length > 0) { %>
+                                                                                        <% arraySolicitudesIncobrables.forEach(solicitud=> { %>
+
+
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <%= solicitud.idSolicitud %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <%= solicitud.nombre %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <%= solicitud.apellido %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <%= solicitud.cedula %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Yakutat" },) %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <%= solicitud.montoSolicitado %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <% if(solicitud.saldoFinal){ %>
+                                                                                                        <span style="color: green;">
+                                                            <%= solicitud.saldoFinal %>
+                                                        </span>
+                                                                                                        <% }else { %>
+                                                                                                            <span style="color: rgb(200, 130, 0);">Pendiente</span>
+                                                                                                            <% } %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <%= solicitud.firmaContrato %>
+                                                                                                </td>
+                                                                                                <td class="text-danger">
+                                                                                                    <%= solicitud.incobrableMonto %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <%= solicitud.ruta %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <%= solicitud.celular %>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                                                                                        <p style="background-color: gray; color: white;">
+                                                                                                            <%= solicitud.clasificacionCliente %>
+                                                                                                        </p>
+                                                                                                        <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
+                                                                                                            <p style="background-color: green; color: white;">
+                                                                                                                <%= solicitud.clasificacionCliente %>
+                                                                                                            </p>
+                                                                                                            <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                                                                                <p style="background-color: yellow; color: black;">
+                                                                                                                    <%= solicitud.clasificacionCliente %>
+                                                                                                                </p>
+                                                                                                                <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
+                                                                                                                    <p style="background-color: orange; color: black;">
+                                                                                                                        <%= solicitud.clasificacionCliente %>
+                                                                                                                    </p>
+                                                                                                                    <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                                                                                        <p style="background-color: darkred; color: white;">
+                                                                                                                            <%= solicitud.clasificacionCliente %>
+                                                                                                                        </p>
+                                                                                                                        <% } %>
+                                                                                                </td>
+
+                                                                                                <td class="w-0 "><a id="eventoAct-Inact" href="/solicitudes-aprobadas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+
+                                                                                                    <!-- <a id="eventoAct-Inact" href="/solicitudes-aprobadas/ver-solicitud/<%=  %>" class="btn " title="Ver Mensaje"><i class="bi bi-folder2-open "></i></a> -->
+                                                                                                    <!-- <a href="/rutas/eliminar-ruta/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Ruta"></i></a> -->
+                                                                                                </td>
+                                                                                            </tr>
+
+                                                                                            <% }) %>
+                                                                                                <% } %>
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                    <% } %>
+
+                                                        </div>
 
 
 
 
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        $('#datatable').DataTable({
-                                                            "lengthMenu": [5, 10, 25, 50, 100],
-                                                            order: [
-                                                                [0, 'desc']
-                                                            ],
-                                                            language: {
-                                                                "decimal": "",
-                                                                "emptyTable": "No hay información",
-                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                                                                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                                                                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                                                                "infoPostFix": "",
-                                                                "thousands": ",",
-                                                                "lengthMenu": "Mostrar _MENU_ Entradas",
-                                                                "loadingRecords": "Cargando...",
-                                                                "processing": "Procesando...",
-                                                                "search": "Buscar:",
-                                                                "zeroRecords": "Sin resultados encontrados",
-                                                                "paginate": {
-                                                                    "first": "Primero",
-                                                                    "last": "Ultimo",
-                                                                    "next": "Siguiente",
-                                                                    "previous": "Anterior"
-                                                                }
-                                                            }
-                                                        });
 
-                                                    });
-                                                </script>
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        $('#datatable2').DataTable({
-                                                            "lengthMenu": [5, 10, 25, 50, 100],
-                                                            order: [
-                                                                [0, 'desc']
-                                                            ],
-                                                            language: {
-                                                                "decimal": "",
-                                                                "emptyTable": "No hay información",
-                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                                                                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                                                                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                                                                "infoPostFix": "",
-                                                                "thousands": ",",
-                                                                "lengthMenu": "Mostrar _MENU_ Entradas",
-                                                                "loadingRecords": "Cargando...",
-                                                                "processing": "Procesando...",
-                                                                "search": "Buscar:",
-                                                                "zeroRecords": "Sin resultados encontrados",
-                                                                "paginate": {
-                                                                    "first": "Primero",
-                                                                    "last": "Ultimo",
-                                                                    "next": "Siguiente",
-                                                                    "previous": "Anterior"
-                                                                }
-                                                            }
-                                                        });
+                                                        <script>
+                                                            $(document).ready(function() {
+                                                                $('#datatable').DataTable({
+                                                                    "lengthMenu": [5, 10, 25, 50, 100],
+                                                                    order: [
+                                                                        [0, 'desc']
+                                                                    ],
+                                                                    language: {
+                                                                        "decimal": "",
+                                                                        "emptyTable": "No hay información",
+                                                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                                                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                                                                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                                                                        "infoPostFix": "",
+                                                                        "thousands": ",",
+                                                                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                                                                        "loadingRecords": "Cargando...",
+                                                                        "processing": "Procesando...",
+                                                                        "search": "Buscar:",
+                                                                        "zeroRecords": "Sin resultados encontrados",
+                                                                        "paginate": {
+                                                                            "first": "Primero",
+                                                                            "last": "Ultimo",
+                                                                            "next": "Siguiente",
+                                                                            "previous": "Anterior"
+                                                                        }
+                                                                    }
+                                                                });
 
-                                                    });
-                                                </script>
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        $('#datatable3').DataTable({
-                                                            "lengthMenu": [5, 10, 25, 50, 100],
-                                                            order: [
-                                                                [0, 'desc']
-                                                            ],
-                                                            language: {
-                                                                "decimal": "",
-                                                                "emptyTable": "No hay información",
-                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                                                                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                                                                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                                                                "infoPostFix": "",
-                                                                "thousands": ",",
-                                                                "lengthMenu": "Mostrar _MENU_ Entradas",
-                                                                "loadingRecords": "Cargando...",
-                                                                "processing": "Procesando...",
-                                                                "search": "Buscar:",
-                                                                "zeroRecords": "Sin resultados encontrados",
-                                                                "paginate": {
-                                                                    "first": "Primero",
-                                                                    "last": "Ultimo",
-                                                                    "next": "Siguiente",
-                                                                    "previous": "Anterior"
-                                                                }
-                                                            }
-                                                        });
+                                                            });
+                                                        </script>
+                                                        <script>
+                                                            $(document).ready(function() {
+                                                                $('#datatable2').DataTable({
+                                                                    "lengthMenu": [5, 10, 25, 50, 100],
+                                                                    order: [
+                                                                        [0, 'desc']
+                                                                    ],
+                                                                    language: {
+                                                                        "decimal": "",
+                                                                        "emptyTable": "No hay información",
+                                                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                                                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                                                                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                                                                        "infoPostFix": "",
+                                                                        "thousands": ",",
+                                                                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                                                                        "loadingRecords": "Cargando...",
+                                                                        "processing": "Procesando...",
+                                                                        "search": "Buscar:",
+                                                                        "zeroRecords": "Sin resultados encontrados",
+                                                                        "paginate": {
+                                                                            "first": "Primero",
+                                                                            "last": "Ultimo",
+                                                                            "next": "Siguiente",
+                                                                            "previous": "Anterior"
+                                                                        }
+                                                                    }
+                                                                });
 
-                                                    });
-                                                </script>
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        $('#datatable4').DataTable({
-                                                            "lengthMenu": [5, 10, 25, 50, 100],
-                                                            order: [
-                                                                [0, 'desc']
-                                                            ],
-                                                            language: {
-                                                                "decimal": "",
-                                                                "emptyTable": "No hay información",
-                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                                                                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                                                                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                                                                "infoPostFix": "",
-                                                                "thousands": ",",
-                                                                "lengthMenu": "Mostrar _MENU_ Entradas",
-                                                                "loadingRecords": "Cargando...",
-                                                                "processing": "Procesando...",
-                                                                "search": "Buscar:",
-                                                                "zeroRecords": "Sin resultados encontrados",
-                                                                "paginate": {
-                                                                    "first": "Primero",
-                                                                    "last": "Ultimo",
-                                                                    "next": "Siguiente",
-                                                                    "previous": "Anterior"
-                                                                }
-                                                            }
-                                                        });
+                                                            });
+                                                        </script>
+                                                        <script>
+                                                            $(document).ready(function() {
+                                                                $('#datatable3').DataTable({
+                                                                    "lengthMenu": [5, 10, 25, 50, 100],
+                                                                    order: [
+                                                                        [0, 'desc']
+                                                                    ],
+                                                                    language: {
+                                                                        "decimal": "",
+                                                                        "emptyTable": "No hay información",
+                                                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                                                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                                                                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                                                                        "infoPostFix": "",
+                                                                        "thousands": ",",
+                                                                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                                                                        "loadingRecords": "Cargando...",
+                                                                        "processing": "Procesando...",
+                                                                        "search": "Buscar:",
+                                                                        "zeroRecords": "Sin resultados encontrados",
+                                                                        "paginate": {
+                                                                            "first": "Primero",
+                                                                            "last": "Ultimo",
+                                                                            "next": "Siguiente",
+                                                                            "previous": "Anterior"
+                                                                        }
+                                                                    }
+                                                                });
 
-                                                    });
-                                                </script>
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        $('#datatable5').DataTable({
-                                                            "lengthMenu": [5, 10, 25, 50, 100],
-                                                            order: [
-                                                                [1, 'desc']
-                                                            ],
-                                                            language: {
-                                                                "decimal": "",
-                                                                "emptyTable": "No hay información",
-                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                                                                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                                                                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                                                                "infoPostFix": "",
-                                                                "thousands": ",",
-                                                                "lengthMenu": "Mostrar _MENU_ Entradas",
-                                                                "loadingRecords": "Cargando...",
-                                                                "processing": "Procesando...",
-                                                                "search": "Buscar:",
-                                                                "zeroRecords": "Sin resultados encontrados",
-                                                                "paginate": {
-                                                                    "first": "Primero",
-                                                                    "last": "Ultimo",
-                                                                    "next": "Siguiente",
-                                                                    "previous": "Anterior"
-                                                                }
-                                                            }
-                                                        });
+                                                            });
+                                                        </script>
+                                                        <script>
+                                                            $(document).ready(function() {
+                                                                $('#datatable4').DataTable({
+                                                                    "lengthMenu": [5, 10, 25, 50, 100],
+                                                                    order: [
+                                                                        [0, 'desc']
+                                                                    ],
+                                                                    language: {
+                                                                        "decimal": "",
+                                                                        "emptyTable": "No hay información",
+                                                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                                                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                                                                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                                                                        "infoPostFix": "",
+                                                                        "thousands": ",",
+                                                                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                                                                        "loadingRecords": "Cargando...",
+                                                                        "processing": "Procesando...",
+                                                                        "search": "Buscar:",
+                                                                        "zeroRecords": "Sin resultados encontrados",
+                                                                        "paginate": {
+                                                                            "first": "Primero",
+                                                                            "last": "Ultimo",
+                                                                            "next": "Siguiente",
+                                                                            "previous": "Anterior"
+                                                                        }
+                                                                    }
+                                                                });
 
-                                                    });
-                                                </script>
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        $('#datatable6').DataTable({
-                                                            "lengthMenu": [5, 10, 25, 50, 100],
-                                                            order: [
-                                                                [1, 'desc']
-                                                            ],
-                                                            language: {
-                                                                "decimal": "",
-                                                                "emptyTable": "No hay información",
-                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                                                                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                                                                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                                                                "infoPostFix": "",
-                                                                "thousands": ",",
-                                                                "lengthMenu": "Mostrar _MENU_ Entradas",
-                                                                "loadingRecords": "Cargando...",
-                                                                "processing": "Procesando...",
-                                                                "search": "Buscar:",
-                                                                "zeroRecords": "Sin resultados encontrados",
-                                                                "paginate": {
-                                                                    "first": "Primero",
-                                                                    "last": "Ultimo",
-                                                                    "next": "Siguiente",
-                                                                    "previous": "Anterior"
-                                                                }
-                                                            }
-                                                        });
+                                                            });
+                                                        </script>
+                                                        <script>
+                                                            $(document).ready(function() {
+                                                                $('#datatable5').DataTable({
+                                                                    "lengthMenu": [5, 10, 25, 50, 100],
+                                                                    order: [
+                                                                        [1, 'desc']
+                                                                    ],
+                                                                    language: {
+                                                                        "decimal": "",
+                                                                        "emptyTable": "No hay información",
+                                                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                                                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                                                                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                                                                        "infoPostFix": "",
+                                                                        "thousands": ",",
+                                                                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                                                                        "loadingRecords": "Cargando...",
+                                                                        "processing": "Procesando...",
+                                                                        "search": "Buscar:",
+                                                                        "zeroRecords": "Sin resultados encontrados",
+                                                                        "paginate": {
+                                                                            "first": "Primero",
+                                                                            "last": "Ultimo",
+                                                                            "next": "Siguiente",
+                                                                            "previous": "Anterior"
+                                                                        }
+                                                                    }
+                                                                });
 
-                                                    });
-                                                </script>
+                                                            });
+                                                        </script>
+                                                        <script>
+                                                            $(document).ready(function() {
+                                                                $('#datatable6').DataTable({
+                                                                    "lengthMenu": [5, 10, 25, 50, 100],
+                                                                    order: [
+                                                                        [1, 'desc']
+                                                                    ],
+                                                                    language: {
+                                                                        "decimal": "",
+                                                                        "emptyTable": "No hay información",
+                                                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                                                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                                                                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                                                                        "infoPostFix": "",
+                                                                        "thousands": ",",
+                                                                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                                                                        "loadingRecords": "Cargando...",
+                                                                        "processing": "Procesando...",
+                                                                        "search": "Buscar:",
+                                                                        "zeroRecords": "Sin resultados encontrados",
+                                                                        "paginate": {
+                                                                            "first": "Primero",
+                                                                            "last": "Ultimo",
+                                                                            "next": "Siguiente",
+                                                                            "previous": "Anterior"
+                                                                        }
+                                                                    }
+                                                                });
 
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        $('#datatable7').DataTable({
-                                                            "lengthMenu": [5, 10, 25, 50, 100],
-                                                            order: [
-                                                                [1, 'desc']
-                                                            ],
-                                                            language: {
-                                                                "decimal": "",
-                                                                "emptyTable": "No hay información",
-                                                                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                                                                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                                                                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                                                                "infoPostFix": "",
-                                                                "thousands": ",",
-                                                                "lengthMenu": "Mostrar _MENU_ Entradas",
-                                                                "loadingRecords": "Cargando...",
-                                                                "processing": "Procesando...",
-                                                                "search": "Buscar:",
-                                                                "zeroRecords": "Sin resultados encontrados",
-                                                                "paginate": {
-                                                                    "first": "Primero",
-                                                                    "last": "Ultimo",
-                                                                    "next": "Siguiente",
-                                                                    "previous": "Anterior"
-                                                                }
-                                                            }
-                                                        });
+                                                            });
+                                                        </script>
 
-                                                    });
-                                                </script>
+                                                        <script>
+                                                            $(document).ready(function() {
+                                                                $('#datatable7').DataTable({
+                                                                    "lengthMenu": [5, 10, 25, 50, 100],
+                                                                    order: [
+                                                                        [1, 'desc']
+                                                                    ],
+                                                                    language: {
+                                                                        "decimal": "",
+                                                                        "emptyTable": "No hay información",
+                                                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                                                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                                                                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                                                                        "infoPostFix": "",
+                                                                        "thousands": ",",
+                                                                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                                                                        "loadingRecords": "Cargando...",
+                                                                        "processing": "Procesando...",
+                                                                        "search": "Buscar:",
+                                                                        "zeroRecords": "Sin resultados encontrados",
+                                                                        "paginate": {
+                                                                            "first": "Primero",
+                                                                            "last": "Ultimo",
+                                                                            "next": "Siguiente",
+                                                                            "previous": "Anterior"
+                                                                        }
+                                                                    }
+                                                                });
+
+                                                            });
+                                                        </script>
 
 
-                                                <script src="/js/notificacion-atrasos.js">
-                                                </script>
+                                                        <script src="/js/notificacion-atrasos.js">
+                                                        </script>
 
 
 

@@ -226,6 +226,9 @@
     <script>
         $(document).ready(function() {
             $('#datatable').DataTable({
+                order: [
+                    [0, 'desc']
+                ],
                 language: {
                     "decimal": "",
                     "emptyTable": "No hay información",

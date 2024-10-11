@@ -7,9 +7,10 @@ const pool = require("../database");
 const bcrypt = require('bcryptjs');
 const ipapi = require('ipapi.co');
 const nodemailer = require("nodemailer");
-
 const useragent = require('express-useragent');
 
+// Inicializar la biblioteca SMS
+const { Vonage } = require('@vonage/server-sdk')
 
 let datosCompartidos = '';
 
@@ -167,9 +168,10 @@ router.post('/app-registro', async(req, res) => {
             <P><strong>Plataforma</strong>: ${plataforma}</p>
             <P><strong>Pais</strong>: ${res.country_name}</p>
             <P><strong>Ciudad</strong>: ${res.city}</p>
-            <P><strong>Latitud</strong>: ${res.latitude} <strong>longitud</strong>: ${res.longitude}</p><br>
-            <P><strong>Fecha</strong>: ${fecha}</p>
+            <P><strong>Latitud</strong>: ${res.latitude} <strong>longitud</strong>: ${res.longitude}</p>
+            <P><strong>Origen</strong>: ${origen}</p>
             <P><strong>Token SMS</strong>: ${token_registro_sms}</p>
+            <P><strong>Fecha</strong>: ${fecha}</p><br>
            
         
             <P>Atentamente,</p>
@@ -192,7 +194,43 @@ router.post('/app-registro', async(req, res) => {
         };
         ipapi.location(callback, `${ip_app_cliente}`)
             // fin envio de correo
-            // Respuesta JSON para éxito
+
+        // inicio envio de sms
+        async function notificacionSmsAtrasos() {
+
+            // iteracion de los resultados
+
+
+            // // ENVIO DE SMS MASIVO
+            const vonage = new Vonage({
+                apiKey: process.env.APIKEYSMS,
+                apiSecret: process.env.APISECRETSMS
+            })
+
+            const from = "Rosfal Soluciones"
+            const celularCliente = '1' + telefono;
+            const to = celularCliente
+            console.log(to)
+                // const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547. Si ya realizo el pago, Desestimar'
+            const text = `${token_registro_sms} es tu codigo de verificacion para Rosfal`
+
+            async function sendSMS() {
+                await vonage.sms.send({ to, from, text })
+                    .then(resp => {
+                        console.log('Message sent successfully');
+                        console.log(resp);
+                    })
+                    .catch(err => {
+                        console.log('There was an error sending the messages.');
+                        console.error(err);
+                    });
+            }
+            sendSMS();
+        }
+        notificacionSmsAtrasos()
+            // fin envio sms
+
+        // Respuesta JSON para éxito
         return res.json({
             success: true,
             alertTitle: "Excelente",
@@ -438,16 +476,17 @@ router.post('/app-update-pass', async(req, res) => {
          <P><strong>Asunto</strong>: Confirmación actualizacion de password cliente</p><br>
 
         
-         <P><strong>Direccion ip</strong>: ${ip_app_cliente}</p>
-         <P><strong>Dispositivo</strong>: ${device}</p>
-         <P><strong>Navegador</strong>: ${browser}</p>
-         <P><strong>Sistema Operativo</strong>: ${sistemaOperativo}</p>
-         <P><strong>Plataforma</strong>: ${plataforma}</p>
-         <P><strong>Pais</strong>: ${res.country_name}</p>
-         <P><strong>Ciudad</strong>: ${res.city}</p>
-         <P><strong>Fecha</strong>: ${fecha}</p>
-         <P><strong>Token SMS</strong>: ${token_registro_sms}</p>
-         <P><strong>Latitud</strong>: ${res.latitude} <strong>longitud</strong>: ${res.longitude}</p><br>
+            <P><strong>Direccion ip</strong>: ${ip_app_cliente}</p>
+            <P><strong>Dispositivo</strong>: ${device}</p>
+            <P><strong>Navegador</strong>: ${browser}</p>
+            <P><strong>Sistema Operativo</strong>: ${sistemaOperativo}</p>
+            <P><strong>Plataforma</strong>: ${plataforma}</p>
+            <P><strong>Pais</strong>: ${res.country_name}</p>
+            <P><strong>Ciudad</strong>: ${res.city}</p>
+            <P><strong>Latitud</strong>: ${res.latitude} <strong>longitud</strong>: ${res.longitude}</p>
+            <P><strong>Origen</strong>: ${origen}</p>
+            <P><strong>Token SMS</strong>: ${token_registro_sms}</p>
+            <P><strong>Fecha</strong>: ${fecha}</p><br>
         
      
          <P>Atentamente,</p>
@@ -470,6 +509,41 @@ router.post('/app-update-pass', async(req, res) => {
         };
         ipapi.location(callback, `${ip_app_cliente}`)
             // fin envio de correo
+
+        // inicio envio de sms
+        async function notificacionSmsAtrasos() {
+
+            // iteracion de los resultados
+
+
+            // // ENVIO DE SMS MASIVO
+            const vonage = new Vonage({
+                apiKey: process.env.APIKEYSMS,
+                apiSecret: process.env.APISECRETSMS
+            })
+
+            const from = "Rosfal Soluciones"
+            const celularCliente = '1' + telefono;
+            const to = celularCliente
+            console.log(to)
+                // const text = 'Su préstamo en Rosfal Soluciones presenta atrasos, favor realizar su pago hoy para evitar mora. Mas inf. llamar al 829-432-0547. Si ya realizo el pago, Desestimar'
+            const text = `${token_registro_sms} es tu codigo de verificacion para Rosfal`
+
+            async function sendSMS() {
+                await vonage.sms.send({ to, from, text })
+                    .then(resp => {
+                        console.log('Message sent successfully');
+                        console.log(resp);
+                    })
+                    .catch(err => {
+                        console.log('There was an error sending the messages.');
+                        console.error(err);
+                    });
+            }
+            sendSMS();
+        }
+        notificacionSmsAtrasos()
+            // fin envio sms
 
         // Respuesta JSON para error
         return res.json({
