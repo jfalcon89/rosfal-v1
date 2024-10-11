@@ -88,7 +88,9 @@ router.get('/', async(req, res) => {
         }
 
     } else {
-        res.render('404', {});
+        res.render('404-inicio', {
+            mensaje: 'Disponible solo para Rep. Dom'
+        });
 
     };
 
