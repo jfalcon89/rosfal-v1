@@ -30,40 +30,49 @@
 
 <body style="height: 100vh; background-size: cover; background-position: center; background-repeat: no-repeat; background-image: url(/img/app_registro.png)">
     <div class="whatsapp">
-        <a class="btn-ws " href="https://bit.ly/3xzs0RV" target="_blank"><img class="img-fluid" src="/img/logo-ws.png" alt="logo ws"></a>
+        <a class="btn-ws" href="https://bit.ly/3xzs0RV" target="_blank"><img class="img-fluid" src="/img/logo-ws.png" alt="logo ws"></a>
     </div>
 
-    <div class="" style=" width: 100%; padding-top: 200px; ">
-
-        <form autocomplete="off" action="" method="post" style="padding: 15px;">
-
+    <div class="" style="width: 100%; padding-top: 200px;">
+        <form autocomplete="off" action="" method="post" style="padding: 15px;" onsubmit="return validarPassword()">
             <div class="form-group">
-                <label for="token_registro_sms" class=" "><strong>"Último paso para tu seguridad"</strong></label>
+                <label for="token_registro_sms"><strong>"Último paso para tu seguridad"</strong></label>
                 <p>Crea una contraseña para proteger tus datos y actualizar la contraseña de tu cuenta de manera segura.</p>
-                <!-- <input type="tel" name="nombre" class="form-control p-2" id="nombre" aria-describedby="" placeholder="nombre" required>
-                <input type="tel" name="apellido" class="form-control p-2" id="apellido" aria-describedby="" placeholder="apellido" required>
-                <input type="tel" name="correo_electronico" class="form-control p-2" id="correo_electronico" aria-describedby="" placeholder="correo_electronico" required> -->
-                <input type="password" name="pass" class="form-control p-2" id="pass" aria-describedby="" placeholder="contraseña" required>
+                <input type="password" name="pass" class="form-control p-2" id="pass" placeholder="Contraseña" required>
+                <small id="passwordHelp" class="form-text text-muted">Tu contraseña debe tener al menos 8 caracteres.</small>
             </div>
             <br>
             <div class="d-flex justify-content-center">
-
-                <button style="background-color: #014c90; border-color: #639cc9;" href="" class="btn btn-primary m-3 p-2 w-100" id="btnConfirmacion">Actualizar</button>
+                <button style="background-color: #014c90; border-color: #639cc9;" class="btn btn-primary m-3 p-2 w-100" id="btnConfirmacion">Actualizar</button>
             </div>
         </form>
     </div>
 
-
-
-
-
     <script src="/js/app-validacion.js"></script>
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-    <% if (typeof alert != "undefined")  { %>
+    <!-- Validación del password -->
+    <script>
+        function validarPassword() {
+            const password = document.getElementById('pass').value;
+            const passwordHelp = document.getElementById('passwordHelp');
+            const regex = /^.{8,}$/; // Requisito: mínimo 8 caracteres
+
+            if (!regex.test(password)) {
+                passwordHelp.style.color = "red";
+                Swal.fire({
+                    title: 'Contraseña inválida',
+                    text: 'Tu contraseña debe tener al menos 8 caracteres.',
+                    icon: 'error',
+                    confirmButtonText: 'Entendido'
+                });
+                return false; // Evita el envío del formulario si la contraseña no es válida
+            }
+            return true; // Permite el envío del formulario si la contraseña es válida
+        }
+    </script>
+
+    <% if (typeof alert != "undefined") { %>
         <script>
             Swal.fire({
                 title: '<%= alertTitle %>',
@@ -76,8 +85,7 @@
             })
         </script>
         <% } %>
-            </div>
-
 </body>
+
 
 </html>

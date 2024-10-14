@@ -33,35 +33,108 @@
         <a class="btn-ws " href="https://bit.ly/3xzs0RV" target="_blank"><img class="img-fluid" src="/img/logo-ws.png" alt="logo ws"></a>
     </div>
 
-    <div class="" style=" width: 100%; padding-top: 200px; ">
-
-        <form autocomplete="off" action="" method="post" style="padding: 15px;">
-
+    <div class="" style="width: 100%; padding-top: 200px;">
+        <form autocomplete="off" action="" method="post" style="padding: 15px;" onsubmit="return validarFormulario()">
             <div class="form-group">
-                <label for="token_registro_sms" class=" "><strong>"Último paso para tu seguridad"</strong></label>
+                <label for="token_registro_sms"><strong>"Último paso para tu seguridad"</strong></label>
                 <p>Crea una contraseña para proteger tus datos y completar tu registro de manera segura.</p>
-                <!-- <input type="tel" name="nombre" class="form-control p-2" id="nombre" aria-describedby="" placeholder="nombre" required>
-                <input type="tel" name="apellido" class="form-control p-2" id="apellido" aria-describedby="" placeholder="apellido" required>
-                <input type="tel" name="correo_electronico" class="form-control p-2" id="correo_electronico" aria-describedby="" placeholder="correo_electronico" required> -->
-                <input type="password" name="pass" class="form-control p-2" id="pass" aria-describedby="" placeholder="contraseña" required>
+                <input type="password" name="pass" class="form-control p-2" id="pass" placeholder="Contraseña" required>
+                <small id="passwordHelp" class="form-text text-muted">Tu contraseña debe tener al menos 8 caracteres.</small>
             </div>
-            <br>
-            <div class="d-flex justify-content-center">
 
-                <button style="background-color: #014c90; border-color: #639cc9;" href="" class="btn btn-primary m-3 p-2 w-100" id="btnConfirmacion">Ingresar</button>
+            <br>
+
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="terminosCheck">
+                <label class="form-check-label" for="terminosCheck">
+                    Acepto los <a href="#" data-bs-toggle="modal" data-bs-target="#terminosModal">Términos y Condiciones</a>.
+                </label>
+            </div>
+
+            <br>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary m-3 p-2 w-100" id="btnConfirmacion" disabled>Registrarse</button>
             </div>
         </form>
     </div>
 
+    <!-- Modal de Términos y Condiciones -->
+    <div class="modal fade" id="terminosModal" tabindex="-1" aria-labelledby="terminosModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="terminosModalLabel">Términos y Condiciones</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+                    <!-- Aquí puedes colocar los Términos y Condiciones -->
+                    <p><strong>Términos y Condiciones de Rosfal Soluciones de Préstamos</strong><br><br> Fecha de entrada en vigor: 15/10/2024<br><br> Bienvenido a Rosfal Soluciones de Préstamos. Al utilizar nuestros servicios de solicitud de préstamos en
+                        línea y aceptar estos Términos y Condiciones, usted acuerda estar legalmente vinculado por los términos descritos a continuación. Si no está de acuerdo con alguno de los términos, le recomendamos no utilizar nuestros servicios.
+                        <br><br>
+                        <strong>1. Aceptación de los Términos </strong> Al acceder o utilizar los servicios de Rosfal Soluciones de Préstamos, usted confirma que ha leído, entendido y acepta los presentes Términos y Condiciones, así como nuestra Política
+                        de Privacidad. Estos términos son vinculantes entre Rosfal Soluciones de Préstamos y usted como usuario.<br><br>
+                        <strong>2. Uso del Servicio</strong> Rosfal Soluciones de Préstamos ofrece un servicio de solicitud de préstamos en línea para personas y pequeños negocios. Usted es responsable de la información que proporcione durante el proceso
+                        de solicitud, y garantiza que la información suministrada es veraz y actualizada. El uso fraudulento o inadecuado de nuestros servicios resultará en la suspensión inmediata de su cuenta.<br><br>
+                        <strong>3. Seguridad y Protección de Datos</strong> Rosfal se compromete a proteger sus datos personales. Al aceptar estos términos, usted está de acuerdo con lo siguiente:<br> • Recolección de Datos: Recopilamos información personal
+                        necesaria para procesar su solicitud de préstamo, incluyendo pero no limitándose a nombre, dirección, información financiera, y detalles de contacto.<br> • Uso de Datos: Los datos recopilados serán utilizados exclusivamente para
+                        procesar su solicitud, gestionar su cuenta y ofrecerle un servicio personalizado. Rosfal se compromete a no compartir sus datos con terceros sin su consentimiento, salvo en los casos en que sea requerido por la ley o para garantizar
+                        el cumplimiento del contrato.<br> • Almacenamiento de Datos: Toda la información proporcionada será almacenada en bases de datos seguras con medidas de protección adecuadas para evitar el acceso no autorizado.<br> • Derechos de
+                        Acceso: Usted tiene el derecho de solicitar acceso, rectificación o eliminación de sus datos personales en cualquier momento, contactándonos a través de nuestro soporte.<br><br>
+                        <strong>4. Comunicaciones y Ofertas Publicitarias</strong> Al aceptar estos términos, usted autoriza a Rosfal Soluciones de Préstamos a enviarle comunicaciones comerciales y publicitarias a través de correos electrónicos o mensajes
+                        de texto, incluyendo promociones, ofertas de temporada y avisos sobre nuevos productos o servicios. Si en algún momento desea dejar de recibir estas comunicaciones, podrá optar por darse de baja siguiendo las instrucciones incluidas
+                        en nuestros correos.<br><br>
+                        <strong>5. Condiciones del Préstamo</strong> Las condiciones específicas del préstamo, como tasas de interés, plazos de pago y penalidades por retraso, serán claramente especificadas en el contrato individual de préstamo que usted
+                        firmará antes de que el préstamo sea procesado. Rosfal se reserva el derecho de revisar y modificar estas condiciones conforme a las políticas financieras vigentes.<br><br>
+                        <strong>6. Responsabilidades del Cliente</strong> Al aceptar un préstamo con Rosfal, usted se compromete a:<br> • Proporcionar información precisa y actualizada.<br> • Cumplir con los términos de reembolso establecidos en su contrato
+                        de préstamo.
+                        <br> • Notificar a Rosfal de cualquier cambio relevante en su situación financiera que pueda afectar su capacidad de pago.<br><br>
+                        <strong>7. Modificación de Términos y Condiciones</strong> Rosfal Soluciones de Préstamos se reserva el derecho de modificar estos Términos y Condiciones en cualquier momento. Cualquier cambio será notificado a los usuarios registrados
+                        a través de los medios de contacto proporcionados. El uso continuado de los servicios después de la notificación constituirá su aceptación de los términos modificados.<br><br>
+                        <strong>8. Jurisdicción y Ley Aplicable</strong> Estos Términos y Condiciones se regirán e interpretarán de acuerdo con las leyes vigentes en Republica Dominicana. Cualquier controversia derivada de estos términos será sometida
+                        a la jurisdicción de los tribunales competentes en Republica Dominicana.<br><br>
+                        <strong>9. Contacto</strong> Para cualquier duda o consulta relacionada con estos Términos y Condiciones, puede ponerse en contacto con nosotros a través de contacto@rosfal.com o nuestro sitio web.<br>
 
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-
+    <!-- Scripts -->
     <script src="/js/app-validacion.js"></script>
 
-
-
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!-- Script para habilitar/deshabilitar el botón "Registrarse" y validar la contraseña -->
+    <script>
+        document.getElementById('terminosCheck').addEventListener('change', function() {
+            document.getElementById('btnConfirmacion').disabled = !this.checked;
+        });
+
+        // Validación de la contraseña
+        function validarFormulario() {
+            const password = document.getElementById('pass').value;
+            const passwordHelp = document.getElementById('passwordHelp');
+            const regex = /^.{8,}$/; // Requisitos: solo 8 caracteres mínimo
+
+            if (!regex.test(password)) {
+                passwordHelp.style.color = "red";
+                Swal.fire({
+                    title: 'Contraseña inválida',
+                    text: 'Tu contraseña debe tener al menos 8 caracteres.',
+                    icon: 'error',
+                    confirmButtonText: 'Entendido'
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
 
     <% if (typeof alert != "undefined")  { %>
         <script>
@@ -76,8 +149,6 @@
             })
         </script>
         <% } %>
-            </div>
-
 </body>
 
 </html>

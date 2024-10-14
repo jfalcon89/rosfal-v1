@@ -409,6 +409,7 @@ router.post('/app-update-pass', async(req, res) => {
     const ip_app_cliente = ipString.split(',')[0];
     const telefono = req.body.telefono;
     const token_registro_sms = generarNumeroAleatorio();
+    const origen = 'Movil App'
 
 
     datosCompartidos = telefono; // Almacena los datos en memoria
