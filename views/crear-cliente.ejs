@@ -31,7 +31,7 @@
 
 
 
-    <nav class="navbar navbar-expand-lg navbar-light  mt-4">
+    <nav class="navbar navbar-expand-lg navbar-light  ">
         <div class="container-fluid  " style="background-color: #ececec;">
 
             <div class="d-flex">
@@ -157,7 +157,6 @@
                                     <th scope="col">Telefono</th>
                                     <th scope="col">Token sms</th>
                                     <th scope="col">Ip_app_cliente</th>
-                                    <th scope="col">Password</th>
                                     <th scope="col">Fecha Creacion</th>
                                     <th scope="col">Estado</th>
                                     <th scope="col">Origen</th>
@@ -179,9 +178,6 @@
                                             </td>
                                             <td>
                                                 <%= cliente.ip_app_cliente %>
-                                            </td>
-                                            <td>
-                                                <%= cliente.pass %>
                                             </td>
                                             <td>
                                                 <%= cliente.fecha_creacion.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
