@@ -22,13 +22,15 @@ router.get('/app-clientes', async(req, res) => {
         const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
         const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
+
         const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-        const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
+        const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
         const clienteDB = await pool.query('SELECT * FROM app_clientes ');
         res.render("app-clientes", {
             arrayClientesV: arrayClientesVDB,
             arrayUsuariosV: arrayUsuariosVDB,
             cliente: clienteDB[0],
+
             login: true,
             name: req.session.name,
             rol: req.session.rol,
@@ -67,7 +69,7 @@ router.get('/app-clientes/crear-cliente', async(req, res) => {
         const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-        const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
+        const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
         res.render("crear-cliente", {
             arrayClientesV: arrayClientesVDB,
             arrayUsuariosV: arrayUsuariosVDB,
@@ -294,7 +296,7 @@ router.get('/app-clientes/editar-cliente', async(req, res) => {
         const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-        const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
+        const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
         res.render('editar-cliente', {
             arrayClientesV: arrayClientesVDB,
             arrayUsuariosV: arrayUsuariosVDB,
@@ -340,7 +342,7 @@ router.get("/app-clientes/editar-cliente/:id", async(req, res) => {
 
         try {
             const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-            const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
+            const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
             const clienteDB = await pool.query("SELECT * FROM app_clientes WHERE cliente_id = ?", [id]);
             // Verifica si existe un usuario con el teléfono en `users`
             const userDB = await pool.query(`SELECT * FROM users WHERE user = ?`, [clienteDB[0].telefono]);

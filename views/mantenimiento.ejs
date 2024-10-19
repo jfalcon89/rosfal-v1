@@ -53,7 +53,15 @@
                             <% if (login) { %>
                                 <div>
                                     <h4 type="" class="" style="color: #aeaeae;">
-                                        <%= name %>
+                                        <% if (SolicitudesCliente.length > 0) { %>
+                                            <% SolicitudesCliente.forEach(SolicitudesCliente=> { %>
+                                                <% if(SolicitudesCliente.celular == usuario.user){ %>
+                                                    <%= SolicitudesCliente.nombre %>
+                                                        <% } %>
+                                                            <% }) %>
+                                                                <% }else{ %>
+                                                                    <%= name %>
+                                                                        <% } %>
                                     </h4>
                                     <h6>
                                         <%= rol %>
@@ -80,7 +88,15 @@
                     <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
                     <div>
                         <h4 type="" class="" style="color: #aeaeae;">
-                            <%= name %>
+                            <% if (SolicitudesCliente.length > 0) { %>
+                                <% SolicitudesCliente.forEach(SolicitudesCliente=> { %>
+                                    <% if(SolicitudesCliente.celular == usuario.user){ %>
+                                        <%= SolicitudesCliente.nombre %>
+                                            <% } %>
+                                                <% }) %>
+                                                    <% }else{ %>
+                                                        <%= name %>
+                                                            <% } %>
                         </h4>
                         <h6>
                             <%= rol %>

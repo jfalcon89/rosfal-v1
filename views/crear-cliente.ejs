@@ -153,8 +153,9 @@
                         <table id="datatable" class="display responsive nowrap" style="width:100%">
                             <thead class="thead-ligth">
                                 <tr>
-                                    <th scope="col">Cliente Id</th>
+                                    <th scope="col">Id</th>
                                     <th scope="col">Telefono</th>
+                                    <th scope="col">Cliente</th>
                                     <th scope="col">Token sms</th>
                                     <th scope="col">Ip_app_cliente</th>
                                     <th scope="col">Fecha Creacion</th>
@@ -172,6 +173,15 @@
                                             </td>
                                             <td>
                                                 <%= cliente.telefono %>
+                                            </td>
+                                            <td>
+                                                <% if(cliente.nombre_solicitud ) { %>
+                                                    <i style="color: green;" class="bi bi-check-square-fill"></i>
+                                                    <%= cliente.nombre_solicitud  %>
+                                                        <%= cliente.apellido_solicitud  %>
+                                                            <% }else { %>
+                                                                <span style="color: #f85e5e;"><i class="bi bi-x-square-fill"></i> Cliente sin solicitud</span>
+                                                                <% } %>
                                             </td>
                                             <td>
                                                 <%= cliente.token_registro_sms %>

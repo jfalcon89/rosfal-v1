@@ -146,6 +146,8 @@ router.get('/mantenimiento', async(req, res) => {
                     'SELECT * FROM solicitudes WHERE estadoSolicitud = "Liquidado" AND celular = ?', [req.session.user]
                 );
 
+                const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${req.session.user}' `);
+
                 res.render("mantenimiento", {
                     arrayArchivos: arrayArchivosDB,
 
@@ -153,7 +155,7 @@ router.get('/mantenimiento', async(req, res) => {
                     arraySolicitudesAprobadasFirmadas: arraySolicitudesAprobadasFirmadasDB,
                     arraySolicitudesAtrasadas: arraySolicitudesAtrasadasDB,
                     arraySolicitudesLiquidadas: arraySolicitudesLiquidadasDB,
-
+                    SolicitudesCliente: SolicitudesClienteDB,
                     montoPrestado: montoPrestadoDB[0].montoPrestado,
                     cantPrestamos: cantPrestamosDB[0].cantPrestamos,
                     prestamosAtrasos: prestamosAtrasosDB[0].prestamosAtrasos,
@@ -197,7 +199,7 @@ router.get('/mantenimiento', async(req, res) => {
                 const cantPrestamosDB = await pool.query("SELECT COUNT(idSolicitud) cantPrestamos FROM solicitudes WHERE estadoSolicitud IN ('Aprobada',  'En Legal') ")
                 const prestamosAtrasosDB = await pool.query("SELECT SUM(atraso) prestamosAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
                 const cantAtrasosDB = await pool.query("SELECT COUNT(idSolicitud) cantAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
-
+                const SolicitudesCliente = ''
 
                 const arraySolicitudesAprobadasDB = await pool.query(`SELECT idSolicitud, nombre, apellido, celular FROM solicitudes WHERE estadoSolicitud IN ("Aprobada" , 'En Legal', 'Nueva', 'En Revision') ORDER BY fechaSolicitud DESC`);
                 const arraySolicitudesAprobadasFirmadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND firmaContrato= "NO" ORDER BY fechaSolicitud DESC');
@@ -208,6 +210,7 @@ router.get('/mantenimiento', async(req, res) => {
                     arrayArchivos: arrayArchivosDB,
                     arraySolicitudes: arraySolicitudesDB,
                     arrayMensajesNuevos: arrayMensajesNuevosDB,
+                    SolicitudesCliente,
                     arrayRutas: arrayRutasDB,
                     arrayUsuarios: arrayUsuariosDB,
                     arrayClientes: arrayClientesDB,

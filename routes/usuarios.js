@@ -364,12 +364,14 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
         const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
         const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
+
         const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
         const arrayUsuariosVDB = await pool.query("SELECT * FROM users");
         const usuarioDB = await pool.query("SELECT * FROM users WHERE idUsuario = ?", [id]);
         const clienteDB = await pool.query("SELECT * FROM app_clientes WHERE telefono = ?", [usuarioDB[0].user]);
         const arrayArchivosDB = await pool.query(`SELECT archivo_id, celular, prestamo_id, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where celular = '${usuarioDB[0].user}'`);
         const arraySolicitudesAprobadasDB = await pool.query(`SELECT idSolicitud, nombre, apellido, celular FROM solicitudes WHERE estadoSolicitud IN ("Aprobada" , 'En Legal', 'Nueva', 'En Revision') AND celular = '${usuarioDB[0].user}' ORDER BY fechaSolicitud DESC`);
+        const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${usuarioDB[0].user}' `);
         try {
 
             if (!usuarioDB.length) {
@@ -378,6 +380,7 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
 
             res.render("editar-usuario-app", {
                 cliente: clienteDB[0],
+                SolicitudesCliente: SolicitudesClienteDB,
                 usuario: usuarioDB[0],
                 arrayUsuariosV: arrayUsuariosVDB,
                 arrayClientesV: arrayClientesVDB,

@@ -142,12 +142,15 @@ router.get('/panel-administracion', async(req, res) => {
                 'SELECT * FROM solicitudes WHERE estadoSolicitud="Incobrable" AND celular = ?', [req.session.user]
             );
 
+            const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${req.session.user}' `);
+
             return res.render("panel-administracion", {
                 arrayUsuarios: arrayUsuariosDB,
                 arrayClientes: arrayClientesDB,
                 arraySolicitudes: arraySolicitudesDB,
                 arrayMensajesNuevos: arrayMensajesNuevosDB,
                 arrayRutas: arrayRutasDB,
+                SolicitudesCliente: SolicitudesClienteDB,
                 arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
                 arraySolicitudesAprobadasFirmadas: arraySolicitudesAprobadasFirmadasDB,
                 arraySolicitudesAtrasadas: arraySolicitudesAtrasadasDB,
@@ -222,7 +225,7 @@ router.get('/panel-administracion', async(req, res) => {
             const porcentajeEnLegalDB = await pool.query("SELECT left((SUM(CASE WHEN legalMonto > 0 THEN legalMonto ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeEnLegal FROM solicitudes;")
             const porcentajeAtrasoDB = await pool.query("SELECT left((SUM(CASE WHEN atraso > 0 THEN atraso ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal', 'Incobrable') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeAtraso FROM solicitudes;")
             const porcentajeIncobrableDB = await pool.query("SELECT left((SUM(CASE WHEN incobrableMonto > 0 THEN incobrableMonto ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeIncobrable FROM solicitudes;")
-
+            const SolicitudesCliente = ''
 
             const arraySolicitudesAprobadasDB = await pool.query(`SELECT  s.*, (SELECT SUM(s2.saldoFinal) FROM solicitudes s2 WHERE s2.cedula = s.cedula AND s2.estadoSolicitud = "Liquidado" AND s2.cedula IS NOT NULL AND s2.cedula != '' ) AS prestamosLiquidadosCliente FROM solicitudes s WHERE s.estadoSolicitud = "Aprobada" OR s.estadoSolicitud = "En Legal" ORDER BY s.fechaSolicitud DESC;`)
             const arraySolicitudesAprobadasFirmadasDB = await pool.query('SELECT * FROM solicitudes WHERE firmaContrato="NO" AND (estadoSolicitud="Aprobada" OR estadoSolicitud ="En Legal")');
@@ -239,6 +242,7 @@ router.get('/panel-administracion', async(req, res) => {
                 arrayMensajesNuevos: arrayMensajesNuevosDB,
                 arrayRutas: arrayRutasDB,
                 arrayVisitas: arrayVisitasDB,
+                SolicitudesCliente,
                 arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
                 arraySolicitudesAprobadasFirmadas: arraySolicitudesAprobadasFirmadasDB,
                 arraySolicitudesAtrasadas: arraySolicitudesAtrasadasDB,
