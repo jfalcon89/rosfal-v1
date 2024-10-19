@@ -371,7 +371,7 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
         const clienteDB = await pool.query("SELECT * FROM app_clientes WHERE telefono = ?", [usuarioDB[0].user]);
         const arrayArchivosDB = await pool.query(`SELECT archivo_id, celular, prestamo_id, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where celular = '${usuarioDB[0].user}'`);
         const arraySolicitudesAprobadasDB = await pool.query(`SELECT idSolicitud, nombre, apellido, celular FROM solicitudes WHERE estadoSolicitud IN ("Aprobada" , 'En Legal', 'Nueva', 'En Revision') AND celular = '${usuarioDB[0].user}' ORDER BY fechaSolicitud DESC`);
-        const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${usuarioDB[0].user}' `);
+        const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${usuarioDB[0].user}' limit 1`);
         try {
 
             if (!usuarioDB.length) {

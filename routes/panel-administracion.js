@@ -142,7 +142,7 @@ router.get('/panel-administracion', async(req, res) => {
                 'SELECT * FROM solicitudes WHERE estadoSolicitud="Incobrable" AND celular = ?', [req.session.user]
             );
 
-            const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${req.session.user}' `);
+            const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${req.session.user}' limit 1`);
 
             return res.render("panel-administracion", {
                 arrayUsuarios: arrayUsuariosDB,

@@ -146,7 +146,7 @@ router.get('/mantenimiento', async(req, res) => {
                     'SELECT * FROM solicitudes WHERE estadoSolicitud = "Liquidado" AND celular = ?', [req.session.user]
                 );
 
-                const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${req.session.user}' `);
+                const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${req.session.user}' limit 1`);
 
                 res.render("mantenimiento", {
                     arrayArchivos: arrayArchivosDB,
