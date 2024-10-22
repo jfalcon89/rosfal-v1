@@ -1041,7 +1041,9 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         legalMonto,
         incobrableMonto,
         clasificacionCliente,
-        saldoFinal
+        saldoFinal,
+        fechaPago,
+        montoCuota
     } = req.body;
 
     const nuevaSolicitud = {
@@ -1091,7 +1093,9 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         cantidadPagosDiarios,
         cantidadPagosQuincenales,
         cantidadPagosMensuales,
-        cuotaPagos
+        cuotaPagos,
+        fechaPago,
+        montoCuota
     };
 
     const atrasoDB = await pool.query(`SELECT novedades_atrasos.atraso FROM novedades_atrasos WHERE novedades_atrasos.idSolicitud = ${id}`);

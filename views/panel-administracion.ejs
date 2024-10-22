@@ -129,9 +129,52 @@
 
                 <img class="" width="60px" src="/img/solicita-ya.png" alt="">
                 <% if(montoPrestado > 0){ %>
-                    <h3 class="mt-4">¡Tu préstamo ha sido un éxito! 🎉</h3>
-                    <p class="">Recuerda que puedes solicitar más préstamos cuando lo necesites. Estamos aquí para apoyarte en cada paso. ¡Sigue avanzando con nosotros!</p>
-                    <a style="background-color: #23649f; border-radius: 10px; color: white;" href="/solicita-ya" class="btn ">Solicitar Ahora</a>
+                    <h3 class="mt-4">¡Tu préstamo fue exitoso! 🎉</h3>
+                    <hr>
+                    <div style="">
+                        <h6 style="text-align: start; font-size: small;" class="text-secondary"><strong>MONTO A PAGAR </strong></h6>
+                        <h1 style="text-align: start; "><strong><%= SolicitudMontoCuota.montoCuota=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(SolicitudMontoCuota.montoCuota) %></strong></h1>
+                        <% if(fechaPago > hoy  ){ %>
+                            <p style="color: #047116;">Fecha de pago:
+                                <%= SolicitudFechaPago %>
+                            </p>
+                            <% }else{ %>
+                                <p style="color: #b30707;">Fecha de pago:
+                                    <%= SolicitudFechaPago %>
+                                </p>
+                                <% } %>
+                                    <div class="d-flex justify-content-center w-100">
+                                        <a style="background-color: #014c90; border-color: #639cc9;" type="submit" class="btn btn-primary m-2 p-2 w-100" id="btn" data-bs-toggle="modal" data-bs-target="#infoModal">Pagar prestamo</a>
+                                    </div>
+                                    <% console.log('fecha de hoy ' + fechaHoyFormateada) %>
+                                        <% console.log('fecha de pago ' + SolicitudFechaPago) %>
+                                            <% console.log('fecha de hoy sin formato ' + hoy) %>
+                                                <% console.log('fecha de pago sin formato ' + fechaPago) %>
+                                                    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+                                                    <script>
+                                                        // Función para lanzar confeti
+                                                        function lanzarConfeti() {
+                                                            confetti({
+                                                                particleCount: 100,
+                                                                spread: 70,
+                                                                origin: {
+                                                                    y: 0.6
+                                                                }
+                                                            });
+                                                        }
+
+                                                        // Lanza el confeti al cargar la página
+                                                        window.onload = function() {
+                                                            lanzarConfeti();
+                                                        };
+                                                    </script>
+
+                                                    <!-- <div class="d-flex justify-content-center w-100">
+                            <a href="/login" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="bi bi-info-circle me-2"></i>Más información</a>
+                        </div> -->
+                    </div>
+                    <!-- <p class="">Recuerda que puedes solicitar más préstamos cuando lo necesites. Estamos aquí para apoyarte en cada paso. ¡Sigue avanzando con nosotros!</p>
+                    <a style="background-color: #23649f; border-radius: 10px; color: white;" href="/solicita-ya" class="btn ">Solicitar Ahora</a> -->
                     <% }else if (montoPrestado <= 0 && solicitudPendiente <= 0){ %>
                         <h3 class="mt-4">¡Obtén tu préstamo hoy mismo!</h3>
                         <p class="">"Estás a un paso, solo debes llenar tu solicitud"</p>
@@ -142,6 +185,79 @@
                             <a style="background-color: #23649f; border-radius: 10px; color: white;" href="/consulta-solicitud" class="btn ">Revisar Estatus</a>
                             <% } %>
 
+            </div>
+        </div>
+        <!-- Modal pagos -->
+        <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true" data-aos="fade-down">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="p-2">
+
+                        <button type="button" class="btn-close mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="row text-center p-0" style="">
+
+                        <div class="container ">
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- Título -->
+                                    <h5>Instrucciones</h5>
+                                    <h5 class="container">Puedes realizar tu pago en cualquier banco del <strong>Banco Popular</strong>, <strong>BHD León</strong> o <strong>Banreservas</strong>.</h5>
+                                </div>
+
+                                <!-- Instrucciones -->
+                                <div style="background-color: #aec6dd; padding: 10px;" class="">
+                                    <div class="info-step">
+                                        <p class="mb-0"><span class="highlight"></span> 📸 <span class="highlight">Envía</span> una foto o captura de tu comprobante de pago o transferencia.</p>
+                                    </div>
+                                </div>
+                                <div style="text-align: start;" class="container col-10 mt-1">
+                                    <!-- Banco Popular -->
+                                    <div class="bank-section d-flex">
+                                        <img src="/img/img-popular.png" alt="popular" width="90px" height="90px">
+                                        <div class="d-flex flex-column justify-content-center align-items-start">
+                                            <p><strong>Cuenta:</strong> 36434334421</p>
+                                            <p><strong>A nombre:</strong> Jose Miguel Falcon</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- BHD León -->
+                                    <div class="bank-section d-flex">
+                                        <img src="/img/img-bhd.png" alt="popular" width="90px" height="90px">
+                                        <div class="d-flex flex-column justify-content-center align-items-start">
+                                            <p><strong>Cuenta:</strong> 36434334421</p>
+                                            <p><strong>A nombre:</strong> Jose Miguel Falcon</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="bank-section d-flex">
+                                        <img src="/img/img-banreservas.png" alt="popular" width="90px" height="90px">
+                                        <div class="d-flex flex-column justify-content-center align-items-start">
+                                            <p><strong>Cuenta:</strong> 36434334421</p>
+                                            <p><strong>A nombre:</strong> Jose Miguel Falcon</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <!-- Nota -->
+                                    <div class="note  ">
+                                        <div style="text-align: center;">
+                                            <p><strong>NOTA:</strong> Es imprescindible colocar la referencia de tu cédula al realizar el pago vía depósito o transferencia.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Enviar comprobante -->
+                    <div class="d-flex align-items-center justify-content-end flex-column" style="height: 100%; width: 100%; background-color: #aec6dd; ">
+                        <p class="container" style="text-align: center;">¿Ya realizaste tu depósito? Envía tu comprobante para confirmar.</p>
+                        <div class="d-flex justify-content-center w-100">
+                            <a href="https://bit.ly/3xzs0RV" target="_blank" style="background-color: #014c90; border-color: #639cc9;" type="submit" class="btn btn-primary m-2 p-2 w-100" id="btn">Enviar comprobante</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

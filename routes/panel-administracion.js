@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 const moment = require("moment");
 const pool = require("../database");
+const { format } = require('date-fns');
+const { es } = require('date-fns/locale');
 
 
 
@@ -144,6 +146,24 @@ router.get('/panel-administracion', async(req, res) => {
 
             const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${req.session.user}' limit 1`);
 
+            const SolicitudesClientePagosDB = await pool.query(`SELECT idSolicitud, montoCuota, fechaPago, celular, fechaSolicitud FROM solicitudes WHERE celular = '${req.session.user}'  AND (estadoSolicitud="Aprobada" OR estadoSolicitud ="En Legal") ORDER BY fechaSolicitud DESC limit 1`);
+
+            // Obtener la fecha de hoy
+            const hoy = new Date();
+
+
+
+            console.log(SolicitudesClientePagosDB.length > 0)
+
+            if (SolicitudesClientePagosDB.length > 0) {
+                // Convierte la fecha en un objeto Date
+                var fechaPago = new Date(SolicitudesClientePagosDB[0].fechaPago);
+
+                // Formatea la fecha
+                var fechaFormateada = format(fechaPago, "d 'de' MMMM, yyyy", { locale: es });
+                var fechaHoyFormateada = format(hoy, "d 'de' MMMM, yyyy", { locale: es });
+            }
+
             return res.render("panel-administracion", {
                 arrayUsuarios: arrayUsuariosDB,
                 arrayClientes: arrayClientesDB,
@@ -176,6 +196,11 @@ router.get('/panel-administracion', async(req, res) => {
                 porcentajeAtraso: porcentajeAtrasoDB[0].porcentajeAtraso,
                 porcentajeIncobrable: porcentajeIncobrableDB[0].porcentajeIncobrable,
                 solicitudPendiente: solicitudPendienteDB[0].idSolicitud,
+                SolicitudMontoCuota: SolicitudesClientePagosDB[0],
+                SolicitudFechaPago: fechaFormateada,
+                fechaHoyFormateada,
+                hoy,
+                fechaPago,
                 i,
                 a,
                 login: true,
