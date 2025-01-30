@@ -44,6 +44,10 @@ router.post('/auth', async(req, res) => {
                 req.session.user = results[0].user;
                 req.session.name = results[0].name;
                 req.session.rol = results[0].rol;
+
+                pool.query('SET @usuario_actual = ?', [req.session.user], (error, results, fields) => {
+                    if (error) throw error;
+                });
                 res.render('login', {
                     device,
                     alert: true,

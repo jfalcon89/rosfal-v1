@@ -347,7 +347,7 @@ router.post('/adm-usuarios/editar-usuario/:id', async(req, res) => {
 });
 
 
-// //EDITAR USUARIO EN ESTADO NUEVA ************
+// //EDITAR USUARIO ************
 router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
     if (req.session.loggedin) {
         const id = req.params.id;
@@ -434,6 +434,276 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
         });
     }
 });
+router.get("/adm-usuarios/promociones-cliente/:id", async(req, res) => {
+    if (req.session.loggedin) {
+        const id = req.params.id;
+        console.log(req.params);
+
+
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
+
+        const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
+        const arrayUsuariosVDB = await pool.query("SELECT * FROM users");
+        const usuarioDB = await pool.query("SELECT * FROM users WHERE idUsuario = ?", [id]);
+        const clienteDB = await pool.query("SELECT * FROM app_clientes WHERE telefono = ?", [usuarioDB[0].user]);
+        const arrayArchivosDB = await pool.query(`SELECT archivo_id, celular, prestamo_id, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where celular = '${usuarioDB[0].user}'`);
+        const arraySolicitudesAprobadasDB = await pool.query(`SELECT idSolicitud, nombre, apellido, celular FROM solicitudes WHERE estadoSolicitud IN ("Aprobada" , 'En Legal', 'Nueva', 'En Revision') AND celular = '${usuarioDB[0].user}' ORDER BY fechaSolicitud DESC`);
+        const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${usuarioDB[0].user}' limit 1`);
+        const promocionesClienteDB = await pool.query(`SELECT * FROM promociones_clientes WHERE cliente_id = '${usuarioDB[0].idUsuario}' `);
+        const promocionesDB = await pool.query(`SELECT * FROM promociones `);
+        try {
+
+            if (!usuarioDB.length) {
+                throw new Error("Usuario no encontrado");
+            }
+
+            res.render("promociones-cliente", {
+                cliente: clienteDB[0],
+                SolicitudesCliente: SolicitudesClienteDB,
+                usuario: usuarioDB[0],
+                arrayUsuariosV: arrayUsuariosVDB,
+                arrayClientesV: arrayClientesVDB,
+                login: true,
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                arrayArchivos: arrayArchivosDB,
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                promocionesCliente: promocionesClienteDB,
+                promociones: promocionesDB
+            });
+
+        } catch (error) {
+            console.log(error);
+            res.render("promociones-cliente", {
+                error: true,
+                mensaje: "No se encuentra el ID seleccionado o hubo un error en la base de datos",
+                arrayUsuariosV: arrayUsuariosVDB,
+                arrayClientesV: arrayClientesVDB,
+                cliente: clienteDB[0],
+                usuario: usuarioDB[0],
+                login: true,
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                arrayArchivos: arrayArchivosDB,
+                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                promociones: promocionesDB
+            });
+        }
+
+    } else {
+        res.render("login", {
+            login: false,
+            name: "Debe iniciar sesión",
+
+        });
+    }
+});
+
+
+
+// //CREAR PROMOCIONES CLIENTES
+router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
+    if (req.session.loggedin) {
+        const id = req.params.id;
+        console.log('Usuario ID:', id);
+
+        const { codigo_promocion } = req.body;
+
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
+        // Consultar el usuario en la base de datos
+        const usuarioDB = await pool.query("SELECT * FROM users WHERE idUsuario = ?", [id]);
+        const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${usuarioDB[0].user}' limit 1`);
+        const promocionesClienteDB = await pool.query(`SELECT * FROM promociones_clientes WHERE cliente_id = '${usuarioDB[0].idUsuario}' `);
+
+
+        try {
+
+            if (!usuarioDB.length) {
+                return res.status(404).send('Usuario no encontrado.');
+            }
+
+            // Consultar cliente asociado al usuario
+            const clienteDB = await pool.query("SELECT * FROM app_clientes WHERE telefono = ?", [usuarioDB[0].user]);
+
+            if (!clienteDB.length) {
+                return res.status(404).send('Cliente no encontrado.');
+            }
+
+            // Verificar si el código de promoción existe
+            const promocionesDB = await pool.query(`SELECT * FROM promociones WHERE codigo_promocion = "${codigo_promocion}" AND estado_promocion = "Activo"`);
+
+            if (promocionesDB.length === 0) {
+                // Parámetros para la alerta de código inválido
+                return res.render('promociones-cliente', {
+                    SolicitudesCliente: SolicitudesClienteDB,
+                    promociones: promocionesDB,
+                    promocionesCliente: promocionesClienteDB,
+                    cliente: clienteDB[0],
+                    usuario: usuarioDB[0],
+                    permiso_A,
+                    permiso_B,
+                    permiso_C,
+                    arrayUsuarios,
+                    arrayClientes,
+                    arraySolicitudes,
+                    arrayMensajesNuevos,
+                    arrayVisitas,
+                    arrayTestimoniosNuevos,
+                    login: true,
+                    name: req.session.name,
+                    rol: req.session.rol,
+                    alert: true,
+                    alertTitle: "Código inválido",
+                    alertMessage: "El código de promoción ingresado no es válido.",
+                    alertIcon: "error",
+                    showConfirmButton: true,
+                    timer: 4000, // 4 segundos
+                    ruta: `/adm-usuarios/promociones-cliente/${id}`
+                });
+            }
+            // Verificar si el código de promoción existe en el cliente que recibe
+            const promocionesEnElClientesDB = await pool.query(`SELECT * FROM promociones_clientes WHERE codigo_promocion = "${codigo_promocion}" AND cliente_id = ${id} `);
+
+            if (promocionesEnElClientesDB.length > 0) {
+                // Parámetros para la alerta de código inválido
+                return res.render('promociones-cliente', {
+                    SolicitudesCliente: SolicitudesClienteDB,
+                    promociones: promocionesDB,
+                    promocionesCliente: promocionesClienteDB,
+                    cliente: clienteDB[0],
+                    usuario: usuarioDB[0],
+                    permiso_A,
+                    permiso_B,
+                    permiso_C,
+                    arrayUsuarios,
+                    arrayClientes,
+                    arraySolicitudes,
+                    arrayMensajesNuevos,
+                    arrayVisitas,
+                    arrayTestimoniosNuevos,
+                    login: true,
+                    name: req.session.name,
+                    rol: req.session.rol,
+                    alert: true,
+                    alertTitle: "Código inválido",
+                    alertMessage: "El código de promoción ingresado ya esta utilizado.",
+                    alertIcon: "error",
+                    showConfirmButton: true,
+                    timer: 4000, // 4 segundos
+                    ruta: `/adm-usuarios/promociones-cliente/${id}`
+                });
+            }
+
+            // buscar el código del cliente que envia
+            const idUsuarioEnviaDB = await pool.query(`SELECT * FROM users WHERE user = "${promocionesDB[0].origen_bono}" `);
+
+
+            const promocionClienteRecibe = {
+                codigo_promocion,
+                valor_credito: promocionesDB[0].valor_credito,
+                estado_promocion: 'En revision',
+                origen_bono: promocionesDB[0].origen_bono,
+                cliente_id: id
+
+
+            };
+            // Insertar la promoción en la tabla promociones_clientes del cliente que recibe 
+            await pool.query('INSERT INTO promociones_clientes SET ?', [promocionClienteRecibe]);
+            console.log('cliente que recibe:', promocionClienteRecibe);
+            console.log('tabla promociones:', promocionesDB);
+
+            const promocionClienteEnvia = {
+                codigo_promocion,
+                valor_credito: promocionesDB[0].valor_credito,
+                estado_promocion: 'En revision',
+                origen_bono: req.session.user,
+                cliente_id: idUsuarioEnviaDB[0].idUsuario
+            };
+            // Insertar la promoción en la tabla promociones_clientes del cliente que envia 
+            await pool.query('INSERT INTO promociones_clientes SET ?', [promocionClienteEnvia]);
+            console.log('cliente que envia:', promocionClienteEnvia);
+
+
+
+            // Parámetros para la alerta de éxito en el frontend
+            res.render('promociones-cliente', {
+                SolicitudesCliente: SolicitudesClienteDB,
+                promociones: promocionesDB,
+                promocionesCliente: promocionesClienteDB,
+                cliente: clienteDB[0],
+                usuario: usuarioDB[0],
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos,
+                login: true,
+                name: req.session.name,
+                rol: req.session.rol,
+                alert: true,
+                alertTitle: "Promoción Agregada",
+                alertMessage: "Código de promoción agregado satisfactoriamente.",
+                alertIcon: "success",
+                showConfirmButton: true,
+                timer: 2000, // 2 segundos
+                ruta: `/adm-usuarios/promociones-cliente/${id}`
+            });
+
+        } catch (error) {
+            console.error('Error durante la actualización:', error);
+            res.status(500).send('Hubo un error actualizando el usuario.');
+        }
+
+    } else {
+        res.render("login", {
+            login: false,
+            name: "Debe iniciar sesión",
+
+        });
+    }
+});
+
+
 
 
 

@@ -536,12 +536,6 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
     // console.log(req.params.id)
 
     const {
-        frecuenciaPagos,
-        cantidadPagosSemanales,
-        cantidadPagosDiarios,
-        cantidadPagosQuincenales,
-        cantidadPagosMensuales,
-        cuotaPagos,
         cedula,
         nombre,
         apellido,
@@ -578,8 +572,19 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
         contrato,
         ruta,
         firmaContrato,
+        atraso,
+        legalMonto,
+        incobrableMonto,
         clasificacionCliente,
-        saldoFinal
+        saldoFinal,
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos,
+        fechaPago,
+        montoCuota
     } = req.body;
 
     const nuevaSolicitud = {
@@ -619,6 +624,9 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
         contrato,
         ruta,
         firmaContrato,
+        atraso,
+        legalMonto,
+        incobrableMonto,
         clasificacionCliente,
         saldoFinal,
         frecuenciaPagos,
@@ -626,7 +634,9 @@ router.post('/Solicitudes-nuevas/editar-solicitud/:id', async(req, res) => {
         cantidadPagosDiarios,
         cantidadPagosQuincenales,
         cantidadPagosMensuales,
-        cuotaPagos
+        cuotaPagos,
+        fechaPago,
+        montoCuota
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -1098,6 +1108,7 @@ router.post('/Solicitudes-aprobadas/editar-solicitud/:id', async(req, res) => {
         montoCuota
     };
 
+
     const atrasoDB = await pool.query(`SELECT novedades_atrasos.atraso FROM novedades_atrasos WHERE novedades_atrasos.idSolicitud = ${id}`);
 
 
@@ -1328,12 +1339,6 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
     // console.log(req.params.id)
 
     const {
-        frecuenciaPagos,
-        cantidadPagosSemanales,
-        cantidadPagosDiarios,
-        cantidadPagosQuincenales,
-        cantidadPagosMensuales,
-        cuotaPagos,
         cedula,
         nombre,
         apellido,
@@ -1370,8 +1375,19 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
         contrato,
         ruta,
         firmaContrato,
+        atraso,
+        legalMonto,
+        incobrableMonto,
         clasificacionCliente,
-        saldoFinal
+        saldoFinal,
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos,
+        fechaPago,
+        montoCuota
     } = req.body;
 
     const nuevaSolicitud = {
@@ -1411,6 +1427,9 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
         contrato,
         ruta,
         firmaContrato,
+        atraso,
+        legalMonto,
+        incobrableMonto,
         clasificacionCliente,
         saldoFinal,
         frecuenciaPagos,
@@ -1418,7 +1437,9 @@ router.post('/Solicitudes-declinadas/editar-solicitud/:id', async(req, res) => {
         cantidadPagosDiarios,
         cantidadPagosQuincenales,
         cantidadPagosMensuales,
-        cuotaPagos
+        cuotaPagos,
+        fechaPago,
+        montoCuota
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);
@@ -1642,12 +1663,6 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
     // console.log(req.params.id)
 
     const {
-        frecuenciaPagos,
-        cantidadPagosSemanales,
-        cantidadPagosDiarios,
-        cantidadPagosQuincenales,
-        cantidadPagosMensuales,
-        cuotaPagos,
         cedula,
         nombre,
         apellido,
@@ -1684,8 +1699,19 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
         contrato,
         ruta,
         firmaContrato,
+        atraso,
+        legalMonto,
+        incobrableMonto,
         clasificacionCliente,
-        saldoFinal
+        saldoFinal,
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales,
+        cuotaPagos,
+        fechaPago,
+        montoCuota
     } = req.body;
 
     const nuevaSolicitud = {
@@ -1725,6 +1751,9 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
         contrato,
         ruta,
         firmaContrato,
+        atraso,
+        legalMonto,
+        incobrableMonto,
         clasificacionCliente,
         saldoFinal,
         frecuenciaPagos,
@@ -1732,7 +1761,9 @@ router.post('/Solicitudes-en-revision/editar-solicitud/:id', async(req, res) => 
         cantidadPagosDiarios,
         cantidadPagosQuincenales,
         cantidadPagosMensuales,
-        cuotaPagos
+        cuotaPagos,
+        fechaPago,
+        montoCuota
     };
 
     await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [nuevaSolicitud, id]);

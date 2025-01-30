@@ -133,43 +133,46 @@
                     <hr>
                     <div style="">
                         <h6 style="text-align: start; font-size: small;" class="text-secondary"><strong>MONTO A PAGAR </strong></h6>
-                        <h1 style="text-align: start; "><strong><%= SolicitudMontoCuota.montoCuota=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(SolicitudMontoCuota.montoCuota) %></strong></h1>
-                        <% if(fechaPago > hoy  ){ %>
-                            <p style="color: #047116;">Fecha de pago:
-                                <%= SolicitudFechaPago %>
-                            </p>
-                            <% }else{ %>
-                                <p style="color: #b30707;">Fecha de pago:
-                                    <%= SolicitudFechaPago %>
-                                </p>
-                                <% } %>
-                                    <div class="d-flex justify-content-center w-100">
-                                        <a style="background-color: #014c90; border-color: #639cc9;" type="submit" class="btn btn-primary m-2 p-2 w-100" id="btn" data-bs-toggle="modal" data-bs-target="#infoModal">Pagar prestamo</a>
-                                    </div>
-                                    <% console.log('fecha de hoy ' + fechaHoyFormateada) %>
-                                        <% console.log('fecha de pago ' + SolicitudFechaPago) %>
-                                            <% console.log('fecha de hoy sin formato ' + hoy) %>
-                                                <% console.log('fecha de pago sin formato ' + fechaPago) %>
-                                                    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-                                                    <script>
-                                                        // Función para lanzar confeti
-                                                        function lanzarConfeti() {
-                                                            confetti({
-                                                                particleCount: 100,
-                                                                spread: 70,
-                                                                origin: {
-                                                                    y: 0.6
+                        <% var SolicitudMontoCuotaFinal = (SolicitudMontoCuota.montoCuota - creditosAcumulados) %>
+                            <% console.log(SolicitudMontoCuotaFinal) %>
+                                <h1 style="text-align: start; "><strong><%= SolicitudMontoCuotaFinal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(SolicitudMontoCuotaFinal) %></strong></h1>
+
+                                <% if(fechaPago > hoy  ){ %>
+                                    <p style="color: #047116;">Fecha de pago:
+                                        <%= SolicitudFechaPago %>
+                                    </p>
+                                    <% }else{ %>
+                                        <p style="color: #b30707;">Fecha de pago:
+                                            <%= SolicitudFechaPago %>
+                                        </p>
+                                        <% } %>
+                                            <div class="d-flex justify-content-center w-100">
+                                                <a style="background-color: #014c90; border-color: #639cc9;" type="submit" class="btn btn-primary m-2 p-2 w-100" id="btn" data-bs-toggle="modal" data-bs-target="#infoModal">Pagar Cuota</a>
+                                            </div>
+                                            <% console.log('fecha de hoy ' + fechaHoyFormateada) %>
+                                                <% console.log('fecha de pago ' + SolicitudFechaPago) %>
+                                                    <% console.log('fecha de hoy sin formato ' + hoy) %>
+                                                        <% console.log('fecha de pago sin formato ' + fechaPago) %>
+                                                            <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+                                                            <script>
+                                                                // Función para lanzar confeti
+                                                                function lanzarConfeti() {
+                                                                    confetti({
+                                                                        particleCount: 100,
+                                                                        spread: 70,
+                                                                        origin: {
+                                                                            y: 0.6
+                                                                        }
+                                                                    });
                                                                 }
-                                                            });
-                                                        }
 
-                                                        // Lanza el confeti al cargar la página
-                                                        window.onload = function() {
-                                                            lanzarConfeti();
-                                                        };
-                                                    </script>
+                                                                // Lanza el confeti al cargar la página
+                                                                window.onload = function() {
+                                                                    lanzarConfeti();
+                                                                };
+                                                            </script>
 
-                                                    <!-- <div class="d-flex justify-content-center w-100">
+                                                            <!-- <div class="d-flex justify-content-center w-100">
                             <a href="/login" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="bi bi-info-circle me-2"></i>Más información</a>
                         </div> -->
                     </div>
@@ -200,7 +203,7 @@
 
                         <div class="container ">
                             <div class="row">
-                                <div class="col-12 mb-4">
+                                <div class="col-12 mb-2">
                                     <!-- Título -->
                                     <h5><strong>Instrucciones</strong></h5>
                                     <h5 class="container">Puedes realizar tu pago por deposito o transferencia de manera rápida y segura en cualquiera de las siguientes entidades bancarias.</h5>
@@ -244,7 +247,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="note mt-5 ">
+                    <div class="note mt-4 ">
                         <div style="text-align: center; ">
                             <p><strong>Importante:</strong><br> Al realizar el depósito o transferencia, asegúrate de incluir como referencia tu número de cédula para facilitar la identificación de tu pago.</p>
                         </div>
@@ -262,10 +265,28 @@
         </div>
 
         <!-- Button trigger modal -->
-        <div style="background-color: #ececec; border-radius: 15px; margin: 15px;" class="d-flex justify-content-center mt-4" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
-            <img width="60px" src="/img/reporte-de-negocios.png" alt="">
+        <div style="background-color: #ececec; border-radius: 15px; margin: 15px;" class="d-flex justify-content-lg-center mt-4" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
+            <img style="margin-right: 15px;" width="60px" src="/img/reporte-de-negocios.png" alt="">
 
             <h4 class="d-flex align-items-center">Resumen Prestamos</h4>
+        </div>
+
+        <!-- Button trigger modal invitar -->
+        <div style="background-color: #ececec; border-radius: 15px; margin: 15px;">
+            <a style="text-decoration: none; color: black;" href="/adm-usuarios/promociones-cliente/<%= usuario.idUsuario %>">
+                <div class="d-flex justify-content-center mt-4">
+
+
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img height="60px" class="me-3" width="60px" src="/img/invita-amigo.png" alt="">
+                    </div>
+                    <div class="">
+                        <p><strong>Invita a alguien!</strong></p>
+                        <p>Obten RD$250 pesos por cada persona que recomiendes a Rosfal</p>
+                    </div>
+
+                </div>
+            </a>
         </div>
 
         <!-- Modal -->
@@ -531,7 +552,6 @@
 
                     </div>
                     <% } %>
-
 
                         <div style="border-radius: 15px;" class="container-fluid  mt-5  ">
 

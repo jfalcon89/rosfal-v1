@@ -34,6 +34,7 @@ const rutasConsulta_solicitud = require("./routes/consulta-solicitud");
 const controlesAnuncios = require("./routes/controles-anuncios");
 const visitasWeb = require("./routes/visitas-web");
 const mantenimiento = require("./routes/mantenimiento");
+const promociones = require("./routes/promociones");
 
 // rutas app movil
 const appRegistro = require("./routes/app-registro");
@@ -102,6 +103,7 @@ app.use("/", rutasConsulta_solicitud);
 app.use("/", controlesAnuncios);
 app.use("/", visitasWeb);
 app.use("/", mantenimiento);
+app.use("/", promociones);
 
 //------------ VISTAS APP MOVIL-----------------------//
 app.use("/", appRegistro);

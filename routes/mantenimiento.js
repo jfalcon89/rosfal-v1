@@ -206,6 +206,7 @@ router.get('/mantenimiento', async(req, res) => {
                 const arraySolicitudesAtrasadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND atraso > 0');
                 const arrayNotificacionAtrasoDB = await pool.query(`SELECT novedades_atrasos.idSolicitud, idNovedadAtraso, solicitudes.nombre, solicitudes.apellido, novedades_atrasos.celular, novedades_atrasos.ruta, novedades_atrasos.atraso, fechaNovedad  FROM novedades_atrasos, solicitudes WHERE novedades_atrasos.idSolicitud = solicitudes.idSolicitud ORDER BY fechaNovedad DESC`);
                 const arraySolicitudesLiquidadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Liquidado"');
+                const arrayBitacoraEventosDB = await pool.query('SELECT * FROM bitacora_eventos');
                 res.render("mantenimiento", {
                     arrayArchivos: arrayArchivosDB,
                     arraySolicitudes: arraySolicitudesDB,
@@ -226,6 +227,7 @@ router.get('/mantenimiento', async(req, res) => {
                     cantAtrasos: cantAtrasosDB[0].cantAtrasos,
                     montoLiquidado: montoLiquidadoDB[0].montoLiquidado,
                     arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
+                    arrayBitacoraEventos: arrayBitacoraEventosDB,
                     login: true,
                     name: req.session.name,
                     rol: req.session.rol,

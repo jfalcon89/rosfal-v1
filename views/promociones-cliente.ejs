@@ -29,16 +29,20 @@
 
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-light  ">
         <div class="container-fluid  " style="background-color: #ececec;">
+
             <div class="d-flex">
                 <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
+
             </div>
             <button class="navbar-toggler  " type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon "></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <div class="offcanvas-body ">
+
                     <div class="d-flex">
                         <div class="btn-group ">
                             <button type="button" class="hola navbar-toggler d-block me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,7 +110,11 @@
         </div>
     </div>
 
-    <div class="container-fluid d-lg-flex">
+
+
+
+    <div class=" p-2">
+
         <div class="container-fluid p-2  ">
             <h3 class="text-secondary"><strong>HOLA, </strong>
                 <% if (SolicitudesCliente.length > 0) { %>
@@ -120,116 +128,150 @@
                                                 <% } %>
 
             </h3>
-            <form id="form-validacion" class="" autocomplete="off" action="" method="POST">
-                <div style="border-radius: 10px;" class="container bg-white mt-2  pb-2 pt-2">
-                    <div class="d-flex justify-content-center">
-                        <div class="input-group mb-3">
-                            <div class="">
-                                <p class="me-2" id="estado_usuario">Estado</p>
-                            </div>
-                            <div class="">
-                                <p class="text-secondary" id="estado_usuario">
-                                    <%= usuario.estado_usuario %>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end input-group mb-3">
-
-                            <div class="d-flex ">
-                                <p class="text-secondary" id="estado_usuario">
-                                    <%= usuario.rol %>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="d-flex justify-content-center ">
-                        <p class="me-2" id="user">Fecha Registro</p>
-                    </div>
-
-
-                    <div class="d-flex justify-content-center">
-                        <p class="text-secondary" id="user">
-                            <%= usuario.fecha_creacion.toLocaleString('es-US', { timeZone: 'America/Santo_Domingo'}) %>
-                        </p>
-                    </div>
-
-                    <div class="d-flex justify-content-center">
-                        <p class="me-2" id="user">Identificacion Usuario</p>
-                    </div>
-
-                    <div class="d-flex justify-content-center">
-                        <p class="text-secondary" id="user">
-                            <%= usuario.user %>
-                        </p>
-                    </div>
-
-
-                    <div class="input-group mb-3">
-                        <div class="d-flex">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="pass">Password</span>
-                            </div>
-                            <input class="form-control " type="password" name="" value="<%= usuario.pass %>" id="pass" placeholder="" aria-describedby="pass"><a class="btn btn-secondary  btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">CAMBIAR</a>
-                        </div>
-                    </div>
-
-
-                    <div>
-                        <div class="d-lg-flex justify-content-center mt-3">
-                            <button id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 me-lg-3" type="submit">GUARDAR CAMBIOS</button>
-
-                        </div>
-                    </div>
-                </div>
-            </form>
         </div>
-    </div>
 
+        <div style="text-align: center;" class="mt-5">
+            <h3><strong>Comparte tu codigo</strong></h3>
+            <h5>Obten RD$250 pesos por cada persona que recomiendes a Rosfal. <br>La persona que recomiendes tambien recibira RD$250 pesos.</h5>
 
+            <div class="mt-5">
+                <span><strong>Tu codigo es:</strong></span>
+                <h2>
+                    <%= usuario.idUsuario %>00-PRIMERCREDITO</h2>
+            </div>
 
+            <div class="mt-5">
+                <button style="border-radius: 20px;  width: 100%;" class="btn btn-success"><a class="dropdown-item text-white" target="_blank" href="https://wa.me/<%=  %>?text=
+        
+                        %0A*INVITACIÓN ESPECIAL A ROSFAL SOLUCIONES DE PRÉSTAMOS*%0A
+                                    
+                        %0AEstimad@ cliente, le han extendido una invitación especial para registrarse en Rosfal Soluciones de Préstamos.%0A
+                                    
+                        %0AUna vez completado su registro, obtendrás un descuento exclusivo y trato preferencial en su primer préstamo.%0A
 
-
-    <!-- Modal 2 -->
-    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered">
-
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel2">Actualizar contraseña</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="form-validacion" class="" autocomplete="off" action="" method="POST">
-                    <div class="modal-body">
-
-                        <h5 class="text-center">
-                            <input class="form-control " type="password" name="pass" value="" id="Contraseña" placeholder="Password" aria-describedby="Contraseña">
-
-                        </h5>
-
-                    </div>
-                    <div class="modal-footer border-0">
-                        <button id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 " type="submit">CAMBIAR CONTRASEÑA</button>
-                    </div>
-
-                </form>
+                        %0A*Código de invitación:*
+                        %0A<%= usuario.idUsuario %>00-PRIMERCREDITO%0A
+                                    
+                        %0A*Para más información:*
+                        %0A*Email:* contacto@rosfal.com
+                        %0A*WhatsApp:* 829 856-0203
+                        %0A*Regístrese aquí:* https://www.rosfal.com/app-inicio
+                                    
+                        
+                                    
+                        ">Compatir mi codigo</a></button>
             </div>
         </div>
+
+
+
+
+        <form id="form-validacion" class="" autocomplete="off" action="" method="POST">
+
+            <!-- Modal 2 -->
+            <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+                <div class="modal-dialog  modal-dialog-centered">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel2">Cargar codigo promocion</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form id="form-validacion" class="" autocomplete="off" action="" method="POST">
+                            <div class="modal-body">
+
+                                <h5 class="text-center">
+                                    <input class="form-control " type="text" name="codigo_promocion" value="" id="Contraseña" placeholder="" aria-describedby="codigo_promocion">
+
+                                </h5>
+
+                            </div>
+                            <div class="modal-footer border-0">
+                                <button id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 " type="submit">GUARDAR CODIGO</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <% if (typeof alert !="undefined" ) { %>
+    <div class="container-fluid  mt-3">
+        <div class="container-fluid p-1">
+            <h3 class="text-secondary"><strong>LISTADO</strong> DE PROMOCIONES</h3>
+            <div class="container-fluid p-4">
+                <div class="container-table table-responsive">
+                    <table id="datatable" class="display responsive nowrap" style="width:100%">
+                        <thead class="thead-ligth">
+                            <tr>
+                                <th scope="col">Promocion</th>
+                                <th scope="col">Valor Acreditado</th>
+                                <th scope="col">Fecha Registro</th>
+
+                                <th scope="col">Origen Bono</th>
+                                <th scope="col">Estado</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (promocionesCliente.length > 0) { %>
+                                <% promocionesCliente.forEach(promocion=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= promocion.codigo_promocion %>
+                                        </td>
+                                        <td>
+                                            <%= promocion.valor_credito=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(promocion.valor_credito) %>
+                                        </td>
+                                        <td>
+                                            <%= promocion.fecha_registro.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
+                                        </td>
+
+                                        <td>
+                                            <%= promocion.origen_bono %>
+                                        </td>
+                                        <td>
+                                            <% if(promocion.estado_promocion == 'Aprobado' ) { %>
+                                                <i style="color: green;" class="bi bi-check-square-fill"></i>
+                                                <%= promocion.estado_promocion  %>
+
+                                                    <% }else { %>
+                                                        <span style="color: #f85e5e;"><i class="bi bi-x-square-fill"></i> <%= promocion.estado_promocion  %></span>
+                                                        <% } %>
+                                        </td>
+
+                                    </tr>
+
+
+                                    <% }) %>
+                                        <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="d-lg-flex justify-content-center mt-3">
+            <a style="border-radius: 20px;" id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 me-lg-3" type="" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">CARGAR CODIGO PROMOCION</a>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if (typeof alert !== "undefined") { %>
         <script>
             Swal.fire({
-                title: '<%= alertTitle %>',
-                text: '<%= alertMessage %>',
-                icon: '<%= alertIcon %>',
+                title: "<%= alertTitle %>",
+                text: "<%= alertMessage %>",
+                icon: "<%= alertIcon %>",
                 showConfirmButton: <%= showConfirmButton %>,
                 timer: <%= timer %>
             }).then(() => {
-                window.location = '/<%= ruta %>'
-            })
+                window.location.href = "<%= ruta %>";
+            });
         </script>
         <% } %>
 

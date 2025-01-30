@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css y js bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
+    <!-- linkeado css propio -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- icons bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- generador de pdf cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <!-- moment.js cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <!-- DATATABLE -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
+    <link rel="icon" href="/img/favicon/logo-favicon.png">
+    <title>Rosfal - Promociones</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light  ">
+        <div class="container-fluid  " style="background-color: #ececec;">
+
+            <div class="d-flex">
+                <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
+                <h5 class="text-dark m-2 d-flex align-items-center" style="font-size: large;">APP PROMOCIONES</h5>
+            </div>
+            <button class="navbar-toggler  " type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon "></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="offcanvas-body ">
+
+                    <div class="d-flex">
+                        <div class="btn-group ">
+                            <button type="button" class="hola navbar-toggler d-block me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon show "></span>
+                            </button>
+                            <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
+                        </div>
+                        <div class="user-container me-2 d-flex">
+                            <% if (login) { %>
+                                <div>
+                                    <h4 type="" class="" style="color: #aeaeae;">
+                                        <%= name %>
+                                    </h4>
+                                    <h6>
+                                        <%= rol %>
+                                    </h6>
+                                </div>
+                                <%}  %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="navbarOffcanvasLabel">
+                <h5 class="text-dark m-2" style="font-size: large;">PROMOCIONES</h5>
+            </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="user-container me-2 d-flex align-content-center" style="background-color: #ececec;">
+                <% if (login) { %>
+                    <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
+                    <div>
+                        <h4 type="" class="" style="color: #aeaeae;">
+                            <%= name %>
+                        </h4>
+                        <h6>
+                            <%= rol %>
+                        </h6>
+                    </div>
+                    <%}  %>
+            </div>
+            <hr class="dropdown-divider">
+            <%- include('template/navbar-menu') %>
+        </div>
+    </div>
+
+
+
+    <div class=" p-2 d-lg-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">
+        <div class="container-fluid d-flex mt-3 mb-3 me-lg-3 shadow-sm " style="background-color: #d4d4d4;">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/app-clientes.png" alt="Clientes">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%=  %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/promociones">Promociones</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white  d-flex mt-3 mb-3 me-lg-3 shadow-sm ">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/adm-usuarios.png" alt="Usuarios">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%=  %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/clientes-promociones-adm">Clientes Promociones</a></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="container-fluid d-lg-flex">
+
+        <div class="container-fluid p-4 mt-5 ">
+            <!-- Button trigger modal -->
+            <% if(rol == permiso_A){ %>
+                <div style="text-align: left;" class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                     CARGAR PROMOCION
+                        </button>
+                </div>
+                <% }%>
+                    <h3 class="text-secondary"><strong>LISTADO</strong> PROMOCIONES</h3>
+                    <div class="container-fluid p-4">
+                        <div class="container-table table-responsive">
+                            <table id="datatable" class="display responsive nowrap" style="width:100%">
+                                <thead class="thead-ligth">
+                                    <tr>
+                                        <th scope="col">ID Promocion</th>
+                                        <th scope="col">Codigo Promocion</th>
+                                        <th scope="col">Valor Credito</th>
+                                        <th scope="col">Fecha Registro</th>
+                                        <th scope="col">Estado</th>
+                                        <th scope="col">Origen Bono</th>
+                                        <% if(rol == permiso_A){ %>
+                                            <th scope="col">Acciones</th>
+                                            <% } %>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (promociones.length > 0) { %>
+                                        <% promociones.forEach(promocion=> { %>
+                                            <span class="d-none"><%= i++ %></span>
+                                            <tr>
+                                                <td>
+                                                    <%= promocion.id_promocion %>
+                                                </td>
+                                                <td>
+                                                    <%= promocion.codigo_promocion %>
+                                                </td>
+                                                <td>
+                                                    $
+                                                    <%= promocion.valor_credito %>
+                                                </td>
+                                                <td>
+                                                    <%= promocion.fecha_registro.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
+                                                </td>
+
+                                                <td>
+                                                    <% if(promocion.estado_promocion == 'Activo' ) { %>
+                                                        <i style="color: green;" class="bi bi-check-square-fill"></i>
+                                                        <%= promocion.estado_promocion  %>
+
+                                                            <% }else { %>
+                                                                <span style="color: #f85e5e;"><i class="bi bi-x-square-fill"></i> <%= promocion.estado_promocion  %></span>
+                                                                <% } %>
+                                                </td>
+                                                <td>
+                                                    <%= promocion.origen_bono %>
+                                                </td>
+
+                                                <% if(rol == permiso_A){ %>
+                                                    <td class="w-0 "><a id="eventoAct-Inact" href="/promociones/editar-promocion/<%= promocion.id_promocion %>" class="btn " title="Editar Promocion" data-bs-toggle="modal" data-bs-target="#exampleModal3<%= i %>"><i class="bi bi-pencil-square "></i></a>
+                                                        <a id="eventoAct-Inact" href="/promociones/eliminar-promocion/<%= promocion.id_promocion %>" class="btn " title="Eliminar Promocion" data-bs-toggle="modal" data-bs-target="#exampleModal4<%= i %>"><i style="color: red;" class="bi bi-x-square-fill"></i></a>
+
+                                                        <% }%>
+
+                                                    </td>
+
+
+                                            </tr>
+
+                                            <!-- Modal editar promociones -->
+                                            <div class="modal fade  mt-4" id="exampleModal3<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Editar Promocion Sistema</h5>
+                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                       <span aria-hidden="true">&times;</span>
+                                                     </button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+
+                                                            <form action="/promociones/editar-promocion/<%= promocion.id_promocion %>" method="POST" enctype="">
+                                                                <!-- Campo para ingresar el ID del préstamo -->
+
+                                                                <label for="codigo_promocion">Codigo Promocion</label>
+                                                                <input class="form-control" type="text" value="<%= promocion.codigo_promocion %>" name="codigo_promocion">
+
+                                                                <label for="valor_credito">Valor Credito</label>
+                                                                <input class="form-control" type="number" value="<%= promocion.valor_credito %>" name="valor_credito">
+
+                                                                <label for="origen_bono">Origen Bono</label>
+                                                                <select name="origen_bono" class="form-control" id="origen_bono" required>
+                                                             <option value="<%= promocion.origen_bono %>" selected><%= promocion.origen_bono %></option>
+                                                             <% if (arrayUsuariosV.length > 0) { %>
+                                                                 <% arrayUsuariosV.forEach(usuario=> { %>
+                                                                     <option value=<%= usuario.user %>><%= usuario.idUsuario %> <%= usuario.user %></option>
+                                                             <% }) %>
+                                                                         <% } %>
+                                                                    
+                                                         </select>
+                                                                <label for="estado_promocion">Estado</label>
+                                                                <select name="estado_promocion" class="form-control" id="estado_promocion" required>
+                                                             <option value="<%= promocion.estado_promocion %>" selected><%= promocion.estado_promocion %></option>
+                                                             <option value="Activo">Activo</option>
+                                                             <option value="Inactivo">Inactivo</option>
+                                                                                            
+                                                         </select>
+                                                                <br><br>
+
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-success">Actualizar Promocion</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Modal eliminar promociones -->
+                                            <div class="modal fade  mt-4" id="exampleModal4<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar Promocion</h5>
+                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                       <span aria-hidden="true">&times;</span>
+                                                     </button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+
+                                                            <form action="/promociones/eliminar-promocion/<%= promocion.id_promocion %>" method="" enctype="">
+                                                                <!-- Campo para ingresar el ID del préstamo -->
+
+                                                                <div class="d-flex justify-content-center">
+                                                                    <h4>
+                                                                        <%= promocion.codigo_promocion %>
+                                                                    </h4>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-success">Eliminar Promocion</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <% }) %>
+                                                <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- </div> -->
+        </div>
+    </div>
+
+    <!-- Modal carga promociones -->
+    <div class="modal fade  mt-4" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cargar Promocion</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <form action="/promociones" method="POST" enctype="">
+                        <!-- Campo para ingresar el ID del préstamo -->
+
+                        <label for="codigo_promocion">Codigo Promocion</label>
+                        <input class="form-control" type="text" name="codigo_promocion">
+
+                        <label for="valor_credito">Valor Credito</label>
+                        <input class="form-control" type="number" name="valor_credito">
+
+                        <label for="origen_bono">Origen Bono</label>
+                        <select name="origen_bono" class="form-control" id="origen_bono" required>
+                            <option value="PromocionesRosfal" selected>Promociones Rosfal</option>
+                            <% if (arrayUsuariosV.length > 0) { %>
+                                <% arrayUsuariosV.forEach(usuario=> { %>
+                                    <option value=<%= usuario.user %>><%= usuario.idUsuario %> <%= usuario.user %></option>
+                            <% }) %>
+                                        <% } %>
+                            
+                        </select>
+                        <label for="estado_promocion">Estado</label>
+                        <select name="estado_promocion" class="form-control" id="estado_promocion" required>
+                            <option value="Activo" selected>Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                            
+                        </select>
+                        <br><br>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success">Cargar Promocion</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
+        <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+    </div>
+
+
+    <script src="/js/rutasFunction.js"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if (typeof alert !== "undefined") { %>
+        <script>
+            Swal.fire({
+                title: "<%= alertTitle %>",
+                text: "<%= alertMessage %>",
+                icon: "<%= alertIcon %>",
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location.href = "<%= ruta %>";
+            });
+        </script>
+        <% } %>
+
+
+            <script>
+                $(document).ready(function() {
+                    $('#datatable').DataTable({
+                        order: [
+                            [0, 'desc']
+                        ],
+                        language: {
+                            "decimal": "",
+                            "emptyTable": "No hay información",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar _MENU_ Entradas",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscar:",
+                            "zeroRecords": "Sin resultados encontrados",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            }
+                        }
+                    });
+                });
+            </script>
+
+
+
+</body>
+
+</html>

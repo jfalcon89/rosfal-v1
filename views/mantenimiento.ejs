@@ -335,26 +335,83 @@
         </div>
     </div>
 
+    <% if(rol == permiso_A || rol == permiso_B){ %>
+        <div class="p-lg-3">
+            <h6 class="m-1">BITACORA DE EVENTOS</h6>
 
-    <!-- Modal -->
-    <div class="modal fade  mt-4" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Subir Documentos</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+
+            <div class="container-table table-responsive">
+                <table id="datatable2" class="display responsive nowrap" style="width:100%">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID evento</th>
+                            <th>ID registro</th>
+                            <th>Tabla</th>
+                            <th>Accion</th>
+                            <th>Usuario</th>
+                            <th>Campos cambiados</th>
+                            <th>Detall del cambio</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="archivos-table-body">
+                        <!-- Las filas de archivos se agregarán aquí dinámicamente -->
+                        <% if (arrayBitacoraEventos.length > 0) { %>
+                            <% arrayBitacoraEventos.forEach(evento=> { %>
+
+                                <tr>
+                                    <td>
+                                        <%= evento.id_evento %>
+                                    </td>
+                                    <td>
+                                        <%= evento.id_registro %>
+                                    </td>
+                                    <td>
+                                        <%= evento.tabla %>
+                                    </td>
+                                    <td>
+                                        <%= evento.accion %>
+                                    </td>
+                                    <td>
+                                        <%= evento.usuario_responsable %>
+                                    </td>
+                                    <td>
+                                        <%= evento.campos_cambiados %>
+                                    </td>
+                                    <td class="text-truncate">
+                                        <%= evento.detalles %>
+                                    </td>
+                                    <td>
+                                        <%= evento.fecha_evento.toLocaleString('es-US', { timeZone: 'America/Santo_Domingo'}) %>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <% } %>
+
+            <!-- Modal -->
+            <div class="modal fade  mt-4" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Subir Documentos</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-                </div>
-                <div class="modal-body">
+                        </div>
+                        <div class="modal-body">
 
 
-                    <form action="/upload" method="POST" enctype="multipart/form-data">
-                        <!-- Campo para ingresar el ID del préstamo -->
+                            <form action="/upload" method="POST" enctype="multipart/form-data">
+                                <!-- Campo para ingresar el ID del préstamo -->
 
 
-                        <label for="prestamo_id">ID del Préstamo:</label>
-                        <select name="prestamo_id" class="form-control" id="prestamo_id" required>
+                                <label for="prestamo_id">ID del Préstamo:</label>
+                                <select name="prestamo_id" class="form-control" id="prestamo_id" required>
                             <option value="" selected>Seleccionar</option>
                             <% if (arraySolicitudesAprobadas.length > 0) { %>
                                 <% arraySolicitudesAprobadas.forEach(cliente=> { %>
@@ -367,8 +424,8 @@
 
 
 
-                        <label for="celular">Telefono Cliente Asociado</label>
-                        <select name="celular" class="form-control" id="celular" required>
+                                <label for="celular">Telefono Cliente Asociado</label>
+                                <select name="celular" class="form-control" id="celular" required>
                             <option value="" selected>Seleccionar</option>
                             <% if (arraySolicitudesAprobadas.length > 0) { %>
                                 <% arraySolicitudesAprobadas.forEach(cliente=> { %>
@@ -379,8 +436,8 @@
                             <% } %>
                         </select>
 
-                        <label for="prestamo_id">Tipo de Documento</label>
-                        <select name="tipo_documento" class="form-control" id="tipo_documento" required>
+                                <label for="prestamo_id">Tipo de Documento</label>
+                                <select name="tipo_documento" class="form-control" id="tipo_documento" required>
                             <option value="" selected>Seleccionar</option>
                             <option value="Recibo">Recibo</option>
                             <option value="Contrato">Contrato</option>
@@ -389,169 +446,198 @@
                             <option value="Pasaporte">Pasaporte</option>
                             <option value="Otro">Otro</option>
                         </select>
-                        <br><br>
+                                <br><br>
 
-                        <!-- Campo para subir el archivo PDF -->
-                        <label for="archivo">Subir archivo (PDF, PNG, JPG):</label>
-                        <input type="file" id="archivo" name="archivo" accept=".pdf, .png, .jpg, .jpeg" required />
-                        <br><br>
+                                <!-- Campo para subir el archivo PDF -->
+                                <label for="archivo">Subir archivo (PDF, PNG, JPG):</label>
+                                <input type="file" id="archivo" name="archivo" accept=".pdf, .png, .jpg, .jpeg" required />
+                                <br><br>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success">Subir Documento</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success">Subir Documento</button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
 
-    <script>
-        // Obtener el botón
-        var btn = document.getElementById('generate-pdf');
-        // var htmlContent = document.getElementById('html-content').innerHTML;
+            <script>
+                // Obtener el botón
+                var btn = document.getElementById('generate-pdf');
+                // var htmlContent = document.getElementById('html-content').innerHTML;
 
-        // Agregar un evento de clic al botón
-        btn.addEventListener('click', function() {
+                // Agregar un evento de clic al botón
+                btn.addEventListener('click', function() {
 
-            let fecha = new Date();
-            let fechaReporte = fecha.toLocaleString('es-US', {
-                timeZone: "America/Santo_Domingo"
-            }, );
+                    let fecha = new Date();
+                    let fechaReporte = fecha.toLocaleString('es-US', {
+                        timeZone: "America/Santo_Domingo"
+                    }, );
 
-            // Definir el contenido del documento
-            var docDefinition = {
-                content: [{
-                        text: 'ROSFAL SOLUCIONES DE PRESTAMOS',
-                        fontSize: 20,
-                        margin: [80, 20, 0, 5],
-                    }, {
-                        text: `Fecha del reporte: `,
-                        margin: [370, 20, 0, 5],
-                        bold: true
-                    }, {
-                        text: `${fechaReporte}`,
-                        margin: [370, 0, 0, 5]
-                    }, {
-                        text: 'Reporte de estado de cartera',
-                        margin: [0, 10, 0, 5]
-                    },
+                    // Definir el contenido del documento
+                    var docDefinition = {
+                        content: [{
+                                text: 'ROSFAL SOLUCIONES DE PRESTAMOS',
+                                fontSize: 20,
+                                margin: [80, 20, 0, 5],
+                            }, {
+                                text: `Fecha del reporte: `,
+                                margin: [370, 20, 0, 5],
+                                bold: true
+                            }, {
+                                text: `${fechaReporte}`,
+                                margin: [370, 0, 0, 5]
+                            }, {
+                                text: 'Reporte de estado de cartera',
+                                margin: [0, 10, 0, 5]
+                            },
 
-                    {
-                        // to treat a paragraph as a bulleted list, set an array of items under the ul key
-                        ul: [
-                            'Prestamos activos <%= montoPrestado %>',
-                            'Liquidado <%= montoLiquidado %>',
-                            'Atrasos <%= prestamosAtrasos %>',
-                            'Cant. Prestamos <%= cantPrestamos %>',
-                            'Cant. Atrasos <%= cantAtrasos %>',
+                            {
+                                // to treat a paragraph as a bulleted list, set an array of items under the ul key
+                                ul: [
+                                    'Prestamos activos <%= montoPrestado %>',
+                                    'Liquidado <%= montoLiquidado %>',
+                                    'Atrasos <%= prestamosAtrasos %>',
+                                    'Cant. Prestamos <%= cantPrestamos %>',
+                                    'Cant. Atrasos <%= cantAtrasos %>',
+
+                                ]
+                            }, {
+                                text: 'Listado de atrasos',
+                                margin: [0, 20, 0, 5]
+                            }, {
+
+                                layout: 'headerLineOnly',
+                                table: {
+                                    // headers are automatically repeated if the table spans over multiple pages
+                                    // you can declare how many rows should be treated as headers
+                                    headerRows: 1,
+                                    // widths: ['*', 'auto', 100, '*'],
+
+                                    body: [
+
+                                        [{
+                                            text: 'Solicitud',
+                                            bold: true,
+                                            fontSize: 10
+                                        }, {
+                                            text: 'Nombre',
+                                            bold: true,
+                                            fontSize: 10
+                                        }, {
+                                            text: 'Apellido',
+                                            bold: true,
+                                            fontSize: 10
+                                        }, {
+                                            text: 'Cedula',
+                                            bold: true,
+                                            fontSize: 10
+                                        }, {
+                                            text: 'Saldo Final',
+                                            bold: true,
+                                            fontSize: 10
+                                        }, {
+                                            text: 'Firma',
+                                            bold: true,
+                                            fontSize: 10
+                                        }, {
+                                            text: 'Atraso',
+                                            bold: true,
+                                            fontSize: 10
+                                        }, {
+                                            text: 'Telefono',
+                                            bold: true,
+                                            fontSize: 10
+                                        }],
+
+                                        <% if (arraySolicitudesAtrasadas.length > 0) { %>
+                                        <% arraySolicitudesAtrasadas.forEach(solicitud=> { %>
+
+                                        ['<%= solicitud.idSolicitud %>', '<%= solicitud.nombre %>', '<%= solicitud.apellido %>', '<%= solicitud.cedula %>', '<%= solicitud.saldoFinal %>', '<%= solicitud.firmaContrato %>', '<%= solicitud.atraso %>', '<%= solicitud.celular %>'],
+
+                                        <% }) %>
+                                        <% } %>
+
+                                    ]
+                                }
+                            }
 
                         ]
-                    }, {
-                        text: 'Listado de atrasos',
-                        margin: [0, 20, 0, 5]
-                    }, {
+                    };
 
-                        layout: 'headerLineOnly',
-                        table: {
-                            // headers are automatically repeated if the table spans over multiple pages
-                            // you can declare how many rows should be treated as headers
-                            headerRows: 1,
-                            // widths: ['*', 'auto', 100, '*'],
+                    // Generar el documento PDF
+                    pdfMake.createPdf(docDefinition).download('reporte estado cartera.pdf');
+                });
+            </script>
 
-                            body: [
+            <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
+                <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+            </div>
 
-                                [{
-                                    text: 'Solicitud',
-                                    bold: true,
-                                    fontSize: 10
-                                }, {
-                                    text: 'Nombre',
-                                    bold: true,
-                                    fontSize: 10
-                                }, {
-                                    text: 'Apellido',
-                                    bold: true,
-                                    fontSize: 10
-                                }, {
-                                    text: 'Cedula',
-                                    bold: true,
-                                    fontSize: 10
-                                }, {
-                                    text: 'Saldo Final',
-                                    bold: true,
-                                    fontSize: 10
-                                }, {
-                                    text: 'Firma',
-                                    bold: true,
-                                    fontSize: 10
-                                }, {
-                                    text: 'Atraso',
-                                    bold: true,
-                                    fontSize: 10
-                                }, {
-                                    text: 'Telefono',
-                                    bold: true,
-                                    fontSize: 10
-                                }],
+            <!-- <script src="./routes/solicitudes.js"></script> -->
+            <script src="/js/enviar-correo.js"></script>
 
-                                <% if (arraySolicitudesAtrasadas.length > 0) { %>
-                                <% arraySolicitudesAtrasadas.forEach(solicitud=> { %>
-
-                                ['<%= solicitud.idSolicitud %>', '<%= solicitud.nombre %>', '<%= solicitud.apellido %>', '<%= solicitud.cedula %>', '<%= solicitud.saldoFinal %>', '<%= solicitud.firmaContrato %>', '<%= solicitud.atraso %>', '<%= solicitud.celular %>'],
-
-                                <% }) %>
-                                <% } %>
-
-                            ]
+            <script>
+                $(document).ready(function() {
+                    $('#datatable').DataTable({
+                        order: [
+                            [0, 'desc']
+                        ],
+                        language: {
+                            "decimal": "",
+                            "emptyTable": "No hay información",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar _MENU_ Entradas",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscar:",
+                            "zeroRecords": "Sin resultados encontrados",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            }
                         }
-                    }
-
-                ]
-            };
-
-            // Generar el documento PDF
-            pdfMake.createPdf(docDefinition).download('reporte estado cartera.pdf');
-        });
-    </script>
-
-    <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
-        <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
-    </div>
-
-    <!-- <script src="./routes/solicitudes.js"></script> -->
-    <script src="/js/enviar-correo.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#datatable').DataTable({
-                order: [
-                    [0, 'desc']
-                ],
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
-        });
-    </script>
+                    });
+                });
+            </script>
+            <script>
+                $(document).ready(function() {
+                    $('#datatable2').DataTable({
+                        order: [
+                            [0, 'desc']
+                        ],
+                        language: {
+                            "decimal": "",
+                            "emptyTable": "No hay información",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar _MENU_ Entradas",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscar:",
+                            "zeroRecords": "Sin resultados encontrados",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            }
+                        }
+                    });
+                });
+            </script>
 
 </body>
 

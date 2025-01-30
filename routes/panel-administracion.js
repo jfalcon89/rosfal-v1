@@ -74,6 +74,9 @@ router.get('/panel-administracion', async(req, res) => {
             const prestamosEnLegalDB = await pool.query(
                 "SELECT SUM(legalMonto) prestamosEnLegal FROM solicitudes WHERE estadoSolicitud = 'En Legal' AND legalMonto > 0 AND celular = ?", [req.session.user]
             );
+            const creditosAcumuladosDB = await pool.query(
+                `SELECT SUM(valor_credito) valor_credito FROM promociones_clientes WHERE cliente_id = '${usuarioDB[0].idUsuario}' AND estado_promocion = 'Aprobado'`
+            );
 
             const cantAtrasosDB = await pool.query(
                 "SELECT COUNT(idSolicitud) cantAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0 AND celular = ?", [req.session.user]
@@ -212,7 +215,8 @@ router.get('/panel-administracion', async(req, res) => {
                 permiso_C,
                 usuario: usuarioDB[0],
                 documentosCliente: documentosClienteDB,
-                arrayArchivos: arrayArchivosDB
+                arrayArchivos: arrayArchivosDB,
+                creditosAcumulados: creditosAcumuladosDB[0].valor_credito
 
             });
 
@@ -260,6 +264,18 @@ router.get('/panel-administracion', async(req, res) => {
             const arraySolicitudesLiquidadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Liquidado"');
             const arraySolicitudesIncobrablesDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Incobrable"');
 
+            const pagosPromocionesDB = await pool.query(`SELECT 
+                SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS creditos_aprobado,
+                SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS creditos_en_revision,
+                SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS creditos_liquidado,
+                SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS debitos_aprobado,
+                SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS debitos_en_revision,
+                SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS debitos_liquidado
+            FROM 
+                promociones_clientes p
+            LEFT JOIN 
+                users u ON p.cliente_id = u.idUsuario;`);
+
             return res.render("panel-administracion", {
                 arrayUsuarios: arrayUsuariosDB,
                 arrayClientes: arrayClientesDB,
@@ -301,7 +317,8 @@ router.get('/panel-administracion', async(req, res) => {
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                documentosCliente: documentosClienteDB
+                documentosCliente: documentosClienteDB,
+                pagosPromociones: pagosPromocionesDB
 
 
             });
