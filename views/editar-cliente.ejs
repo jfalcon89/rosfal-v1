@@ -194,7 +194,11 @@
                                                 <%= cliente.fecha_creacion.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                             </td>
                                             <td>
-                                                <%= cliente.estado_cliente %>
+                                                <% if(cliente.estado_cliente == 'Activo'){ %>
+                                                    <span style="background-color: green; color: white;"> <%= cliente.estado_cliente %></span>
+                                                    <%} else if(cliente.estado_cliente == 'Inactivo'){ %>
+                                                        <span style="background-color: red; color: white;"><%= cliente.estado_cliente %></span>
+                                                        <% } %>
                                             </td>
                                             <td>
                                                 <%= cliente.origen %>
@@ -218,67 +222,73 @@
                 <h3 class="text-secondary"><strong>EDITAR </strong> CLIENTE</h3>
                 <form id="form-validacion" class="" autocomplete="off" action="" method="POST">
                     <div class="container bg-white mt-5 mb-5 pb-5 pt-5">
-                        <h4><strong>Cliente ID </strong>
-                            <%= cliente.cliente_id %>
-                        </h4>
-                        <% if(user) { %>
-                            <div class=" d-lg-flex mb-3">
-                                <div class="input-group-prepend">
-                                    <input class="form-control text-muted p-2" id="user" readonly value="Usuario ID: <%= user.idUsuario %>">
-                                </div>
-                                <div class="input-group-prepend">
-                                    <input class="form-control text-muted p-2" id="user" readonly value="Rol: <%= user.rol %>">
-                                </div>
+                        <% if(cliente.estado_cliente == 'Inactivo'){ %>
+                            <div>
+                                <p class="bg-danger text-light">Cliente no aplica para préstamo</p>
                             </div>
-                            <% }else{ %>
-
-                                <div class=" d-lg-flex mb-3">
-                                    <div class="input-group-prepend">
-                                        <input class="form-control text-muted p-2" id="user" readonly value="Usuario ID: No Registrado">
-                                    </div>
-
-                                </div>
-
-                                <% } %>
-                                    <div class="input-group mb-3">
+                            <% } %>
+                                <h4><strong>Cliente ID </strong>
+                                    <%= cliente.cliente_id %>
+                                </h4>
+                                <% if(user) { %>
+                                    <div class=" d-lg-flex mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="telefono">Telefono</span>
+                                            <input class="form-control text-muted p-2" id="user" readonly value="Usuario ID: <%= user.idUsuario %>">
                                         </div>
-                                        <input class="form-control text-muted" readonly type="number" name="telefono" value="<%= cliente.telefono %>" id="telefono" placeholder="" aria-describedby="telefono">
+                                        <div class="input-group-prepend">
+                                            <input class="form-control text-muted p-2" id="user" readonly value="Rol: <%= user.rol %>">
+                                        </div>
                                     </div>
+                                    <% }else{ %>
 
-                                    <div class="input-group mb-3">
-                                        <div class="d-flex">
+                                        <div class=" d-lg-flex mb-3">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text" id="Contraseña">Contraseña</span>
+                                                <input class="form-control text-muted p-2" id="user" readonly value="Usuario ID: No Registrado">
                                             </div>
-                                            <input class="form-control " type="password" name="" value="<%= cliente.pass %>" id="Contraseña" placeholder="" aria-describedby="Contraseña"><a class="btn btn-secondary  btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">CAMBIAR</a>
+
                                         </div>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="estado_cliente">Estado</span>
-                                        </div>
-                                        <select class="form-control" name="estado_cliente" id="estado_cliente" aria-describedby="estado_cliente">
+
+                                        <% } %>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="telefono">Telefono</span>
+                                                </div>
+                                                <input class="form-control text-muted" readonly type="number" name="telefono" value="<%= cliente.telefono %>" id="telefono" placeholder="" aria-describedby="telefono">
+                                            </div>
+
+                                            <div class="input-group mb-3">
+                                                <div class="d-flex">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="Contraseña">Contraseña</span>
+                                                    </div>
+                                                    <input class="form-control " type="password" name="" value="<%= cliente.pass %>" id="Contraseña" placeholder="" aria-describedby="Contraseña"><a class="btn btn-secondary  btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#staticBackdrop2">CAMBIAR</a>
+                                                </div>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="estado_cliente">Estado</span>
+                                                </div>
+                                                <select class="form-control" name="estado_cliente" id="estado_cliente" aria-describedby="estado_cliente">
                             <option value="<%= cliente.estado_cliente %>" selected><%= cliente.estado_cliente %></option>
                             <option value="Activo" >Activo</option>
                             <option value="Inactivo">Inactivo</option>
                         </select>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="origen">Origen</span>
-                                        </div>
-                                        <select class="form-control" name="origen" id="origen" aria-describedby="origen">
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text" id="origen">Origen</span>
+                                                </div>
+                                                <select class="form-control" name="origen" id="origen" aria-describedby="origen">
                                 <option value="<%= cliente.origen %>" selected><%= cliente.origen %></option>
                                 <option value="Movil App">Movil App</option>
                                 <option value="Aplicacion Web">Aplicacion Web</option>
                             </select>
-                                    </div>
-                                    <div class="d-lg-flex justify-content-center mt-3">
-                                        <button id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 me-lg-3" type="submit">GUARDAR CAMBIOS</button>
-                                        <a class="btn btn-danger btn-block p-2 mt-1 mb-3 w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">ELIMINAR CLIENTE</a>
-                                    </div>
+                                            </div>
+                                            <div class="d-lg-flex justify-content-center mt-3">
+                                                <button id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 me-lg-3" type="submit">GUARDAR CAMBIOS</button>
+                                                <a class="btn btn-danger btn-block p-2 mt-1 mb-3 w-100" data-bs-toggle="modal" data-bs-target="#staticBackdrop">ELIMINAR CLIENTE</a>
+                                            </div>
                     </div>
                 </form>
             </div>

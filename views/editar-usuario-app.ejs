@@ -145,18 +145,18 @@
 
 
                     <div class="d-flex justify-content-center ">
-                        <p class="me-2" id="user">Fecha Registro</p>
+                        <p class="" id="user">Fecha Registro</p>
                     </div>
 
 
                     <div class="d-flex justify-content-center">
                         <p class="text-secondary" id="user">
-                            <%= usuario.fecha_creacion.toLocaleString('es-US', { timeZone: 'America/Santo_Domingo'}) %>
+                            <%= usuario.fecha_creacion.toLocaleString('es-US', { timeZone: 'America/Santo_Domingo'}).slice(0,10) %>
                         </p>
                     </div>
 
                     <div class="d-flex justify-content-center">
-                        <p class="me-2" id="user">Identificacion Usuario</p>
+                        <p class="" id="user">Identificacion Usuario</p>
                     </div>
 
                     <div class="d-flex justify-content-center">

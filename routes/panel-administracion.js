@@ -35,6 +35,7 @@ router.get('/panel-administracion', async(req, res) => {
             console.log(id)
 
             const usuarioDB = await pool.query('SELECT * FROM users WHERE user = ?', [req.session.user]);
+            const clienteDB = await pool.query('SELECT * FROM app_clientes WHERE telefono = ?', [req.session.user]);
             const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where celular = '${req.session.user}'`);
             const arrayArchivosDB = await pool.query('SELECT archivo_id, celular, prestamo_id, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos');
 
@@ -214,6 +215,7 @@ router.get('/panel-administracion', async(req, res) => {
                 permiso_B,
                 permiso_C,
                 usuario: usuarioDB[0],
+                cliente: clienteDB[0],
                 documentosCliente: documentosClienteDB,
                 arrayArchivos: arrayArchivosDB,
                 creditosAcumulados: creditosAcumuladosDB[0].valor_credito

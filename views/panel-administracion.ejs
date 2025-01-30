@@ -176,17 +176,19 @@
                             <a href="/login" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="bi bi-info-circle me-2"></i>Más información</a>
                         </div> -->
                     </div>
-                    <!-- <p class="">Recuerda que puedes solicitar más préstamos cuando lo necesites. Estamos aquí para apoyarte en cada paso. ¡Sigue avanzando con nosotros!</p>
-                    <a style="background-color: #23649f; border-radius: 10px; color: white;" href="/solicita-ya" class="btn ">Solicitar Ahora</a> -->
-                    <% }else if (montoPrestado <= 0 && solicitudPendiente <= 0){ %>
-                        <h3 class="mt-4">¡Obtén tu préstamo hoy mismo!</h3>
-                        <p class="">"Estás a un paso, solo debes llenar tu solicitud"</p>
-                        <a style="background-color: #23649f; border-radius: 10px; color: white;" href="/solicita-ya" class="btn ">Solicitar Ahora</a>
-                        <% } else if (montoPrestado <= 0 && solicitudPendiente > 0){ %>
-                            <h3 class="mt-4">¡Estamos revisando tu solicitud! 🔍</h3>
-                            <p class="">Tu préstamo está en proceso de aprobación y pronto te daremos una respuesta. ¡Gracias por elegirnos!</p>
-                            <a style="background-color: #23649f; border-radius: 10px; color: white;" href="/consulta-solicitud" class="btn ">Revisar Estatus</a>
-                            <% } %>
+                    <% } else if (cliente.estado_cliente == 'Inactivo'){ %>
+                        <h3 class="mt-4">¡En estos momentos no aplicas para un préstamo! </h3>
+                        <p class="">Evaluaremos en otro momento si aplicas. ¡Gracias por elegirnos!</p>
+
+                        <% }else if (montoPrestado <= 0 && solicitudPendiente <= 0){ %>
+                            <h3 class="mt-4">¡Obtén tu préstamo hoy mismo!</h3>
+                            <p class="">"Estás a un paso, solo debes llenar tu solicitud"</p>
+                            <a style="background-color: #23649f; border-radius: 10px; color: white;" href="/solicita-ya" class="btn ">Solicitar Ahora</a>
+                            <% } else if (montoPrestado <= 0 && solicitudPendiente > 0){ %>
+                                <h3 class="mt-4">¡Estamos revisando tu solicitud! 🔍</h3>
+                                <p class="">Tu préstamo está en proceso de aprobación y pronto te daremos una respuesta. ¡Gracias por elegirnos!</p>
+                                <a style="background-color: #23649f; border-radius: 10px; color: white;" href="/consulta-solicitud" class="btn ">Revisar Estatus</a>
+                                <% } %>
 
             </div>
         </div>

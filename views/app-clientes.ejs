@@ -198,7 +198,11 @@
                                             <%= cliente.fecha_creacion.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                         </td>
                                         <td>
-                                            <%= cliente.estado_cliente %>
+                                            <% if(cliente.estado_cliente == 'Activo'){ %>
+                                                <span style="background-color: green; color: white;"> <%= cliente.estado_cliente %></span>
+                                                <%} else if(cliente.estado_cliente == 'Inactivo'){ %>
+                                                    <span style="background-color: red; color: white;"><%= cliente.estado_cliente %></span>
+                                                    <% } %>
                                         </td>
                                         <td>
                                             <%= cliente.origen %>
