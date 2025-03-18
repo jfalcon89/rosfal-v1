@@ -71,35 +71,85 @@ router.post("/solicita-ya", async(req, res) => {
 
                 // Configurar los detalles del correo electrónico
                 let info = await transporter.sendMail({
-                    from: `${from} ROSFAL SOLUCIONES DE PRESTAMOS`,
+                    from: `${from} ROSFAL SOLUCIONES DE PRÉSTAMOS`,
                     to: `${toNotificacion}`,
-                    subject: `Nueva solicitud de prestamo cliente ${nombre} ${apellido}`,
+                    subject: `Nueva solicitud de Préstamo cliente ${nombre} ${apellido}`,
                     html: `
             
-            <P><strong>Asunto</strong>: Confirmación de solicitud de préstamo</p><br>
-
-            <P><strong>Cliente</strong>: ${nombre} ${apellido}</p>
-            <P><strong>Cedula</strong>: ${cedula}</p>
-            <P><strong>Monto solicitado</strong>: ${montoSolicitado}</p>
-            <P><strong>Direccion</strong>: ${direccion}</p>
-            <P><strong>Email</strong>: ${email}</p>
-            <P><strong>Celular</strong>: ${celular}</p>
-            <P><strong>Pais</strong>: ${res.country_name}</p>
-            <P><strong>Ciudad</strong>: ${res.city}</p>
-            <P><strong>Direccion ip</strong>: ${ip}</p>
-            <P><strong>Dispositivo</strong>: ${device}</p>
-            <P><strong>Navegador</strong>: ${browser}</p>
-            <P><strong>Sistema Operativo</strong>: ${sistemaOperativo}</p>
-            <P><strong>Plataforma</strong>: ${plataforma}</p>
-            <P><strong>Fecha</strong>: ${fecha}</p>
-            <P><strong>Latitud</strong>: ${res.latitude} <strong>longitud</strong>: ${res.longitude}</p><br>
-        
-            <P>Atentamente,</p>
-        
-            <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRESTAMOS</h4>
-            <P><strong>T.</strong> 829-856-0203 <strong>EMAIL.</strong> contacto@rosfal.com </P>
-            <P>Síguenos en <strong>FB:</strong> Rosfalrd <strong>IG:</strong> @Rosfalrd </P>
-            <a href="www.rosfal.com">www.rosfal.com</a>
+            <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de solicitud de préstamo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: #2D8DBD;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .content {
+            padding: 20px;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777777;
+            padding: 10px;
+            border-top: 1px solid #eeeeee;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #2D8DBD;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Confirmación de solicitud de préstamo</div>
+        <div class="content">
+            <p><strong>Cliente:</strong> ${nombre} ${apellido}</p>
+            <p><strong>Cédula:</strong> ${cedula}</p>
+            <p><strong>Monto solicitado:</strong> ${montoSolicitado}</p>
+            <p><strong>Dirección:</strong> ${direccion}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Celular:</strong> ${celular}</p>
+            <p><strong>País:</strong> ${res.country_name}</p>
+            <p><strong>Ciudad:</strong> ${res.city}</p>
+            <p><strong>Dirección IP:</strong> ${ip}</p>
+            <p><strong>Dispositivo:</strong> ${device}</p>
+            <p><strong>Navegador:</strong> ${browser}</p>
+            <p><strong>Sistema Operativo:</strong> ${sistemaOperativo}</p>
+            <p><strong>Plataforma:</strong> ${plataforma}</p>
+            <p><strong>Fecha:</strong> ${fecha}</p>
+            <p><strong>Latitud:</strong> ${res.latitude} <strong>Longitud:</strong> ${res.longitude}</p>
+        </div>
+        <div class="footer">
+            <p><strong>ROSFAL SOLUCIONES DE PRÉSTAMOS</strong></p>
+            <p><strong>T.</strong> 829-856-0203 | <strong>Email:</strong> contacto@rosfal.com</p>
+            <p>Síguenos en <strong>FB:</strong> Rosfalrd | <strong>IG:</strong> @Rosfalrd</p>
+            <p><a href="https://www.rosfal.com" target="_blank">www.rosfal.com</a></p>
+        </div>
+    </div>
+</body>
             `
 
                 });
@@ -143,29 +193,81 @@ router.post("/solicita-ya", async(req, res) => {
 
                 // Configurar los detalles del correo electrónico
                 let info = await transporter.sendMail({
-                    from: `${from} ROSFAL SOLUCIONES DE PRESTAMOS`,
+                    from: `${from} ROSFAL SOLUCIONES DE PRÉSTAMOS`,
                     to: `${email}`,
                     subject: `Gracias por tu solicitud ${nombre} ${apellido}`,
                     html: `
                 
-                <P>Asunto: Confirmación de solicitud de préstamo</p><br>
+                <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Confirmación de Solicitud de Préstamo</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container {
+                width: 80%;
+                max-width: 600px;
+                margin: 20px auto;
+                background: #ffffff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            }
+            
+            .header {
+                background-color: #2D8DBD;
+                color: #fff;
+                text-align: center;
+                padding: 15px;
+                font-size: 20px;
+                border-radius: 8px 8px 0 0;
+            }
+            
+            .content {
+                padding: 20px;
+                color: #333;
+                line-height: 1.6;
+            }
+            
+            .footer {
+                text-align: center;
+                padding: 15px;
+                font-size: 14px;
+                color: #666;
+            }
+            
+            .footer a {
+                color: #2D8DBD;
+                text-decoration: none;
+                font-weight: bold;
+            }
+        </style>
+    </head>
 
-                <P>Estimado/a ${nombre} ${apellido},</p>
-            
-                <P>Esperamos que se encuentre bien. Le escribimos para confirmar que hemos recibido su solicitud de préstamo.</p>
-            
-                <P>Nos complace informarle que su solicitud estara siendo revisada. Nos pondremos en contacto con usted en breve para informarle si su solicitud ha sido aprobada.</p>
-            
-                <P>Mientras tanto, si tiene alguna pregunta o inquietud, no dude en ponerse en contacto con nosotros.</p><br>
-            
-                <P>Gracias por elegir nuestro servicio de préstamos.</p><br>
-            
-                <P>Atentamente,</p><br>
-            
-                <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRESTAMOS</h4>
-                <P><strong>T.</strong> 829-856-0203 <strong>EMAIL.</strong> contacto@rosfal.com </P>
-                <P>Síguenos en <strong>FB:</strong> Rosfalrd <strong>IG:</strong> @Rosfalrd </P>
-                <a href="www.rosfal.com">www.rosfal.com</a>
+    <body>
+        <div class="container">
+            <div class="header">Confirmación de Solicitud de Préstamo</div>
+            <div class="content">
+                <p>Estimado/a <strong>${nombre} ${apellido}</strong>,</p>
+                <p>Esperamos que se encuentre bien. Le escribimos para confirmar que hemos recibido su solicitud de préstamo.</p>
+                <p>Nos complace informarle que su solicitud está siendo revisada. Nos pondremos en contacto con usted en breve para informarle si su solicitud ha sido aprobada.</p>
+                <p>Mientras tanto, si tiene alguna pregunta o inquietud, no dude en ponerse en contacto con nosotros.</p>
+                <p>Gracias por elegir nuestro servicio de préstamos.</p>
+            </div>
+            <div class="footer">
+                <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRÉSTAMOS</h4>
+                <p><strong>T.</strong> 829-856-0203 | <strong>Email:</strong> contacto@rosfal.com</p>
+                <p>Síguenos en <strong>FB:</strong> Rosfalrd | <strong>IG:</strong> @Rosfalrd</p>
+                <p><a href="www.rosfal.com">www.rosfal.com</a></p>
+            </div>
+        </div>
+    </body>
                 `
 
                 });

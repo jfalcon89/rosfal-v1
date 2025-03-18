@@ -196,8 +196,8 @@
                                             <td>
                                                 <% if(cliente.estado_cliente == 'Activo'){ %>
                                                     <span style="background-color: green; color: white;"> <%= cliente.estado_cliente %></span>
-                                                    <%} else if(cliente.estado_cliente == 'Inactivo'){ %>
-                                                        <span style="background-color: red; color: white;"><%= cliente.estado_cliente %></span>
+                                                    <%} else if(cliente.estado_cliente == 'No Aprobado'){ %>
+                                                        <span class="bg-danger text-light"><%= cliente.estado_cliente %></span>
                                                         <% } %>
                                             </td>
                                             <td>
@@ -222,7 +222,7 @@
                 <h3 class="text-secondary"><strong>EDITAR </strong> CLIENTE</h3>
                 <form id="form-validacion" class="" autocomplete="off" action="" method="POST">
                     <div class="container bg-white mt-5 mb-5 pb-5 pt-5">
-                        <% if(cliente.estado_cliente == 'Inactivo'){ %>
+                        <% if(cliente.estado_cliente == 'No Aprobado'){ %>
                             <div>
                                 <p class="bg-danger text-light">Cliente no aplica para préstamo</p>
                             </div>
@@ -272,7 +272,7 @@
                                                 <select class="form-control" name="estado_cliente" id="estado_cliente" aria-describedby="estado_cliente">
                             <option value="<%= cliente.estado_cliente %>" selected><%= cliente.estado_cliente %></option>
                             <option value="Activo" >Activo</option>
-                            <option value="Inactivo">Inactivo</option>
+                            <option value="No Aprobado">No Aprobado</option>
                         </select>
                                             </div>
                                             <div class="input-group mb-3">

@@ -31,7 +31,6 @@
 
     <nav class="navbar navbar-expand-lg navbar-light  ">
         <div class="container-fluid  " style="background-color: #ececec;">
-
             <div class="d-flex">
                 <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
                 <h5 class="text-dark m-2 d-flex align-items-center" style="font-size: large;">APP CLIENTES</h5>
@@ -200,8 +199,8 @@
                                         <td>
                                             <% if(cliente.estado_cliente == 'Activo'){ %>
                                                 <span style="background-color: green; color: white;"> <%= cliente.estado_cliente %></span>
-                                                <%} else if(cliente.estado_cliente == 'Inactivo'){ %>
-                                                    <span style="background-color: red; color: white;"><%= cliente.estado_cliente %></span>
+                                                <%} else if(cliente.estado_cliente == 'No Aprobado'){ %>
+                                                    <span class="bg-danger text-light"><%= cliente.estado_cliente %></span>
                                                     <% } %>
                                         </td>
                                         <td>

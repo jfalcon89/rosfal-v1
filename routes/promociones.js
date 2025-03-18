@@ -76,19 +76,21 @@ router.get('/clientes-promociones-adm', async(req, res) => {
         const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
         const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
         const promocionesClienteDB = await pool.query(`SELECT 
-                                                        p.*, 
-                                                        CASE 
-                                                            WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' THEN 'Credito' 
-                                                            ELSE 'Debito' 
-                                                        END AS tipo_bono
-                                                    FROM 
-                                                        promociones_clientes p
-                                                    LEFT JOIN 
-                                                        users u ON p.cliente_id = u.idUsuario;`);
+                                                            p.*, 
+                                                            u.user AS usuario, 
+                                                            CASE 
+                                                                WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' THEN 'Credito' 
+                                                                ELSE 'Debito' 
+                                                            END AS tipo_bono
+                                                        FROM 
+                                                            promociones_clientes p
+                                                        LEFT JOIN 
+                                                            users u ON p.cliente_id = u.idUsuario;`);
         const pagosPromocionesDB = await pool.query(`SELECT 
                                                         SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS creditos_aprobado,
                                                         SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS creditos_en_revision,
                                                         SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS creditos_liquidado,
+                                                        SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Declinado' THEN p.valor_credito ELSE 0 END) AS creditos_declinado,
                                                         SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS debitos_aprobado,
                                                         SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS debitos_en_revision,
                                                         SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS debitos_liquidado

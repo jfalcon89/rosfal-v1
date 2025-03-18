@@ -142,13 +142,9 @@
                     <p><strong>Aprobados</strong> <span><%= pagosPromociones[0].creditos_aprobado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(pagosPromociones[0].creditos_aprobado) %></span></p>
                     <p><strong>En Revision</strong> <span><%= pagosPromociones[0].creditos_en_revision=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(pagosPromociones[0].creditos_en_revision) %></span></p>
                     <p><strong>Liquidados</strong> <span><%= pagosPromociones[0].creditos_liquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(pagosPromociones[0].creditos_liquidado) %></span></p>
+                    <p><strong>Declinados</strong> <span><%= pagosPromociones[0].creditos_declinado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(pagosPromociones[0].creditos_declinado) %></span></p>
                 </div>
-                <div>
-                    <h3><strong>Debitos Rosfal</strong></h3>
-                    <p><strong>Aprobados</strong> <span><%= pagosPromociones[0].debitos_aprobado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(pagosPromociones[0].debitos_aprobado) %></span></p>
-                    <p><strong>En Revision</strong> <span><%= pagosPromociones[0].debitos_en_revision=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(pagosPromociones[0].debitos_en_revision) %></span></p>
-                    <p><strong>Liquidados</strong> <span><%= pagosPromociones[0].debitos_liquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(pagosPromociones[0].debitos_liquidado) %></span></p>
-                </div>
+                
 
             </div>
             <div class="container-fluid p-4">
@@ -161,7 +157,7 @@
                                 <th scope="col">Valor Credito</th>
                                 <th scope="col">Fecha Registro</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">Cliente ID</th>
+                                <th scope="col">Usuario Beneficiado</th>
                                 <th scope="col">Origen Bonos</th>
                                 <% if(rol == permiso_A){ %>
                                     <th scope="col">Acciones</th>
@@ -169,8 +165,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% if (promocionesCliente.length > 0) { %>
+                            <% if (promocionesCliente.length > 0 ) { %>
                                 <% promocionesCliente.forEach(promocion=> { %>
+                                    <% if (promocion.usuario !== 'PromocionesRosfal'){ %>
+                                    <% console.log('Usuario ' + promocion.usuario) %>
                                     <span class="d-none"><%= i++ %></span>
                                     <tr>
                                         <td>
@@ -196,7 +194,7 @@
                                                         <% } %>
                                         </td>
                                         <td>
-                                            <%= promocion.cliente_id %>
+                                            <%= promocion.cliente_id %> - <%= promocion.usuario %>
                                         </td>
                                         <td>
                                             <% if(promocion.tipo_bono == 'Credito' ){ %>
@@ -255,6 +253,7 @@
                                                          <option value="Aprobado">Aprobado</option>
                                                          <option value="En Revision">En Revision</option>
                                                          <option value="Liquidado">Liquidado</option>
+                                                         <option value="Declinado">Declinado</option>
                                                                                         
                                                      </select>
                                                         <br><br>
@@ -302,7 +301,7 @@
                                         </div>
                                     </div>
 
-
+                                    <% } %>
                                     <% }) %>
                                         <% } %>
                         </tbody>

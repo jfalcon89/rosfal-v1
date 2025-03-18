@@ -97,7 +97,7 @@ router.get('/notificacionCorreoAtrasosCliente/:id', async(req, res) => {
         const solicitudDB = await pool.query(`SELECT * FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND  solicitudes.atraso > 0 AND solicitudes.idSolicitud = ${id} `);
         const solicitud = solicitudDB[0];
         console.log(solicitud);
-        console.log("¡Ejecutando función cada minuto!");
+        // console.log("¡Ejecutando función cada minuto!");
 
         // iteracion de los resultados
 
@@ -129,46 +129,102 @@ router.get('/notificacionCorreoAtrasosCliente/:id', async(req, res) => {
 
                     // Configurar los detalles del correo electrónico
                     let info = await transporter.sendMail({
-                        from: `${from} ROSFAL SOLUCIONES DE PRESTAMOS`,
+                        from: `${from} ROSFAL SOLUCIONES DE PRÉSTAMOS`,
                         to: `${toNotificacion}`,
-                        subject: `Notificacion Prestamo en Atraso ${solicitud.nombre} ${solicitud.apellido} `,
+                        subject: `Notificación Préstamo en Atraso ${solicitud.nombre} ${solicitud.apellido} `,
                         html: `
-            
-             Hola! Si ya pagaste, favor desestimar.</p><br><br>
-        
-             <strong>SEÑOR (A):</strong><br>
-             ${solicitud.nombre}  ${solicitud.apellido} <br><br>
-            
-            Después de un cordial saludo, le informamos que su prestamo No.<strong> ${solicitud.idSolicitud}</strong> realizado en fecha <strong>${solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10)}</strong> presenta un atraso al dia de hoy de <strong>*${solicitud.atraso} Pesos.</strong><br>
-            Le solicitamos poner al dia su prestamo para evitar mora por atraso.<br><br>
-            
-            Llámanos al Teléfono 829-856-0203 si necesitas cualquier tipo de ayuda.<br><br>
-            
-            <strong>COMO PUEDO REALIZAR EL PAGO DE MI CUOTA DE PRÉSTAMO</strong> ?<br><br>
-            Puedes realizar tu pago en cualquier sucursal del Banco Popular, BHD Leon o BanReservas, también puedes realizar transferencias desde tu banco através de internet banking, recuerda que para confirmar su pago debe incluir siempre como referencia su número de cédula.<br><br>
-            
-            <strong>Banco Popular</strong> <br>
-            Numero de cuenta: 786408559<br>
-            Titular de la cuenta: Jose Miguel Falcon<br><br>
 
-            <strong>BHD Leon</strong> <br>
-            Numero de cuenta: 12113510016<br>
-            Titular de la cuenta: Jose Miguel Falcon<br><br>
-
-            <strong>BanReservas</strong> <br>
-            Numero de cuenta: 9606036287<br>
-            Titular de la cuenta: Magdelin M. Rosario<br><br>
-
-            <strong>NOTA:</strong> Es imprescindible colocar referencia de su cédula al realizar su pago vía depósito o transferencia<br><br>
-        
-            <P>Atentamente,</p>
-        
-            <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRESTAMOS</h4>
-            <P><strong>T.</strong> 829-856-0203 <strong>EMAIL.</strong> contacto@rosfal.com </P>
-            <P>Síguenos en <strong>FB:</strong> Rosfalrd <strong>IG:</strong> @Rosfalrd </P>
-            <a href="www.rosfal.com">www.rosfal.com</a>
+             <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificación de Pago</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .header {
+            background-color: #d32f2f;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+        }
+        .content {
+            text-align: left;
+            padding: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        .bank-details {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #d32f2f;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><strong>ROSFAL</strong> | NOTIFICACIÓN DE PAGO EN ATRASO</div>
+        <div class="content">
+            
+            <p><strong>SEÑOR (A):</strong> ${solicitud.nombre} ${solicitud.apellido}</p>
+            <p>Después de un cordial saludo, le informamos que su préstamo No. <strong>${solicitud.idSolicitud}</strong> realizado en fecha <strong>${solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10)}</strong> presenta un atraso al día de hoy de <span class="highlight">${solicitud.atraso} Pesos</span>.</p>
+            <p>Le solicitamos poner al día su préstamo para evitar mora por atraso.</p>
+            <p>Si necesita ayuda, llámenos al <strong>829-856-0203</strong>.</p>
+            
+            <h3>¿Cómo realizar el pago?</h3>
+            <p>Puedes realizar tu pago en cualquier sucursal del Banco Popular, BHD León o BanReservas. También puedes transferir desde tu banco a través de internet banking. Recuerda incluir tu número de cédula como referencia.</p>
+            
+            <div class="bank-details">
+                <p><strong>Banco Popular</strong><br>Cuenta: 786408559<br>Titular: José Miguel Falcón</p>
+                <p><strong>BHD León</strong><br>Cuenta: 12113510016<br>Titular: José Miguel Falcón</p>
+                <p><strong>BanReservas</strong><br>Cuenta: 9606036287<br>Titular: Magdelin M. Rosario</p>
+            </div>
+            
+            <p><strong>Nota:</strong> Es imprescindible colocar referencia de su cédula al realizar su pago.</p>
+            
+            <a href="www.rosfal.com" class="btn-danger btn"> Ir a app Rosfal</a>
+        </div>
+        <div class="footer">
+            <p style="color: #2D8DBD;"><strong>ROSFAL SOLUCIONES DE PRÉSTAMOS</strong></p>
+            <p><strong>T:</strong> 829-856-0203 | <strong>Email:</strong> contacto@rosfal.com</p>
+            <p>Síguenos en <strong>FB:</strong> Rosfalrd | <strong>IG:</strong> @Rosfalrd</p>
+            <p><a href="www.rosfal.com">www.rosfal.com</a></p>
+        </div>
+    </div>
+</body>
             `
-
                     });
 
                     console.log("Correo enviado: %s", info.messageId);
@@ -191,6 +247,164 @@ router.get('/notificacionCorreoAtrasosCliente/:id', async(req, res) => {
 
 
     notificacionCorreoAtrasosCliente()
+});
+
+//FUNCION PARA ENVIAR NOTIFICACION DE LEGAL POR CORREO A CLIENTE
+
+router.get('/notificarLegalClienteBtnCorreo/:id', async(req, res) => {
+
+    const id = req.params.id
+
+    const fecha = new Date().toLocaleString('en-EN', { timeZone: 'America/Santo_Domingo' });
+
+    async function notificarLegalClienteBtnCorreo() {
+
+        // Coloca aquí el código que deseas que se ejecute como condicion para los clientes que aplican para este correo
+        const solicitudDB = await pool.query(`SELECT * FROM solicitudes WHERE estadoSolicitud in ('Aprobada', 'En Legal') AND solicitudes.legalMonto > 0 AND solicitudes.idSolicitud = ${id} `);
+        const solicitud = solicitudDB[0];
+        console.log(solicitud);
+
+
+        // iteracion de los resultados
+
+        console.log(solicitud.legalMonto)
+
+        if (solicitud.email) {
+            async function notificacionCorreo() {
+                try {
+                    const from = "cobros@rosfal.com"
+                    const toNotificacion = solicitud.email + `,mrosario@rosfal.com`
+
+
+                    // console.log(nombre + " en enviar correo");
+                    // console.log(apellido + " en enviar correo");
+
+                    // Configurar la conexión SMTP con el servidor de correo personalizado
+                    let transporter = nodemailer.createTransport({
+                        host: "mail.privateemail.com",
+                        port: 465, // El puerto puede variar según la configuración de su servidor
+                        secure: true, // Si utiliza SSL/TLS, establezca este valor en true
+                        tls: {
+                            rejectUnauthorized: false
+                        },
+                        auth: {
+                            user: process.env.USERCORREO,
+                            pass: process.env.PASSCORREO,
+                        },
+                    });
+
+                    // Configurar los detalles del correo electrónico
+                    let info = await transporter.sendMail({
+                        from: `${from} ROSFAL SOLUCIONES DE PRÉSTAMOS`,
+                        to: `${toNotificacion}`,
+                        subject: `Requerimiento de Pago Préstamo en PRE-LEGAL ${solicitud.nombre} ${solicitud.apellido} `,
+                        html: `
+
+             <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Requerimiento de Pago Pre-Legal</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 20px;
+            }
+            
+            .container {
+                max-width: 600px;
+                background: #fff;
+                padding: 20px;
+                margin: auto;
+                border-radius: 8px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+            
+            .header {
+                background-color: #d32f2f;
+                color: white;
+                padding: 15px;
+                font-size: 18px;
+                font-weight: bold;
+                text-align: left;
+            }
+            
+            .content {
+                text-align: left;
+                padding: 20px;
+                color: #777;
+            }
+            
+            .highlight {
+                font-weight: bold;
+                color: #d32f2f;
+            }
+            
+            .footer {
+                margin-top: 20px;
+                font-size: 14px;
+                color: #777;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="header"><strong>ROSFAL</strong> | REQUERIMIENTO DE PAGO PRE-LEGAL</div>
+            <div style="color: #777;" class="content">
+
+                <p style="text-align: right;">República Dominicana, <strong>${fecha.slice(0, 10)}</strong></p>
+                <p><strong>Señor(a):</strong><br>${solicitud.nombre} ${solicitud.apellido}</p>
+
+                <p>Le informamos que su crédito presenta incumplimientos de pagos, con un saldo pendiente a la fecha de <strong>RD$${solicitud.legalMonto}.00</strong></p>
+
+                <p style="font-weight: bold; ">De no regularizar su situación de inmediato, su expediente será trasladado a nuestro <strong>BUFETE DE ABOGADOS</strong> externo para su respectivo cobro <strong>PRE-JURÍDICO</strong>. Adicionalmente, su información será reportada al <strong>BURÓ DE CRÉDITO.</strong></p>
+
+                <p>Le recordamos que un mal récord crediticio puede afectar su acceso a financiamiento en cualquier entidad financiera o comercial, limitando su capacidad de crédito futuro. Para evitar estos inconvenientes, le instamos a realizar su pago
+                    lo antes posible.</p>
+
+                <p>Si tiene alguna duda o requiere más información, puede comunicarse con nosotros al teléfono <strong style="color: #2D8DBD;">(829) 856-0203</strong> de lunes a viernes en horario de 8:00 a.m. a 5:00 p.m.</p><br><br>
+
+                <p><strong>Atentamente:</strong></p>
+                <p><strong>Departamento de Cobros</strong></p>
+
+            </div>
+            <div class="footer">
+                <p style="color: #2D8DBD;"><strong>ROSFAL SOLUCIONES DE PRÉSTAMOS</strong></p>
+                <p><strong>T:</strong> 829-856-0203 | <strong>Email:</strong> contacto@rosfal.com</p>
+                <p>Síguenos en <strong>FB:</strong> Rosfalrd | <strong>IG:</strong> @Rosfalrd</p>
+                <p><a href="www.rosfal.com">www.rosfal.com</a></p>
+            </div>
+            <hr>
+            <p style="font-size: 12px; color: #888; text-align: center;">Este correo puede contener información confidencial y/o protegida legalmente. Si usted no es el destinatario y ha recibido este mensaje por error, por favor notifíquelo al remitente y elimínelo inmediatamente para evitar violar las leyes aplicables.
+                Agradecemos su atención y colaboración.</p>
+        </div>
+    </body>
+            `
+                    });
+
+                    console.log("Correo enviado: %s", info.messageId);
+
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            notificacionCorreo()
+        }
+
+
+
+
+
+    }
+
+
+
+
+    notificarLegalClienteBtnCorreo()
 });
 
 
@@ -264,44 +478,101 @@ router.get('/notificacionCorreoAtrasos', async(req, res) => {
 
                             // Configurar los detalles del correo electrónico
                             let info = await transporter.sendMail({
-                                from: `${from} ROSFAL SOLUCIONES DE PRESTAMOS`,
+                                from: `${from} ROSFAL SOLUCIONES DE PRÉSTAMOS`,
                                 to: `${toNotificacion}`,
-                                subject: `Notificacion Prestamo en Atraso ${solicitud.nombre} ${solicitud.apellido} `,
+                                subject: `Notificacion Préstamo en Atraso ${solicitud.nombre} ${solicitud.apellido} `,
                                 html: `
             
-             Hola! Si ya pagaste, favor desestimar.</p><br><br>
-        
-             <strong>SEÑOR (A):</strong><br>
-             ${solicitud.nombre}  ${solicitud.apellido} <br><br>
+            <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificación de Pago</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .header {
+            background-color: #d32f2f;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+        }
+        .content {
+            text-align: left;
+            padding: 20px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        .bank-details {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #d32f2f;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><strong>ROSFAL</strong> | NOTIFICACIÓN DE PAGO EN ATRASO</div>
+        <div class="content">
             
-            Después de un cordial saludo, le informamos que su prestamo No.<strong> ${solicitud.idSolicitud}</strong> realizado en fecha <strong>${solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10)}</strong> presenta un atraso al dia de hoy de <strong>*${solicitud.atraso} Pesos.</strong><br>
-            Le solicitamos poner al dia su prestamo para evitar mora por atraso.<br><br>
+            <p><strong>SEÑOR (A):</strong> ${solicitud.nombre} ${solicitud.apellido}</p>
+            <p>Después de un cordial saludo, le informamos que su préstamo No. <strong>${solicitud.idSolicitud}</strong> realizado en fecha <strong>${solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10)}</strong> presenta un atraso al día de hoy de <span class="highlight">${solicitud.atraso} Pesos</span>.</p>
+            <p>Le solicitamos poner al día su préstamo para evitar mora por atraso.</p>
+            <p>Si necesita ayuda, llámenos al <strong>829-856-0203</strong>.</p>
             
-            Llámanos al Teléfono 829-856-0203 si necesitas cualquier tipo de ayuda.<br><br>
+            <h3>¿Cómo realizar el pago?</h3>
+            <p>Puedes realizar tu pago en cualquier sucursal del Banco Popular, BHD León o BanReservas. También puedes transferir desde tu banco a través de internet banking. Recuerda incluir tu número de cédula como referencia.</p>
             
-            <strong>COMO PUEDO REALIZAR EL PAGO DE MI CUOTA DE PRÉSTAMO</strong> ?<br><br>
-            Puedes realizar tu pago en cualquier sucursal del Banco Popular, BHD Leon o BanReservas, también puedes realizar transferencias desde tu banco através de internet banking, recuerda que para confirmar su pago debe incluir siempre como referencia su número de cédula.<br><br>
+            <div class="bank-details">
+                <p><strong>Banco Popular</strong><br>Cuenta: 786408559<br>Titular: José Miguel Falcón</p>
+                <p><strong>BHD León</strong><br>Cuenta: 12113510016<br>Titular: José Miguel Falcón</p>
+                <p><strong>BanReservas</strong><br>Cuenta: 9606036287<br>Titular: Magdelin M. Rosario</p>
+            </div>
             
-            <strong>Banco Popular</strong> <br>
-            Numero de cuenta: 786408559<br>
-            Titular de la cuenta: Jose Miguel Falcon<br><br>
-
-            <strong>BHD Leon</strong> <br>
-            Numero de cuenta: 12113510016<br>
-            Titular de la cuenta: Jose Miguel Falcon<br><br>
-
-            <strong>BanReservas</strong> <br>
-            Numero de cuenta: 9606036287<br>
-            Titular de la cuenta: Magdelin M. Rosario<br><br>
-
-            <strong>NOTA:</strong> Es imprescindible colocar referencia de su cédula al realizar su pago vía depósito o transferencia<br><br>
-        
-            <P>Atentamente,</p>
-        
-            <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRESTAMOS</h4>
-            <P><strong>T.</strong> 829-856-0203 <strong>EMAIL.</strong> contacto@rosfal.com </P>
-            <P>Síguenos en <strong>FB:</strong> Rosfalrd <strong>IG:</strong> @Rosfalrd </P>
-            <a href="www.rosfal.com">www.rosfal.com</a>
+            <p><strong>Nota:</strong> Es imprescindible colocar referencia de su cédula al realizar su pago.</p>
+            
+            <a href="www.rosfal.com" class="btn-danger btn"> Ir a app Rosfal</a>
+        </div>
+        <div class="footer">
+            <p style="color: #2D8DBD;"><strong>ROSFAL SOLUCIONES DE PRÉSTAMOS</strong></p>
+            <p><strong>T:</strong> 829-856-0203 | <strong>Email:</strong> contacto@rosfal.com</p>
+            <p>Síguenos en <strong>FB:</strong> Rosfalrd | <strong>IG:</strong> @Rosfalrd</p>
+            <p><a href="www.rosfal.com">www.rosfal.com</a></p>
+        </div>
+    </div>
+</body>
             `
 
                             });

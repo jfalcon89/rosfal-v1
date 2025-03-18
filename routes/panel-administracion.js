@@ -157,15 +157,22 @@ router.get('/panel-administracion', async(req, res) => {
 
 
 
-            console.log(SolicitudesClientePagosDB.length > 0)
+            // console.log(SolicitudesClientePagosDB.length > 0)
+            // console.log(SolicitudesClientePagosDB[0].fechaPago.length > 0)
 
             if (SolicitudesClientePagosDB.length > 0) {
                 // Convierte la fecha en un objeto Date
                 var fechaPago = new Date(SolicitudesClientePagosDB[0].fechaPago);
 
-                // Formatea la fecha
-                var fechaFormateada = format(fechaPago, "d 'de' MMMM, yyyy", { locale: es });
-                var fechaHoyFormateada = format(hoy, "d 'de' MMMM, yyyy", { locale: es });
+                if (SolicitudesClientePagosDB[0].fechaPago.length > 0) {
+
+                    // Formatea la fecha
+                    var fechaFormateada = format(fechaPago, "d 'de' MMMM, yyyy", { locale: es });
+                    var fechaHoyFormateada = format(hoy, "d 'de' MMMM, yyyy", { locale: es });
+                } else {
+                    fechaFormateada = 0;
+                    fechaHoyFormateada = 0;
+                }
             }
 
             return res.render("panel-administracion", {

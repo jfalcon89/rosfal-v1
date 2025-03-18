@@ -142,7 +142,7 @@
                                         <%= SolicitudFechaPago %>
                                     </p>
                                     <% }else{ %>
-                                        <p style="color: #b30707;">Fecha de pago:
+                                        <p style="color: #b30707;">Fecha de pago vencida:
                                             <%= SolicitudFechaPago %>
                                         </p>
                                         <% } %>
@@ -176,7 +176,7 @@
                             <a href="/login" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="bi bi-info-circle me-2"></i>Más información</a>
                         </div> -->
                     </div>
-                    <% } else if (cliente.estado_cliente == 'Inactivo'){ %>
+                    <% } else if (cliente.estado_cliente == 'No Aprobado'){ %>
                         <h3 class="mt-4">¡En estos momentos no aplicas para un préstamo! </h3>
                         <p class="">Evaluaremos en otro momento si aplicas. ¡Gracias por elegirnos!</p>
 
