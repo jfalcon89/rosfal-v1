@@ -181,6 +181,18 @@
 
             <form id="uploadSolicitud" class="" autocomplete="off" action="" method="POST">
 
+                <script>
+                    document.getElementById("uploadSolicitud").addEventListener("submit", function(event) {
+                        let estadoSolicitud = document.getElementById("estadoSolicitud").value;
+                        let saldoFinal = document.getElementById("saldoFinal").value.trim();
+
+                        if (estadoSolicitud === "Aprobada" && saldoFinal === "") {
+                            event.preventDefault(); // Evita que el formulario se envíe
+                            alert("Si se va a aprobar una solicitud, el campo saldoFinal debe estar lleno.");
+                        }
+                    });
+                </script>
+
                 <div class="d-lg-flex justify-content-end">
 
                     <a class="btn btn-secondary btn-block p-2 mb-2 me-lg-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"><i
@@ -188,8 +200,10 @@
                     <% if(rol == permiso_A){ %>
                         <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-danger btn-block p-2 mb-2 me-lg-2"><i class="bi bi-x-lg me-lg-2"></i>ELIMINAR SOLICITUD</i></a>
                         <% } %>
+
                             <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i
-                            class="bi bi-check-lg me-lg-2"></i>GUARDAR CAMBIOS</button>
+                    class="bi bi-check-lg me-lg-2" ></i>GUARDAR CAMBIOS</button>
+
 
                             <a class="btn btn-primary p-2 mb-2 dropdown-toggle" type="button" data-bs-toggle="collapse" href="#collapseExampleNotificacion" aria-expanded="false">
                                 NOTIFICAR CLIENTE
@@ -320,7 +334,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Estado Solicitud</span>
                                                         </div>
-                                                        <select name="estadoSolicitud" class="form-control" id="">
+                                                        <select name="estadoSolicitud" class="form-control" id="estadoSolicitud">
                                                             <option value="<%= solicitud.estadoSolicitud %>" selected>
                                                                 <%= solicitud.estadoSolicitud %>
                                                             </option>
