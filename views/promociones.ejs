@@ -312,17 +312,17 @@
                         <!-- Campo para ingresar el ID del préstamo -->
 
                         <label for="codigo_promocion">Codigo Promocion</label>
-                        <input class="form-control" type="text" name="codigo_promocion">
+                        <input style="text-transform:uppercase" class="form-control" type="text" name="codigo_promocion">
 
                         <label for="valor_credito">Valor Credito</label>
                         <input class="form-control" type="number" name="valor_credito">
 
                         <label for="origen_bono">Origen Bono</label>
                         <select name="origen_bono" class="form-control" id="origen_bono" required>
-                            <option value="PromocionesRosfal" selected>Promociones Rosfal</option>
+                            <option value="PromocionesRosfal" selected>Promociones Rosfal</option>  
                             <% if (arrayUsuariosV.length > 0) { %>
                                 <% arrayUsuariosV.forEach(usuario=> { %>
-                                    <option value=<%= usuario.user %>><%= usuario.idUsuario %> <%= usuario.user %></option>
+                                    <option value=<%= usuario.user %>><%= usuario.idUsuario %> - <%= usuario.user %></option>
                             <% }) %>
                                         <% } %>
                             

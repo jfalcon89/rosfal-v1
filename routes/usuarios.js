@@ -691,7 +691,10 @@ router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
 
         } catch (error) {
             console.error('Error durante la actualización:', error);
-            // // res.status(500).send('Hubo un error actualizando el usuario.');
+            // res.status(500).send('Hubo un error actualizando el usuario.');
+            res.render('404', {
+                mensaje: error
+            });
         }
 
     } else {
