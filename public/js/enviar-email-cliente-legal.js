@@ -1,8 +1,10 @@
+// LEGAL ENVIO DE CORREO EMAIL
 // Asignar el evento click al botón
-document.getElementById('notificarAtrasosClienteBtnCorreo').addEventListener('click', notificarAtrasosClienteBtnCorreo);
+document.getElementById('notificarLegalClienteBtnCorreo').addEventListener('click', notificarLegalClienteBtnCorreo);
 
 // Función que notifica los atrasos
-async function notificarAtrasosClienteBtnCorreo() {
+async function notificarLegalClienteBtnCorreo() {
+    console.log('entro a la function javascript')
     try {
 
         const id = document.getElementById('idSolicitud').textContent
@@ -12,7 +14,7 @@ async function notificarAtrasosClienteBtnCorreo() {
             // confirm("Seguro que desea enviar Notificacion de atrasos masivos")
 
         // Hacer una petición al servidor para notificar atrasos
-        const response = await fetch(`/notificacionCorreoAtrasosCliente/${id.slice(14)}`, { method: 'GET' });
+        const response = await fetch(`/notificacionLegalClienteCorreo/${id.slice(14)}`, { method: 'GET' });
         const message = await response.text();
         alert('Su notificacion se han enviado correctamente');
         // console.log(message)

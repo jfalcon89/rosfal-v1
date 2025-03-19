@@ -236,16 +236,24 @@
 
                                 </li>
 
+                                <script src="/js/enviar-sms-cliente.js"></script>
+                                <script src="/js/enviar-email-cliente.js"></script>
+
                                 <% } %>
-                                    <% if(solicitud.legalMonto > "0"){ %>
+                                    <% if(solicitud.legalMonto >"0"){ %>
                                         <li>
                                             <a id="notificarLegalClienteBtnCorreo" type="button" class="dropdown-item ">Notificar Email Legal</a>
 
                                         </li>
+
+                                        <script src="/js/enviar-email-cliente-legal.js"></script>
                                         <% } %>
 
 
                 </ul>
+
+
+
 
                 <!-- </div> -->
 
@@ -823,8 +831,8 @@
 
 
     <script src="/js/ver-solicitud-event.js"></script>
-    <script src="/js/enviar-sms-cliente.js"></script>
-    <script src="/js/enviar-email-cliente.js"></script>
+
+
 
     <div class="container ">
 

@@ -251,16 +251,18 @@ router.get('/notificacionCorreoAtrasosCliente/:id', async(req, res) => {
 
 //FUNCION PARA ENVIAR NOTIFICACION DE LEGAL POR CORREO A CLIENTE
 
-router.get('/notificarLegalClienteBtnCorreo/:id', async(req, res) => {
+router.get('/notificacionLegalClienteCorreo/:id', async(req, res) => {
+
+    console.log('entro a la ruta')
 
     const id = req.params.id
 
     const fecha = new Date().toLocaleString('en-EN', { timeZone: 'America/Santo_Domingo' });
 
-    async function notificarLegalClienteBtnCorreo() {
+    async function notificacionLegalClienteCorreo() {
 
         // Coloca aquí el código que deseas que se ejecute como condicion para los clientes que aplican para este correo
-        const solicitudDB = await pool.query(`SELECT * FROM solicitudes WHERE estadoSolicitud in ('Aprobada', 'En Legal') AND solicitudes.legalMonto > 0 AND solicitudes.idSolicitud = ${id} `);
+        const solicitudDB = await pool.query(`SELECT * FROM solicitudes WHERE solicitudes.legalMonto > 0 AND solicitudes.idSolicitud = ${id} `);
         const solicitud = solicitudDB[0];
         console.log(solicitud);
 
@@ -389,6 +391,7 @@ router.get('/notificarLegalClienteBtnCorreo/:id', async(req, res) => {
 
                 } catch (error) {
                     console.log(error);
+                    res.mensaje(error);
                 }
             }
 
@@ -404,7 +407,7 @@ router.get('/notificarLegalClienteBtnCorreo/:id', async(req, res) => {
 
 
 
-    notificarLegalClienteBtnCorreo()
+    notificacionLegalClienteCorreo()
 });
 
 
