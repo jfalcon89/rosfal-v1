@@ -588,7 +588,6 @@ router.get('/notificacionCorreoAtrasos', async(req, res) => {
                 }
 
 
-
             })
         }
 
