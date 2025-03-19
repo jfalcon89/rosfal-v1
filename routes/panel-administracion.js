@@ -164,7 +164,7 @@ router.get('/panel-administracion', async(req, res) => {
                 // Convierte la fecha en un objeto Date
                 var fechaPago = new Date(SolicitudesClientePagosDB[0].fechaPago);
 
-                if (SolicitudesClientePagosDB[0].fechaPago.length > 0) {
+                if (SolicitudesClientePagosDB[0].fechaPago) {
 
                     // Formatea la fecha
                     var fechaFormateada = format(fechaPago, "d 'de' MMMM, yyyy", { locale: es });
