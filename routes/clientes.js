@@ -48,6 +48,7 @@ router.get('/app-clientes', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -91,6 +92,7 @@ router.get('/app-clientes/crear-cliente', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 })
@@ -318,6 +320,7 @@ router.get('/app-clientes/editar-cliente', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 })
@@ -382,6 +385,7 @@ router.get("/app-clientes/editar-cliente/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });

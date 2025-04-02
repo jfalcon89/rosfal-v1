@@ -654,6 +654,7 @@ router.get('/solicitudes-nuevas', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -726,6 +727,7 @@ router.get("/Solicitudes-nuevas/ver-solicitud/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -798,6 +800,7 @@ router.get("/Solicitudes-nuevas/editar-solicitud/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -1004,6 +1007,7 @@ router.get('/solicitudes-aprobadas', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -1078,6 +1082,7 @@ router.get("/Solicitudes-aprobadas/ver-solicitud/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -1136,6 +1141,7 @@ router.get("/Solicitudes-aprobadas/imprimir-solicitud/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -1194,6 +1200,7 @@ router.get("/Solicitudes-aprobadas/imprimir-contato/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -1265,6 +1272,7 @@ router.get("/Solicitudes-aprobadas/editar-solicitud/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -1458,6 +1466,7 @@ router.get('/solicitudes-declinadas', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -1528,6 +1537,7 @@ router.get("/Solicitudes-declinadas/ver-solicitud/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -1602,6 +1612,7 @@ router.get("/Solicitudes-declinadas/editar-solicitud/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -1785,6 +1796,7 @@ router.get('/solicitudes-en-revision', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -1854,6 +1866,7 @@ router.get("/Solicitudes-en-revision/ver-solicitud/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -1926,6 +1939,7 @@ router.get("/Solicitudes-en-revision/editar-solicitud/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -2109,6 +2123,7 @@ router.get('/todas-las-solicitudes', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -2156,6 +2171,7 @@ router.get('/clientes', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -2212,6 +2228,7 @@ router.get("/clientes/ver-cliente/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -2461,6 +2478,8 @@ router.post("/clientes/ver-cliente/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
+
         });
     }
 

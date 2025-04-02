@@ -31,92 +31,30 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light  ">
-        <div class="container-fluid  " style="background-color: #ececec;">
+        <div class="container-fluid  " style="">
+            <div class="w-100 m-2 d-flex justify-content-between align-items-center">
 
-            <div class="d-flex">
-                <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
+                <a href="/panel-administracion">
 
-            </div>
-            <button class="navbar-toggler  " type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon "></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <div class="offcanvas-body ">
+                    <i class="bi bi-arrow-left fs-4"></i>
+                </a>
 
-                    <div class="d-flex">
-                        <div class="btn-group ">
-                            <button type="button" class="hola navbar-toggler d-block me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon show "></span>
-                            </button>
-                            <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
-                        </div>
-                        <div class="user-container me-2 d-flex">
-                            <% if (login) { %>
-                                <div>
-                                    <h4 type="" class="" style="color: #aeaeae;">
-                                        <% if (SolicitudesCliente.length > 0) { %>
-                                            <% SolicitudesCliente.forEach(SolicitudesCliente=> { %>
-                                                <% if(SolicitudesCliente.celular == usuario.user){ %>
-                                                    <%= SolicitudesCliente.nombre %>
-                                                        <% } %>
-                                                            <% }) %>
-                                                                <% }else{ %>
-                                                                    <%= name %>
-                                                                        <% } %>
-                                    </h4>
-                                    <h6>
-                                        <%= rol %>
-                                    </h6>
-                                </div>
-                                <%}  %>
-                        </div>
-                    </div>
+                <div class="w-100 d-flex justify-content-center">
+
+                    <p class="m-0">Promociones</p>
                 </div>
             </div>
+
         </div>
     </nav>
-
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="navbarOffcanvasLabel">
-                <h5 class="text-dark m-2" style="font-size: large;">USUARIO</h5>
-            </h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="user-container  d-flex align-content-center p-1" style="border-radius: 15px; background-color: #ececec;">
-                <% if (login) { %>
-                    <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
-                    <div>
-                        <h4 type="" class="" style="color: #aeaeae;">
-                            <% if (SolicitudesCliente.length > 0) { %>
-                                <% SolicitudesCliente.forEach(SolicitudesCliente=> { %>
-                                    <% if(SolicitudesCliente.celular == usuario.user){ %>
-                                        <%= SolicitudesCliente.nombre %>
-                                            <% } %>
-                                                <% }) %>
-                                                    <% }else{ %>
-                                                        <%= name %>
-                                                            <% } %>
-                        </h4>
-                        <h6>
-                            <%= rol %>
-                        </h6>
-                    </div>
-                    <%}  %>
-            </div>
-            <hr class="dropdown-divider">
-            <%- include('template/navbar-menu') %>
-        </div>
-    </div>
 
 
 
 
     <div class=" p-2">
 
-        <div class="container-fluid p-2  ">
-            <h3 class="text-secondary"><strong>HOLA, </strong>
+        <div style="border-radius: 15px; background-color: white;" class="container-fluid p-2 shadow">
+            <h5 class="text-secondary text-center"><strong>HOLA, </strong>
                 <% if (SolicitudesCliente.length > 0) { %>
                     <% SolicitudesCliente.forEach(SolicitudesCliente=> { %>
                         <% if(SolicitudesCliente.celular == usuario.user){ %>
@@ -127,21 +65,23 @@
                                             <%= name %>
                                                 <% } %>
 
-            </h3>
+            </h5>
+
+
+            <div style="text-align: center;" class="mt-5">
+                <h3><strong>Comparte tu codigo</strong></h3>
+                <h5>Obten RD$250 pesos por cada persona que recomiendes a Rosfal. <br>La persona que recomiendes tambien recibira RD$250 pesos.</h5>
+
+                <div class="mt-5">
+                    <span><strong>Tu codigo es:</strong></span>
+                    <h2>
+                        <%= usuario.idUsuario %>00-PRIMERCREDITO</h2>
+                </div>
+            </div>
         </div>
 
-        <div style="text-align: center;" class="mt-5">
-            <h3><strong>Comparte tu codigo</strong></h3>
-            <h5>Obten RD$250 pesos por cada persona que recomiendes a Rosfal. <br>La persona que recomiendes tambien recibira RD$250 pesos.</h5>
-
-            <div class="mt-5">
-                <span><strong>Tu codigo es:</strong></span>
-                <h2>
-                    <%= usuario.idUsuario %>00-PRIMERCREDITO</h2>
-            </div>
-
-            <div class="mt-5">
-                <button style="border-radius: 20px;  width: 100%;" class="btn btn-success"><a class="dropdown-item text-white" target="_blank" href="https://wa.me/<%=  %>?text=
+        <div class="mt-5">
+            <button style="border-radius: 20px;  width: 100%;" class="btn btn-success"><a class="dropdown-item text-white" target="_blank" href="https://wa.me/<%=  %>?text=
         
                         %0A*INVITACIÓN ESPECIAL A ROSFAL SOLUCIONES DE PRÉSTAMOS*%0A
                                     
@@ -160,8 +100,8 @@
                         
                                     
                         ">Compatir mi codigo</a></button>
-            </div>
         </div>
+
 
 
 

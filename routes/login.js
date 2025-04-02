@@ -11,7 +11,7 @@ const useragent = require('express-useragent');
 router.get('/login', (req, res) => {
     const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
     res.render('login', {
-        device
+        device: device
     });
 })
 
@@ -26,7 +26,7 @@ router.post('/auth', async(req, res) => {
         pool.query('SELECT * FROM users WHERE user = ?', [user], async(error, results, fields) => {
             if (results.length == 0 || !(await bcrypt.compare(pass, results[0].pass))) {
                 res.render('login', {
-                    device,
+                    device: device,
                     alert: true,
                     alertTitle: "Error",
                     alertMessage: "USUARIO y/o PASSWORD incorrectas",
@@ -49,7 +49,7 @@ router.post('/auth', async(req, res) => {
                     if (error) throw error;
                 });
                 res.render('login', {
-                    device,
+                    device: device,
                     alert: true,
                     alertTitle: "Conexión exitosa",
                     alertMessage: "¡LOGIN CORRECTO!",

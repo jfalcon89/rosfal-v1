@@ -19,217 +19,234 @@ const { es } = require('date-fns/locale');
 
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES NUEVAS********************
 router.get('/panel-administracion', async(req, res) => {
+
+    let device = '';
+
     if (req.session.loggedin) {
+
 
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
 
         if (req.session.rol == 'Cliente App') {
-            let i = 0
-            let a = 0;
-            a++
 
-            const id = req.params.id
+            try {
 
-            console.log(id)
+                let i = 0
+                let a = 0;
+                a++
 
-            const usuarioDB = await pool.query('SELECT * FROM users WHERE user = ?', [req.session.user]);
-            const clienteDB = await pool.query('SELECT * FROM app_clientes WHERE telefono = ?', [req.session.user]);
-            const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where celular = '${req.session.user}'`);
-            const arrayArchivosDB = await pool.query('SELECT archivo_id, celular, prestamo_id, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos');
+                const id = req.params.id
 
-            console.log(req.session)
-            console.log(usuarioDB[0])
+                console.log(id)
 
-            const arrayUsuariosDB = await pool.query('SELECT idUsuario FROM users ');
-            const arrayClientesDB = await pool.query('SELECT cliente_id FROM app_clientes ');
-            const arraySolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-            const arrayMensajesNuevosDB = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-            const arrayRutasDB = await pool.query('SELECT idRuta FROM rutas ');
-            const arrayTestimoniosNuevosDB = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+                const usuarioDB = await pool.query('SELECT * FROM users WHERE user = ?', [req.session.user]);
+                const clienteDB = await pool.query('SELECT * FROM app_clientes WHERE telefono = ?', [req.session.user]);
+                const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where celular = '${req.session.user}'`);
+                const arrayArchivosDB = await pool.query('SELECT archivo_id, celular, prestamo_id, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos');
 
-            const montoPrestadoDB = await pool.query(
-                "SELECT SUM(saldoFinal) montoPrestado FROM solicitudes WHERE (estadoSolicitud = 'Aprobada' OR estadoSolicitud = 'En Legal') AND celular = ?", [req.session.user]
-            );
-            const solicitudPendienteDB = await pool.query(
-                `SELECT COALESCE( (SELECT idSolicitud FROM solicitudes WHERE (estadoSolicitud = 'Nueva' OR estadoSolicitud = 'En Revision') AND celular = ${req.session.user} LIMIT 1), 0) AS idSolicitud`
-            );
+                console.log(req.session)
+                console.log(usuarioDB[0])
 
-            const montoLiquidadoDB = await pool.query(
-                "SELECT SUM(saldoFinal) montoLiquidado FROM solicitudes WHERE estadoSolicitud = 'Liquidado' AND celular = ?", [req.session.user]
-            );
+                const arrayUsuariosDB = await pool.query('SELECT idUsuario FROM users ');
+                const arrayClientesDB = await pool.query('SELECT cliente_id FROM app_clientes ');
+                const arraySolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+                const arrayMensajesNuevosDB = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+                const arrayRutasDB = await pool.query('SELECT idRuta FROM rutas ');
+                const arrayTestimoniosNuevosDB = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
-            const cantPrestamosDB = await pool.query(
-                "SELECT COUNT(idSolicitud) cantPrestamos FROM solicitudes WHERE (estadoSolicitud = 'Aprobada' OR estadoSolicitud = 'En Legal') AND celular = ?", [req.session.user]
-            );
+                const montoPrestadoDB = await pool.query(
+                    "SELECT SUM(saldoFinal) montoPrestado FROM solicitudes WHERE (estadoSolicitud = 'Aprobada' OR estadoSolicitud = 'En Legal') AND celular = ?", [req.session.user]
+                );
+                const solicitudPendienteDB = await pool.query(
+                    `SELECT COALESCE( (SELECT idSolicitud FROM solicitudes WHERE (estadoSolicitud = 'Nueva' OR estadoSolicitud = 'En Revision') AND celular = ${req.session.user} LIMIT 1), 0) AS idSolicitud`
+                );
 
-            const prestamosAtrasosDB = await pool.query(
-                "SELECT SUM(atraso) prestamosAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0 AND celular = ?", [req.session.user]
-            );
+                const montoLiquidadoDB = await pool.query(
+                    "SELECT SUM(saldoFinal) montoLiquidado FROM solicitudes WHERE estadoSolicitud = 'Liquidado' AND celular = ?", [req.session.user]
+                );
 
-            const prestamosIncobrablesDB = await pool.query(
-                "SELECT SUM(incobrableMonto) prestamosIncobrables FROM solicitudes WHERE estadoSolicitud = 'Incobrable' AND incobrableMonto > 0 AND celular = ?", [req.session.user]
-            );
+                const cantPrestamosDB = await pool.query(
+                    "SELECT COUNT(idSolicitud) cantPrestamos FROM solicitudes WHERE (estadoSolicitud = 'Aprobada' OR estadoSolicitud = 'En Legal') AND celular = ?", [req.session.user]
+                );
 
-            const prestamosEnLegalDB = await pool.query(
-                "SELECT SUM(legalMonto) prestamosEnLegal FROM solicitudes WHERE estadoSolicitud = 'En Legal' AND legalMonto > 0 AND celular = ?", [req.session.user]
-            );
-            const creditosAcumuladosDB = await pool.query(
-                `SELECT SUM(valor_credito) valor_credito FROM promociones_clientes WHERE cliente_id = '${usuarioDB[0].idUsuario}' AND estado_promocion = 'Aprobado'`
-            );
+                const prestamosAtrasosDB = await pool.query(
+                    "SELECT SUM(atraso) prestamosAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0 AND celular = ?", [req.session.user]
+                );
 
-            const cantAtrasosDB = await pool.query(
-                "SELECT COUNT(idSolicitud) cantAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0 AND celular = ?", [req.session.user]
-            );
+                const prestamosIncobrablesDB = await pool.query(
+                    "SELECT SUM(incobrableMonto) prestamosIncobrables FROM solicitudes WHERE estadoSolicitud = 'Incobrable' AND incobrableMonto > 0 AND celular = ?", [req.session.user]
+                );
 
-            // Porcentajes
-            const porcentajeAprobacionesDB = await pool.query(
-                "SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeAprobaciones FROM solicitudes WHERE celular = ?", [req.session.user]
-            );
+                const prestamosEnLegalDB = await pool.query(
+                    "SELECT SUM(legalMonto) prestamosEnLegal FROM solicitudes WHERE estadoSolicitud = 'En Legal' AND legalMonto > 0 AND celular = ?", [req.session.user]
+                );
+                const creditosAcumuladosDB = await pool.query(
+                    `SELECT SUM(valor_credito) valor_credito FROM promociones_clientes WHERE cliente_id = '${usuarioDB[0].idUsuario}' AND estado_promocion = 'Aprobado'`
+                );
 
-            const porcentajeDeclinacionesDB = await pool.query(
-                "SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Declinada') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeDeclinaciones FROM solicitudes WHERE celular = ?", [req.session.user]
-            );
+                const cantAtrasosDB = await pool.query(
+                    "SELECT COUNT(idSolicitud) cantAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0 AND celular = ?", [req.session.user]
+                );
 
-            const porcentajeEnRevisionDB = await pool.query(
-                "SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('En Revision') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeEnRevision FROM solicitudes WHERE celular = ?", [req.session.user]
-            );
+                // Porcentajes
+                const porcentajeAprobacionesDB = await pool.query(
+                    "SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeAprobaciones FROM solicitudes WHERE celular = ?", [req.session.user]
+                );
 
-            const porcentajeNuevasDB = await pool.query(
-                "SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Nueva') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeNuevas FROM solicitudes WHERE celular = ?", [req.session.user]
-            );
+                const porcentajeDeclinacionesDB = await pool.query(
+                    "SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Declinada') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeDeclinaciones FROM solicitudes WHERE celular = ?", [req.session.user]
+                );
 
-            const porcentajeLiquidadoDB = await pool.query(
-                "SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Liquidado') THEN montoSolicitado ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'Incobrable', 'En Legal', 'Liquidado') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeLiquidado FROM solicitudes WHERE celular = ?", [req.session.user]
-            );
+                const porcentajeEnRevisionDB = await pool.query(
+                    "SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('En Revision') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeEnRevision FROM solicitudes WHERE celular = ?", [req.session.user]
+                );
 
-            const porcentajeEnLegalDB = await pool.query(
-                "SELECT LEFT((SUM(CASE WHEN legalMonto > 0 THEN legalMonto ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeEnLegal FROM solicitudes WHERE celular = ?", [req.session.user]
-            );
+                const porcentajeNuevasDB = await pool.query(
+                    "SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Nueva') THEN montoSolicitado ELSE 0 END) / SUM(montoSolicitado)) * 100, 5) AS porcentajeNuevas FROM solicitudes WHERE celular = ?", [req.session.user]
+                );
 
-            const porcentajeAtrasoDB = await pool.query(
-                "SELECT LEFT((SUM(CASE WHEN atraso > 0 THEN atraso ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal', 'Incobrable') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeAtraso FROM solicitudes WHERE celular = ?", [req.session.user]
-            );
+                const porcentajeLiquidadoDB = await pool.query(
+                    "SELECT LEFT((SUM(CASE WHEN estadoSolicitud IN ('Liquidado') THEN montoSolicitado ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'Incobrable', 'En Legal', 'Liquidado') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeLiquidado FROM solicitudes WHERE celular = ?", [req.session.user]
+                );
 
-            const porcentajeIncobrableDB = await pool.query(
-                "SELECT LEFT((SUM(CASE WHEN incobrableMonto > 0 THEN incobrableMonto ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeIncobrable FROM solicitudes WHERE celular = ?", [req.session.user]
-            );
+                const porcentajeEnLegalDB = await pool.query(
+                    "SELECT LEFT((SUM(CASE WHEN legalMonto > 0 THEN legalMonto ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeEnLegal FROM solicitudes WHERE celular = ?", [req.session.user]
+                );
 
-            // Arrays
-            const arraySolicitudesAprobadasDB = await pool.query(
-                'SELECT * FROM solicitudes WHERE (estadoSolicitud="Aprobada" OR estadoSolicitud = "En Legal") AND celular = ? ORDER BY fechaSolicitud DESC', [req.session.user]
-            );
+                const porcentajeAtrasoDB = await pool.query(
+                    "SELECT LEFT((SUM(CASE WHEN atraso > 0 THEN atraso ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal', 'Incobrable') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeAtraso FROM solicitudes WHERE celular = ?", [req.session.user]
+                );
 
-            const arraySolicitudesAprobadasFirmadasDB = await pool.query(
-                'SELECT * FROM solicitudes WHERE firmaContrato="NO" AND (estadoSolicitud="Aprobada" OR estadoSolicitud ="En Legal") AND celular = ?', [req.session.user]
-            );
+                const porcentajeIncobrableDB = await pool.query(
+                    "SELECT LEFT((SUM(CASE WHEN incobrableMonto > 0 THEN incobrableMonto ELSE 0 END) / SUM(CASE WHEN estadoSolicitud IN ('Aprobada', 'En Legal') THEN montoSolicitado ELSE 0 END)) * 100, 5) AS porcentajeIncobrable FROM solicitudes WHERE celular = ?", [req.session.user]
+                );
 
-            const arraySolicitudesAtrasadasDB = await pool.query(
-                'SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND atraso > 0 AND celular = ?', [req.session.user]
-            );
+                // Arrays
+                const arraySolicitudesAprobadasDB = await pool.query(
+                    'SELECT * FROM solicitudes WHERE (estadoSolicitud="Aprobada" OR estadoSolicitud = "En Legal") AND celular = ? ORDER BY fechaSolicitud DESC', [req.session.user]
+                );
 
-            const arrayNotificacionAtrasoDB = await pool.query(
-                `SELECT novedades_atrasos.idSolicitud, idNovedadAtraso, solicitudes.nombre, solicitudes.apellido, novedades_atrasos.celular, novedades_atrasos.ruta, novedades_atrasos.atraso, fechaNovedad 
+                const arraySolicitudesAprobadasFirmadasDB = await pool.query(
+                    'SELECT * FROM solicitudes WHERE firmaContrato="NO" AND (estadoSolicitud="Aprobada" OR estadoSolicitud ="En Legal") AND celular = ?', [req.session.user]
+                );
+
+                const arraySolicitudesAtrasadasDB = await pool.query(
+                    'SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND atraso > 0 AND celular = ?', [req.session.user]
+                );
+
+                const arrayNotificacionAtrasoDB = await pool.query(
+                    `SELECT novedades_atrasos.idSolicitud, idNovedadAtraso, solicitudes.nombre, solicitudes.apellido, novedades_atrasos.celular, novedades_atrasos.ruta, novedades_atrasos.atraso, fechaNovedad 
             FROM novedades_atrasos, solicitudes 
             WHERE novedades_atrasos.idSolicitud = solicitudes.idSolicitud AND solicitudes.celular = ? 
             ORDER BY fechaNovedad DESC`, [req.session.user]
-            );
+                );
 
-            const arraySolicitudesEnLegalDB = await pool.query(
-                'SELECT * FROM solicitudes WHERE estadoSolicitud="En Legal" AND celular = ?', [req.session.user]
-            );
+                const arraySolicitudesEnLegalDB = await pool.query(
+                    'SELECT * FROM solicitudes WHERE estadoSolicitud="En Legal" AND celular = ?', [req.session.user]
+                );
 
-            const arraySolicitudesLiquidadasDB = await pool.query(
-                'SELECT * FROM solicitudes WHERE estadoSolicitud="Liquidado" AND celular = ?', [req.session.user]
-            );
+                const arraySolicitudesLiquidadasDB = await pool.query(
+                    'SELECT * FROM solicitudes WHERE estadoSolicitud="Liquidado" AND celular = ?', [req.session.user]
+                );
 
-            const arraySolicitudesIncobrablesDB = await pool.query(
-                'SELECT * FROM solicitudes WHERE estadoSolicitud="Incobrable" AND celular = ?', [req.session.user]
-            );
+                const arraySolicitudesIncobrablesDB = await pool.query(
+                    'SELECT * FROM solicitudes WHERE estadoSolicitud="Incobrable" AND celular = ?', [req.session.user]
+                );
 
-            const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${req.session.user}' limit 1`);
+                const SolicitudesClienteDB = await pool.query(`SELECT  nombre, apellido, celular FROM solicitudes WHERE celular = '${req.session.user}' limit 1`);
 
-            const SolicitudesClientePagosDB = await pool.query(`SELECT idSolicitud, montoCuota, fechaPago, celular, fechaSolicitud FROM solicitudes WHERE celular = '${req.session.user}'  AND (estadoSolicitud="Aprobada" OR estadoSolicitud ="En Legal") ORDER BY fechaSolicitud DESC limit 1`);
+                const SolicitudesClientePagosDB = await pool.query(`SELECT idSolicitud, montoCuota, fechaPago, celular, fechaSolicitud FROM solicitudes WHERE celular = '${req.session.user}'  AND (estadoSolicitud="Aprobada" OR estadoSolicitud ="En Legal") ORDER BY fechaSolicitud DESC limit 1`);
 
-            // Obtener la fecha de hoy
-            const hoy = new Date();
+                // Obtener la fecha de hoy
+                const hoy = new Date();
 
 
 
-            // console.log(SolicitudesClientePagosDB.length > 0)
-            // console.log(SolicitudesClientePagosDB[0].fechaPago.length > 0)
+                // console.log(SolicitudesClientePagosDB.length > 0)
+                // console.log(SolicitudesClientePagosDB[0].fechaPago.length > 0)
 
-            if (SolicitudesClientePagosDB.length > 0) {
-                // Convierte la fecha en un objeto Date
-                var fechaPago = new Date(SolicitudesClientePagosDB[0].fechaPago);
+                if (SolicitudesClientePagosDB.length > 0) {
+                    // Convierte la fecha en un objeto Date
+                    var fechaPago = new Date(SolicitudesClientePagosDB[0].fechaPago);
 
-                if (SolicitudesClientePagosDB[0].fechaPago) {
+                    if (SolicitudesClientePagosDB[0].fechaPago) {
 
-                    // Formatea la fecha
-                    var fechaFormateada = format(fechaPago, "d 'de' MMMM, yyyy", { locale: es });
-                    var fechaHoyFormateada = format(hoy, "d 'de' MMMM, yyyy", { locale: es });
-                } else {
-                    fechaFormateada = 0;
-                    fechaHoyFormateada = 0;
+                        // Formatea la fecha
+                        var fechaFormateada = format(fechaPago, "d 'de' MMMM, yyyy", { locale: es });
+                        var fechaHoyFormateada = format(hoy, "d 'de' MMMM, yyyy", { locale: es });
+                    } else {
+                        fechaFormateada = 0;
+                        fechaHoyFormateada = 0;
+                    }
                 }
+
+                return res.render("panel-administracion", {
+                    arrayUsuarios: arrayUsuariosDB,
+                    arrayClientes: arrayClientesDB,
+                    arraySolicitudes: arraySolicitudesDB,
+                    arrayMensajesNuevos: arrayMensajesNuevosDB,
+                    arrayRutas: arrayRutasDB,
+                    SolicitudesCliente: SolicitudesClienteDB,
+                    arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
+                    arraySolicitudesAprobadasFirmadas: arraySolicitudesAprobadasFirmadasDB,
+                    arraySolicitudesAtrasadas: arraySolicitudesAtrasadasDB,
+                    arraySolicitudesLiquidadas: arraySolicitudesLiquidadasDB,
+                    arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
+                    montoPrestado: montoPrestadoDB[0].montoPrestado,
+                    cantPrestamos: cantPrestamosDB[0].cantPrestamos,
+                    prestamosAtrasos: prestamosAtrasosDB[0].prestamosAtrasos,
+                    prestamosEnLegal: prestamosEnLegalDB[0].prestamosEnLegal,
+                    prestamosEnLegalValidacion: prestamosEnLegalDB[0].prestamosEnLegal,
+                    prestamosIncobrables: prestamosIncobrablesDB[0].prestamosIncobrables,
+                    cantAtrasos: cantAtrasosDB[0].cantAtrasos,
+                    montoLiquidado: montoLiquidadoDB[0].montoLiquidado,
+                    arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
+                    arraySolicitudesEnLegal: arraySolicitudesEnLegalDB,
+                    arraySolicitudesIncobrables: arraySolicitudesIncobrablesDB,
+                    porcentajeAprobaciones: porcentajeAprobacionesDB[0].porcentajeAprobaciones,
+                    porcentajeDeclinaciones: porcentajeDeclinacionesDB[0].porcentajeDeclinaciones,
+                    porcentajeEnRevision: porcentajeEnRevisionDB[0].porcentajeEnRevision,
+                    porcentajeNuevas: porcentajeNuevasDB[0].porcentajeNuevas,
+                    porcentajeLiquidado: porcentajeLiquidadoDB[0].porcentajeLiquidado,
+                    porcentajeEnLegal: porcentajeEnLegalDB[0].porcentajeEnLegal,
+                    porcentajeAtraso: porcentajeAtrasoDB[0].porcentajeAtraso,
+                    porcentajeIncobrable: porcentajeIncobrableDB[0].porcentajeIncobrable,
+                    solicitudPendiente: solicitudPendienteDB[0].idSolicitud,
+                    SolicitudMontoCuota: SolicitudesClientePagosDB[0],
+                    SolicitudFechaPago: fechaFormateada,
+                    fechaHoyFormateada,
+                    hoy,
+                    fechaPago,
+                    i,
+                    a,
+                    login: true,
+                    name: req.session.name,
+                    rol: req.session.rol,
+                    user: req.session.user,
+                    permiso_A,
+                    permiso_B,
+                    permiso_C,
+                    usuario: usuarioDB[0],
+                    cliente: clienteDB[0],
+                    documentosCliente: documentosClienteDB,
+                    arrayArchivos: arrayArchivosDB,
+                    creditosAcumulados: creditosAcumuladosDB[0].valor_credito
+
+                });
+
+            } catch (error) {
+                console.log('este es el error' + error)
+                res.render("404", {
+                    error: true,
+                    mensaje: "no se encuentra el id seleccionado"
+                });
             }
 
-            return res.render("panel-administracion", {
-                arrayUsuarios: arrayUsuariosDB,
-                arrayClientes: arrayClientesDB,
-                arraySolicitudes: arraySolicitudesDB,
-                arrayMensajesNuevos: arrayMensajesNuevosDB,
-                arrayRutas: arrayRutasDB,
-                SolicitudesCliente: SolicitudesClienteDB,
-                arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-                arraySolicitudesAprobadasFirmadas: arraySolicitudesAprobadasFirmadasDB,
-                arraySolicitudesAtrasadas: arraySolicitudesAtrasadasDB,
-                arraySolicitudesLiquidadas: arraySolicitudesLiquidadasDB,
-                arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
-                montoPrestado: montoPrestadoDB[0].montoPrestado,
-                cantPrestamos: cantPrestamosDB[0].cantPrestamos,
-                prestamosAtrasos: prestamosAtrasosDB[0].prestamosAtrasos,
-                prestamosEnLegal: prestamosEnLegalDB[0].prestamosEnLegal,
-                prestamosEnLegalValidacion: prestamosEnLegalDB[0].prestamosEnLegal,
-                prestamosIncobrables: prestamosIncobrablesDB[0].prestamosIncobrables,
-                cantAtrasos: cantAtrasosDB[0].cantAtrasos,
-                montoLiquidado: montoLiquidadoDB[0].montoLiquidado,
-                arrayNotificacionAtraso: arrayNotificacionAtrasoDB,
-                arraySolicitudesEnLegal: arraySolicitudesEnLegalDB,
-                arraySolicitudesIncobrables: arraySolicitudesIncobrablesDB,
-                porcentajeAprobaciones: porcentajeAprobacionesDB[0].porcentajeAprobaciones,
-                porcentajeDeclinaciones: porcentajeDeclinacionesDB[0].porcentajeDeclinaciones,
-                porcentajeEnRevision: porcentajeEnRevisionDB[0].porcentajeEnRevision,
-                porcentajeNuevas: porcentajeNuevasDB[0].porcentajeNuevas,
-                porcentajeLiquidado: porcentajeLiquidadoDB[0].porcentajeLiquidado,
-                porcentajeEnLegal: porcentajeEnLegalDB[0].porcentajeEnLegal,
-                porcentajeAtraso: porcentajeAtrasoDB[0].porcentajeAtraso,
-                porcentajeIncobrable: porcentajeIncobrableDB[0].porcentajeIncobrable,
-                solicitudPendiente: solicitudPendienteDB[0].idSolicitud,
-                SolicitudMontoCuota: SolicitudesClientePagosDB[0],
-                SolicitudFechaPago: fechaFormateada,
-                fechaHoyFormateada,
-                hoy,
-                fechaPago,
-                i,
-                a,
-                login: true,
-                name: req.session.name,
-                rol: req.session.rol,
-                user: req.session.user,
-                permiso_A,
-                permiso_B,
-                permiso_C,
-                usuario: usuarioDB[0],
-                cliente: clienteDB[0],
-                documentosCliente: documentosClienteDB,
-                arrayArchivos: arrayArchivosDB,
-                creditosAcumulados: creditosAcumuladosDB[0].valor_credito
-
-            });
-
         } else {
+
+            let device = '';
 
             let i = 0
             let a = 0
@@ -327,7 +344,8 @@ router.get('/panel-administracion', async(req, res) => {
                 permiso_B,
                 permiso_C,
                 documentosCliente: documentosClienteDB,
-                pagosPromociones: pagosPromocionesDB
+                pagosPromociones: pagosPromocionesDB,
+                device
 
 
             });
@@ -337,6 +355,7 @@ router.get('/panel-administracion', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 

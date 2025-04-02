@@ -94,38 +94,60 @@
 
         <% } %>
 
-            <div class="container mt-3 mb-3 d-flex ">
-                <H3 style="background-color: #0B5496; border-radius: 7px; margin-left: 3px;" class="me-4 text-light"><strong>SOLICITA AHORA</strong></H3>
-                <div class="d-flex ">
-                    <i class="bi bi-hand-index me-1 fs-4"></i>
-                    <H3><strong><a style="color: #0B5496" class="text-decoration-none " href="/consulta-solicitud">ESTATUS SOLICITUD</a></strong></H3>
-                </div>
+            <% if (rol == 'Cliente App'){ %>
 
-            </div>
+                <nav class="navbar navbar-expand-lg navbar-light  ">
+                    <div class="container-fluid  " style="">
+                        <div class="w-100 m-2 d-flex justify-content-between align-items-center">
 
-            <div class="container mt-3 mb-5">
+                            <a href="/panel-administracion">
 
-                <form class="" autocomplete="off" action="" method="POST">
+                                <i class="bi bi-arrow-left fs-4"></i>
+                            </a>
 
-                    <div class="container d-lg-flex justify-content-center mb-3">
-                        <div class="container-label col-lg-6 mb-3" data-aos="fade-down">
+                            <div class="w-100 d-flex justify-content-center">
 
-                            <h5 style="background-color: #e1e1e1; border-radius: 20px;" class="me-lg-5"><img src="/img/img-icons/img-garante.svg" width="40px"> Sin garante</h5>
-                            <h5 style="background-color: #e1e1e1; border-radius: 20px;" class="me-lg-5"><img src="/img/img-icons/img-aprobacion.svg" width="40px"> Aprobación en línea</h5>
-                            <h5 style="background-color: #e1e1e1; border-radius: 20px;" class="me-lg-5"><img src="/img/img-icons/img-taza.svg" width="40px"> Tasa de interés más baja</h5>
-                            <h5 style="background-color: #e1e1e1; border-radius: 20px;" class="me-lg-5"><img src="/img/img-icons/img-calendar.svg" width="40px"> Pagas al tiempo que quieras</h5>
+                                <p class="m-0"></p>
+                            </div>
                         </div>
 
+                    </div>
+                </nav>
+
+                <% } %>
+
+                    <div class="container mt-3 mb-3 d-flex ">
+                        <H3 style="background-color: #0B5496; border-radius: 7px; margin-left: 3px;" class="me-4 text-light"><strong>SOLICITA AHORA</strong></H3>
+                        <div class="d-flex ">
+                            <i class="bi bi-hand-index me-1 fs-4"></i>
+                            <H3><strong><a style="color: #0B5496" class="text-decoration-none " href="/consulta-solicitud">ESTATUS SOLICITUD</a></strong></H3>
+                        </div>
+
+                    </div>
+
+                    <div class="container mt-3 mb-5">
+
+                        <form class="" autocomplete="off" action="" method="POST">
+
+                            <div class="container d-lg-flex justify-content-center mb-3">
+                                <div class="container-label col-lg-6 mb-3" data-aos="fade-down">
+
+                                    <h5 style="background-color: #e1e1e1; border-radius: 20px;" class="me-lg-5"><img src="/img/img-icons/img-garante.svg" width="40px"> Sin garante</h5>
+                                    <h5 style="background-color: #e1e1e1; border-radius: 20px;" class="me-lg-5"><img src="/img/img-icons/img-aprobacion.svg" width="40px"> Aprobación en línea</h5>
+                                    <h5 style="background-color: #e1e1e1; border-radius: 20px;" class="me-lg-5"><img src="/img/img-icons/img-taza.svg" width="40px"> Tasa de interés más baja</h5>
+                                    <h5 style="background-color: #e1e1e1; border-radius: 20px;" class="me-lg-5"><img src="/img/img-icons/img-calendar.svg" width="40px"> Pagas al tiempo que quieras</h5>
+                                </div>
 
 
-                        <div class="container col-lg-6" id="formulario" style="background-color: #0b55964b; border-radius: 20px;" data-aos="fade-up">
-                            <h3 class="text-center">Monto solicitado</h3>
-                            <div class=" d-flex justify-content-center flex-column align-content-center align-items-center">
-                                <h1> RD $<span id="demo"></span></h1>
-                                <div class="d-flex justify-content-center w-100">
-                                    <div class="rangeslider w-100">
-                                        <input style="width: 100%;" name="montoSolicitado" type="range" step="1000" min="2000" max="20000" value="2000" class="myslider form-range" id="sliderRange" list="tickmarks">
-                                        <datalist class="tickmarks" id="tickmarks">
+
+                                <div class="container col-lg-6" id="formulario" style="background-color: #0b55964b; border-radius: 20px;" data-aos="fade-up">
+                                    <h3 class="text-center">Monto solicitado</h3>
+                                    <div class=" d-flex justify-content-center flex-column align-content-center align-items-center">
+                                        <h1> RD $<span id="demo"></span></h1>
+                                        <div class="d-flex justify-content-center w-100">
+                                            <div class="rangeslider w-100">
+                                                <input style="width: 100%;" name="montoSolicitado" type="range" step="1000" min="2000" max="20000" value="2000" class="myslider form-range" id="sliderRange" list="tickmarks">
+                                                <datalist class="tickmarks" id="tickmarks">
                              <option value="2000">
                              <option value="3000">
                              <option value="4000">
@@ -146,26 +168,26 @@
                              <option value="19000">
                              <option value="20000">
                         </datalist>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="d-lg-flex row justify-content-between mt-3">
-                                <div class="d-flex mt-3">
-                                    <img style="width: 40px; height: 40px;" src="/img/img-icons/calendar-frecuencia.svg" alt="">
-                                    <select class="form-control form-select border-0 bg-transparent" name="frecuenciaPagos" id="frecuenciaPago" required>
+                                    <div class="d-lg-flex row justify-content-between mt-3">
+                                        <div class="d-flex mt-3">
+                                            <img style="width: 40px; height: 40px;" src="/img/img-icons/calendar-frecuencia.svg" alt="">
+                                            <select class="form-control form-select border-0 bg-transparent" name="frecuenciaPagos" id="frecuenciaPago" required>
                             <option value="" selected>Seleccione la frecuencia de pagos</option>
                             <option value="pagos diarios">Pagos Diarios</option>
                             <option value="pagos semanales">Pagos Semanales</option>
                             <option value="pagos quincenales">Pagos Quincenales</option>
                             <option value="pagos mensuales">Pagos Mensuales</option>
                         </select>
-                                </div>
+                                        </div>
 
-                                <!-- <label for="">Indique la cantidad de dias "max 46"</label> -->
-                                <div id="labelDias">
-                                    <div class="d-flex mt-3">
-                                        <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                        <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosDiarios" id="cuotaDias">
+                                        <!-- <label for="">Indique la cantidad de dias "max 46"</label> -->
+                                        <div id="labelDias">
+                                            <div class="d-flex mt-3">
+                                                <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosDiarios" id="cuotaDias">
                             <option value="" selected>Seleccione la cantidad de días</option>
                             <option value="1">1 dia</option>
                             <option value="2">2 dias</option>
@@ -214,12 +236,12 @@
                             <option value="45">45 dias</option>
                             <option value="46">46 dias</option>
                             </select>
-                                    </div>
-                                </div>
-                                <div id="labelSemanas">
-                                    <div class="d-flex mt-3">
-                                        <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                        <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosSemanales" id="cuotaSemanas">
+                                            </div>
+                                        </div>
+                                        <div id="labelSemanas">
+                                            <div class="d-flex mt-3">
+                                                <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosSemanales" id="cuotaSemanas">
                             <option value="" selected>Seleccione la cantidad de semanas</option>
                             <option value="1">1 semana</option>
                             <option value="2">2 semanas</option>
@@ -234,12 +256,12 @@
                             <option value="11">11 semanas</option>
                             <option value="12">12 semanas</option>
                         </select>
-                                    </div>
-                                </div>
-                                <div id="labelQuincenas">
-                                    <div class="d-flex mt-3">
-                                        <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                        <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosQuincenales" id="cuotaQuincenas">
+                                            </div>
+                                        </div>
+                                        <div id="labelQuincenas">
+                                            <div class="d-flex mt-3">
+                                                <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosQuincenales" id="cuotaQuincenas">
                             <option value="" selected>Seleccione la cantidad de quincenas</option>
                             <option value="1">1 quincena</option>
                             <option value="2">2 quincenas</option>
@@ -258,12 +280,12 @@
                             <option value="15">15 quincenas</option>
                             <option value="16">16 quincenas</option>
                         </select>
-                                    </div>
-                                </div>
-                                <div id="labelMeses">
-                                    <div class="d-flex mt-3">
-                                        <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
-                                        <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosMensuales" id="cuotaMeses">
+                                            </div>
+                                        </div>
+                                        <div id="labelMeses">
+                                            <div class="d-flex mt-3">
+                                                <img style="width: 40px; height: 40px;" src="/img/img-icons/calculator.svg" alt="">
+                                                <select class="form-control form-select border-0 bg-transparent" name="cantidadPagosMensuales" id="cuotaMeses">
                             <option value="" selected>Seleccione la cantidad de meses</option>
                             <option value="1">1 mes</option>
                             <option value="2">2 meses</option>
@@ -278,353 +300,353 @@
                             <option value="11">11 meses</option>
                             <option value="12">12 meses</option>
                         </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-primary m-3 p-2" id="btn">Calcular Cuota</button>
+                                    </div>
+
+                                    <div class=" justify-content-center d-lg-flex ">
+                                        <h4 class="me-lg-3 text-center" id="labelResul"></h4>
+                                        <h4 class="text-center" id="labelRespuesta"></h4>
                                     </div>
                                 </div>
+
                             </div>
 
-                            <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary m-3 p-2" id="btn">Calcular Cuota</button>
-                            </div>
-
-                            <div class=" justify-content-center d-lg-flex ">
-                                <h4 class="me-lg-3 text-center" id="labelResul"></h4>
-                                <h4 class="text-center" id="labelRespuesta"></h4>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <h4 class="text-secondary mt-1">Completa este formulario para enviar su solicitud de préstamo</h4>
-                    <div class="accordion" id="accordionPanelsStayOpenExample">
-                        <div class="accordion-item border-0">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            <h4 class="text-secondary mt-1">Completa este formulario para enviar su solicitud de préstamo</h4>
+                            <div class="accordion" id="accordionPanelsStayOpenExample">
+                                <div class="accordion-item border-0">
+                                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                             <strong>PASO 1 - DATOS PERSONALES </strong>
                         </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                                <div class="accordion-body">
-                                    <!-- primera parte -->
-                                    <div class="container-datos-header ">
-                                        <div class="datos-de-busqueda ">
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                                        <div class="accordion-body">
+                                            <!-- primera parte -->
+                                            <div class="container-datos-header ">
+                                                <div class="datos-de-busqueda ">
 
 
-                                            <div class="form-group  ">
-                                                <label for="tipoPrestamo" class="  p-2">Tipo de Prestamo <span class="text-secondary fs-6">Obligatorio <span class="text-danger">*</span></span></label>
-                                                <select name="tipoPrestamo" class="form-control form-select" id="inputTipPrestamo" required>
+                                                    <div class="form-group  ">
+                                                        <label for="tipoPrestamo" class="  p-2">Tipo de Prestamo <span class="text-secondary fs-6">Obligatorio <span class="text-danger">*</span></span></label>
+                                                        <select name="tipoPrestamo" class="form-control form-select" id="inputTipPrestamo" required>
                                             <option value="">Seleccionar</option>
                                             <option value="Personal">Personal</option>
                                             <option value="Comercial">Comercial</option>
                                         </select>
-                                            </div>
+                                                    </div>
 
-                                            <div class="">
-                                                <div class="form-group   ">
-                                                    <div class="input-group ">
-                                                        <div class=" me-lg-5">
-                                                            <label class="p-2">Cedula <span class="text-secondary fs-6">Obligatorio <span class="text-danger">*</span></span></label>
-                                                            <input type="number" name="cedula" class="form-control " id="cedula" required>
-                                                        </div>
-                                                        <div class="me-lg-5">
-                                                            <label for="sexo" class="p-2">Sexo</label>
-                                                            <select name="sexo" class="form-control" id="sexo">
+                                                    <div class="">
+                                                        <div class="form-group   ">
+                                                            <div class="input-group ">
+                                                                <div class=" me-lg-5">
+                                                                    <label class="p-2">Cedula <span class="text-secondary fs-6">Obligatorio <span class="text-danger">*</span></span></label>
+                                                                    <input type="number" name="cedula" class="form-control " id="cedula" required>
+                                                                </div>
+                                                                <div class="me-lg-5">
+                                                                    <label for="sexo" class="p-2">Sexo</label>
+                                                                    <select name="sexo" class="form-control" id="sexo">
                                                         <option value="seleccionar" selected>Seleccionar</option>
                                                         <option value="Hombre">Hombre</option>
                                                         <option value="Mujer">Mujer</option>
                                                     </select>
-                                                        </div>
-                                                        <div class="me-lg-5">
-                                                            <label for="sexo" class="p-2">Estado Civil</label>
-                                                            <select name="estadoCivil" class="form-control" id="estadoCivil">
+                                                                </div>
+                                                                <div class="me-lg-5">
+                                                                    <label for="sexo" class="p-2">Estado Civil</label>
+                                                                    <select name="estadoCivil" class="form-control" id="estadoCivil">
                                                         <option value="seleccionar" selected>Seleccionar</option>
                                                         <option value="Casado/a">Casado/a</option>
                                                         <option value="Soltero/a">Soltero/a</option>
                                                         <option value="Union Libre">Union Libre</option>
                                                     </select>
+                                                                </div>
+                                                            </div>
                                                         </div>
+
+
                                                     </div>
                                                 </div>
-
-
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nombre" class="  p-2">Nombre</label>
-                                        <input type="text" name="nombre" class="form-control p-2 " id="nombre" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label for="apellido" class="p-2">Apellido</label>
-                                        <input type="text" name="apellido" class="form-control p-2" id="apellido" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label for="direccion" class="p-2">Direccion </label>
-                                        <input type="text" name="direccion" class="form-control p-2" id="direccion" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  " id="labelDireccionNegocio">
-                                        <label for="direccionNegocio" class=" p-2">Direccion del Negocio</label>
-                                        <input type="text" name="direccionNegocio" class="form-control p-2" id="direccionNegocio" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  " id="labelTiempoNegocio">
-                                        <label for="tiempoNegocio" class=" p-2">Tiempo del Negocio</label>
-                                        <select name="tiempoNegocio" id="tiempoNegocio" class="form-control p-2">
+                                            <div class="form-group">
+                                                <label for="nombre" class="  p-2">Nombre</label>
+                                                <input type="text" name="nombre" class="form-control p-2 " id="nombre" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  ">
+                                                <label for="apellido" class="p-2">Apellido</label>
+                                                <input type="text" name="apellido" class="form-control p-2" id="apellido" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  ">
+                                                <label for="direccion" class="p-2">Direccion </label>
+                                                <input type="text" name="direccion" class="form-control p-2" id="direccion" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  " id="labelDireccionNegocio">
+                                                <label for="direccionNegocio" class=" p-2">Direccion del Negocio</label>
+                                                <input type="text" name="direccionNegocio" class="form-control p-2" id="direccionNegocio" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  " id="labelTiempoNegocio">
+                                                <label for="tiempoNegocio" class=" p-2">Tiempo del Negocio</label>
+                                                <select name="tiempoNegocio" id="tiempoNegocio" class="form-control p-2">
                                     <option value="Seleccionar" selected>Seleccionar</option>
                                     <option value="Menos de 6 Meses">Menos de 6 Meses</option>
                                     <option value="De 6 Meses a 1 Año">De 6 Meses a 1 Año</option>
                                     <option value="Mas de 1 Año y Menos de 2 Años">Mas de 1 Año y Menos de 2 Años</option>
                                     <option value="Mas de 2 Años">Mas de 2 Años</option>
                                 </select>
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="email" class=" p-2">Email</label>
-                                        <input type="email" name="email" class="form-control p-2" id="email" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="d-flex">
-                                        <div class="form-group me-lg-5">
-                                            <label for="celular" class="  p-2">Celular <span class="text-secondary fs-6">Obligatorio <span class="text-danger">*</span></span></label>
-                                            <input type="number" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" placeholder="" required>
-                                        </div>
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="email" class=" p-2">Email</label>
+                                                <input type="email" name="email" class="form-control p-2" id="email" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="form-group me-lg-5">
+                                                    <label for="celular" class="  p-2">Celular <span class="text-secondary fs-6">Obligatorio <span class="text-danger">*</span></span></label>
+                                                    <input type="number" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" placeholder="" required>
+                                                </div>
 
-                                        <div class="form-group me-lg-5 ">
-                                            <label for="nacionadlidad" class="  p-2">Nacionadlidad</label>
-                                            <select name="nacionadlidad" class="form-control p-2" id="nacionadlidad">
+                                                <div class="form-group me-lg-5 ">
+                                                    <label for="nacionadlidad" class="  p-2">Nacionadlidad</label>
+                                                    <select name="nacionadlidad" class="form-control p-2" id="nacionadlidad">
                                         <option value="Seleccionar">Seleccionar</option>
                                         <option value="Dominicano/a">Dominicano/a</option>
                                         <option value="Extranjero/a">Extranjero/a</option>
                                     </select>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
                       <strong>PASO 2 - DATOS DE UN FAMILIAR QUE NO VIVA CON USTED</strong>
                     </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                                <div class="accordion-body">
-                                    <!-- segunda parte -->
-                                    <div class="form-group  ">
-                                        <label for="nombreFamilia" class="  p-2">Nombre </label>
-                                        <input type="text" name="nombreFamilia" class="form-control p-2" id="nombreFamilia" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="direccionFamilia" class="  p-2">Direccion</label>
-                                        <input type="text" name="direccionFamilia" class="form-control p-2" id="direccionFamilia" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label for="parentescoFamilia" class="  p-2">Parentesco</label>
-                                        <input type="text" name="parentescoFamilia" class="form-control p-2" id="parentescoFamilia" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="telefonoFamilia" class="  p-2">Telefono</label>
-                                        <input type="text" name="telefonoFamilia" class="form-control p-2" id="telefonoFamilia" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label for="apodoFamilia" class=" p-2">Apodo</label>
-                                        <input type="text" name="apodoFamilia" class="form-control p-2" id="apodoFamilia" aria-describedby="emailHelp" placeholder="">
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+                                        <div class="accordion-body">
+                                            <!-- segunda parte -->
+                                            <div class="form-group  ">
+                                                <label for="nombreFamilia" class="  p-2">Nombre </label>
+                                                <input type="text" name="nombreFamilia" class="form-control p-2" id="nombreFamilia" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="direccionFamilia" class="  p-2">Direccion</label>
+                                                <input type="text" name="direccionFamilia" class="form-control p-2" id="direccionFamilia" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  ">
+                                                <label for="parentescoFamilia" class="  p-2">Parentesco</label>
+                                                <input type="text" name="parentescoFamilia" class="form-control p-2" id="parentescoFamilia" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="telefonoFamilia" class="  p-2">Telefono</label>
+                                                <input type="text" name="telefonoFamilia" class="form-control p-2" id="telefonoFamilia" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  ">
+                                                <label for="apodoFamilia" class=" p-2">Apodo</label>
+                                                <input type="text" name="apodoFamilia" class="form-control p-2" id="apodoFamilia" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item" id="labelDatosLaborales">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                <div class="accordion-item" id="labelDatosLaborales">
+                                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                      <strong>PASO 3 - DATOS LABORALES</strong>
                     </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                                <div class="accordion-body">
-                                    <!-- tercera parte -->
-                                    <div class="form-group  ">
-                                        <label for="empresa" class=" p-2">Empresa donde labora</label>
-                                        <input type="text" name="empresa" class="form-control p-2" id="empresa" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="salario" class=" p-2">Salario</label>
-                                        <input type="number" name="salario" class="form-control p-2" id="salario" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label for="puesto" class="  p-2">Puesto</label>
-                                        <input type="text" name="puesto" class="form-control p-2" id="puesto" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label for="dir-empresa" class="  p-2">Dirreccion Empresa</label>
-                                        <input type="text" name="dirEmpresa" class="form-control p-2" id="dir-empresa" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label for="telefonoEmpresa" class="  p-2">Telefono Empresa</label>
-                                        <input type="text" name="telefonoEmpresa" class="form-control p-2" id="telefonoEmpresa" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label for="departamento" class="  p-2">Departamento</label>
-                                        <input type="text" name="departamento" class="form-control p-2" id="departamento" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="tiempoEmpresa" class=" p-2">Tiempo en la Empresa</label>
-                                        <select name="tiempoEmpresa" id="" class="form-control p-2">
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+                                        <div class="accordion-body">
+                                            <!-- tercera parte -->
+                                            <div class="form-group  ">
+                                                <label for="empresa" class=" p-2">Empresa donde labora</label>
+                                                <input type="text" name="empresa" class="form-control p-2" id="empresa" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="salario" class=" p-2">Salario</label>
+                                                <input type="number" name="salario" class="form-control p-2" id="salario" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  ">
+                                                <label for="puesto" class="  p-2">Puesto</label>
+                                                <input type="text" name="puesto" class="form-control p-2" id="puesto" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  ">
+                                                <label for="dir-empresa" class="  p-2">Dirreccion Empresa</label>
+                                                <input type="text" name="dirEmpresa" class="form-control p-2" id="dir-empresa" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  ">
+                                                <label for="telefonoEmpresa" class="  p-2">Telefono Empresa</label>
+                                                <input type="text" name="telefonoEmpresa" class="form-control p-2" id="telefonoEmpresa" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  ">
+                                                <label for="departamento" class="  p-2">Departamento</label>
+                                                <input type="text" name="departamento" class="form-control p-2" id="departamento" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="tiempoEmpresa" class=" p-2">Tiempo en la Empresa</label>
+                                                <select name="tiempoEmpresa" id="" class="form-control p-2">
                                     <option value="Seleccionar" selected>Seleccionar</option>
                                     <option value="Menos de 6 Meses">Menos de 6 Meses</option>
                                     <option value="De 6 Meses a 1 Año">De 6 Meses a 1 Año</option>
                                     <option value="Mas de 1 Año y Menos de 2 Años">Mas de 1 Año y Menos de 2 Años</option>
                                     <option value="Mas de 2 Años">Mas de 2 Años</option>
                                 </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingFour">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
                      <strong id="label_4">PASO 4 - REFERENCIAS PERSONALES</strong>
                     </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
-                                <div class="accordion-body">
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                                        <div class="accordion-body">
 
-                                    <!-- cuarta parte -->
-                                    <div class="form-group  ">
-                                        <label for="nombreRefPers1" class=" p-2">Nombre Persona de Referencia 1</label>
-                                        <input type="text" name="nombreRefPers1" class="form-control p-2" id="nombreRefPers1" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="telefonoRefPer1" class="  p-2">Telefono Persona de Referencia 1</label>
-                                        <input type="text" name="telefonoRefPer1" class="form-control p-2" id="telefonoRefPer1" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label for="nombreRefPers2" class="  p-2">Nombre Persona de Referencia 2</label>
-                                        <input type="text" name="nombreRefPers2" class="form-control p-2" id="nombreRefPers2" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group  ">
-                                        <label for="telefonoRefPer2" class="  p-2">Telefono Persona de Referencia 2</label>
-                                        <input type="text" name="telefonoRefPer2" class="form-control p-2" id="telefonoRefPer2" aria-describedby="emailHelp" placeholder="">
+                                            <!-- cuarta parte -->
+                                            <div class="form-group  ">
+                                                <label for="nombreRefPers1" class=" p-2">Nombre Persona de Referencia 1</label>
+                                                <input type="text" name="nombreRefPers1" class="form-control p-2" id="nombreRefPers1" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="telefonoRefPer1" class="  p-2">Telefono Persona de Referencia 1</label>
+                                                <input type="text" name="telefonoRefPer1" class="form-control p-2" id="telefonoRefPer1" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  ">
+                                                <label for="nombreRefPers2" class="  p-2">Nombre Persona de Referencia 2</label>
+                                                <input type="text" name="nombreRefPers2" class="form-control p-2" id="nombreRefPers2" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group  ">
+                                                <label for="telefonoRefPer2" class="  p-2">Telefono Persona de Referencia 2</label>
+                                                <input type="text" name="telefonoRefPer2" class="form-control p-2" id="telefonoRefPer2" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="panelsStayOpen-headingFive">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
                       <strong id="label_5">PASO 5 - DATOS DEL PRESTAMO</strong>
                     </button>
-                            </h2>
-                            <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
-                                <div class="accordion-body">
-                                    <!-- quinta parte -->
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFive">
+                                        <div class="accordion-body">
+                                            <!-- quinta parte -->
 
-                                    <div class="form-group  ">
-                                        <label for="banco" class="  p-2">Banco</label>
-                                        <input type="text" name="banco" class="form-control p-2" id="banco" aria-describedby="emailHelp" placeholder="">
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="numeroCuenta" class="  p-2">Numero de Cuenta</label>
-                                        <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" placeholder="">
-                                    </div>
+                                            <div class="form-group  ">
+                                                <label for="banco" class="  p-2">Banco</label>
+                                                <input type="text" name="banco" class="form-control p-2" id="banco" aria-describedby="emailHelp" placeholder="">
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="numeroCuenta" class="  p-2">Numero de Cuenta</label>
+                                                <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" placeholder="">
+                                            </div>
 
-                                    <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mt-4 mb-3" type="submit"><i class="bi bi-check-lg me-lg-2"></i>ENVIAR</button>
-                                    <a href="/" class="btn btn-danger btn-block p-2 mt-4 mb-3"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a>
+                                            <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mt-4 mb-3" type="submit"><i class="bi bi-check-lg me-lg-2"></i>ENVIAR</button>
+                                            <a href="/" class="btn btn-danger btn-block p-2 mt-4 mb-3"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+
+
+
+
+
+                        </form>
+
                     </div>
-
-
-
-
-
-                </form>
-
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-            <% if (typeof alert != "undefined")  { %>
-                <script>
-                    Swal.fire({
-                        title: '<%= alertTitle %>',
-                        text: '<%= alertMessage %>',
-                        icon: '<%= alertIcon %>',
-                        showConfirmButton: <%= showConfirmButton %>,
-                        timer: <%= timer %>
-                    }).then(() => {
-                        window.location = '/<%= ruta %>'
-                    })
-                </script>
-                <% } %>
-
-
-
-
-
-
-                    <% if (rol !== 'Cliente App'){ %>
-
-                        <footer class="d-flex" style="background-color: #0B5496 ;">
-                            <div class="container  d-lg-flex justify-content-lg-between">
-                                <div class="container-dir mt-5 mb-5">
-                                    <img class="mb-5" src="/img/LOGO- footer.png" alt="logo" style="width: 220px;">
-                                </div>
-                                <div class="container-dir mt-5 mb-5">
-                                    <h6 class="text-white mb-3"><strong>DIRECCION</strong></h6>
-                                    <h6 class="text-white"><i class="bi bi-geo-alt-fill me-2"></i>Calle Primera #59</h6>
-                                    <h6 style="margin-left: 25px;" class="text-white">Sector Enriquillo de Herrera</h6>
-                                    <h6 style="margin-left: 25px;" class="text-white">Santo Domingo R.D</h6>
-                                    <h6 class="text-white"><i class="bi bi-envelope-fill me-2"></i>contacto@rosfal.com</h6>
-                                    <h6 class="text-white"><i class="bi bi-telephone-fill me-2"></i>829-856-0203</h6>
-                                </div>
-                                <div class="container-link mt-5 mb-5">
-                                    <h6 class="text-white mb-3"><strong>LINKS DE INTERES</strong></h6>
-                                    <a class="text-white text-decoration-none" href="/">
-                                        <li>Inicio</li>
-                                    </a>
-                                    <a class="text-white text-decoration-none" href="/quienes-somos">
-                                        <li>Quienes Somos</li>
-                                    </a>
-                                    <a class="text-white text-decoration-none" href="/solicita-ya">
-                                        <li>Solicita Ya</li>
-                                    </a>
-                                    <a class="text-white text-decoration-none" href="/preguntas-frecuentes">
-                                        <li>Preguntas Frecuentes</li>
-                                    </a>
-                                    <a class="text-white text-decoration-none" href="/contacto">
-                                        <li>Contactos</li>
-                                    </a>
-                                    <a class="text-white text-decoration-none" href="/login">
-                                        <li>Panel Administracion</li>
-                                    </a>
-                                </div>
-                                <div class="container-redes mt-5 mb-5">
-                                    <h6 class="text-white mb-3"><strong>NUESTRAS REDES SOCIALES</strong></h6>
-                                    <a href="https://www.facebook.com/rosfalrd/" target="_blank"> <img style="width: 40px;" src="/img/logo-facebook.png" alt="facebook"></a>
-                                    <a href="https://www.instagram.com/rosfalrd/" target="_blank"> <img style="width: 40px;" src="/img/logo-instagram.png" alt="instagram"></a>
-                                    <a href="https://bit.ly/3xzs0RV" target="_blank"> <img style="width: 40px;" src="/img/logo-ws-navar-footer.png" alt="ws"></a>
-                                    <a href="#"> <img style="width: 40px;" src="/img/logo-twiter.png" alt="twier"></a>
-                                </div>
-                            </div>
-                        </footer>
-                        <div class="mt-0 mb-0" style="background-color:#083d6b ;">
-                            <p class="text-white text-center pt-3 pb-3 m-0">© Copyright 2022 - Rosfal Soluciones de Prestamos</p>
-                        </div>
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                    <% if (typeof alert != "undefined")  { %>
+                        <script>
+                            Swal.fire({
+                                title: '<%= alertTitle %>',
+                                text: '<%= alertMessage %>',
+                                icon: '<%= alertIcon %>',
+                                showConfirmButton: <%= showConfirmButton %>,
+                                timer: <%= timer %>
+                            }).then(() => {
+                                window.location = '/<%= ruta %>'
+                            })
+                        </script>
                         <% } %>
 
-                            <% if (rol == 'Cliente App'){ %>
-                                <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
-                                    <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+
+
+
+
+
+                            <% if (rol !== 'Cliente App'){ %>
+
+                                <footer class="d-flex" style="background-color: #0B5496 ;">
+                                    <div class="container  d-lg-flex justify-content-lg-between">
+                                        <div class="container-dir mt-5 mb-5">
+                                            <img class="mb-5" src="/img/LOGO- footer.png" alt="logo" style="width: 220px;">
+                                        </div>
+                                        <div class="container-dir mt-5 mb-5">
+                                            <h6 class="text-white mb-3"><strong>DIRECCION</strong></h6>
+                                            <h6 class="text-white"><i class="bi bi-geo-alt-fill me-2"></i>Calle Primera #59</h6>
+                                            <h6 style="margin-left: 25px;" class="text-white">Sector Enriquillo de Herrera</h6>
+                                            <h6 style="margin-left: 25px;" class="text-white">Santo Domingo R.D</h6>
+                                            <h6 class="text-white"><i class="bi bi-envelope-fill me-2"></i>contacto@rosfal.com</h6>
+                                            <h6 class="text-white"><i class="bi bi-telephone-fill me-2"></i>829-856-0203</h6>
+                                        </div>
+                                        <div class="container-link mt-5 mb-5">
+                                            <h6 class="text-white mb-3"><strong>LINKS DE INTERES</strong></h6>
+                                            <a class="text-white text-decoration-none" href="/">
+                                                <li>Inicio</li>
+                                            </a>
+                                            <a class="text-white text-decoration-none" href="/quienes-somos">
+                                                <li>Quienes Somos</li>
+                                            </a>
+                                            <a class="text-white text-decoration-none" href="/solicita-ya">
+                                                <li>Solicita Ya</li>
+                                            </a>
+                                            <a class="text-white text-decoration-none" href="/preguntas-frecuentes">
+                                                <li>Preguntas Frecuentes</li>
+                                            </a>
+                                            <a class="text-white text-decoration-none" href="/contacto">
+                                                <li>Contactos</li>
+                                            </a>
+                                            <a class="text-white text-decoration-none" href="/login">
+                                                <li>Panel Administracion</li>
+                                            </a>
+                                        </div>
+                                        <div class="container-redes mt-5 mb-5">
+                                            <h6 class="text-white mb-3"><strong>NUESTRAS REDES SOCIALES</strong></h6>
+                                            <a href="https://www.facebook.com/rosfalrd/" target="_blank"> <img style="width: 40px;" src="/img/logo-facebook.png" alt="facebook"></a>
+                                            <a href="https://www.instagram.com/rosfalrd/" target="_blank"> <img style="width: 40px;" src="/img/logo-instagram.png" alt="instagram"></a>
+                                            <a href="https://bit.ly/3xzs0RV" target="_blank"> <img style="width: 40px;" src="/img/logo-ws-navar-footer.png" alt="ws"></a>
+                                            <a href="#"> <img style="width: 40px;" src="/img/logo-twiter.png" alt="twier"></a>
+                                        </div>
+                                    </div>
+                                </footer>
+                                <div class="mt-0 mb-0" style="background-color:#083d6b ;">
+                                    <p class="text-white text-center pt-3 pb-3 m-0">© Copyright 2022 - Rosfal Soluciones de Prestamos</p>
                                 </div>
                                 <% } %>
-                                    <script src="/js/solicita-ya-event.js"></script>
-                                    <script src="/js/enviar-correo.js"></script>
-                                    <!-- <script src="./routes/enviar-correo.js"></script> -->
+
+                                    <% if (rol == 'Cliente App'){ %>
+                                        <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
+                                            <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+                                        </div>
+                                        <% } %>
+                                            <script src="/js/solicita-ya-event.js"></script>
+                                            <script src="/js/enviar-correo.js"></script>
+                                            <!-- <script src="./routes/enviar-correo.js"></script> -->
 
 
-                                    <script>
-                                        AOS.init({
-                                            duration: 1000
-                                        });
-                                    </script>
+                                            <script>
+                                                AOS.init({
+                                                    duration: 1000
+                                                });
+                                            </script>
 </body>
 
 </html>

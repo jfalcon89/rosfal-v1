@@ -53,6 +53,7 @@ router.get('/promociones', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -123,6 +124,7 @@ router.get('/clientes-promociones-adm', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 })
@@ -453,6 +455,7 @@ router.get('/app-clientes/editar-cliente', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 })
@@ -517,6 +520,7 @@ router.get("/app-clientes/editar-cliente/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });

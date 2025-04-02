@@ -48,6 +48,7 @@ router.get('/testimonios', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -114,6 +115,7 @@ router.get("/testimonios/ver-testimonio/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -202,6 +204,7 @@ router.get('/testimonios-activos', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -267,6 +270,7 @@ router.get("/testimonios-activos/ver-testimonio-activo/:id", async(req, res) => 
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -355,6 +359,7 @@ router.get('/testimonios-inactivos', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -419,6 +424,7 @@ router.get("/testimonios-inactivos/ver-testimonio-inactivo/:id", async(req, res)
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });

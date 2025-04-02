@@ -44,6 +44,7 @@ router.get('/adm-usuarios', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -87,6 +88,7 @@ router.get('/adm-usuarios/crear-usuario', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 })
@@ -210,6 +212,7 @@ router.get('/adm-usuarios/editar-usuario', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 })
@@ -288,7 +291,7 @@ router.get("/adm-usuarios/editar-usuario/:id", async(req, res) => {
         res.render("login", {
             login: false,
             name: "Debe iniciar sesión",
-
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -430,6 +433,7 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
         res.render("login", {
             login: false,
             name: "Debe iniciar sesión",
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
 
         });
     }
@@ -521,6 +525,7 @@ router.get("/adm-usuarios/promociones-cliente/:id", async(req, res) => {
         res.render("login", {
             login: false,
             name: "Debe iniciar sesión",
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
 
         });
     }
@@ -701,7 +706,7 @@ router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
         res.render("login", {
             login: false,
             name: "Debe iniciar sesión",
-
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });

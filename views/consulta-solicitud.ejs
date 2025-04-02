@@ -88,157 +88,179 @@
 
         <% } %>
 
-            <div class="container mt-3 mb-3 d-flex  ">
-                <div class="d-flex">
-                    <i class="bi bi-hand-index me-1 fs-4"></i>
-                    <H3 style=" margin-left: 3px;" class="me-4"><strong><a style="color: #0B5496;" class="text-decoration-none " href="/solicita-ya">SOLICITA AHORA</a></strong></H3>
-                </div>
-                <H3 style="background-color: #0B5496; border-radius: 7px;"><strong><a class="text-decoration-none text-light">ESTATUS SOLICITUD</a></strong></H3>
+            <% if (rol == 'Cliente App'){ %>
 
-            </div>
+                <nav class="navbar navbar-expand-lg navbar-light  ">
+                    <div class="container-fluid  " style="">
+                        <div class="w-100 m-2 d-flex justify-content-between align-items-center">
 
-            <div class="container mt-5">
-                <h5>Consulta de Estatus Solicitud de Préstamo</h5>
-            </div>
-            <hr class="container">
+                            <a href="/panel-administracion">
 
-            <div class="container mt-5 mb-5">
-                <form action="" method="get">
-                    <div class="d-flex">
-                        <input class="form-control" type="number" placeholder="No. Cedula" name="id">
-                        <button class="btn btn-primary" type="submit">Buscar</button>
-                    </div>
+                                <i class="bi bi-arrow-left fs-4"></i>
+                            </a>
 
+                            <div class="w-100 d-flex justify-content-center">
 
-
-                </form>
-
-                <% if (arraySolicitud.length > 0) { %>
-
-                    <% if(id != "Vacio") { %>
-
-                        <div class="mt-4 mb-5">
-
-                            <h6><strong>Nombre:</strong>
-                                <%= arraySolicitud[0].nombre %>
-                                    <%= arraySolicitud[0].apellido %>
-                            </h6>
-                            <h6><strong>Cédula:</strong>
-                                <%= arraySolicitud[0].cedula %>
-                            </h6>
+                                <p class="m-0"></p>
+                            </div>
                         </div>
 
-                        <div class="container mt-2 table-responsive">
-                            <table id="datatable" class="   table  table-hover">
-                                <thead class="thead-ligth">
-                                    <tr>
-                                        <th scope="col">No. Solicitud</th>
-                                        <th scope="col">Tipo de Préstamo</th>
-                                        <th scope="col">Monto Solicitud</th>
-                                        <th scope="col">Fecha Solicitud</th>
-                                        <th scope="col">Estatus Solicitud</th>
+                    </div>
+                </nav>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
+                <% } %>
+
+                    <div class="container mt-3 mb-3 d-flex  ">
+                        <div class="d-flex">
+                            <i class="bi bi-hand-index me-1 fs-4"></i>
+                            <H3 style=" margin-left: 3px;" class="me-4"><strong><a style="color: #0B5496;" class="text-decoration-none " href="/solicita-ya">SOLICITA AHORA</a></strong></H3>
+                        </div>
+                        <H3 style="background-color: #0B5496; border-radius: 7px;"><strong><a class="text-decoration-none text-light">ESTATUS SOLICITUD</a></strong></H3>
+
+                    </div>
+
+                    <div class="container mt-5">
+                        <h5>Consulta de Estatus Solicitud de Préstamo</h5>
+                    </div>
+                    <hr class="container">
+
+                    <div class="container mt-5 mb-5">
+                        <form action="" method="get">
+                            <div class="d-flex">
+                                <input class="form-control" type="number" placeholder="No. Cedula" name="id">
+                                <button class="btn btn-primary" type="submit">Buscar</button>
+                            </div>
 
 
-                                    <% if (arraySolicitud.length > 0) { %>
-                                        <% arraySolicitud.forEach(solicitud=> { %>
 
+                        </form>
+
+                        <% if (arraySolicitud.length > 0) { %>
+
+                            <% if(id != "Vacio") { %>
+
+                                <div class="mt-4 mb-5">
+
+                                    <h6><strong>Nombre:</strong>
+                                        <%= arraySolicitud[0].nombre %>
+                                            <%= arraySolicitud[0].apellido %>
+                                    </h6>
+                                    <h6><strong>Cédula:</strong>
+                                        <%= arraySolicitud[0].cedula %>
+                                    </h6>
+                                </div>
+
+                                <div class="container mt-2 table-responsive">
+                                    <table id="datatable" class="   table  table-hover">
+                                        <thead class="thead-ligth">
                                             <tr>
-                                                <td>
-                                                    <%= solicitud.idSolicitud %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.tipoPrestamo %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.montoSolicitado %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.estadoSolicitud %>
-                                                </td>
+                                                <th scope="col">No. Solicitud</th>
+                                                <th scope="col">Tipo de Préstamo</th>
+                                                <th scope="col">Monto Solicitud</th>
+                                                <th scope="col">Fecha Solicitud</th>
+                                                <th scope="col">Estatus Solicitud</th>
+
                                             </tr>
+                                        </thead>
+                                        <tbody>
 
-                                            <% }) %>
-                                                <% } %>
 
-                                                    <% }else{ %>
-                                                        <h5 class="mt-5">Ningun Resultado</h5>
+                                            <% if (arraySolicitud.length > 0) { %>
+                                                <% arraySolicitud.forEach(solicitud=> { %>
+
+                                                    <tr>
+                                                        <td>
+                                                            <%= solicitud.idSolicitud %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.tipoPrestamo %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.montoSolicitado %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %>
+                                                        </td>
+                                                        <td>
+                                                            <%= solicitud.estadoSolicitud %>
+                                                        </td>
+                                                    </tr>
+
+                                                    <% }) %>
                                                         <% } %>
 
                                                             <% }else{ %>
                                                                 <h5 class="mt-5">Ningun Resultado</h5>
                                                                 <% } %>
 
-                                </tbody>
-                            </table>
-                        </div>
+                                                                    <% }else{ %>
+                                                                        <h5 class="mt-5">Ningun Resultado</h5>
+                                                                        <% } %>
 
-            </div>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-
-
-            <% if (rol !== 'Cliente App'){ %>
-
-                <footer class="d-flex" style="background-color: #0B5496 ;">
-                    <div class="container  d-lg-flex justify-content-lg-between">
-                        <div class="container-dir mt-5 mb-5">
-                            <img class="mb-5" src="/img/LOGO- footer.png" alt="logo" style="width: 220px;">
-                        </div>
-                        <div class="container-dir mt-5 mb-5">
-                            <h6 class="text-white mb-3"><strong>DIRECCION</strong></h6>
-                            <h6 class="text-white"><i class="bi bi-geo-alt-fill me-2"></i>Calle Primera #59</h6>
-                            <h6 style="margin-left: 25px;" class="text-white">Sector Enriquillo de Herrera</h6>
-                            <h6 style="margin-left: 25px;" class="text-white">Santo Domingo R.D</h6>
-                            <h6 class="text-white"><i class="bi bi-envelope-fill me-2"></i>contacto@rosfal.com</h6>
-                            <h6 class="text-white"><i class="bi bi-telephone-fill me-2"></i>829-856-0203</h6>
-                        </div>
-                        <div class="container-link mt-5 mb-5">
-                            <h6 class="text-white mb-3"><strong>LINKS DE INTERES</strong></h6>
-                            <a class="text-white text-decoration-none" href="/">
-                                <li>Inicio</li>
-                            </a>
-                            <a class="text-white text-decoration-none" href="/quienes-somos">
-                                <li>Quienes Somos</li>
-                            </a>
-                            <a class="text-white text-decoration-none" href="/solicita-ya">
-                                <li>Solicita Ya</li>
-                            </a>
-                            <a class="text-white text-decoration-none" href="/preguntas-frecuentes">
-                                <li>Preguntas Frecuentes</li>
-                            </a>
-                            <a class="text-white text-decoration-none" href="/contacto">
-                                <li>Contactos</li>
-                            </a>
-                            <a class="text-white text-decoration-none" href="/login">
-                                <li>Panel Administracion</li>
-                            </a>
-                        </div>
-                        <div class="container-redes mt-5 mb-5">
-                            <h6 class="text-white mb-3"><strong>NUESTRAS REDES SOCIALES</strong></h6>
-                            <a href="https://www.facebook.com/rosfalrd/" target="_blank"> <img style="width: 40px;" src="/img/logo-facebook.png" alt="facebook"></a>
-                            <a href="https://www.instagram.com/rosfalrd/" target="_blank"> <img style="width: 40px;" src="/img/logo-instagram.png" alt="instagram"></a>
-                            <a href="https://bit.ly/3xzs0RV" target="_blank"> <img style="width: 40px;" src="/img/logo-ws-navar-footer.png" alt="ws"></a>
-                            <a href="#"> <img style="width: 40px;" src="/img/logo-twiter.png" alt="twier"></a>
-                        </div>
                     </div>
-                </footer>
-                <div class="mt-0 mb-0" style="background-color:#083d6b ;">
-                    <p class="text-white text-center pt-3 pb-3 m-0">© Copyright 2022 - Rosfal Soluciones de Prestamos</p>
-                </div>
 
-                <% } %>
 
-                    <% if (rol == 'Cliente App'){ %>
-                        <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
-                            <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+
+                    <% if (rol !== 'Cliente App'){ %>
+
+                        <footer class="d-flex" style="background-color: #0B5496 ;">
+                            <div class="container  d-lg-flex justify-content-lg-between">
+                                <div class="container-dir mt-5 mb-5">
+                                    <img class="mb-5" src="/img/LOGO- footer.png" alt="logo" style="width: 220px;">
+                                </div>
+                                <div class="container-dir mt-5 mb-5">
+                                    <h6 class="text-white mb-3"><strong>DIRECCION</strong></h6>
+                                    <h6 class="text-white"><i class="bi bi-geo-alt-fill me-2"></i>Calle Primera #59</h6>
+                                    <h6 style="margin-left: 25px;" class="text-white">Sector Enriquillo de Herrera</h6>
+                                    <h6 style="margin-left: 25px;" class="text-white">Santo Domingo R.D</h6>
+                                    <h6 class="text-white"><i class="bi bi-envelope-fill me-2"></i>contacto@rosfal.com</h6>
+                                    <h6 class="text-white"><i class="bi bi-telephone-fill me-2"></i>829-856-0203</h6>
+                                </div>
+                                <div class="container-link mt-5 mb-5">
+                                    <h6 class="text-white mb-3"><strong>LINKS DE INTERES</strong></h6>
+                                    <a class="text-white text-decoration-none" href="/">
+                                        <li>Inicio</li>
+                                    </a>
+                                    <a class="text-white text-decoration-none" href="/quienes-somos">
+                                        <li>Quienes Somos</li>
+                                    </a>
+                                    <a class="text-white text-decoration-none" href="/solicita-ya">
+                                        <li>Solicita Ya</li>
+                                    </a>
+                                    <a class="text-white text-decoration-none" href="/preguntas-frecuentes">
+                                        <li>Preguntas Frecuentes</li>
+                                    </a>
+                                    <a class="text-white text-decoration-none" href="/contacto">
+                                        <li>Contactos</li>
+                                    </a>
+                                    <a class="text-white text-decoration-none" href="/login">
+                                        <li>Panel Administracion</li>
+                                    </a>
+                                </div>
+                                <div class="container-redes mt-5 mb-5">
+                                    <h6 class="text-white mb-3"><strong>NUESTRAS REDES SOCIALES</strong></h6>
+                                    <a href="https://www.facebook.com/rosfalrd/" target="_blank"> <img style="width: 40px;" src="/img/logo-facebook.png" alt="facebook"></a>
+                                    <a href="https://www.instagram.com/rosfalrd/" target="_blank"> <img style="width: 40px;" src="/img/logo-instagram.png" alt="instagram"></a>
+                                    <a href="https://bit.ly/3xzs0RV" target="_blank"> <img style="width: 40px;" src="/img/logo-ws-navar-footer.png" alt="ws"></a>
+                                    <a href="#"> <img style="width: 40px;" src="/img/logo-twiter.png" alt="twier"></a>
+                                </div>
+                            </div>
+                        </footer>
+                        <div class="mt-0 mb-0" style="background-color:#083d6b ;">
+                            <p class="text-white text-center pt-3 pb-3 m-0">© Copyright 2022 - Rosfal Soluciones de Prestamos</p>
                         </div>
+
                         <% } %>
+
+                            <% if (rol == 'Cliente App'){ %>
+                                <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
+                                    <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+                                </div>
+                                <% } %>
 
 </body>
 

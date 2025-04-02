@@ -9,46 +9,61 @@ const pool = require("../database");
 // RENDERIZANDO Y MOSTRANDO TODOS LOS MENSAJES NUEVOS
 router.get('/mensajes', async(req, res) => {
     if (req.session.loggedin) {
-
-        const permiso_A = 'Administrador'
-        const permiso_B = 'Representante'
-        const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
-
-        const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ORDER BY fechaMensaje DESC');
-        const arrayMensajesLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
-        const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
-
-        res.render("mensajes", {
-            arrayMensajes: arrayMensajesDB,
-            arrayMensajesLeidos: arrayMensajesLeidosDB,
-            arrayMensajesNoLeidos: arrayMensajesNoLeidosDB,
-            login: true,
-            name: req.session.name,
-            rol: req.session.rol,
-            permiso_A,
-            permiso_B,
-            permiso_C,
-            arrayUsuarios,
-            arrayClientes,
-            arraySolicitudes,
-            arrayMensajesNuevos,
-            arrayVisitas,
-            arrayTestimoniosNuevos
+        // console.log('entro el mmg')
+        try {
+            console.log('entro al try')
 
 
+            const permiso_A = 'Administrador'
+            const permiso_B = 'Representante'
+            const permiso_C = 'Cliente App'
+            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
-        });
+            const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ORDER BY fechaMensaje DESC');
+            const arrayMensajesLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
+            const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
+
+            // console.log('valido las consultas')
+
+            res.render("mensajes", {
+                arrayMensajes: arrayMensajesDB,
+                arrayMensajesLeidos: arrayMensajesLeidosDB,
+                arrayMensajesNoLeidos: arrayMensajesNoLeidosDB,
+                login: true,
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayUsuarios,
+                arrayClientes,
+                arraySolicitudes,
+                arrayMensajesNuevos,
+                arrayVisitas,
+                arrayTestimoniosNuevos
+
+            });
+
+            // console.log('hizo el render a mensajes')
+
+        } catch (error) {
+            console.log('este es el error' + error)
+            res.render("404", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
 
     } else {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -60,10 +75,11 @@ router.get('/mensajes', async(req, res) => {
 router.get("/mensajes/ver-mensaje-nuevo/:id", async(req, res) => {
     if (req.session.loggedin) {
 
-        const id = req.params.id
-        console.log(req.params)
-
         try {
+
+            const id = req.params.id
+            console.log(req.params)
+
 
             const permiso_A = 'Administrador'
             const permiso_B = 'Representante'
@@ -102,9 +118,9 @@ router.get("/mensajes/ver-mensaje-nuevo/:id", async(req, res) => {
 
         } catch (error) {
             console.log(error)
-            res.render("ver-mensaje-nuevo", {
+            res.render("404", {
                 error: true,
-                mensaje: "no se encuentra el id seleccionado"
+                mensaje: "no se encuentra el id seleccionado " + error
             });
         }
 
@@ -112,6 +128,7 @@ router.get("/mensajes/ver-mensaje-nuevo/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -197,6 +214,7 @@ router.get('/mensajes-no-leidos', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -249,7 +267,7 @@ router.get("/mensajes-no-leidos/ver-mensaje-no-leido/:id", async(req, res) => {
 
         } catch (error) {
             console.log(error)
-            res.render("ver-mensaje-no-leido", {
+            res.render("404", {
                 error: true,
                 mensaje: "no se encuentra el id seleccionado"
             });
@@ -259,6 +277,7 @@ router.get("/mensajes-no-leidos/ver-mensaje-no-leido/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
@@ -340,6 +359,7 @@ router.get('/mensajes-leidos', async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 
@@ -402,6 +422,7 @@ router.get("/mensajes-leidos/ver-mensaje-leido/:id", async(req, res) => {
         res.render('login', {
             login: false,
             name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
         });
     }
 });
