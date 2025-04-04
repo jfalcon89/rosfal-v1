@@ -19,13 +19,17 @@ router.get('/consulta-solicitud', async(req, res) => {
     console.log(id)
     console.log(req.url.slice(23))
     const arraySolicitudDB = await pool.query("SELECT tipoPrestamo, montoSolicitado, fechaSolicitud, estadoSolicitud, nombre, apellido, idSolicitud, cedula FROM solicitudes WHERE cedula= ?", [id]);
+    const ClienteDB = await pool.query("SELECT telefono, estado_cliente FROM app_clientes WHERE telefono= ?", [req.session.user]);
+
 
     console.log(arraySolicitudDB)
+    console.log(ClienteDB[0])
     res.render('consulta-solicitud', {
         arraySolicitud: arraySolicitudDB,
         id,
         rol: req.session.rol,
-        permiso_C
+        permiso_C,
+        Cliente: ClienteDB[0]
     });
 
     // } catch (error) {
