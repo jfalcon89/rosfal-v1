@@ -144,12 +144,12 @@
                     <p><strong>Liquidados</strong> <span><%= pagosPromociones[0].creditos_liquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(pagosPromociones[0].creditos_liquidado) %></span></p>
                     <p><strong>Declinados</strong> <span><%= pagosPromociones[0].creditos_declinado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(pagosPromociones[0].creditos_declinado) %></span></p>
                 </div>
-                
+
 
             </div>
             <div class="container-fluid p-4">
                 <div class="container-table table-responsive">
-                    <table id="datatable" class="display responsive nowrap" style="width:100%">
+                    <table id="datatable" class="display responsive nowrap compact" style="width:100%">
                         <thead class="thead-ligth">
                             <tr>
                                 <th scope="col">ID Promocion</th>
@@ -168,77 +168,78 @@
                             <% if (promocionesCliente.length > 0 ) { %>
                                 <% promocionesCliente.forEach(promocion=> { %>
                                     <% if (promocion.usuario !== 'PromocionesRosfal'){ %>
-                                    <% console.log('Usuario ' + promocion.usuario) %>
-                                    <span class="d-none"><%= i++ %></span>
-                                    <tr>
-                                        <td>
-                                            <%= promocion.id_promocion %>
-                                        </td>
-                                        <td>
-                                            <%= promocion.codigo_promocion %>
-                                        </td>
-                                        <td>
-                                            $
-                                            <%= promocion.valor_credito %>
-                                        </td>
-                                        <td>
-                                            <%= promocion.fecha_registro.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
-                                        </td>
-                                        <td>
-                                            <% if(promocion.estado_promocion == 'Aprobado' ) { %>
-                                                <i style="color: green;" class="bi bi-check-square-fill"></i>
-                                                <%= promocion.estado_promocion  %>
+                                        <% console.log('Usuario ' + promocion.usuario) %>
+                                            <span class="d-none"><%= i++ %></span>
+                                            <tr>
+                                                <td>
+                                                    <%= promocion.id_promocion %>
+                                                </td>
+                                                <td>
+                                                    <%= promocion.codigo_promocion %>
+                                                </td>
+                                                <td>
+                                                    $
+                                                    <%= promocion.valor_credito %>
+                                                </td>
+                                                <td>
+                                                    <%= promocion.fecha_registro.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
+                                                </td>
+                                                <td>
+                                                    <% if(promocion.estado_promocion == 'Aprobado' ) { %>
+                                                        <i style="color: green;" class="bi bi-check-square-fill"></i>
+                                                        <%= promocion.estado_promocion  %>
 
-                                                    <% }else { %>
-                                                        <span style="color: #f85e5e;"><i class="bi bi-x-square-fill"></i> <%= promocion.estado_promocion  %></span>
-                                                        <% } %>
-                                        </td>
-                                        <td>
-                                            <%= promocion.cliente_id %> - <%= promocion.usuario %>
-                                        </td>
-                                        <td>
-                                            <% if(promocion.tipo_bono == 'Credito' ){ %>
-                                                <span class="text-white bg-success p-1">Credito</span>
-                                                <% }else{ %>
-                                                    <span class="text-white bg-danger p-1">Debito</span>
-                                                    <% } %>
-                                                        <%= promocion.origen_bono %>
-                                        </td>
+                                                            <% }else { %>
+                                                                <span style="color: #f85e5e;"><i class="bi bi-x-square-fill"></i> <%= promocion.estado_promocion  %></span>
+                                                                <% } %>
+                                                </td>
+                                                <td>
+                                                    <%= promocion.cliente_id %> -
+                                                        <%= promocion.usuario %>
+                                                </td>
+                                                <td>
+                                                    <% if(promocion.tipo_bono == 'Credito' ){ %>
+                                                        <span class="text-white bg-success p-1">Credito</span>
+                                                        <% }else{ %>
+                                                            <span class="text-white bg-danger p-1">Debito</span>
+                                                            <% } %>
+                                                                <%= promocion.origen_bono %>
+                                                </td>
 
-                                        <% if(rol == permiso_A){ %>
-                                            <td class="w-0 ">
-                                                <a id="eventoAct-Inact" href="/clientes-promociones-adm/editar-promocion-cliente/<%= promocion.id_promocion %>" class="btn " title="Editar promocion" data-bs-toggle="modal" data-bs-target="#exampleModal3<%= i %>"><i class="bi bi-pencil-square "></i></a>
-                                                <a id="eventoAct-Inact" href="/clientes-promociones/eliminar-promocion-cliente/<%= promocion.id_promocion %>" class="btn " title="Eliminar Promocion" data-bs-toggle="modal" data-bs-target="#exampleModal4<%= i %>"><i style="color: red;" class="bi bi-x-square-fill"></i></a>
+                                                <% if(rol == permiso_A){ %>
+                                                    <td class="w-0 ">
+                                                        <a id="eventoAct-Inact" href="/clientes-promociones-adm/editar-promocion-cliente/<%= promocion.id_promocion %>" class="btn " title="Editar promocion" data-bs-toggle="modal" data-bs-target="#exampleModal3<%= i %>"><i class="bi bi-pencil-square "></i></a>
+                                                        <a id="eventoAct-Inact" href="/clientes-promociones/eliminar-promocion-cliente/<%= promocion.id_promocion %>" class="btn " title="Eliminar Promocion" data-bs-toggle="modal" data-bs-target="#exampleModal4<%= i %>"><i style="color: red;" class="bi bi-x-square-fill"></i></a>
 
-                                                <% }%>
+                                                        <% }%>
 
-                                            </td>
-                                    </tr>
+                                                    </td>
+                                            </tr>
 
-                                    <!-- Modal editar promociones -->
-                                    <div class="modal fade  mt-4" id="exampleModal3<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Editar Promocion Cliente</h5>
-                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <!-- Modal editar promociones -->
+                                            <div class="modal fade  mt-4" id="exampleModal3<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Editar Promocion Cliente</h5>
+                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                    <span aria-hidden="true">&times;</span>
                                                  </button>
-                                                </div>
-                                                <div class="modal-body">
+                                                        </div>
+                                                        <div class="modal-body">
 
 
-                                                    <form action="/clientes-promociones-adm/editar-promocion-cliente/<%= promocion.id_promocion %>" method="POST" enctype="">
-                                                        <!-- Campo para ingresar el ID del préstamo -->
+                                                            <form action="/clientes-promociones-adm/editar-promocion-cliente/<%= promocion.id_promocion %>" method="POST" enctype="">
+                                                                <!-- Campo para ingresar el ID del préstamo -->
 
-                                                        <label for="codigo_promocion">Codigo Promocion</label>
-                                                        <input class="form-control" type="text" value="<%= promocion.codigo_promocion %>" name="codigo_promocion">
+                                                                <label for="codigo_promocion">Codigo Promocion</label>
+                                                                <input class="form-control" type="text" value="<%= promocion.codigo_promocion %>" name="codigo_promocion">
 
-                                                        <label for="valor_credito">Valor Credito</label>
-                                                        <input class="form-control" type="number" value="<%= promocion.valor_credito %>" name="valor_credito">
+                                                                <label for="valor_credito">Valor Credito</label>
+                                                                <input class="form-control" type="number" value="<%= promocion.valor_credito %>" name="valor_credito">
 
-                                                        <label for="origen_bono">Origen Bono</label>
-                                                        <select name="origen_bono" class="form-control" id="origen_bono" required>
+                                                                <label for="origen_bono">Origen Bono</label>
+                                                                <select name="origen_bono" class="form-control" id="origen_bono" required>
                                                          <option value="<%= promocion.origen_bono %>" selected><%= promocion.origen_bono %></option>
                                                          <% if (arrayUsuariosV.length > 0) { %>
                                                              <% arrayUsuariosV.forEach(usuario=> { %>
@@ -247,8 +248,8 @@
                                                                      <% } %>
                                                                 
                                                      </select>
-                                                        <label for="estado_promocion">Estado</label>
-                                                        <select name="estado_promocion" class="form-control" id="estado_promocion" required>
+                                                                <label for="estado_promocion">Estado</label>
+                                                                <select name="estado_promocion" class="form-control" id="estado_promocion" required>
                                                          <option value="<%= promocion.estado_promocion %>" selected><%= promocion.estado_promocion %></option>
                                                          <option value="Aprobado">Aprobado</option>
                                                          <option value="En Revision">En Revision</option>
@@ -256,54 +257,54 @@
                                                          <option value="Declinado">Declinado</option>
                                                                                         
                                                      </select>
-                                                        <br><br>
+                                                                <br><br>
 
 
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-success">Actualizar Promocion</button>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-success">Actualizar Promocion</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                                    </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
 
-                                    <!-- Modal Eliminar promociones -->
-                                    <div class="modal fade  mt-4" id="exampleModal4<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Editar Promocion Cliente</h5>
-                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <!-- Modal Eliminar promociones -->
+                                            <div class="modal fade  mt-4" id="exampleModal4<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Editar Promocion Cliente</h5>
+                                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                                    <span aria-hidden="true">&times;</span>
                                                  </button>
-                                                </div>
-                                                <div class="modal-body">
-
-
-                                                    <form action="/clientes-promociones/eliminar-promocion-cliente/<%= promocion.id_promocion %>" method="" enctype="">
-                                                        <!-- Campo para ingresar el ID del préstamo -->
-
-                                                        <div class="d-flex justify-content-center">
-                                                            <h4>
-                                                                <%= promocion.codigo_promocion %>
-                                                            </h4>
                                                         </div>
+                                                        <div class="modal-body">
 
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-success">Eliminar Promocion</button>
+
+                                                            <form action="/clientes-promociones/eliminar-promocion-cliente/<%= promocion.id_promocion %>" method="" enctype="">
+                                                                <!-- Campo para ingresar el ID del préstamo -->
+
+                                                                <div class="d-flex justify-content-center">
+                                                                    <h4>
+                                                                        <%= promocion.codigo_promocion %>
+                                                                    </h4>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-success">Eliminar Promocion</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                                    </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
 
-                                    <% } %>
-                                    <% }) %>
-                                        <% } %>
+                                            <% } %>
+                                                <% }) %>
+                                                    <% } %>
                         </tbody>
                     </table>
                 </div>

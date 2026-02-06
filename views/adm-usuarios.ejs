@@ -11,6 +11,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
     <!-- linkeado css propio -->
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style_form_clientes.css">
     <!-- icons bootstrap cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <!-- generador de pdf cdn -->
@@ -29,8 +30,8 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light ">
-        <div class="container-fluid  " style="background-color: #ececec;">
+    <nav class="navbar navbar-expand-lg navbar-light " style="background: linear-gradient(to right, #eaf6ff, #a5d3ff); border-radius: 0px 0px 15px 15px;">
+        <div class="container-fluid  ">
 
             <div class="d-flex">
                 <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
@@ -52,7 +53,7 @@
                         <div class="user-container me-2 d-flex">
                             <% if (login) { %>
                                 <div>
-                                    <h4 type="" class="" style="color: #aeaeae;">
+                                    <h4 type="" class="">
                                         <%= name %>
                                     </h4>
                                     <h6>
@@ -136,12 +137,52 @@
                                 <%=  %>
                             </h3>
                         </div>
-                        <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/adm-usuarios/crear-usuario">Crear Usuario</a></div>
+                        <div class="titulo"><a class="btn text-decoration-none text-secondary fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal2">Crear Usuario</a></div>
                     </div>
                 </div>
             </div>
             <% } %>
     </div>
+
+
+    <!-- Modal crear usuario -->
+    <div class="modal fade  mt-4" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div style="background: linear-gradient(to right, #eaf6ff, #a5d3ff);" class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Crear Usuario</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <form id="form-validacion" class="" autocomplete="off" action="/adm-usuarios/crear-usuario" method="POST">
+                        <div class="container bg-white mt-5 mb-5 ">
+                            <input class="form-control mt-3 mb-3" type="text" name="user" id="user" placeholder="Identificacion Usuario">
+                            <input class="form-control mt-3 mb-3" type="text" name="name" id="name" placeholder="Nombre Completo">
+                            <input class="form-control mt-3 mb-3" type="password" name="pass" placeholder="Password">
+                            <select class="form-control mt-3 mb-3" name="rol" id="rol">
+                    <option value="Seleccionar" selected>Seleccionar</option>
+                    <option value="Representante" >Representante</option>
+                    <option value="Administrador">Administrador</option>
+                </select>
+                            <select class="form-control" name="estado_usuario" id="estado_usuario">
+                    <option value="Activo" selected>Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+
+                            <div class="d-flex justify-content-center">
+                                <button id="btn" class="btn btn-success btn-block p-2 mt-4 mb-3 w-100" style="background-color: #0B5496;" type="submit">CREAR USUARIO</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <div class="container-fluid d-lg-flex">
@@ -150,7 +191,7 @@
             <h3 class="text-secondary"><strong>LISTADO</strong> USUARIOS</h3>
             <div class="container-fluid p-4">
                 <div class="container-table table-responsive">
-                    <table id="datatable" class="display responsive nowrap" style="width:100%">
+                    <table id="datatable" class="display responsive nowrap compact" style="width:100%">
                         <thead class="thead-ligth">
                             <tr>
                                 <th scope="col">Id</th>
@@ -159,6 +200,7 @@
                                 <th scope="col">Rol</th>
                                 <th scope="col">Fecha Creacion</th>
                                 <th scope="col">Estado</th>
+                                <th scope="col">Cliente Id</th>
                                 <% if(rol == permiso_A){ %>
                                     <th scope="col">Acciones</th>
                                     <% } %>
@@ -167,6 +209,7 @@
                         <tbody>
                             <% if (arrayUsuariosV.length > 0) { %>
                                 <% arrayUsuariosV.forEach(usuario=> { %>
+                                    <span class="d-none"><%= i++ %></span>
                                     <tr>
                                         <td>
                                             <%= usuario.idUsuario %>
@@ -186,60 +229,279 @@
                                         <td>
                                             <%= usuario.estado_usuario %>
                                         </td>
+                                        <td>
+                                            <% if(usuario.cliente > 0) { %>
+                                                <i style="color: green;" class="bi bi-check-square-fill"></i> <span class="text-success"><%= usuario.cliente %></span>
+                                                <% }else{ %>
+                                                    <i style="color: red;" class="bi bi-x-square-fill"></i> <span class="text-danger">Cliente no Registrado</span>
+                                                    <% } %>
+                                        </td>
                                         <% if(rol == permiso_A){ %>
-                                            <td class="w-0 "><a id="eventoAct-Inact" href="/adm-usuarios/editar-usuario/<%= usuario.idUsuario %>" class="btn " title="Editar Usuario"><i class="bi bi-pencil-square "></i></a>
+                                            <td class="w-0 ">
+                                                <a id="eventoAct-Inact" data-bs-toggle="modal" data-bs-target="#modalEditarUsuario<%= i %>" href="/adm-usuarios/editar-usuario/<%= usuario.idUsuario %>" class="btn " title="Editar Usuario"><i class="bi bi-pencil-square "></i></a>
                                                 <% } %>
                                             </td>
                                     </tr>
 
+                                    <!-- Modal editar usuario -->
+                                    <div class="modal fade  mt-4" id="modalEditarUsuario<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl" role="document">
+                                            <div class="modal-content">
+                                                <div style="background: linear-gradient(to right, #eaf6ff, #a5d3ff);" class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form class="" autocomplete="off" action="/adm-usuarios/editar-usuario/<%= usuario.idUsuario %>" method="POST">
+                                                        <div class="container bg-white mt-5 mb-5">
+                                                            <h4><strong>Usuario ID </strong>
+                                                                <%= usuario.idUsuario %>
+                                                            </h4>
+
+                                                            <% if(usuario.cliente > 0) { %>
+                                                                <div class=" d-lg-flex mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <input class="form-control p-2 bg-success text-light" readonly value="Cliente ID: <%= usuario.cliente %> Registrado">
+                                                                    </div>
+                                                                </div>
+                                                                <% }else{ %>
+
+                                                                    <div class=" d-lg-flex mb-3">
+                                                                        <div class="input-group-prepend">
+                                                                            <input class="form-control text-light p-2 bg-danger" readonly value="Cliente: No Registrado">
+                                                                        </div>
+                                                                    </div>
+                                                                    <% } %>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text">Ident. Usuario</span>
+                                                                            </div>
+                                                                            <input class="form-control text-muted" type="text" name="user" value="<%= usuario.user %>" placeholder="" aria-describedby="user">
+                                                                        </div>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text">Nombre Usuario</span>
+                                                                            </div>
+                                                                            <input class="form-control text-muted" type="text" name="name" value="<%= usuario.name %>" placeholder="" aria-describedby="user">
+                                                                        </div>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="d-flex">
+                                                                                <div class="input-group-prepend">
+                                                                                    <span class="input-group-text">Password</span>
+                                                                                </div>
+                                                                                <input class="form-control " type="password" name="" value="<%= usuario.pass %>" placeholder="" aria-describedby="pass"><a class="btn btn-secondary  btn-sm" data-bs-toggle="modal"
+                                                                                    data-bs-target="#staticBackdrop2<%= i %>">CAMBIAR</a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text">Estado</span>
+                                                                            </div>
+                                                                            <select class="form-control" name="estado_usuario" aria-describedby="estado_usuario">
+                                                                                          <option value="<%= usuario.estado_usuario %>" selected><%= usuario.estado_usuario %></option>
+                                                                                          <option value="Activo" >Activo</option>
+                                                                                          <option value="Inactivo">Inactivo</option>
+                                                                                    </select>
+                                                                        </div>
+                                                                        <div class="input-group mb-3">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text">rol</span>
+                                                                            </div>
+                                                                            <select class="form-control" name="rol" aria-describedby="rol">
+                                                                                       <option value="<%= usuario.rol %>" selected><%= usuario.rol %></option>
+                                                                                       <option value="Representante" >Representante</option>
+                                                                                       <option value="Administrador">Administrador</option>
+                                                                                   </select>
+                                                                        </div>
+                                                                        <div>
+                                                                            <div class="d-lg-flex justify-content-center mt-3">
+                                                                                <button class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 me-lg-3" type="submit">GUARDAR CAMBIOS</button>
+                                                                                <a class="btn btn-danger btn-block p-2 mt-1 mb-3 w-100" data-bs-toggle="modal" data-bs-target="#modalEliminarUsuario<%= i %>">ELIMINAR USUARIO</a>
+                                                                            </div>
+                                                                        </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal eliminar usuario -->
+                                    <div class="modal fade" id="modalEliminarUsuario<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eliminarUsuarioLabel" aria-hidden="true">
+                                        <div class="modal-dialog  modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title text-center fw-bold" id="eliminarUsuarioLabel">Eliminar Usuario</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5 class="text-center">
+                                                        <%= usuario.user %>
+                                                    </h5>
+                                                </div>
+                                                <div class=" d-lg-flex justify-content-center mt-3 p-3">
+                                                    <button type="button" class="btn btn-secondary btn-block p-2 mt-1 mb-3 w-100 me-lg-3" data-bs-dismiss="modal">No</button>
+                                                    <a href="/adm-usuarios/eliminar-usuario/<%= usuario.idUsuario %>" class="btn btn-danger btn-block p-2 mt-1 mb-3 w-100">Si Eliminar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal actualizar contraseña -->
+                                    <div class="modal fade" id="staticBackdrop2<%= i %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+                                        <div class="modal-dialog  modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel2">Actualizar contraseña</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form class="" autocomplete="off" action="/adm-usuarios/editar-usuario/<%= usuario.idUsuario %>" method="POST">
+                                                    <div class="modal-body">
+                                                        <h5 class="text-center">
+                                                            <input class="form-control " type="password" name="pass" value="" placeholder="Password" aria-describedby="Contraseña">
+                                                        </h5>
+                                                    </div>
+                                                    <div class="modal-footer border-0">
+                                                        <button class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 " type="submit">CAMBIAR CONTRASEÑA</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <% }) %>
                                         <% } %>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <!-- </div> -->
         </div>
     </div>
 
 
-    <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
-        <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
-    </div>
-
-
-    <script src="/js/rutasFunction.js"></script>
-
 
     <script>
-        $(document).ready(function() {
-            $('#datatable').DataTable({
-                order: [
-                    [0, 'desc']
-                ],
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                }
-            });
+        // Captura el envío del formulario
+        document.getElementById('form-validacion').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita la recarga de la página
+
+
+            const user = document.getElementById('user').value;
+            const name = document.getElementById('name').value;
+            const pass = document.querySelector('input[name="pass"]').value;
+            const rol = document.querySelector('select[name="rol"]').value;
+            const estado_usuario = document.querySelector('select[name="estado_usuario"]').value;
+
+
+            // Enviar datos al backend sin recargar la página usando fetch
+            fetch('/adm-usuarios/crear-usuario', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        // token_registro_sms: token,
+                        user: user,
+                        name: name,
+                        pass: pass,
+                        rol: rol,
+                        estado_usuario: estado_usuario
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Usar SweetAlert2 para mostrar la alerta
+                    Swal.fire({
+                        title: data.alertTitle,
+                        text: data.alertMessage,
+                        icon: data.alertIcon,
+                        confirmButtonText: data.success ? 'Continuar' : 'Reintentar',
+                        cancelButtonText: 'Ver Usuarios',
+                        showConfirmButton: true,
+                        showCancelButton: !data.success && data.showCancelButton,
+                        // Eliminar el temporizador para asegurar la redirección manual
+                        timer: data.success ? null : null, // Sin temporizador en caso de éxito
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Si el registro fue exitoso, redirigir a 'app-validacion-registro'
+                            if (data.success) {
+                                window.location.href = data.ruta; // Redirigir a la ruta de éxito
+                            } else {
+                                // Si hubo un error, limpiar el campo 'telefono'
+                                document.getElementById('user').value = '';
+                            }
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            // Si el usuario hace clic en "Iniciar sesión"
+                            window.location.href = data.ruta; // Redirigir a la página de inicio de sesión
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Ocurrió un error inesperado.',
+                        icon: 'error',
+                        confirmButtonText: 'Reintentar'
+                    });
+                });
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <% if (typeof alert !="undefined" ) { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '/<%= ruta %>'
+            })
+        </script>
+        <% } %>
+
+
+            <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
+                <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+            </div>
+
+
+            <!-- <script src="/js/rutasFunction.js"></script> -->
+
+
+            <script>
+                $(document).ready(function() {
+                    $('#datatable').DataTable({
+                        order: [
+                            [0, 'desc']
+                        ],
+                        language: {
+                            "decimal": "",
+                            "emptyTable": "No hay información",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar _MENU_ Entradas",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscar:",
+                            "zeroRecords": "Sin resultados encontrados",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            }
+                        }
+                    });
+                });
+            </script>
 
 
 

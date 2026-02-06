@@ -5,41 +5,56 @@ const moment = require("moment");
 const pool = require("../database");
 const bcrypt = require('bcryptjs');
 const ipapi = require('ipapi.co');
+const { obtenerConteos } = require("../services/conteosService");
 
 
 router.get('/adm-usuarios', async(req, res) => {
     if (req.session.loggedin) {
 
-        const permiso_A = 'Administrador'
-        const permiso_B = 'Representante'
-        const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
-        const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
-        const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-        const usuarioDB = await pool.query('SELECT * FROM users ');
-        res.render("adm-usuarios", {
-            arrayUsuariosV: arrayUsuariosVDB,
-            arrayClientesV: arrayClientesVDB,
-            usuario: usuarioDB[0],
-            login: true,
-            name: req.session.name,
-            rol: req.session.rol,
-            permiso_A,
-            permiso_B,
-            permiso_C,
-            arrayUsuarios,
-            arrayClientes,
-            arraySolicitudes,
-            arrayMensajesNuevos,
-            arrayVisitas,
-            arrayTestimoniosNuevos
-        });
+        // Aquí usas el servicio centralizado
+        const conteos = await obtenerConteos();
+        let i = '';
+
+        try {
+            const permiso_A = 'Administrador'
+            const permiso_B = 'Representante'
+            const permiso_C = 'Cliente App'
+            const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
+            const arrayUsuariosVDB = await pool.query('SELECT u.*, c.cliente_id AS cliente FROM users u LEFT JOIN app_clientes c ON u.user = c.telefono; ');
+            const usuarioDB = await pool.query('SELECT * FROM users ');
+
+            res.render("adm-usuarios", {
+                arrayUsuariosV: arrayUsuariosVDB,
+                arrayClientesV: arrayClientesVDB,
+                usuario: usuarioDB[0],
+                login: true,
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                conteos,
+                i
+
+
+            }, (err, html) => {
+                if (err) {
+                    console.error("Error al renderizar EJS:", err);
+                    return res.render("404", {
+                        error: true,
+                        mensaje: `Ocurrió un error al generar la página ${err}`
+                    });
+                }
+                res.send(html);
+            });
+        } catch (error) {
+            console.log("este es el error: " + error);
+            res.render("404", {
+                error: true,
+                mensaje: "no se encuentra el id seleccionado"
+            });
+        }
     } else {
         res.render('login', {
             login: false,
@@ -55,16 +70,12 @@ router.get('/adm-usuarios', async(req, res) => {
 router.get('/adm-usuarios/crear-usuario', async(req, res) => {
     if (req.session.loggedin) {
 
+
+        // Aquí usas el servicio centralizado
+        const conteos = await obtenerConteos();
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
-
         const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
         const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
         res.render("crear-usuario", {
@@ -76,13 +87,7 @@ router.get('/adm-usuarios/crear-usuario', async(req, res) => {
             permiso_A,
             permiso_B,
             permiso_C,
-            arrayUsuarios,
-            arrayClientes,
-            arraySolicitudes,
-            arrayMensajesNuevos,
-            arrayVisitas,
-            arrayTestimoniosNuevos
-
+            conteos
         });
     } else {
         res.render('login', {
@@ -179,16 +184,11 @@ router.post("/adm-usuarios/crear-usuario", async(req, res) => {
 router.get('/adm-usuarios/editar-usuario', async(req, res) => {
     if (req.session.loggedin) {
 
+        // Aquí usas el servicio centralizado
+        const conteos = await obtenerConteos();
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
-
         const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
         const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
         res.render('editar-usuario', {
@@ -200,13 +200,7 @@ router.get('/adm-usuarios/editar-usuario', async(req, res) => {
             permiso_A,
             permiso_B,
             permiso_C,
-            arrayUsuarios,
-            arrayClientes,
-            arraySolicitudes,
-            arrayMensajesNuevos,
-            arrayVisitas,
-            arrayTestimoniosNuevos
-
+            conteos
         });
     } else {
         res.render('login', {
@@ -223,16 +217,13 @@ router.get("/adm-usuarios/editar-usuario/:id", async(req, res) => {
         const id = req.params.id;
         console.log(req.params);
 
+        let i = '';
+
+        // Aquí usas el servicio centralizado
+        const conteos = await obtenerConteos();
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
-
         const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
         const arrayUsuariosVDB = await pool.query("SELECT * FROM users");
         const usuarioDB = await pool.query("SELECT * FROM users WHERE idUsuario = ?", [id]);
@@ -255,12 +246,9 @@ router.get("/adm-usuarios/editar-usuario/:id", async(req, res) => {
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                arrayUsuarios,
-                arrayClientes,
-                arraySolicitudes,
-                arrayMensajesNuevos,
-                arrayVisitas,
-                arrayTestimoniosNuevos
+                conteos,
+                i
+
             });
 
         } catch (error) {
@@ -278,12 +266,7 @@ router.get("/adm-usuarios/editar-usuario/:id", async(req, res) => {
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                arrayUsuarios,
-                arrayClientes,
-                arraySolicitudes,
-                arrayMensajesNuevos,
-                arrayVisitas,
-                arrayTestimoniosNuevos
+                conteos
             });
         }
 
@@ -356,18 +339,11 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
         const id = req.params.id;
         console.log(req.params);
 
-
+        // Aquí usas el servicio centralizado
+        const conteos = await obtenerConteos();
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
-
-
         const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
         const arrayUsuariosVDB = await pool.query("SELECT * FROM users");
         const usuarioDB = await pool.query("SELECT * FROM users WHERE idUsuario = ?", [id]);
@@ -393,12 +369,7 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                arrayUsuarios,
-                arrayClientes,
-                arraySolicitudes,
-                arrayMensajesNuevos,
-                arrayVisitas,
-                arrayTestimoniosNuevos,
+                conteos,
                 arrayArchivos: arrayArchivosDB,
                 arraySolicitudesAprobadas: arraySolicitudesAprobadasDB
             });
@@ -418,12 +389,7 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                arrayUsuarios,
-                arrayClientes,
-                arraySolicitudes,
-                arrayMensajesNuevos,
-                arrayVisitas,
-                arrayTestimoniosNuevos,
+                conteos,
                 arrayArchivos: arrayArchivosDB,
                 arraySolicitudesAprobadas: arraySolicitudesAprobadasDB
             });

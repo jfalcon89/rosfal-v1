@@ -1,31 +1,203 @@
 <% if (rol == permiso_A) { %>
 
     <ul class="navbar-nav">
-        <li class="p-2"><a class="dropdown-item" href="/panel-administracion"><i class="bi bi-house-door me-2"></i>Inicio</a></li>
-        <% if (arraySolicitudes.length == 0) { %>
-            <li class="p-2"><a class="dropdown-item" href="/solicitudes-nuevas"><i class="bi bi-file-text me-2"></i>Solicitudes</a></li>
+
+
+        <li class="btn p-0 dropdown-item">
+            <a style="padding: 16px 20px 16px 20px; background: none; box-shadow: none" class="dropdown-item text-black holographic-card " href="/panel-administracion"><i class="bi bi-house-door me-2"></i>Inicios</a>
+        </li>
+        <li class="accordion-header" id="panelsStayOpen-heading1">
+            <li class="btn p-0 dropdown-item">
+                <a style="background: none; box-shadow: none " class="dropdown-item accordion-button collapsed text-black holographic-card" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse1" aria-expanded="false" aria-controls="panelsStayOpen-collapse1"><i class="bi bi-file-text me-2"></i>Solicitudes</a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse1" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading1">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Solicitudes Nuevas 
+                        </a><span class="badge badge-pill badge-info bg-secondary"><%= conteos.totalSolicitudesNuevas %></span>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse1" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading1">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Solicitudes Aprobadas 
+                        </a><span class="badge badge-pill badge-info bg-secondary"><%= conteos.totalSolicitudesAprobadas %></span>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse1" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading1">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Solicitudes Declinadas 
+                        </a><span class="badge badge-pill badge-info bg-secondary"><%= conteos.totalSolicitudesDeclinadas %></span>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse1" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading1">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Solicitudes en Revision 
+                        </a><span class="badge badge-pill badge-info bg-secondary"><%= conteos.totalSolicitudesEnRevision %></span>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse1" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading1">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Todas las Solicitudes
+                        </a><span class="badge badge-pill badge-info bg-secondary"><%= conteos.solicitudesTotales %></span>
+            </li>
+        </li>
+
+        <li class="accordion-header" id="panelsStayOpen-heading2">
+            <li class="btn p-0 dropdown-item">
+                <a style="background: none; box-shadow: none " class="dropdown-item accordion-button collapsed text-black holographic-card" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse2" aria-expanded="false" aria-controls="panelsStayOpen-collapse2"><i class="bi bi-file-text me-2"></i>Procesos</a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse2" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading2">
+                <a style="color: black; text-decoration: none;" data-bs-toggle="modal" data-bs-target="#modalCrearCliente" type="button">
+                            Registro de clientes 
+                </a>
+            </li>
+
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse2" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading2">
+                <a style="color: black; text-decoration: none;" type="button" data-bs-toggle="modal" data-bs-target="#aperturarPrestamoModal">
+                            Apertura de prestamo
+                        </a>
+            </li>
+
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse2" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading2">
+                <a style="color: black; text-decoration: none;" type="button" data-bs-toggle="modal" data-bs-target="#reciboDeIngresoPrestamoModal">
+                    Recibo de ingreso
+                </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse2" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading2">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Renovar prestamo 
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse2" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading2">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Rutas y Sector
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse2" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading2">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Ajustes o Notas credito
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse2" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading2">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Carta de saldo
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse2" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading2">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Calculadora prestamo
+                        </a>
+            </li>
+        </li>
+        <li class="accordion-header" id="panelsStayOpen-heading3">
+            <li class="btn p-0 dropdown-item">
+                <a style="background: none; box-shadow: none " class="dropdown-item accordion-button collapsed text-black holographic-card" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse3" aria-expanded="false" aria-controls="panelsStayOpen-collapse3"><i class="bi bi-file-text me-2"></i>Reportes</a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Desembolsos de Prestamos 
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Relacion de Cobros >
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Proyeccion de Cobros
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Cartera de Prestamos
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Balance General
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Atrasos >
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                           Balance por Cliente
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Utilidad por Desembolsos
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Prestamos por Tipo
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Prestamos al Dia 
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Historico de Prestamo
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Notas Credito o Ajustes
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <hr>
+            </li>
+
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Clientes
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Cobradores >
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Rutas / Sectores >
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Empresas
+                        </a>
+            </li>
+            <li style="margin-left: 30px; " id="panelsStayOpen-collapse3" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading3">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                            Otros
+                        </a>
+            </li>
+        </li>
+
+
+
+        <li class="p-2"><a class="dropdown-item holographic-card" href="/mensajes"><i class="bi bi-envelope-paper me-2"></i>Bandeja Mensaje <span class="badge badge-pill badge-info bg-success">Nuevo: <%= conteos.totalMensajesNuevos %></span></a></li>
+
+        <li class="p-2"><a class="dropdown-item" href="/rutas"><i class="bi bi-map me-2"></i>Rutas</a></li>
+        <% if (conteos.totalTestimoniosNuevos == 0) { %>
+            <li class="p-2"><a class="dropdown-item" href="/testimonios"><i class="bi bi-chat-left-text me-2"></i>Testimonios</a></li>
             <% } else { %>
-                <li class="p-2"><a class="dropdown-item" href="/solicitudes-nuevas"><i class="bi bi-file-text me-2"></i>Solicitudes <span class="badge badge-pill badge-info bg-success">Nuevo: <%= arraySolicitudes.length %></span></a></li>
+                <li class="p-2"><a class="dropdown-item" href="/testimonios"><i class="bi bi-chat-left-text me-2"></i>Testimonios <span class="badge badge-pill badge-info bg-success"> Nuevo: <%= conteos.totalTestimoniosNuevos %></span></a></li>
                 <% } %>
-                    <% if (arrayMensajesNuevos.length == 0) { %>
-                        <li class="p-2"><a class="dropdown-item" href="/mensajes"><i class="bi bi-envelope-paper me-2"></i>Bandeja Mensaje</a></li>
-                        <% } else { %>
-                            <li class="p-2"><a class="dropdown-item" href="/mensajes"><i class="bi bi-envelope-paper me-2"></i>Bandeja Mensaje <span class="badge badge-pill badge-info bg-success">Nuevo: <%= arrayMensajesNuevos.length %></span></a></li>
-                            <% } %>
-                                <li class="p-2"><a class="dropdown-item" href="/rutas"><i class="bi bi-map me-2"></i>Rutas</a></li>
-                                <% if (arrayTestimoniosNuevos.length == 0) { %>
-                                    <li class="p-2"><a class="dropdown-item" href="/testimonios"><i class="bi bi-chat-left-text me-2"></i>Testimonios</a></li>
-                                    <% } else { %>
-                                        <li class="p-2"><a class="dropdown-item" href="/testimonios"><i class="bi bi-chat-left-text me-2"></i>Testimonios <span class="badge badge-pill badge-info bg-success"> Nuevo: <%= arrayTestimoniosNuevos.length %></span></a></li>
-                                        <% } %>
-                                            <li class="p-2"><a class="dropdown-item" href="/mantenimiento"><i class="bi bi-sliders me-2"></i>Mantenimiento</a></li>
-                                            <li class="p-2"><a class="dropdown-item" href="/app-clientes"><i class="bi bi-person-plus me-2"></i>Clientes <span class="badge badge-pill badge-info bg-success"> <%= arrayClientes.length %></span></a></li>
-                                            <li class="p-2"><a class="dropdown-item" href="/adm-usuarios"><i class="bi bi-person-plus me-2"></i>Usuarios <span class="badge badge-pill badge-info bg-success"> <%= arrayUsuarios.length %></span></a></li>
-                                            <li class="p-2"><a class="dropdown-item" href="/controles-anuncios"><i class="bi bi-info-square me-2"></i>Controles Anuncios</a></li>
-                                            <li class="p-2"><a class="dropdown-item" href="/visitas-web"><i class="bi bi-window-fullscreen me-2"></i>Visitas <span class="badge badge-pill badge-info bg-secondary"> <%= arrayVisitas.length %></span></a></li>
-                                            <li class="p-2"><a class="dropdown-item" href="/promociones"><i class="bi bi-currency-dollar me-2"></i>Promociones</a></li>
-                                            <hr class="dropdown-divider">
-                                            <li class="p-2"><a style="border-radius: 15px;" class="dropdown-item bg-danger text-light" href="/logout"><i class="bi bi-box-arrow-left me-2"></i>Cerrar Session</a></li>
+                    <li class="p-2"><a class="dropdown-item" href="/mantenimiento"><i class="bi bi-sliders me-2"></i>Mantenimiento</a></li>
+                    <li class="p-2"><a class="dropdown-item" href="/app-clientes"><i class="bi bi-person-plus me-2"></i>Clientes <span class="badge badge-pill badge-info bg-success"> <%= conteos.totalClientes %></span></a></li>
+                    <li class="p-2"><a class="dropdown-item" href="/adm-usuarios"><i class="bi bi-person-plus me-2"></i>Usuarios <span class="badge badge-pill badge-info bg-success"> <%= conteos.totalUsuarios %></span></a></li>
+                    <li class="p-2"><a class="dropdown-item" href="/controles-anuncios"><i class="bi bi-info-square me-2"></i>Controles Anuncios</a></li>
+                    <li class="p-2"><a class="dropdown-item" href="/visitas-web"><i class="bi bi-window-fullscreen me-2"></i>Visitas <span class="badge badge-pill badge-info bg-secondary"> <%= conteos.totalVisitas %></span></a></li>
+                    <li class="p-2"><a class="dropdown-item" href="/promociones"><i class="bi bi-currency-dollar me-2"></i>Promociones</a></li>
+
+                    <hr class="dropdown-divider">
+                    <li class="p-2"><a style="border-radius: 15px;" class="dropdown-item bg-danger text-light" href="/logout"><i class="bi bi-box-arrow-left me-2"></i>Cerrar Session</a></li>
     </ul>
 
     <% } else if (rol == permiso_B) { %>
@@ -63,3 +235,1661 @@
             </ul>
 
             <% } %>
+
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const sidebarItems = document.querySelectorAll('.sidebar-item-menu');
+                        const contentSections = document.querySelectorAll('.form-section-menu');
+
+                        sidebarItems.forEach(item => {
+                            item.addEventListener('click', function() {
+                                // Elimina la clase 'active' de todos los items del menú
+                                sidebarItems.forEach(i => i.classList.remove('active'));
+                                // Agrega la clase 'active' al item actual
+                                this.classList.add('active');
+
+                                // Oculta todas las secciones de contenido
+                                contentSections.forEach(section => section.classList.add('d-none'));
+
+                                // Obtiene el ID de la sección a mostrar del atributo 'data-target'
+                                const targetId = this.getAttribute('data-target');
+                                // Muestra la sección de contenido correspondiente
+                                const targetSection = document.getElementById(targetId);
+                                if (targetSection) {
+                                    targetSection.classList.remove('d-none');
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                <!-- estilos parametros busqueda prestamos -->
+                <style>
+                    .app-window {
+                        background: linear-gradient(to bottom, #d2f7fa 0%, #a4e6ec 100%);
+                        /* Degradado de la barra de título */
+                        border: 1px solid #008080;
+                        padding: 0;
+                        max-width: 700px;
+                        margin: auto;
+                        border-radius: 5px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                    }
+                    
+                    .title-bar {
+                        padding: 8px 15px;
+                        color: #000;
+                        font-weight: bold;
+                        font-size: 16px;
+                        text-align: center;
+                    }
+                    
+                    .content-area {
+                        background-color: #ffffff;
+                        /* Fondo blanco para el contenido */
+                        padding: 15px;
+                        border-top: 1px solid #008080;
+                    }
+                    
+                    .filter-box {
+                        border: 1px solid #ccc;
+                        padding: 15px;
+                        border-radius: 5px;
+                        background-color: #f7f7f7;
+                        margin-bottom: 20px;
+                    }
+                    
+                    .form-label-custom {
+                        font-weight: bold;
+                        text-align: right;
+                        padding-right: 10px;
+                        line-height: 2.2;
+                        /* Alinear el texto con los inputs */
+                    }
+                    
+                    .input-group-custom {
+                        display: flex;
+                        align-items: center;
+                    }
+                    
+                    .search-icon {
+                        background-color: #a4e6ec;
+                        /* Color del botón de la lupa */
+                        border: 1px solid #71b4b9;
+                        color: #000;
+                        padding: 5px 10px;
+                        cursor: pointer;
+                        border-radius: 0 4px 4px 0;
+                        height: 38px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    
+                    .footer-buttons {
+                        background-color: #f0f0f0;
+                        padding: 10px 15px;
+                        border-top: 1px solid #ccc;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+                    
+                    .device-output {
+                        display: flex;
+                        align-items: center;
+                    }
+                    
+                    .device-output-label {
+                        margin-right: 10px;
+                        font-weight: bold;
+                        display: flex;
+                        align-items: center;
+                        font-size: 14px;
+                    }
+                    
+                    .btn-output {
+                        border: 1px solid #777;
+                        padding: 5px 15px;
+                        margin-right: 5px;
+                        font-size: 13px;
+                    }
+                    
+                    .btn-pantalla {
+                        background-color: #d8f5b8;
+                        /* Tono verde/amarillo claro */
+                        border-color: #a6c483;
+                        font-weight: bold;
+                    }
+                    
+                    .btn-procesar {
+                        background-color: #c0f0f0;
+                        /* Tono cian claro */
+                        border-color: #99dcdc;
+                        font-weight: bold;
+                        padding: 10px 20px;
+                        font-size: 15px;
+                        display: flex;
+                        align-items: center;
+                    }
+                    
+                    .btn-salir {
+                        background-color: #d1f7f7;
+                        /* Tono cian claro */
+                        border-color: #a0d4d4;
+                        font-weight: bold;
+                        padding: 10px 20px;
+                        font-size: 15px;
+                        display: flex;
+                        align-items: center;
+                    }
+                    
+                    .calendar-icon {
+                        background-color: #c9c9c9;
+                        border: 1px solid #a0a0a0;
+                        color: #000;
+                        padding: 5px 10px;
+                        cursor: pointer;
+                        border-radius: 0 4px 4px 0;
+                        height: 38px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                </style>
+
+                <!-- Modal parametros busqueda -->
+                <div class="modal fade" id="reporte1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="app-window">
+                                    <form id="reporte" action="" method="" enctype="">
+                                        <div class="title-bar">
+                                            Estado de la cartera por cobrar
+                                        </div>
+
+                                        <div class="content-area">
+                                            <div class="filter-box">
+                                                <div class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <div class="row mb-2 align-items-center">
+                                                            <div class="col-4 form-label-custom">Cartera</div>
+                                                            <div class="col-8 input-group-custom">
+                                                                <input type="text" class="form-control" style="border-right: none;" value="">
+                                                                <span class="search-icon"><i class="fas fa-search"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col-4"></div>
+                                                            <div class="col-8 form-check">
+                                                                <input class="form-check-input" type="checkbox" id="checkCarteras" checked>
+                                                                <label class="form-check-label" for="checkCarteras">
+                                    Incluir todas las Carteras de prestamos
+                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2 align-items-center">
+                                                            <div class="col-4 form-label-custom">Sucursal</div>
+                                                            <div class="col-8 input-group-custom">
+                                                                <input type="text" class="form-control" style="border-right: none;" value="ROSFAL SOLUCIONES DE PRESTAMOS">
+                                                                <span class="search-icon"><i class="fas fa-search"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col-4"></div>
+                                                            <div class="col-8 form-check">
+                                                                <input class="form-check-input" type="checkbox" id="checkSucursales">
+                                                                <label class="form-check-label" for="checkSucursales">
+                                    Incluir todas las Sucursales
+                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row mb-2 align-items-center">
+                                                            <div class="col-4 form-label-custom">Fecha corte:</div>
+                                                            <div class="col-8 input-group-custom">
+                                                                <input type="text" class="form-control" style="border-right: none;" value="15/11/2025">
+                                                                <span class="calendar-icon"><i class="far fa-calendar-alt"></i></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="row mb-2 align-items-center">
+                                                            <div class="col-3 form-label-custom">Tipo</div>
+                                                            <div class="col-9 input-group-custom">
+                                                                <input type="text" class="form-control" style="border-right: none;" value="">
+                                                                <span class="search-icon"><i class="fas fa-search"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col-3"></div>
+                                                            <div class="col-9 form-check">
+                                                                <input class="form-check-input" type="checkbox" id="checkTipos" checked>
+                                                                <label class="form-check-label" for="checkTipos">
+                                    Incluir todos los tipos.
+                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-3"></div>
+                                                            <div class="col-9">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="radioTipo" id="radioNormal" checked>
+                                                                    <label class="form-check-label" for="radioNormal">Normal.</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="radioTipo" id="radioLegal">
+                                                                    <label class="form-check-label" for="radioLegal">Legal.</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="radioTipo" id="radioIncobrable">
+                                                                    <label class="form-check-label" for="radioIncobrable">Incobrable.</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="radioTipo" id="radioTodos">
+                                                                    <label class="form-check-label" for="radioTodos">Todos</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="footer-buttons">
+                                            <div class="device-output">
+                                                <div class="device-output-label">
+                                                    <i class="fas fa-save me-2" style="color: #64bc64;"></i> Dispositivo de Salida
+                                                </div>
+                                                <button type="button" class="btn btn-output btn-pantalla">Pantalla</button>
+                                                <button type="button" class="btn btn-output">Impresora</button>
+                                            </div>
+
+                                            <div>
+                                                <button type="button" class="btn btn-procesar me-2" data-bs-toggle="modal" data-bs-target="#reporteResultado" id="openReportBtn" onclick="document.getElementById('reporteResultado').classList.remove('hidden'); loadReportData();">
+                                                    <i class="fas fa-cog me-2"></i> Procesar
+                                                </button>
+
+                                                <button type="button" class="btn btn-salir">
+                                                 <i class="fas fa-times me-2"></i> Salir
+                                            </button>
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Modal reporte prestamos -->
+                <div class="modal fade" id="reporteResultado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Modal reporte prestamos (Adaptado a Tailwind CSS) -->
+                                <div id="reporteResultado" class="modal-overlay fixed inset-0 hidden z-50 overflow-y-auto">
+                                    <div class="flex items-center justify-center min-h-screen p-4">
+                                        <div class="modal-content-custom bg-white rounded-xl shadow-2xl w-full mx-auto overflow-hidden transition-all transform scale-100">
+
+                                            <!-- Encabezado del Modal -->
+                                            <div class="flex justify-between items-center p-5 border-b border-gray-200">
+                                                <h1 class="text-xl font-semibold text-gray-900" id="modalTitle">Estado de la Cartera de Préstamos</h1>
+                                                <button type="button" class="text-gray-400 hover:text-gray-600" onclick="document.getElementById('reporteResultado').classList.add('hidden');">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                                            </div>
+
+                                            <!-- Cuerpo del Reporte -->
+                                            <div class="p-6">
+                                                <div class="container-fluid">
+                                                    <!-- Información de la Empresa y Fecha -->
+                                                    <div class="flex justify-between items-start mb-4">
+                                                        <div class="w-2/3">
+                                                            <h2 class="text-2xl font-bold text-gray-900 mb-0">ROSFAL SOLUCIONES DE PRESTAMOS</h2>
+                                                            <p class="text-gray-600 mb-0">TEL: 829-853-0203</p>
+                                                        </div>
+                                                        <div class="w-1/3 text-right text-sm text-gray-600">
+                                                            <p class="mb-0">Impreso el día: <span id="reportDate"></span></p>
+                                                            <p class="mb-0"><span id="reportTime"></span></p>
+                                                            <p class="mb-0">Página (1)</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <hr class="my-4 border-gray-300">
+
+                                                    <div class="report-title">
+                                                        Estado de la Cartera de Prestamos (Basado en datos de consulta)
+                                                    </div>
+
+                                                    <div class="section-header">
+                                                        TODOS LOS PRÉSTAMOS
+                                                    </div>
+
+                                                    <div class="mb-4 text-sm text-gray-700">
+                                                        <p class="mb-1"><strong>ROSFAL SOLUCIONES DE PRESTAMOS</strong></p>
+                                                        <p class="mb-0"><strong>FECHA DE CORTE AL: <span id="cutOffDate"></span></strong></p>
+                                                    </div>
+
+                                                    <!-- Tabla de Préstamos -->
+                                                    <div class="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+                                                        <table class="table-custom w-full">
+                                                            <thead class="bg-gray-100">
+                                                                <tr>
+                                                                    <!-- Encabezados actualizados para coincidir con la base de datos -->
+                                                                    <th class="text-left whitespace-nowrap">ID Prestamo</th>
+                                                                    <th class="text-left whitespace-nowrap">ID Cliente</th>
+                                                                    <th class="text-left whitespace-nowrap">Tipo Pago</th>
+                                                                    <th class="text-right whitespace-nowrap">Plazo</th>
+                                                                    <th class="text-right whitespace-nowrap">Tasa</th>
+                                                                    <th class="text-right whitespace-nowrap">Mora %</th>
+                                                                    <th class="text-right whitespace-nowrap">Fecha Apertura</th>
+                                                                    <th class="text-right whitespace-nowrap">Monto Cuota</th>
+                                                                    <th class="text-right whitespace-nowrap hidden sm:table-cell">Desembolso</th>
+                                                                    <th class="text-right whitespace-nowrap hidden sm:table-cell">Gastos Cierre</th>
+                                                                    <th class="text-center whitespace-nowrap">Vencimiento</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="reporteTableBody" class="divide-y divide-gray-200">
+                                                                <!-- Los datos se cargarán aquí -->
+                                                                <tr id="loadingRow">
+                                                                    <td colspan="11" class="text-center py-4 text-gray-500">Presione el botón "Generar Reporte" para cargar los datos...</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <!-- Sección de Totales Actualizada -->
+                                                    <div class="my-6">
+                                                        <div class="section-header text-center mt-8">
+                                                            RESUMEN DE CAMPOS NUMÉRICOS
+                                                        </div>
+
+                                                        <table class="table-totals w-full">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td id="totalLoansCount" class="total-left-box" rowspan="3">0</td>
+                                                                    <td class="total-label">Total Desembolsado:</td>
+                                                                    <td id="totalPorCobrarValue" class="total-value text-green-700">0.00</td>
+                                                                    <td class="total-spacer"></td>
+                                                                    <td class="total-label">Suma de Tasas:</td>
+                                                                    <td id="moraPorCobrarValue" class="total-value">0.00%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="total-label">Suma de Cuotas:</td>
+                                                                    <td id="capitalPorCobrarValue" class="total-value">0.00</td>
+                                                                    <td class="total-spacer"></td>
+                                                                    <td class="total-label">Suma Mora %:</td>
+                                                                    <td id="otrosPorCobrarValue" class="total-value">0.00%</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="total-label">Suma de Plazos (en meses):</td>
+                                                                    <td id="interesPorCobrarValue" class="total-value">0</td>
+                                                                    <td class="total-spacer"></td>
+                                                                    <td class="total-label">Suma Gastos Cierre:</td>
+                                                                    <td id="seguroPorCobrarValue" class="total-value">0.00</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <!-- Pie de página del Modal -->
+                                            <div class="flex justify-end p-5 border-t border-gray-200 bg-gray-50">
+                                                <button type="button" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition duration-150" onclick="document.getElementById('reporteResultado').classList.add('hidden');">
+                        Cerrar
+                    </button>
+                                                <button type="button" class="ml-3 px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-150">
+                        Imprimir Reporte
+                    </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+                <style>
+                    /* Configuración de fuente y estilo base */
+                    
+                    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+                    body {
+                        font-family: 'Inter', sans-serif;
+                        background-color: #f4f7f9;
+                    }
+                    /* Estilos personalizados para el reporte */
+                    
+                    .modal-overlay {
+                        background-color: rgba(0, 0, 0, 0.7);
+                        transition: opacity 0.3s ease;
+                    }
+                    
+                    .modal-content-custom {
+                        max-width: 90%;
+                        max-height: 90vh;
+                    }
+                    
+                    .report-title {
+                        font-size: 1.5rem;
+                        font-weight: 700;
+                        color: #1f2937;
+                        text-align: center;
+                        margin-bottom: 1rem;
+                    }
+                    
+                    .section-header {
+                        font-size: 1.125rem;
+                        font-weight: 600;
+                        color: #4b5563;
+                        border-bottom: 2px solid #e5e7eb;
+                        padding-bottom: 0.5rem;
+                        margin-bottom: 0.75rem;
+                    }
+                    
+                    .table-custom th {
+                        background-color: #f3f4f6;
+                        color: #1f2937;
+                        padding: 0.75rem 0.5rem;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        font-size: 0.75rem;
+                    }
+                    
+                    .table-custom td {
+                        padding: 0.5rem 0.5rem;
+                        font-size: 0.875rem;
+                    }
+                    
+                    .table-totals {
+                        width: 100%;
+                        border-collapse: separate;
+                        border-spacing: 0 0.5rem;
+                        /* Espacio entre filas */
+                    }
+                    
+                    .total-left-box {
+                        background-color: #10b981;
+                        /* green-500 */
+                        color: white;
+                        font-size: 1.5rem;
+                        font-weight: 700;
+                        text-align: center;
+                        padding: 1rem;
+                        width: 50px;
+                        /* Ancho fijo para el contador de filas */
+                        border-radius: 0.5rem 0 0 0.5rem;
+                        vertical-align: top;
+                    }
+                    
+                    .total-label {
+                        font-weight: 600;
+                        background-color: #e5e7eb;
+                        /* gray-200 */
+                        padding: 0.5rem 1rem;
+                        text-align: right;
+                        border-radius: 0 0.5rem 0.5rem 0;
+                        width: 25%;
+                    }
+                    
+                    .total-value {
+                        font-weight: 700;
+                        background-color: #f9fafb;
+                        /* gray-50 */
+                        padding: 0.5rem 1rem;
+                        text-align: right;
+                        border-radius: 0 0.5rem 0.5rem 0;
+                        width: 20%;
+                    }
+                    
+                    .total-spacer {
+                        width: 5%;
+                    }
+                </style>
+
+                <script>
+                    // Función para formatear números como moneda (ej. pesos dominicanos)
+                    const formatCurrency = (amount) => {
+                        // Asegura que es un número, si no, devuelve 0.00
+                        const number = typeof amount === 'number' ? amount : 0;
+                        return number.toLocaleString('es-DO', {
+                            style: 'currency',
+                            currency: 'DOP',
+                            minimumFractionDigits: 2
+                        }).replace('DOP', ''); // Quita el símbolo de moneda para alinearse con tu ejemplo
+                    };
+
+                    // Función principal para cargar los datos del reporte
+                    async function loadReportData() {
+                        const tableBody = document.getElementById('reporteTableBody');
+
+                        // 1. Mostrar estado de carga
+                        tableBody.innerHTML = '<tr id="loadingRow"><td colspan="11" class="text-center py-4 text-indigo-500 font-semibold">Cargando datos de préstamos...</td></tr>';
+
+                        // 2. Actualizar fechas
+                        const now = new Date();
+                        const dateStr = now.toLocaleDateString('es-DO', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric'
+                        });
+                        const timeStr = now.toLocaleTimeString('es-DO');
+
+                        document.getElementById('reportDate').textContent = dateStr;
+                        document.getElementById('reportTime').textContent = timeStr;
+                        document.getElementById('cutOffDate').textContent = dateStr;
+
+                        try {
+                            // 3. Realizar la solicitud FETCH a la ruta de Node.js (NO redirige)
+                            const response = await fetch('/prueba');
+
+                            // 4. Manejar la respuesta del servidor (INCLUYE LA LÓGICA DE SESIÓN/401)
+                            if (!response.ok) {
+                                // Si el estado es 401 (No Autorizado) o 500 (Error del Servidor)
+                                const errorData = await response.json();
+                                const errorMessage = response.status === 401 ?
+                                    `Error 401: ${errorData.message}` // Mensaje de sesión: "Debe iniciar sesión para acceder a este recurso."
+                                    :
+                                    `Error ${response.status}: ${errorData.message}`; // Mensaje de error de DB/Servidor
+
+                                tableBody.innerHTML = `<tr class="bg-red-50"><td colspan="11" class="text-center py-4 text-red-700 font-semibold">${errorMessage}</td></tr>`;
+                                updateTotals({}, 0); // Resetear totales
+                                return;
+                            }
+
+                            // 5. Procesar la respuesta JSON
+                            const data = await response.json();
+
+                            if (!data.success || !data.prestamos || data.prestamos.length === 0) {
+                                tableBody.innerHTML = '<tr class="bg-yellow-50"><td colspan="11" class="text-center py-4 text-yellow-700">No se encontraron préstamos para mostrar.</td></tr>';
+                                updateTotals({}, 0);
+                                return;
+                            }
+
+                            const prestamos = data.prestamos;
+                            let rowsHTML = '';
+
+                            // Inicializar objeto para sumar los totales usando los nombres de las columnas reales
+                            const totals = {
+                                totalDesembolsado: 0,
+                                sumaCuotas: 0,
+                                sumaPlazos: 0,
+                                sumaTasas: 0,
+                                sumaMoraPorcentaje: 0,
+                                sumaGastosCierre: 0
+                            };
+
+                            // 6. Generar filas de la tabla y calcular totales
+                            prestamos.forEach(p => {
+                                // Convertir y asegurar que los campos sean numéricos para cálculos
+                                const desembolso = parseFloat(p.desembolso || 0);
+                                const montn_cuota = parseFloat(p.monto_cuota || 0);
+                                const plazo = parseInt(p.plazo || 0);
+                                const tasa = parseFloat(p.tasa || 0);
+                                const mora_porcentaje = parseFloat(p.mora_porcentaje || 0);
+                                const gastos_cierre = parseFloat(p.gastos_cierre || 0);
+
+                                // Acumular
+                                totals.totalDesembolsado += desembolso;
+                                totals.sumaCuotas += montn_cuota;
+                                totals.sumaPlazos += plazo;
+                                totals.sumaTasas += tasa;
+                                totals.sumaMoraPorcentaje += mora_porcentaje;
+                                totals.sumaGastosCierre += gastos_cierre;
+
+                                // Formatear fechas, manejando el '0000-00-00'
+                                const aperturaDate = p.apertura && p.apertura !== '0000-00-00' ? new Date(p.apertura).toLocaleDateString('es-DO') : 'N/A';
+                                const vencimientoDate = p.fecha_vencimiento && p.fecha_vencimiento !== '0000-00-00' ? new Date(p.fecha_vencimiento).toLocaleDateString('es-DO') : 'N/A';
+
+                                rowsHTML += `
+                        <tr class="hover:bg-gray-50 transition duration-100">
+                            <td class="text-left font-medium">${p.id_prestamo || 'N/A'}</td>
+                            <td class="text-left whitespace-nowrap">${p.cliente_id || 'N/A'}</td>
+                            <td class="text-left whitespace-nowrap">${p.tpo_pago || 'N/A'}</td>
+                            <td class="text-right whitespace-nowrap">${plazo}</td>
+                            <td class="text-right whitespace-nowrap">${tasa.toFixed(2)}%</td>
+                            <td class="text-right whitespace-nowrap">${mora_porcentaje.toFixed(2)}%</td>
+                            <td class="text-right whitespace-nowrap">${aperturaDate}</td>
+                            <td class="text-right whitespace-nowrap font-semibold text-green-700">${formatCurrency(montn_cuota)}</td>
+                            <td class="text-right whitespace-nowrap hidden sm:table-cell">${formatCurrency(desembolso)}</td>
+                            <td class="text-right whitespace-nowrap hidden sm:table-cell">${formatCurrency(gastos_cierre)}</td>
+                            <td class="text-center whitespace-nowrap">${vencimientoDate}</td>
+                        </tr>
+                    `;
+                            });
+
+                            // 7. Insertar filas y actualizar totales
+                            tableBody.innerHTML = rowsHTML;
+                            updateTotals(totals, prestamos.length);
+
+
+                        } catch (error) {
+                            console.error('Error al cargar datos del reporte:', error);
+                            tableBody.innerHTML = `<tr class="bg-red-50"><td colspan="11" class="text-center py-4 text-red-700">Error de conexión o datos: ${error.message}</td></tr>`;
+                            updateTotals({}, 0);
+                        }
+                    }
+
+                    // Función para actualizar los totales en la parte inferior del reporte
+                    function updateTotals(totals, count) {
+                        document.getElementById('totalLoansCount').textContent = count;
+
+                        const hasData = count > 0 && totals;
+
+                        // Totales Monetarios (formato de moneda)
+                        document.getElementById('totalPorCobrarValue').textContent = formatCurrency(hasData ? totals.totalDesembolsado : 0); // Total Desembolsado
+                        document.getElementById('capitalPorCobrarValue').textContent = formatCurrency(hasData ? totals.sumaCuotas : 0); // Suma de Cuotas
+                        document.getElementById('seguroPorCobrarValue').textContent = formatCurrency(hasData ? totals.sumaGastosCierre : 0); // Suma Gastos Cierre
+
+                        // Totales Numéricos/Porcentaje
+                        document.getElementById('interesPorCobrarValue').textContent = hasData ? totals.sumaPlazos : 0; // Suma de Plazos
+                        document.getElementById('moraPorCobrarValue').textContent = hasData ? totals.sumaTasas.toFixed(2) + '%' : '0.00%'; // Suma de Tasas
+                        document.getElementById('otrosPorCobrarValue').textContent = hasData ? totals.sumaMoraPorcentaje.toFixed(2) + '%' : '0.00%'; // Suma Mora %
+                    }
+                </script>
+
+
+
+                <!-- Modal crear cliente-->
+                <div class="modal fade mt-4" id="modalCrearCliente" tabindex="-1" role="dialog" aria-labelledby="modalCrearClienteLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div style="background-color: #a7d9f7;" class="modal-header">
+                                <h5 class="modal-title" id="modalCrearClienteLabel">Registro de clientes</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-0">
+                                <form action="/app-clientes/crear-cliente" method="POST" enctype="" id="miFormulario">
+                                    <div class="container-fluid py-4 h-100">
+                                        <div class="row h-100">
+                                            <!-- <div class="col-12 text-center p-2 mb-3 rounded-top" style="background-color: #a7d9f7;">
+                                                <h4 class="mb-0 text-white">Registro de clientes</h4>
+                                            </div> -->
+
+                                            <div class="col-12 d-flex h-100 p-0">
+                                                <div class="sidebar-menu col-2 d-flex flex-column">
+                                                    <div class="sidebar-item-menu active" data-target="seccion-personales-menu">
+                                                        <i class="bi bi-person-circle me-2 fs-5"></i>
+                                                        <span>Datos personales</span>
+                                                    </div>
+                                                    <div class="sidebar-item-menu ps-4" data-target="seccion-garante-menu">
+                                                        <span>Garante</span>
+                                                    </div>
+                                                    <div class="sidebar-item-menu" data-target="seccion-vecinos-menu">
+                                                        <i class="bi bi-house-door me-2 fs-5"></i>
+                                                        <span>Vecinos</span>
+                                                    </div>
+                                                    <div class="sidebar-item-menu ps-4" data-target="seccion-familiares-menu">
+                                                        <span>Familiares</span>
+                                                    </div>
+                                                    <div class="sidebar-item-menu" data-target="seccion-laborales-menu">
+                                                        <i class="bi bi-person-badge me-2 fs-5"></i>
+                                                        <span>Laborales</span>
+                                                    </div>
+                                                    <div class="sidebar-item-menu ps-4" data-target="seccion-referencias-menu">
+                                                        <span>Referencias y otros</span>
+                                                    </div>
+                                                    <div class="sidebar-item-menu" data-target="seccion-foto-menu">
+                                                        <i class="bi bi-person-bounding-box me-2 fs-5"></i>
+                                                        <span>Foto del cliente</span>
+                                                    </div>
+                                                    <div class="sidebar-item-menu" data-target="seccion-documentos-menu">
+                                                        <i class="bi bi-file-earmark-text me-2 fs-5"></i>
+                                                        <span>Documentos</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-10 content-area">
+                                                    <div class="form-section-menu" id="seccion-personales-menu">
+                                                        <div class="form-section-header">Datos personales</div>
+                                                        <div class="row g-3 mb-4">
+                                                            <div class="col-md-3">
+                                                                <label for="secuencia" class="form-label">Secuencia</label>
+                                                                <input type="text" class="form-control" id="secuencia" disabled>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label for="ubicacion" class="form-label">Clasificacion</label>
+                                                                <input type="text" class="form-control" id="ubicacion">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="form-label" for="cedula">Cédula</label>
+                                                                <input type="text" class="form-control" name="cedula">
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label class="form-label" for="estado">Estado</label>
+                                                                <div class="input-group ">
+                                                                    <select name="estado_cliente" class="form-control">
+                                                                        <option value="Activo">Activo</option>
+                                                                        <option value="Inactivo">Inactivo</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row g-3">
+                                                            <div class="col-md-6">
+                                                                <div class="mb-3"><label class="form-label">Nombres</label><input type="text" class="form-control" name="nombre"></div>
+                                                                <div class="mb-3"><label class="form-label">Apellidos</label><input type="text" class="form-control" name="apellido"></div>
+                                                                <div class="mb-3"><label class="form-label">Apodo</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Sexo</label><select class="form-select"></select></div>
+                                                                <div class="mb-3"><label class="form-label">Dirección Vivienda</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Est. Vivienda</label><select class="form-select"></select></div>
+                                                                <div class="mb-3"><label class="form-label">Dirección Negocio</label><input type="text" class="form-control"></div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="mb-3"><label class="form-label">Teléfono 1</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Celular 1</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Estado Civil</label><select class="form-select"></select></div>
+                                                                <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Nacionalidad</label><input type="text" class="form-control" value="DOMINICANO"></div>
+                                                                <div class="mb-3"><label class="form-label">Ocupación</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Lugar Nac.</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Fec. Nac.</label><input type="date" class="form-control"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-section-menu d-none" id="seccion-garante-menu">
+                                                        <div class="form-section-header">Datos del garante</div>
+                                                        <div class="row g-3 mb-4">
+                                                            <div class="col-md-6 d-flex align-items-center">
+                                                                <div class="form-check me-3">
+                                                                    <input class="form-check-input" type="checkbox" checked>
+                                                                    <label class="form-check-label">Cédula</label>
+                                                                </div>
+                                                                <div class="form-check me-3">
+                                                                    <input class="form-check-input" type="checkbox">
+                                                                    <label class="form-check-label">Pasaporte</label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox">
+                                                                    <label class="form-check-label">RNC</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row g-3">
+                                                            <div class="col-md-6">
+                                                                <div class="mb-3"><label class="form-label">Nombres</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Apellidos</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Apodo</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Dirección</label><input type="text" class="form-control"></div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="mb-3"><label class="form-label">Teléfono</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Celular</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Ocupación</label><input type="text" class="form-control"></div>
+                                                                <div class="mb-3"><label class="form-label">Sexo</label><select class="form-select"></select></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-section-menu d-none" id="seccion-vecinos-menu">
+                                                        <div class="form-section-header">Datos de Vecinos</div>
+                                                        <p>Contenido para la sección de Vecinos.</p>
+                                                    </div>
+                                                    <div class="form-section-menu d-none" id="seccion-familiares-menu">
+                                                        <div class="form-section-header">Datos de Familiares</div>
+                                                        <p>Contenido para la sección de Familiares.</p>
+                                                    </div>
+                                                    <div class="form-section-menu d-none" id="seccion-laborales-menu">
+                                                        <div class="form-section-header">Datos Laborales</div>
+                                                        <p>Contenido para la sección de Laborales.</p>
+                                                    </div>
+                                                    <div class="form-section-menu d-none" id="seccion-referencias-menu">
+                                                        <div class="form-section-header">Referencias y Otros</div>
+                                                        <p>Contenido para la sección de Referencias.</p>
+                                                    </div>
+                                                    <div class="form-section-menu d-none" id="seccion-foto-menu">
+                                                        <div class="form-section-header">Foto del Cliente</div>
+                                                        <p>Contenido para la sección de la Foto del Cliente.</p>
+                                                    </div>
+                                                    <div class="form-section-menu d-none" id="seccion-documentos-menu">
+                                                        <div class="form-section-header">Documentos</div>
+                                                        <p>Contenido para la sección de Documentos.</p>
+                                                    </div>
+                                                    <div class="form-section-menu d-none" id="seccion-observacion-menu">
+                                                        <div class="form-section-header">Observación sobre el cliente</div>
+                                                        <textarea class="form-control" rows="3"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 footer-buttons">
+                                                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-2"></i>Guardar</button>
+                                                <button class="btn btn-secondary"><i class="bi bi-eraser me-2"></i>Limpiar</button>
+                                                <button class="btn btn-primary"><i class="bi bi-pencil-square me-2"></i>Modificar</button>
+                                                <button class="btn btn-info text-white"><i class="bi bi-search me-2"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <script>
+                        // Captura el envío del formulario
+                        document.getElementById('form-validacion').addEventListener('submit', function(event) {
+                            event.preventDefault(); // Evita la recarga de la página
+
+
+                            const telefono = document.getElementById('telefono').value;
+                            const pass = document.querySelector('input[name="pass"]').value;
+                            const estado_cliente = document.querySelector('select[name="estado_cliente"]').value;
+
+
+                            // Enviar datos al backend sin recargar la página usando fetch
+                            fetch('/app-clientes/crear-cliente', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        // token_registro_sms: token,
+                                        telefono: telefono,
+                                        pass: pass,
+                                        estado_cliente: estado_cliente
+                                    })
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Usar SweetAlert2 para mostrar la alerta
+                                    Swal.fire({
+                                        title: data.alertTitle,
+                                        text: data.alertMessage,
+                                        icon: data.alertIcon,
+                                        confirmButtonText: data.success ? 'Continuar' : 'Reintentar',
+                                        cancelButtonText: 'Ver Clientes',
+                                        showConfirmButton: true,
+                                        showCancelButton: !data.success && data.showCancelButton,
+                                        // Eliminar el temporizador para asegurar la redirección manual
+                                        timer: data.success ? null : null, // Sin temporizador en caso de éxito
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // Si el registro fue exitoso, redirigir a 'app-validacion-registro'
+                                            if (data.success) {
+                                                window.location.href = data.ruta; // Redirigir a la ruta de éxito
+                                            } else {
+                                                // Si hubo un error, limpiar el campo 'telefono'
+                                                document.getElementById('telefono').value = '';
+                                            }
+                                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                            // Si el usuario hace clic en "Iniciar sesión"
+                                            window.location.href = data.ruta; // Redirigir a la página de inicio de sesión
+                                        }
+                                    });
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                    Swal.fire({
+                                        title: 'Error',
+                                        text: 'Ocurrió un error inesperado.',
+                                        icon: 'error',
+                                        confirmButtonText: 'Reintentar'
+                                    });
+                                });
+                        });
+                    </script> -->
+
+                    <!-- <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                            const formulario = document.getElementById("miFormulario");
+
+                            formulario.addEventListener("submit", function(event) {
+                                event.preventDefault(); // Evita el envío hasta verificar los campos
+
+                                const nombre = document.getElementById("nombre").value.trim();
+                                // const email = document.getElementById("email").value.trim();
+
+                                // Validar si los campos están vacíos
+                                if (nombre === "") {
+                                    Swal.fire({
+                                        icon: "warning",
+                                        title: "Campos incompletos",
+                                        text: "Por favor, completa todos los campos antes de continuar.",
+                                        confirmButtonColor: "#3085d6",
+                                        confirmButtonText: "Entendido"
+                                    });
+                                    return;
+                                }
+
+                                // Si todo está correcto, puedes enviar el formulario o hacer lo que necesites
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Formulario enviado",
+                                    text: "Todos los datos están completos.",
+                                    confirmButtonColor: "#3085d6"
+                                }).then(() => {
+                                    formulario.submit(); // Envía el formulario después del mensaje
+                                });
+                            });
+                        });
+                    </script> -->
+
+                </div>
+
+
+
+                <!-- Modal aperturar prestamos -->
+                <div class="modal fade  mt-4" id="aperturarPrestamoModal" tabindex="-1" role="dialog" aria-labelledby="aperturarPrestamoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+
+
+                        <div style="border-radius: 10px; border: none;" class="modal-content ">
+
+
+                            <form action="/prestamo_cliente/" method="POST" enctype="">
+                                <!-- Campo para ingresar el ID del préstamo -->
+
+                                <!-- Nuevo -->
+
+
+                                <div class="container app-container">
+                                    <div class="header-title">Apertura de prestamos</div>
+
+                                    <div class="row mb-3 align-items-end">
+                                        <div class="col-md-7">
+                                            <label for="cliente" class="form-label">Cliente:</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="cliente" value="">
+                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <label for="prestado" class="form-label">Prestado:</label>
+                                            <input type="text" class="form-control" id="prestado" value="0.00">
+                                        </div>
+                                    </div>
+
+                                    <div class="section-box">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <div class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <label for="monto" class="form-label">Monto</label>
+                                                        <input type="text" class="form-control" id="monto" value="" style="border-color: red;">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="apertura" class="form-label">Apertura</label>
+                                                        <div class="input-group">
+                                                            <input type="date" class="form-control" id="apertura" value="2025-09-17">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="tipoPlazo" class="form-label">Tipo plazo</label>
+                                                        <select class="form-select" id="tipoPlazo">
+                                                <option value="" selected>
+                                                                
+                                                            </option>
+                                            <option>Pagos mensuales</option>
+                                            <option>Pagos quincenales</option>
+                                            <option>Pagos diarios</option>
+                                            </select>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="primerPago" class="form-label">Primer Pago</label>
+                                                        <div class="input-group">
+                                                            <input type="date" class="form-control" id="primerPago" value="2025-10-17">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="plazo" class="form-label">Plazo</label>
+                                                        <input type="number" class="form-control" id="plazo" value="0">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="cuotas" class="form-label">Cuotas</label>
+                                                        <input type="text" class="form-control" id="cuotas" value="0.00">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="tasa" class="form-label">Tasa</label>
+                                                        <input type="number" class="form-control" id="tasa" value="0.00">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="desembolso" class="form-label">Desembolso</label>
+                                                        <input type="text" class="form-control" id="desembolso" value="0.00">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="amortizacion" class="form-label">Amortización</label>
+                                                        <select class="form-select" id="amortizacion">
+                            <option>Saldo Absoluto</option>
+                        </select>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="gastosCierre" class="form-label">Gastos cierre</label>
+                                                        <input type="text" class="form-control" id="gastosCierre" value="0.00">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="mora" class="form-label">Mora %</label>
+                                                        <input type="text" class="form-control" id="mora" value="0">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="vencimiento" class="form-label">Vencimiento</label>
+                                                        <input type="date" class="form-control" id="vencimiento" value="2025-09-17">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-check mt-3">
+                                                            <input class="form-check-input" type="checkbox" id="permitirAbonos" checked>
+                                                            <label class="form-check-label" for="permitirAbonos">Permitir abonos / saldo:</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3">
+                                                    <div class="col-12">
+                                                        <label for="tipo" class="form-label">Tipo</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="tipo">
+                                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-pencil-square"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="garantia" class="form-label">Garantía</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="garantia">
+                                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-pencil-square"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="banco" class="form-label">Banco</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="banco">
+                                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                                                            <button class="btn btn-outline-secondary" type="button"><i class="bi bi-pencil-square"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mt-4">
+                                                        <div class="form-check mb-2">
+                                                            <input class="form-check-input" type="checkbox" id="gastosCierreCheck">
+                                                            <label class="form-check-label" for="gastosCierreCheck">Financiar gasto de cierre</label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="interesesCorteFecha">
+                                                            <label class="form-check-label" for="interesesCorteFecha">Interes en corte de fecha</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="section-box">
+                                        <div class="section-header">Registro y Detalle de la Garantía</div>
+                                        <textarea class="form-control" rows="3"></textarea>
+                                    </div>
+
+                                    <div class="section-box">
+                                        <div class="section-header">
+                                            <div class="row align-items-center">
+                                                <div class="col">Cuota No.</div>
+                                                <div class="col">Capital</div>
+                                                <div class="col">Interes</div>
+                                                <div class="col">Seguro</div>
+                                                <div class="col">Cuota</div>
+                                                <div class="col">Vencimiento</div>
+                                                <div class="col">Balance</div>
+                                                <div class="col">Restan</div>
+                                            </div>
+                                        </div>
+                                        <textarea class="form-control" rows="5"></textarea>
+                                        <div class="row mt-2">
+                                            <div class="col">
+                                                <input type="text" class="form-control" value="0">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" value="0.00">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" value="0.00">
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" class="form-control" value="0.00">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="footer-buttons">
+                                        <button class="btn btn-blue"><i class="bi bi-save me-2"></i>Guardar</button>
+                                        <button class="btn btn-info"><i class="bi bi-eraser me-2"></i>Limpiar</button>
+                                        <button class="btn btn-danger"><i class="bi bi-x-circle me-2"></i>Salir</button>
+                                    </div>
+                                </div>
+
+                                <!-- Nuevo -->
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Modal recibo de ingreso prestamos -->
+                <div class="modal fade  mt-4" id="reciboDeIngresoPrestamoModal" tabindex="-1" role="dialog" aria-labelledby="reciboDeIngresoPrestamoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+
+
+                        <div style="border-radius: 10px; border: none;" class="modal-content ">
+
+
+                            <form action="/prestamo_cliente/" method="POST" enctype="">
+                                <!-- Campo para ingresar el ID del préstamo -->
+
+                                <!-- Nuevo -->
+
+
+                                <div class="modal-container w-100">
+                                    <div class="modal-header">
+                                        <h1 class="title">Consulta de Préstamos</h1>
+                                    </div>
+                                    <div class="content-wrapper">
+                                        <div class="main-content">
+                                            <div class="search-section">
+                                                <label for="search-input">Búsqueda:</label>
+                                                <input type="text" id="search-input" class="search-input">
+                                                <div class="search-options">
+                                                    <input type="radio" id="nombre" name="search-type" value="nombreCliente" checked><label for="nombre">Nombre</label>
+                                                    <input type="radio" id="prestamo" name="search-type" value="prestamoId"><label for="prestamo">Préstamo</label>
+
+                                                    <input type="radio" id="cedula" name="search-type" value="cedula"><label for="cedula">Cédula</label>
+                                                </div>
+                                                <div class="date-fields d-flex">
+                                                    <label>Del:</label>
+                                                    <input type="text" value="24/09/2025" class="date-input">
+                                                    <label>Al:</label>
+                                                    <input type="text" value="24/09/2025" class="date-input">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="data-grid">
+                                                <div class="data-row header-row">
+                                                    <div class="cell header-cell">No.</div>
+                                                    <div class="cell header-cell">Cédula</div>
+                                                    <div class="cell header-cell client-name-cell">Nombre del cliente</div>
+                                                    <div class="cell header-cell">Apertura</div>
+                                                    <div class="cell header-cell">Plazo</div>
+                                                    <div class="cell header-cell">Monto</div>
+                                                    <div class="cell header-cell">Cuota</div>
+                                                    <div class="cell header-cell">Tasa</div>
+                                                    <div class="cell header-cell">Mora</div>
+                                                </div>
+                                                <!-- Las filas de datos se generarán dinámicamente con JavaScript -->
+                                            </div>
+
+                                            <div class="details-section">
+                                                <div class="details-left">
+                                                    <div class="detail-group">
+                                                        <label>Ult_Pago</label><input type="text" id="ult_pago">
+                                                        <label>Estatus</label><input type="text" id="estatus">
+                                                        <label>Estado</label><input type="text" id="estado">
+                                                        <label>F_Vence</label><input type="text" id="f_vence">
+                                                        <label>Int.Sob.Corte</label><input type="text" id="int_sob_corte">
+                                                        <label>Int. Adelantado</label><input type="text" id="int_adelantado">
+                                                    </div>
+                                                </div>
+                                                <div class="details-right">
+                                                    <div class="detail-group">
+                                                        <label>Monto</label><input type="text" id="monto">
+                                                        <label>Saldo Final</label><input type="text" id="saldo_final">
+                                                        <label>Balance</label><input type="text" id="balance">
+                                                        <label>Salda hoy</label><input type="text" id="salda_hoy">
+                                                        <label>Atrasos</label><input type="text" id="atrasos">
+                                                        <label>Capital R.</label><input type="text" id="capital_r">
+                                                    </div>
+                                                    <div class="detail-group">
+                                                        <label>Cargado</label><input type="text" id="cargado">
+                                                        <label>Interes Carg.</label><input type="text" id="interes_carg">
+                                                        <label>Capital Carg.</label><input type="text" id="capital_carg">
+                                                        <label>Mora. Carg.</label><input type="text" id="mora_carg">
+                                                        <label>Otros Carg.</label><input type="text" id="otros_carg">
+                                                        <label>Seguro Carg.</label><input type="text" id="seguro_carg">
+                                                    </div>
+                                                    <div class="detail-group">
+                                                        <label>Pagado</label><input type="text" id="pagado">
+                                                        <label>T_Interes</label><input type="text" id="t_interes">
+                                                        <label>T_Capital</label><input type="text" id="t_capital">
+                                                        <label>T_Mora</label><input type="text" id="t_mora">
+                                                        <label>T_Otros</label><input type="text" id="t_otros">
+                                                        <label>T_Seguro</label><input type="text" id="t_seguro">
+                                                    </div>
+                                                    <div class="detail-group">
+                                                        <label>Pagadas</label><input type="text" id="pagadas">
+                                                        <label>Atrasada</label><input type="text" id="atrasada">
+                                                        <label>P_Sgte_Cta</label><input type="text" id="p_sgte_cta">
+                                                        <label>Tipo Prest.</label><input type="text" id="tipo_prestamo">
+                                                        <label>Tipo Plazo</label><input type="text" id="tipo_plazo">
+                                                        <label>Tipo divisa</label><input type="text" id="tipo_divisa">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="loan-details-table">
+                                                <h3>Detalle de la tabla de pagos del préstamo.</h3>
+                                                <div class="data-grid" id="payment-table">
+                                                    <div class="data-row header-row">
+                                                        <div class="cell header-cell">No.</div>
+                                                        <div class="cell header-cell">Fecha</div>
+                                                        <div class="cell header-cell">Cuota</div>
+                                                        <div class="cell header-cell">Pendiente</div>
+                                                        <div class="cell header-cell">Interes</div>
+                                                        <div class="cell header-cell">Interes Pag.</div>
+                                                        <div class="cell header-cell">Capital</div>
+                                                        <div class="cell header-cell">Capital Pag.</div>
+                                                        <div class="cell header-cell">Seguro</div>
+                                                        <div class="cell header-cell">Seg. Pag.</div>
+                                                        <div class="cell header-cell">Estado</div>
+                                                        <div class="cell header-cell">D.A.</div>
+                                                    </div>
+                                                    <!-- Las filas de pagos se generarán dinámicamente con JavaScript -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="action-panel">
+                                            <button class="action-button"><i class="fas fa-money-bill-wave icon"></i>Aplicar Pago</button>
+                                            <button class="action-button"><i class="fas fa-clipboard-list icon"></i>Seguimientos</button>
+                                            <button class="action-button"><i class="fas fa-history icon"></i>Historial de pagos</button>
+                                            <button class="action-button"><i class="fas fa-lock icon"></i>Detalle de Garantia</button>
+                                            <button class="action-button"><i class="fas fa-exclamation-triangle icon"></i>Mora generada</button>
+                                            <button class="action-button"><i class="fas fa-user-circle icon"></i>Historial de cliente</button>
+                                            <button class="action-button"><i class="fas fa-cog icon"></i>Mant. de préstamo</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Nuevo -->
+
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+
+                        // Datos de prueba en formato JSON
+                        const loanData = [{
+                            id: 1,
+                            prestamoId: 'PR-001',
+                            cedula: '123456789',
+                            nombreCliente: 'Juan Pérez',
+                            apodo: 'JP',
+                            garantia: 'Casa',
+                            apertura: '01/01/2025',
+                            plazo: 12,
+                            monto: 10000.00,
+                            cuota: 950.00,
+                            tasa: '10%',
+                            mora: 50.00,
+                            ult_pago: '24/09/2025',
+                            estatus: 'Activo',
+                            estado: 'Normal',
+                            f_vence: '24/10/2025',
+                            int_sob_corte: 0.00,
+                            int_adelantado: 0.00,
+                            saldo_final: 9000.00,
+                            balance: 500.00,
+                            salda_hoy: 500.00,
+                            atrasos: 0.00,
+                            capital_r: 8500.00,
+                            cargado: 1000.00,
+                            interes_carg: 100.00,
+                            capital_carg: 900.00,
+                            mora_carg: 0.00,
+                            otros_carg: 0.00,
+                            seguro_carg: 0.00,
+                            pagado: 1000.00,
+                            t_interes: 100.00,
+                            t_capital: 900.00,
+                            t_mora: 0.00,
+                            t_otros: 0.00,
+                            t_seguro: 0.00,
+                            pagadas: 1,
+                            atrasada: 0.00,
+                            p_sgte_cta: 1000.00,
+                            tipo_prestamo: 'Hipotecario',
+                            tipo_plazo: 'Mensual',
+                            tipo_divisa: 'USD',
+                            pagos: [{
+                                no: 1,
+                                fecha: '24/10/2025',
+                                cuota: 950,
+                                pendiente: 0,
+                                interes: 100,
+                                interes_pag: 100,
+                                capital: 850,
+                                capital_pag: 850,
+                                seguro: 0,
+                                seg_pag: 0,
+                                estado: 'Pagado',
+                                da: 'Sí'
+                            }, {
+                                no: 2,
+                                fecha: '24/11/2025',
+                                cuota: 950,
+                                pendiente: 950,
+                                interes: 90,
+                                interes_pag: 0,
+                                capital: 860,
+                                capital_pag: 0,
+                                seguro: 0,
+                                seg_pag: 0,
+                                estado: 'Pendiente',
+                                da: 'No'
+                            }, {
+                                no: 3,
+                                fecha: '24/12/2025',
+                                cuota: 950,
+                                pendiente: 1900,
+                                interes: 80,
+                                interes_pag: 0,
+                                capital: 870,
+                                capital_pag: 0,
+                                seguro: 0,
+                                seg_pag: 0,
+                                estado: 'Pendiente',
+                                da: 'No'
+                            }, {
+                                no: 4,
+                                fecha: '24/01/2026',
+                                cuota: 950,
+                                pendiente: 2850,
+                                interes: 70,
+                                interes_pag: 0,
+                                capital: 880,
+                                capital_pag: 0,
+                                seguro: 0,
+                                seg_pag: 0,
+                                estado: 'Pendiente',
+                                da: 'No'
+                            }]
+                        }, {
+                            id: 2,
+                            prestamoId: 'PR-002',
+                            cedula: '987654321',
+                            nombreCliente: 'María García',
+                            apodo: 'MG',
+                            garantia: 'Automóvil',
+                            apertura: '02/02/2025',
+                            plazo: 24,
+                            monto: 20000.00,
+                            cuota: 980.00,
+                            tasa: '12%',
+                            mora: 0.00,
+                            ult_pago: '24/09/2025',
+                            estatus: 'Activo',
+                            estado: 'Normal',
+                            f_vence: '24/11/2025',
+                            int_sob_corte: 0.00,
+                            int_adelantado: 0.00,
+                            saldo_final: 19000.00,
+                            balance: 0.00,
+                            salda_hoy: 980.00,
+                            atrasos: 0.00,
+                            capital_r: 18500.00,
+                            cargado: 980.00,
+                            interes_carg: 180.00,
+                            capital_carg: 800.00,
+                            mora_carg: 0.00,
+                            otros_carg: 0.00,
+                            seguro_carg: 0.00,
+                            pagado: 980.00,
+                            t_interes: 180.00,
+                            t_capital: 800.00,
+                            t_mora: 0.00,
+                            t_otros: 0.00,
+                            t_seguro: 0.00,
+                            pagadas: 1,
+                            atrasada: 0.00,
+                            p_sgte_cta: 980.00,
+                            tipo_prestamo: 'Prenda',
+                            tipo_plazo: 'Mensual',
+                            tipo_divisa: 'USD',
+                            pagos: [{
+                                no: 1,
+                                fecha: '24/11/2025',
+                                cuota: 980,
+                                pendiente: 0,
+                                interes: 180,
+                                interes_pag: 180,
+                                capital: 800,
+                                capital_pag: 800,
+                                seguro: 0,
+                                seg_pag: 0,
+                                estado: 'Pagado',
+                                da: 'Sí'
+                            }, {
+                                no: 2,
+                                fecha: '24/12/2025',
+                                cuota: 980,
+                                pendiente: 980,
+                                interes: 170,
+                                interes_pag: 0,
+                                capital: 810,
+                                capital_pag: 0,
+                                seguro: 0,
+                                seg_pag: 0,
+                                estado: 'Pendiente',
+                                da: 'No'
+                            }, ]
+                        }, {
+                            id: 3,
+                            prestamoId: 'PR-003',
+                            cedula: '456789123',
+                            nombreCliente: 'Carlos López',
+                            apodo: 'CL',
+                            garantia: 'Terreno',
+                            apertura: '03/03/2025',
+                            plazo: 6,
+                            monto: 5000.00,
+                            cuota: 850.00,
+                            tasa: '8%',
+                            mora: 120.00,
+                            ult_pago: '15/09/2025',
+                            estatus: 'Atrasado',
+                            estado: 'Vencido',
+                            f_vence: '24/09/2025',
+                            int_sob_corte: 50.00,
+                            int_adelantado: 0.00,
+                            saldo_final: 4500.00,
+                            balance: 100.00,
+                            salda_hoy: 850.00,
+                            atrasos: 1,
+                            capital_r: 4000.00,
+                            cargado: 850.00,
+                            interes_carg: 50.00,
+                            capital_carg: 800.00,
+                            mora_carg: 120.00,
+                            otros_carg: 0.00,
+                            seguro_carg: 0.00,
+                            pagado: 850.00,
+                            t_interes: 50.00,
+                            t_capital: 800.00,
+                            t_mora: 120.00,
+                            t_otros: 0.00,
+                            t_seguro: 0.00,
+                            pagadas: 1,
+                            atrasada: 1,
+                            p_sgte_cta: 850.00,
+                            tipo_prestamo: 'Personal',
+                            tipo_plazo: 'Mensual',
+                            tipo_divisa: 'DOP',
+                            pagos: [{
+                                no: 1,
+                                fecha: '24/09/2025',
+                                cuota: 850,
+                                pendiente: 0,
+                                interes: 50,
+                                interes_pag: 50,
+                                capital: 800,
+                                capital_pag: 800,
+                                seguro: 0,
+                                seg_pag: 0,
+                                estado: 'Pagado',
+                                da: 'Sí'
+                            }, {
+                                no: 2,
+                                fecha: '24/10/2025',
+                                cuota: 850,
+                                pendiente: 850,
+                                interes: 45,
+                                interes_pag: 0,
+                                capital: 805,
+                                capital_pag: 0,
+                                seguro: 0,
+                                seg_pag: 0,
+                                estado: 'Vencido',
+                                da: 'No'
+                            }, ]
+                        }];
+
+                        const loanListContainer = document.querySelector('.data-grid:not(#payment-table)');
+                        const searchInput = document.getElementById('search-input');
+                        const searchOptionRadios = document.querySelectorAll('input[name="search-type"]');
+                        const paymentTableContainer = document.getElementById('payment-table');
+
+                        let filteredLoanData = [...loanData]; // Mantiene una copia de los datos filtrados
+
+                        // Función para renderizar la tabla principal
+                        function renderLoanList(loans) {
+                            // Limpia la tabla actual, excepto la fila de encabezado
+                            const headerRow = loanListContainer.querySelector('.header-row');
+                            loanListContainer.innerHTML = '';
+                            loanListContainer.appendChild(headerRow);
+
+                            loans.forEach((loan, index) => {
+                                const row = document.createElement('div');
+                                row.className = 'data-row';
+                                row.dataset.loanId = loan.id; // Asigna un ID para identificar la fila
+                                row.innerHTML = `
+                        <div class="cell">${index + 1}</div>
+                        <div class="cell">${loan.cedula}</div>
+                        <div class="cell client-name-cell">${loan.nombreCliente}</div>
+                        <div class="cell">${loan.apertura}</div>
+                        <div class="cell">${loan.plazo}</div>
+                        <div class="cell">${loan.monto.toLocaleString()}</div>
+                        <div class="cell">${loan.cuota.toLocaleString()}</div>
+                        <div class="cell">${loan.tasa}</div>
+                        <div class="cell">${loan.mora.toLocaleString()}</div>
+                    `;
+                                loanListContainer.appendChild(row);
+                            });
+                        }
+
+                        // Función para rellenar los campos de detalle del préstamo
+                        function populateDetails(loan) {
+                            if (!loan) {
+                                // Limpia todos los campos si no se proporciona un préstamo
+                                const inputs = document.querySelectorAll('.details-section input');
+                                inputs.forEach(input => input.value = '');
+                                return;
+                            }
+
+                            // Recorre las propiedades del objeto y las asigna a los campos de entrada
+                            for (const key in loan) {
+                                if (Object.hasOwnProperty.call(loan, key)) {
+                                    const element = document.getElementById(key);
+                                    if (element) {
+                                        if (typeof loan[key] === 'number') {
+                                            element.value = loan[key].toLocaleString();
+                                        } else {
+                                            element.value = loan[key];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // Función para renderizar la tabla de pagos
+                        function renderPaymentTable(payments) {
+                            const headerRow = paymentTableContainer.querySelector('.header-row');
+                            paymentTableContainer.innerHTML = '';
+                            paymentTableContainer.appendChild(headerRow);
+
+                            if (!payments) return;
+
+                            payments.forEach(payment => {
+                                const row = document.createElement('div');
+                                row.className = 'data-row';
+                                row.innerHTML = `
+                        <div class="cell">${payment.no}</div>
+                        <div class="cell">${payment.fecha}</div>
+                        <div class="cell">${payment.cuota.toLocaleString()}</div>
+                        <div class="cell">${payment.pendiente.toLocaleString()}</div>
+                        <div class="cell">${payment.interes.toLocaleString()}</div>
+                        <div class="cell">${payment.interes_pag.toLocaleString()}</div>
+                        <div class="cell">${payment.capital.toLocaleString()}</div>
+                        <div class="cell">${payment.capital_pag.toLocaleString()}</div>
+                        <div class="cell">${payment.seguro.toLocaleString()}</div>
+                        <div class="cell">${payment.seg_pag.toLocaleString()}</div>
+                        <div class="cell">${payment.estado}</div>
+                        <div class="cell">${payment.da}</div>
+                    `;
+                                paymentTableContainer.appendChild(row);
+                            });
+                        }
+
+                        // Manejador de eventos para el clic en las filas
+                        loanListContainer.addEventListener('click', (event) => {
+                            const selectedRow = event.target.closest('.data-row');
+                            if (selectedRow && !selectedRow.classList.contains('header-row')) {
+                                // Limpia la selección de las filas anteriores
+                                document.querySelectorAll('.data-row').forEach(row => row.classList.remove('selected'));
+                                // Añade la clase 'selected' a la fila actual
+                                selectedRow.classList.add('selected');
+
+                                const loanId = parseInt(selectedRow.dataset.loanId);
+                                const selectedLoan = loanData.find(loan => loan.id === loanId);
+                                if (selectedLoan) {
+                                    populateDetails(selectedLoan);
+                                    renderPaymentTable(selectedLoan.pagos);
+                                }
+                            }
+                        });
+
+                        // Manejador de eventos para la búsqueda
+                        function handleSearch() {
+                            const searchTerm = searchInput.value.toLowerCase();
+                            const searchType = document.querySelector('input[name="search-type"]:checked').value;
+
+                            filteredLoanData = loanData.filter(loan => {
+                                let value = '';
+                                if (searchType === 'prestamoId') value = loan.prestamoId;
+                                else if (searchType === 'nombreCliente') value = loan.nombreCliente;
+                                else if (searchType === 'cedula') value = loan.cedula;
+
+                                return value.toLowerCase().includes(searchTerm);
+                            });
+                            renderLoanList(filteredLoanData);
+                        }
+
+                        searchInput.addEventListener('keyup', handleSearch);
+                        searchOptionRadios.forEach(radio => radio.addEventListener('change', handleSearch));
+
+                        // Renderiza la lista inicial de préstamos al cargar la página
+                        renderLoanList(loanData);
+                        // Inicializa los detalles con el primer préstamo
+                        populateDetails(loanData[0]);
+                        renderPaymentTable(loanData[0].pagos);
+                    });
+                </script>

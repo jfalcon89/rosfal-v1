@@ -149,7 +149,7 @@
                 <h3 class="text-secondary"><strong>LISTADO</strong> USUARIOS</h3>
                 <div class="container-fluid p-4">
                     <div class="container-table table-responsive">
-                        <table id="datatable" class="display responsive nowrap" style="width:100%">
+                        <table id="datatable" class="display responsive nowrap compact" style="width:100%">
                             <thead class="thead-ligth">
                                 <tr>
                                     <th scope="col">Id</th>
@@ -209,7 +209,7 @@
                     <% if(cliente) { %>
                         <div class=" d-lg-flex mb-3">
                             <div class="input-group-prepend">
-                                <input class="form-control text-muted p-2" id="user" readonly value="Cliente ID: <%= cliente.cliente_id %> Registrado">
+                                <input class="form-control p-2 bg-success text-light" id="user" readonly value="Cliente ID: <%= cliente.cliente_id %> Registrado">
                             </div>
 
                         </div>
@@ -217,7 +217,7 @@
 
                             <div class=" d-lg-flex mb-3">
                                 <div class="input-group-prepend">
-                                    <input class="form-control text-muted p-2" id="" readonly value="Cliente ID: No Registrado">
+                                    <input class="form-control text-light p-2 bg-danger" id="" readonly value="Cliente: No Registrado">
                                 </div>
 
                             </div>

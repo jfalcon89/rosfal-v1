@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de Cartera por Cobrar - App</title>
+    <!-- Incluyendo Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Incluyendo Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Incluyendo Bootstrap Icons (opcional, pero útil para la tabla) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <style>
+        /* Configuración global de la fuente */
+        
+         :root {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Clases personalizadas para simular diseño de aplicación de escritorio */
+        
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f3f4f6;
+            /* Fondo gris claro */
+            padding: 20px;
+        }
+        
+        .app-window {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .title-bar {
+            background-color: #3b82f6;
+            /* Azul primario */
+            color: white;
+            padding: 1rem 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .content-area {
+            padding: 1.5rem;
+        }
+        
+        .filter-box {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 1.5rem;
+            background-color: #f9fafb;
+            /* Ligeramente más claro para el área de filtros */
+        }
+        
+        .form-label-custom {
+            font-weight: 500;
+            color: #1f2937;
+            text-align: right;
+            padding-right: 0.5rem;
+            align-self: center;
+            /* Centrado vertical en la fila */
+        }
+        
+        .input-group-custom {
+            position: relative;
+            display: flex;
+        }
+        
+        .input-group-custom .form-control {
+            border-radius: 6px;
+            padding-right: 2.5rem;
+            /* Espacio para el icono */
+            border: 1px solid #d1d5db;
+        }
+        
+        .input-group-custom .search-icon,
+        .input-group-custom .calendar-icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            padding: 0 0.75rem;
+            display: flex;
+            align-items: center;
+            color: #6b7280;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .footer-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: #e5e7eb;
+            /* Gris claro para el footer */
+            border-top: 1px solid #d1d5db;
+        }
+        /* Botones de Procesar/Salir */
+        
+        .btn-procesar {
+            background-color: #10b981;
+            /* Verde esmeralda */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-procesar:hover {
+            background-color: #059669;
+        }
+        
+        .btn-salir {
+            background-color: #ef4444;
+            /* Rojo */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-salir:hover {
+            background-color: #dc2626;
+        }
+        /* Botones de Dispositivo de Salida */
+        
+        .device-output {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .device-output-label {
+            font-weight: 500;
+            color: #4b5563;
+        }
+        
+        .btn-output {
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid #9ca3af;
+            background-color: #ffffff;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-pantalla {
+            background-color: #d1fae5;
+            border-color: #34d399;
+            color: #059669;
+            font-weight: 600;
+        }
+        /* Estilos del Modal (Reporte) */
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content-report {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            max-width: 95%;
+            width: 1200px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.open .modal-content-report {
+            transform: scale(1);
+        }
+        /* Estilos del Reporte */
+        
+        .report-header {
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .report-title {
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .section-header {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #4b5563;
+            border-bottom: 1px solid #d1d5db;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.25rem;
+        }
+        /* Tabla de Datos (Datatable) */
+        
+        .table-custom th,
+        .table-custom td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.875rem;
+        }
+        
+        .table-custom th {
+            background-color: #eff6ff;
+            /* Azul muy claro para encabezados */
+            color: #1f2937;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .table-custom tbody tr:hover {
+            background-color: #f3f4f6;
+        }
+        /* Tabla de Totales */
+        
+        .table-totals {
+            margin-top: 1.5rem;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            /* Espacio entre filas */
+        }
+        
+        .table-totals td {
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .total-left-box {
+            background-color: #3b82f6;
+            color: white;
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 8px;
+            width: 15%;
+        }
+        
+        .total-label {
+            background-color: #e5e7eb;
+            font-weight: 600;
+            color: #4b5563;
+            width: 30%;
+        }
+        
+        .total-value {
+            background-color: #d1fae5;
+            color: #065f46;
+            font-weight: 700;
+            text-align: right;
+            width: 25%;
+        }
+        
+        .total-spacer {
+            width: 5%;
+        }
+        /* Responsive adjustments */
+        
+        @media (max-width: 768px) {
+            .app-window {
+                margin: 10px;
+            }
+            .form-label-custom {
+                text-align: left;
+                padding-right: 0;
+                margin-bottom: 0.25rem;
+            }
+            .row>div {
+                margin-bottom: 10px;
+            }
+            .footer-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .device-output {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+            .device-output>button {
+                width: 100%;
+                margin-top: 5px;
+            }
+            .modal-content-report {
+                margin: 20px 0;
+            }
+            .total-left-box {
+                font-size: 2rem;
+                padding: 5px;
+            }
+            .table-totals td {
+                font-size: 0.875rem;
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="app-container">
+        <!-- Contenedor Principal de la Aplicación (Formulario de Parámetros) -->
+        <div class="app-window">
+            <form id="reporteForm" class="w-full">
+                <div class="title-bar">
+                    Estado de la Cartera por Cobrar
+                </div>
+
+                <div class="content-area">
+                    <div class="filter-box grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Columna Izquierda: Cartera, Sucursal, Fecha -->
+                        <div>
+                            <!-- Cartera -->
+                            <div class="grid grid-cols-12 gap-2 mb-2">
+                                <label for="inputCartera" class="col-span-12 md:col-span-4 form-label-custom">Cartera</label>
+                                <div class="col-span-12 md:col-span-8 input-group-custom">
+                                    <input type="text" class="form-control w-full rounded-md border p-2" value="Cartera A" id="inputCartera" name="cartera">
+                                    <span class="search-icon"><i class="fas fa-search"></i></span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-12 gap-2 mb-4">
+                                <div class="col-span-4 hidden md:block"></div>
+                                <div class="col-span-12 md:col-span-8 form-check ps-0 md:ps-4">
+                                    <input class="form-check-input me-2" type="checkbox" id="checkCarteras" name="incluirTodasCarteras">
+                                    <label class="form-check-label text-sm text-gray-600" for="checkCarteras">
+                                        Incluir todas las Carteras de préstamos
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Sucursal -->
+                            <div class="grid grid-cols-12 gap-2 mb-2">
+                                <label for="inputSucursal" class="col-span-12 md:col-span-4 form-label-custom">Sucursal</label>
+                                <div class="col-span-12 md:col-span-8 input-group-custom">
+                                    <input type="text" class="form-control w-full rounded-md border p-2" value="ROSFAL SOLUCIONES" id="inputSucursal" name="sucursal">
+                                    <span class="search-icon"><i class="fas fa-search"></i></span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-12 gap-2 mb-4">
+                                <div class="col-span-4 hidden md:block"></div>
+                                <div class="col-span-12 md:col-span-8 form-check ps-0 md:ps-4">
+                                    <input class="form-check-input me-2" type="checkbox" id="checkSucursales" name="incluirTodasSucursales">
+                                    <label class="form-check-label text-sm text-gray-600" for="checkSucursales">
+                                        Incluir todas las Sucursales
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Fecha corte -->
+                            <div class="grid grid-cols-12 gap-2 mb-2">
+                                <label for="inputFechaCorte" class="col-span-12 md:col-span-4 form-label-custom">Fecha corte:</label>
+                                <div class="col-span-12 md:col-span-8 input-group-custom">
+                                    <input type="date" class="form-control w-full rounded-md border p-2" value="2025-11-15" id="inputFechaCorte" name="fechaCorte">
+                                    <span class="calendar-icon"><i class="far fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Columna Derecha: Tipo y Radios -->
+                        <div>
+                            <!-- Tipo -->
+                            <div class="grid grid-cols-12 gap-2 mb-2">
+                                <label for="inputTipo" class="col-span-12 md:col-span-3 form-label-custom">Tipo</label>
+                                <div class="col-span-12 md:col-span-9 input-group-custom">
+                                    <input type="text" class="form-control w-full rounded-md border p-2" value="Personal" id="inputTipo" name="tipo">
+                                    <span class="search-icon"><i class="fas fa-search"></i></span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-12 gap-2 mb-4">
+                                <div class="col-span-3 hidden md:block"></div>
+                                <div class="col-span-12 md:col-span-9 form-check ps-0 md:ps-4">
+                                    <input class="form-check-input me-2" type="checkbox" id="checkTipos" name="incluirTodosTipos">
+                                    <label class="form-check-label text-sm text-gray-600" for="checkTipos">
+                                        Incluir todos los tipos.
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Radios de Tipo de Estado -->
+                            <div class="grid grid-cols-12 gap-2 mb-2">
+                                <div class="col-span-3 hidden md:block"></div>
+                                <div class="col-span-12 md:col-span-9">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioTipo" id="radioNormal" value="Normal" checked>
+                                        <label class="form-check-label text-sm text-gray-700" for="radioNormal">Normal.</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioTipo" id="radioLegal" value="Legal">
+                                        <label class="form-check-label text-sm text-gray-700" for="radioLegal">Legal.</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioTipo" id="radioIncobrable" value="Incobrable">
+                                        <label class="form-check-label text-sm text-gray-700" for="radioIncobrable">Incobrable.</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radioTipo" id="radioTodos" value="Todos">
+                                        <label class="form-check-label text-sm text-gray-700" for="radioTodos">Todos</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer y Botones -->
+                <div class="footer-buttons">
+                    <!-- Dispositivo de Salida -->
+                    <div class="device-output">
+                        <div class="device-output-label">
+                            <i class="fas fa-save me-2" style="color: #64bc64;"></i> Dispositivo de Salida
+                        </div>
+                        <button type="button" class="btn btn-output btn-pantalla shadow-sm">Pantalla</button>
+                        <button type="button" class="btn btn-output shadow-sm">Impresora</button>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="flex space-x-3">
+                        <button type="submit" class="btn btn-procesar shadow-md" id="openReportBtn">
+                            <i class="fas fa-cog me-2"></i> Procesar
+                        </button>
+                        <button type="button" class="btn btn-salir shadow-md" onclick="window.close()">
+                            <i class="fas fa-times me-2"></i> Salir
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal/Overlay para el Reporte de Resultados -->
+    <div id="reporteResultadoModal" class="modal-overlay">
+        <div class="modal-content-report">
+            <!-- Loader y Mensaje de Carga -->
+            <div id="loadingIndicator" class="text-center p-10 hidden">
+                <i class="fas fa-spinner fa-spin text-4xl text-blue-500 mb-4"></i>
+                <p class="text-gray-600">Generando reporte, por favor espere...</p>
+            </div>
+
+            <!-- Contenido del Reporte -->
+            <div id="reporteContent" class="p-6 hidden">
+                <div class="container-fluid">
+                    <!-- Cabecera del Reporte -->
+                    <div class="report-header flex justify-between items-start mb-4">
+                        <div class="w-2/3">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-0">ROSFAL SOLUCIONES DE PRESTAMOS</h2>
+                            <p class="text-gray-600 mb-0">TEL: 829-853-0203</p>
+                        </div>
+                        <div class="w-1/3 text-right text-sm text-gray-600">
+                            <p class="mb-0">Impreso el día: <span id="reportDate"></span></p>
+                            <p class="mb-0"><span id="reportTime"></span></p>
+                            <p class="mb-0">Página (1)</p>
+                        </div>
+                    </div>
+
+                    <div class="report-title">
+                        Estado de la Cartera de Préstamos Activos
+                    </div>
+
+                    <!-- Parámetros de Filtrado en el Reporte -->
+                    <div class="section-header">
+                        Parámetros Aplicados:
+                    </div>
+                    <div class="mb-4 text-sm text-gray-700 report-params border p-3 rounded-lg bg-gray-50">
+                        <p class="mb-1"><strong>Cartera:</strong> <span id="paramCartera"></span></p>
+                        <p class="mb-1"><strong>Sucursal:</strong> <span id="paramSucursal"></span></p>
+                        <p class="mb-1"><strong>Tipo de Préstamo:</strong> <span id="paramTipoPrestamo"></span></p>
+                        <p class="mb-0"><strong>FECHA DE CORTE AL:</strong> <span id="cutOffDate"></span></p>
+                    </div>
+
+                    <div class="section-header">
+                        PRESTAMOS FILTRADOS
+                    </div>
+
+                    <!-- Tabla de Préstamos -->
+                    <div class="overflow-x-auto rounded-lg shadow-lg border border-gray-200 mb-6">
+                        <table id="datatable" class="table-custom min-w-full">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="text-left whitespace-nowrap">ID Prestamo</th>
+                                    <th class="text-left whitespace-nowrap">ID Cliente</th>
+                                    <th class="text-left whitespace-nowrap">idSolicitud</th>
+                                    <th class="text-left whitespace-nowrap">Tipo Pago</th>
+                                    <th class="text-right whitespace-nowrap">Plazo</th>
+                                    <th class="text-right whitespace-nowrap">Tasa</th>
+                                    <th class="text-right whitespace-nowrap">Fecha Apertura</th>
+                                    <th class="text-right whitespace-nowrap">Mora %</th>
+                                    <th class="text-right whitespace-nowrap">Monto Cuota</th>
+                                    <th class="text-right whitespace-nowrap">Desembolso</th>
+                                    <th class="text-center whitespace-nowrap">Ver</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reporteTableBody" class="divide-y divide-gray-200">
+                                <!-- Filas de datos serán insertadas por JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Sección de Totales -->
+                    <div class="my-6">
+                        <div class="section-header text-center mt-8">
+                            RESUMEN GENERAL
+                        </div>
+                        <table class="table-totals w-full">
+                            <tbody>
+                                <tr>
+                                    <td id="totalLoansCount" class="total-left-box align-content-center" rowspan="3">0</td>
+                                    <td class="total-label rounded-s-md">Total Desembolsado:</td>
+                                    <td id="totalDesembolsadoValue" class="total-value rounded-e-md">DOP 0.00</td>
+                                    <td class="total-spacer"></td>
+                                    <td class="total-label rounded-s-md">Suma de Tasas:</td>
+                                    <td id="sumaTasasValue" class="total-value rounded-e-md">0.00%</td>
+                                </tr>
+                                <tr>
+                                    <td class="total-label rounded-s-md">Suma de Cuotas:</td>
+                                    <td id="sumaCuotasValue" class="total-value rounded-e-md">DOP 0.00</td>
+                                    <td class="total-spacer"></td>
+                                    <td class="total-label rounded-s-md">Suma Mora %:</td>
+                                    <td id="sumaMoraValue" class="total-value rounded-e-md">0.00%</td>
+                                </tr>
+                                <tr>
+                                    <td class="total-label rounded-s-md">Suma de Plazos (en meses):</td>
+                                    <td id="sumaPlazosValue" class="total-value rounded-e-md">0</td>
+                                    <td class="total-spacer"></td>
+                                    <td class="total-label rounded-s-md">Suma Gastos Cierre:</td>
+                                    <td id="sumaGastosCierreValue" class="total-value rounded-e-md">DOP 0.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Pie de página del Modal -->
+            <div class="flex justify-start p-4 border-t border-gray-200 bg-gray-50">
+                <button type="button" class="btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-sm">
+                    <i class="fas fa-print me-2"></i> Imprimir Reporte
+                </button>
+                <button type="button" class="btn bg-gray-400 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg shadow-sm ms-3" id="closeReportBtn">
+                    <i class="fas fa-window-close me-2"></i> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función auxiliar para simular la demora de red/procesamiento
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+        // Formatear un número a moneda (DOP - Peso Dominicano)
+        const formatCurrency = (amount) => {
+            // Asegurarse de que el monto es un número antes de formatear
+            const numAmount = parseFloat(amount);
+            if (isNaN(numAmount)) return 'DOP 0.00';
+
+            return new Intl.NumberFormat('es-DO', {
+                style: 'currency',
+                currency: 'DOP',
+                minimumFractionDigits: 2,
+            }).format(numAmount);
+        };
+
+        // Obtener elementos del DOM
+        const form = document.getElementById('reporteForm');
+        const modal = document.getElementById('reporteResultadoModal');
+        const reportContent = document.getElementById('reporteContent');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const tableBody = document.getElementById('reporteTableBody');
+        const closeBtn = document.getElementById('closeReportBtn');
+
+        // Función para mostrar el modal
+        const openModal = () => {
+            modal.classList.add('open');
+        };
+
+        // Función para ocultar el modal
+        const closeModal = () => {
+            modal.classList.remove('open');
+        };
+
+        // Event Listeners
+        form.addEventListener('submit', handleProcessReport);
+        closeBtn.addEventListener('click', closeModal);
+
+        /**
+         * Maneja el envío del formulario, llama a la API del servidor y genera el reporte.
+         */
+        async function handleProcessReport(event) {
+            event.preventDefault();
+            openModal();
+
+            // 1. Mostrar el indicador de carga y ocultar el contenido
+            reportContent.classList.add('hidden');
+            loadingIndicator.classList.remove('hidden');
+
+            // 2. Obtener los valores del formulario
+            const params = {
+                cartera: document.getElementById('inputCartera').value,
+                incluirTodasCarteras: document.getElementById('checkCarteras').checked,
+                sucursal: document.getElementById('inputSucursal').value,
+                incluirTodasSucursales: document.getElementById('checkSucursales').checked,
+                fechaCorte: document.getElementById('inputFechaCorte').value,
+                tipo: document.getElementById('inputTipo').value, // En la BD es el campo 'tipo'
+                incluirTodosTipos: document.getElementById('checkTipos').checked,
+                radioTipo: document.querySelector('input[name="radioTipo"]:checked').value // Estado: Normal, Legal, Incobrable, Todos
+            };
+
+            let data = [];
+
+            try {
+                // 3. Realizar la solicitud POST al endpoint del servidor
+                const response = await fetch('/api/prestamos-reportes-filtrados', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(params),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error en el servidor: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    data = result.data; // Los datos de los préstamos
+                } else {
+                    console.error("Error al obtener datos del reporte:", result.message);
+                    alert(`Error al generar reporte: ${result.message}`);
+                }
+
+            } catch (error) {
+                console.error("Error de conexión:", error);
+                alert('Hubo un error de conexión con el servidor. Intente de nuevo.');
+            }
+
+            // 4. Generar el reporte con los datos recibidos (o vacíos si hubo error)
+            generateReport(params, data);
+
+            // 5. Ocultar el indicador de carga y mostrar el contenido del reporte
+            loadingIndicator.classList.add('hidden');
+            reportContent.classList.remove('hidden');
+        }
+
+        /**
+         * Rellena el modal del reporte con los datos y cálculos.
+         * @param {object} params - Parámetros de filtro del formulario.
+         * @param {Array<object>} data - Datos filtrados del reporte del servidor.
+         */
+        function generateReport(params, data) {
+            // ** 1. Rellenar la Cabecera del Reporte (Fecha y Hora) **
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('es-DO');
+            const timeStr = now.toLocaleTimeString('es-DO');
+
+            document.getElementById('reportDate').textContent = dateStr;
+            document.getElementById('reportTime').textContent = timeStr;
+
+            // ** 2. Rellenar los Parámetros Aplicados **
+            document.getElementById('paramCartera').textContent = params.incluirTodasCarteras ? 'TODAS' : params.cartera;
+            document.getElementById('paramSucursal').textContent = params.incluirTodasSucursales ? 'TODAS' : params.sucursal;
+            document.getElementById('paramTipoPrestamo').textContent = params.radioTipo;
+            document.getElementById('cutOffDate').textContent = new Date(params.fechaCorte).toLocaleDateString('es-DO');
+
+            // ** 3. Rellenar la Tabla de Préstamos (Cuerpo) y Calcular Totales **
+            tableBody.innerHTML = '';
+            let totalDesembolsado = 0;
+            let sumaCuotas = 0;
+            let sumaPlazos = 0;
+            let sumaTasas = 0;
+            let sumaMora = 0;
+            let sumaGastosCierre = 0;
+
+            data.forEach(item => {
+                // Acumular totales (usando los nombres de columna de la BD)
+                const desembolso = parseFloat(item.desembolso) || 0;
+                const montoCuota = parseFloat(item.monto_cuota) || 0;
+                const plazo = parseInt(item.plazo) || 0;
+                const tasa = parseFloat(item.tasa) || 0;
+                const moraPorcentaje = parseFloat(item.mora_porcentaje) || 0;
+                const gastosCierre = parseFloat(item.gastos_cierre) || 0;
+
+                totalDesembolsado += desembolso;
+                sumaCuotas += montoCuota;
+                sumaPlazos += plazo;
+                sumaTasas += tasa;
+                sumaMora += moraPorcentaje;
+                sumaGastosCierre += gastosCierre;
+
+                // Crear fila de la tabla
+                const row = `
+                    <tr>
+                        <td class="whitespace-nowrap">${item.id_prestamo}</td>
+                        <td class="whitespace-nowrap">${item.cliente_id}</td>
+                        <td class="whitespace-nowrap">${item.idSolicitud}</td>
+                        <td class="whitespace-nowrap">${item.tipo_plazo}</td>
+                        <td class="text-right whitespace-nowrap">${plazo}</td>
+                        <td class="text-right whitespace-nowrap">${(tasa * 100).toFixed(2)}%</td>
+                        <td class="text-right whitespace-nowrap">${item.apertura}</td>
+                        <td class="text-right whitespace-nowrap">${(moraPorcentaje * 100).toFixed(2)}%</td>
+                        <td class="text-right whitespace-nowrap">${formatCurrency(montoCuota).replace('DOP', '').trim()}</td>
+                        <td class="text-right whitespace-nowrap">${formatCurrency(desembolso).replace('DOP', '').trim()}</td>
+                        <td class="w-0 text-center"><a href="#" class="text-blue-500 hover:text-blue-700" title="Ver Préstamo"><i class="bi bi-eye"></i></a></td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML('beforeend', row);
+            });
+
+            // ** 4. Rellenar la Sección de Resumen **
+            document.getElementById('totalLoansCount').textContent = data.length;
+            document.getElementById('totalDesembolsadoValue').textContent = formatCurrency(totalDesembolsado);
+            document.getElementById('sumaCuotasValue').textContent = formatCurrency(sumaCuotas);
+            document.getElementById('sumaPlazosValue').textContent = sumaPlazos.toFixed(0);
+            document.getElementById('sumaTasasValue').textContent = (sumaTasas * 100).toFixed(2) + '%';
+            document.getElementById('sumaMoraValue').textContent = (sumaMora * 100).toFixed(2) + '%';
+            document.getElementById('sumaGastosCierreValue').textContent = formatCurrency(sumaGastosCierre);
+        }
+    </script>
+</body>
+
+</html>

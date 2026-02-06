@@ -1,0 +1,53 @@
+.app-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    /* margin: 20px auto; */
+    /* max-width: 900px; */
+}
+
+.header-title {
+    background-color: #62b8ed;
+    padding: 10px 15px;
+    border-radius: 8px 8px 0 0;
+    margin: -20px -20px 20px -20px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.section-box {
+    border: 1px solid #cceeff;
+    background-color: #f7fcff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.section-header {
+    background-color: #e0f7ff;
+    padding: 8px 15px;
+    border-radius: 8px 8px 0 0;
+    margin: -15px -15px 15px -15px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.btn-blue {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.btn-blue:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding-top: 20px;
+}

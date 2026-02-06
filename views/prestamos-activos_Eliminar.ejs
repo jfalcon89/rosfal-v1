@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- css y js bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <!-- linkeado css propio -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- icons bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- generador de pdf cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <!-- moment.js cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <!-- css datatable -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+
+    <!-- <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/buttons/1.2.1/js/buttons.html5.min.js"></script> -->
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.colVis.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
+    <link rel="icon" href="/img/favicon/logo-favicon.png">
+    <title>Rosfal - Prestamos Activos</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(to right, #eaf6ff, #a5d3ff); border-radius: 0px 0px 15px 15px;">
+        <div class="container-fluid  ">
+
+            <div class="d-flex">
+                <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
+                <h5 class="text-dark m-2 d-flex align-items-center" style="font-size: large;">PRESTAMOS</h5>
+            </div>
+            <button class="navbar-toggler  " type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon "></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="offcanvas-body ">
+
+                    <div class="d-flex">
+                        <div class="btn-group ">
+                            <button type="button" class="hola navbar-toggler d-block me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon show "></span>
+                            </button>
+                            <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
+                        </div>
+                        <div class="user-container me-2 d-flex">
+                            <% if (login) { %>
+                                <div>
+                                    <h4 type="" class="">
+                                        <%= name %>
+                                    </h4>
+                                    <h6>
+                                        <%= rol %>
+                                    </h6>
+                                </div>
+                                <%}  %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="navbarOffcanvasLabel">
+                <h5 class="text-dark m-2" style="font-size: large;">PRESTAMOS ACTIVOS</h5>
+            </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="user-container me-2 d-flex align-content-center" style="background-color: #ececec;">
+                <% if (login) { %>
+                    <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
+                    <div>
+                        <h4 type="" class="" style="color: #aeaeae;">
+                            <%= name %>
+                        </h4>
+                        <h6>
+                            <%= rol %>
+                        </h6>
+                    </div>
+                    <%}  %>
+            </div>
+            <hr class="dropdown-divider">
+            <%- include('template/navbar-menu') %>
+        </div>
+    </div>
+
+    <div class=" p-2 d-lg-flex flex-sm-row mt-4 " style="background-color: #ececec;">
+        <div class="container-fluid mt-3 mb-3 me-lg-3 d-flex holographic-card" style="background-color: #d4d4d4; border-radius: 50px;">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-nuevas-solicitudes.svg" alt="Solicitudes Nuevas">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3 style="color: #2f6eaa;">
+                            <%= arrayPrestamos.length %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a style="color: #2f6eaa;" class="text-decoration-none fs-5" href="/solicitudes-nuevas">Prestamos Activos</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-aprobadas.svg" alt="Solicitudes Aprobadas">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%= arraySolicitudesAprobadas.length %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-aprobadas">Prestamos Legal</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-declinadas.svg" alt="Solicitudes Declinadas">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%= arraySolicitudesDeclinadas.length %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-declinadas">Prestamos Incobrables</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-white mt-3 me-lg-3 mb-3 d-flex holographic-card" style="border-radius: 50px;">
+            <div class="container-nuevas d-flex">
+                <div class="container-img m-2 me-lg-3">
+                    <img style="width: 60px;" src="/img/img-icons/img-solicitudes-en-revision.svg" alt="Solicitudes en Revision">
+                </div>
+                <div class="container-titulo">
+                    <div class="indicador">
+                        <h3>
+                            <%= arraySolicitudesEnRevision.length %>
+                        </h3>
+                    </div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-en-revision">Todos los Prestamos</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid p-4 mt-2">
+        <h3 style="color: #2f6eaa;" class="">ACTIVOS</h3>
+
+        <div id="reporteResultado" class="">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="modal-content bg-white rounded-xl shadow-2xl w-full mx-auto overflow-hidden transition-all transform scale-100">
+
+
+
+                    <!-- Cuerpo del Reporte -->
+                    <div class="p-6">
+                        <div class="container-fluid">
+                            <!-- Información de la Empresa y Fecha -->
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="w-2/3">
+                                    <h2 class="text-2xl font-bold text-gray-900 mb-0">ROSFAL SOLUCIONES DE PRESTAMOS</h2>
+                                    <p class="text-gray-600 mb-0">TEL: 829-853-0203</p>
+                                </div>
+                                <div class="w-1/3 text-right text-sm text-gray-600">
+                                    <p class="mb-0">Impreso el día: <span id="reportDate"></span></p>
+                                    <p class="mb-0"><span id="reportTime"></span></p>
+                                    <p class="mb-0">Página (1)</p>
+                                </div>
+                            </div>
+
+                            <hr class="my-4 border-gray-300">
+
+                            <div class="report-title">
+                                Estado de la Cartera de Prestamos Activos
+                            </div>
+
+                            <div class="section-header">
+                                TODOS LOS PRÉSTAMOS
+                            </div>
+
+                            <div class="mb-4 text-sm text-gray-700">
+                                <p class="mb-1"><strong>ROSFAL SOLUCIONES DE PRESTAMOS</strong></p>
+                                <p class="mb-0"><strong>FECHA DE CORTE AL: <span id="cutOffDate"></span></strong></p>
+                            </div>
+
+                            <!-- Tabla de Préstamos -->
+                            <div class="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+                                <table id="datatable" class="table-custom w-full">
+                                    <thead class="bg-gray-100">
+                                        <tr>
+
+                                            <!-- Encabezados actualizados para coincidir con la base de datos -->
+                                            <th class="text-left whitespace-nowrap">ID Prestamo</th>
+                                            <th class="text-left whitespace-nowrap">ID Cliente</th>
+                                            <th class="text-left whitespace-nowrap">idSolicitud</th>
+                                            <th class="text-left whitespace-nowrap">Tipo Pago</th>
+                                            <th class="text-right whitespace-nowrap">Plazo</th>
+                                            <th class="text-right whitespace-nowrap">Tasa</th>
+                                            <th class="text-right whitespace-nowrap">Fecha Apertura</th>
+                                            <th class="text-right whitespace-nowrap">Mora %</th>
+                                            <th class="text-right whitespace-nowrap">primer_pago</th>
+                                            <th class="text-right whitespace-nowrap">Monto Cuota</th>
+
+                                            <th class="text-right whitespace-nowrap hidden sm:table-cell">Desembolso</th>
+                                            <th class="text-right whitespace-nowrap hidden sm:table-cell">fecha_vencimiento</th>
+                                            <th class="text-center whitespace-nowrap">Ver Prestamo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reporteTableBody" class="divide-y divide-gray-200">
+                                        <!-- Los datos se cargarán aquí -->
+                                        <% if (arrayPrestamos.length > 0) { %>
+                                            <% arrayPrestamos.forEach(prestamo=> { %>
+
+                                                <tr>
+
+                                                    <td>
+                                                        <%= prestamo.id_prestamo %>
+                                                    </td>
+                                                    <td>
+                                                        <%= prestamo.cliente_id %>
+                                                    </td>
+                                                    <td>
+                                                        <%= prestamo.idSolicitud %>
+                                                    </td>
+                                                    <td>
+                                                        <%= prestamo.tipo_plazo %>
+                                                    </td>
+                                                    <td>
+                                                        <%= prestamo.plazo %>
+                                                    </td>
+
+                                                    <td>
+                                                        <%= prestamo.tasa %>
+                                                    </td>
+                                                    <td>
+                                                        <%= prestamo.apertura.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
+                                                    </td>
+                                                    <td>
+                                                        <%= prestamo.mora_porcentaje %>
+                                                    </td>
+                                                    <td>
+                                                        <%= prestamo.primer_pago %>
+                                                    </td>
+                                                    <td>
+                                                        <%= prestamo.monto_cuota %>
+                                                    </td>
+                                                    <td>
+                                                        <%= prestamo.desembolso %>
+                                                    </td>
+                                                    <td>
+                                                        <%= prestamo.fecha_vencimiento %>
+                                                    </td>
+
+                                                    <td class="w-0 "><a href="/solicitudes/editar-solicitud/<%= prestamo.id_prestamo %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+
+                                                    </td>
+                                                </tr>
+
+                                                <% }) %>
+                                                    <% } %>
+                                                        <!-- <tr id="loadingRow">
+                                            <td colspan="11" class="text-center py-4 text-gray-500">Presione el botón "Generar Reporte" para cargar los datos...</td>
+                                        </tr> -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Sección de Totales Actualizada -->
+                            <div class="my-6 mt-3">
+                                <div class="section-header text-center mt-8">
+                                    RESUMEN
+                                </div>
+
+                                <table class="table-totals w-full">
+                                    <tbody>
+                                        <tr>
+                                            <td id="totalLoansCount" class="total-left-box align-content-center" rowspan="3">
+                                                <%= arrayPrestamos.length %>
+                                            </td>
+                                            <td class="total-label">Total Desembolsado:</td>
+                                            <td style="background-color: #b1b1b2;" id="totalPorCobrarValue" class="total-value text-green-700">0.00</td>
+                                            <td class="total-spacer"></td>
+                                            <td class="total-label">Suma de Tasas:</td>
+                                            <td style="background-color: #b1b1b2;" id="moraPorCobrarValue" class="total-value">0.00%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="total-label">Suma de Cuotas:</td>
+                                            <td style="background-color: #b1b1b2;" id="capitalPorCobrarValue" class="total-value">0.00</td>
+                                            <td class="total-spacer"></td>
+                                            <td class="total-label">Suma Mora %:</td>
+                                            <td style="background-color: #b1b1b2;" id="otrosPorCobrarValue" class="total-value">0.00%</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="total-label">Suma de Plazos (en meses):</td>
+                                            <td style="background-color: #b1b1b2;" id="interesPorCobrarValue" class="total-value">0</td>
+                                            <td class="total-spacer"></td>
+                                            <td class="total-label">Suma Gastos Cierre:</td>
+                                            <td style="background-color: #b1b1b2;" id="seguroPorCobrarValue" class="total-value">0.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Pie de página del Modal -->
+                    <div class="flex justify-content-start p-5 border-t border-gray-200 ">
+                        <!-- <button type="button" class="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 transition duration-150" onclick="document.getElementById('reporteResultado').classList.add('hidden');">
+                        Cerrar
+                    </button> -->
+                        <button type="button" class="btn  btn-info">
+                        Imprimir Reporte
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100"></div>
+    <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+    </div>
+
+    <script>
+        // Datos de ejemplo para simular una respuesta de la base de datos
+        const mockPrestamos = [{
+                id_prestamo: 1001,
+                cliente_id: 501,
+                idSolicitud: 201,
+                tipo_plazo: 'Mensual',
+                plazo: 12,
+                tasa: 18.00,
+                apertura: new Date('2024-01-15T10:00:00'),
+                mora_porcentaje: 2.00,
+                primer_pago: '2024-02-15',
+                monto_cuota: 1250.75,
+                desembolso: 12000.00,
+                fecha_vencimiento: '2025-01-15',
+                tipo: 'Normal',
+                cartera: 'Cartera A',
+                sucursal: 'ROSFAL SOLUCIONES DE PRESTAMOS',
+                gastos_cierre: 100.00
+            }, {
+                id_prestamo: 1002,
+                cliente_id: 502,
+                idSolicitud: 202,
+                tipo_plazo: 'Quincenal',
+                plazo: 24,
+                tasa: 20.50,
+                apertura: new Date('2024-02-20T11:30:00'),
+                mora_porcentaje: 3.50,
+                primer_pago: '2024-03-05',
+                monto_cuota: 650.00,
+                desembolso: 8000.00,
+                fecha_vencimiento: '2025-02-20',
+                tipo: 'Legal',
+                cartera: 'Cartera B',
+                sucursal: 'Sucursal Central',
+                gastos_cierre: 50.00
+            }, {
+                id_prestamo: 1003,
+                cliente_id: 503,
+                idSolicitud: 203,
+                tipo_plazo: 'Mensual',
+                plazo: 6,
+                tasa: 15.00,
+                apertura: new Date('2024-03-01T09:00:00'),
+                mora_porcentaje: 1.50,
+                primer_pago: '2024-04-01',
+                monto_cuota: 2500.00,
+                desembolso: 15000.00,
+                fecha_vencimiento: '2024-09-01',
+                tipo: 'Normal',
+                cartera: 'Cartera A',
+                sucursal: 'ROSFAL SOLUCIONES DE PRESTAMOS',
+                gastos_cierre: 120.00
+            },
+            // ... más préstamos de ejemplo
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const openReportBtn = document.getElementById('openReportBtn');
+            if (openReportBtn) {
+                openReportBtn.addEventListener('click', loadReportData);
+            }
+
+            // Simular la carga inicial (ocultar el modal)
+            document.getElementById('reporteResultado').classList.add('hidden');
+        });
+
+        function loadReportData() {
+            // 1. Recoger Parámetros de Búsqueda
+            const params = {
+                cartera: document.getElementById('checkCarteras').checked ? 'Todas' : document.getElementById('inputCartera').value.trim(),
+                sucursal: document.getElementById('checkSucursales').checked ? 'Todas' : document.getElementById('inputSucursal').value.trim(),
+                fechaCorte: document.getElementById('inputFechaCorte').value,
+                tipo: document.getElementById('checkTipos').checked ? 'Todos' : (document.querySelector('input[name="radioTipo"]:checked') ? document.querySelector('input[name="radioTipo"]:checked').value : document.getElementById('inputTipo').value.trim() || 'Todos'),
+            };
+
+            // 2. Filtrar Datos (Lógica simulada)
+            const filteredPrestamos = mockPrestamos.filter(prestamo => {
+                const matchesCartera = params.cartera === 'Todas' || prestamo.cartera.includes(params.cartera);
+                const matchesSucursal = params.sucursal === 'Todas' || prestamo.sucursal.includes(params.sucursal);
+                const matchesTipo = params.tipo === 'Todos' || prestamo.tipo === params.tipo;
+
+                // Lógica de fecha de corte es más compleja en el backend, aquí solo se filtran activos
+                return matchesCartera && matchesSucursal && matchesTipo;
+            });
+
+            // 3. Renderizar Reporte
+            renderReport(filteredPrestamos, params);
+
+            // Mostrar el modal si estaba oculto
+            document.getElementById('reporteResultado').classList.remove('hidden');
+        }
+
+        function renderReport(prestamos, params) {
+            const tableBody = document.getElementById('reporteTableBody');
+            const now = new Date();
+            const formatter = new Intl.DateTimeFormat('es-ES', {
+                dateStyle: 'short',
+                timeStyle: 'short',
+                hour12: false
+            });
+
+            // Actualizar fecha y hora de impresión
+            document.getElementById('reportDate').textContent = now.toLocaleDateString('es-ES');
+            document.getElementById('reportTime').textContent = now.toLocaleTimeString('es-ES', {
+                hour12: true
+            });
+
+            // Actualizar parámetros de filtro en el reporte
+            document.getElementById('paramCartera').textContent = params.cartera;
+            document.getElementById('paramSucursal').textContent = params.sucursal;
+            document.getElementById('paramTipoPrestamo').textContent = params.tipo;
+            document.getElementById('cutOffDate').textContent = params.fechaCorte;
+
+
+            // Vaciar la tabla antes de agregar nuevos datos
+            tableBody.innerHTML = '';
+
+            // Rellenar la tabla con los datos filtrados
+            let totalDesembolso = 0;
+            let sumaCuotas = 0;
+            let sumaPlazos = 0;
+            let sumaTasas = 0;
+            let sumaMora = 0;
+            let sumaGastosCierre = 0;
+
+            if (prestamos.length > 0) {
+                prestamos.forEach(prestamo => {
+                    // Cálculo de totales
+                    totalDesembolso += prestamo.desembolso;
+                    sumaCuotas += prestamo.monto_cuota;
+                    sumaPlazos += prestamo.plazo;
+                    sumaTasas += prestamo.tasa;
+                    sumaMora += prestamo.mora_porcentaje;
+                    sumaGastosCierre += prestamo.gastos_cierre;
+
+                    // Formato de fechas
+                    const fechaApertura = new Date(prestamo.apertura).toLocaleDateString('es-ES', {
+                        timeZone: "America/Santo_Domingo"
+                    });
+
+                    // Creación de la fila
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                    <td class="whitespace-nowrap">${prestamo.id_prestamo}</td>
+                    <td class="whitespace-nowrap">${prestamo.cliente_id}</td>
+                    <td class="whitespace-nowrap">${prestamo.idSolicitud}</td>
+                    <td class="whitespace-nowrap">${prestamo.tipo_plazo}</td>
+                    <td class="text-right whitespace-nowrap">${prestamo.plazo}</td>
+                    <td class="text-right whitespace-nowrap">${prestamo.tasa.toFixed(2)}%</td>
+                    <td class="text-right whitespace-nowrap">${fechaApertura}</td>
+                    <td class="text-right whitespace-nowrap">${prestamo.mora_porcentaje.toFixed(2)}%</td>
+                    <td class="text-right whitespace-nowrap">${prestamo.primer_pago}</td>
+                    <td class="text-right whitespace-nowrap">${prestamo.monto_cuota.toFixed(2)}</td>
+                    <td class="text-right whitespace-nowrap hidden sm:table-cell">${prestamo.desembolso.toFixed(2)}</td>
+                    <td class="text-right whitespace-nowrap hidden sm:table-cell">${prestamo.fecha_vencimiento}</td>
+                    <td class="w-0 text-center"><a href="/solicitudes/editar-solicitud/${prestamo.id_prestamo}" class="btn" title="Ver Préstamo"><i class="bi bi-eye"></i></a></td>
+                `;
+                    tableBody.appendChild(newRow);
+                });
+            } else {
+                tableBody.innerHTML = '<tr><td colspan="13" class="text-center py-4 text-gray-500">No se encontraron préstamos que coincidan con los filtros.</td></tr>';
+            }
+
+            // 4. Actualizar Resumen de Totales
+            const formatCurrency = (value) => new Intl.NumberFormat('es-DO', {
+                style: 'currency',
+                currency: 'DOP'
+            }).format(value);
+            const formatPercent = (value) => `${value.toFixed(2)}%`;
+
+            document.getElementById('totalLoansCount').textContent = prestamos.length;
+            document.getElementById('totalDesembolsadoValue').textContent = formatCurrency(totalDesembolso);
+            document.getElementById('sumaCuotasValue').textContent = formatCurrency(sumaCuotas);
+            document.getElementById('sumaPlazosValue').textContent = sumaPlazos;
+            document.getElementById('sumaTasasValue').textContent = formatPercent(sumaTasas);
+            document.getElementById('sumaMoraValue').textContent = formatPercent(sumaMora);
+            document.getElementById('sumaGastosCierreValue').textContent = formatCurrency(sumaGastosCierre);
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable({
+                order: [
+                    [0, 'desc']
+                ],
+
+
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+        });
+    </script>
+
+
+
+</body>
+
+</html>

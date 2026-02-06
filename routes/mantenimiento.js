@@ -31,12 +31,15 @@ const upload = multer({
 });
 
 // Ruta para subir el archivo PDF
-router.post('/upload', upload.single('archivo'), (req, res) => {
+router.post('/upload', upload.single('archivo'), async(req, res) => {
     const prestamoId = req.body.prestamo_id; // Obteniendo el ID del préstamo
     const nombreArchivo = req.file.originalname;
     const archivo = req.file.buffer;
-    const celular = req.body.celular;
+    // const celularDB = celular_prestamo = await pool.query('SELECT celular FROM solicitudes WHERE idSolicitud = ?', [req.body.prestamo_id]);
+    const celularDB = await pool.query(`SELECT celular FROM solicitudes WHERE idSolicitud = ${req.body.prestamo_id}`);
+    const celular = celularDB[0].celular;
     const tipo_documento = req.body.tipo_documento;
+
 
     const query = 'INSERT INTO archivos_prestamos (prestamo_id, celular, nombre_archivo, archivo, tipo_documento) VALUES (?, ?, ?, ?, ?)';
     pool.query(query, [prestamoId, celular, nombreArchivo, archivo, tipo_documento], (err, result) => {
@@ -44,7 +47,7 @@ router.post('/upload', upload.single('archivo'), (req, res) => {
             console.error('Error al insertar el archivo en la base de datos:', err);
             res.status(500).send('Error al guardar el archivo');
         } else {
-            res.redirect('/panel-administracion');
+            res.redirect('/mantenimiento');
         }
     });
 });
@@ -115,7 +118,7 @@ router.get('/mantenimiento', async(req, res) => {
 
                 // Solicitudes aprobadas, en revisión, nuevas o en legal para el usuario logueado
                 const arraySolicitudesAprobadasDB = await pool.query(
-                    `SELECT idSolicitud, nombre, apellido, celular 
+                    `SELECT idSolicitud, nombre, apellido, celular, saldoFinal 
                         FROM solicitudes 
                         WHERE estadoSolicitud IN ("Aprobada", 'En Legal', 'Nueva', 'En Revision') 
                         AND celular = ? 
@@ -201,7 +204,7 @@ router.get('/mantenimiento', async(req, res) => {
                 const cantAtrasosDB = await pool.query("SELECT COUNT(idSolicitud) cantAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
                 const SolicitudesCliente = ''
 
-                const arraySolicitudesAprobadasDB = await pool.query(`SELECT idSolicitud, nombre, apellido, celular FROM solicitudes WHERE estadoSolicitud IN ("Aprobada" , 'En Legal', 'Nueva', 'En Revision') ORDER BY fechaSolicitud DESC`);
+                const arraySolicitudesAprobadasDB = await pool.query(`SELECT idSolicitud, nombre, apellido, celular, saldoFinal FROM solicitudes WHERE estadoSolicitud IN ("Aprobada" , 'En Legal', 'Nueva', 'En Revision') ORDER BY fechaSolicitud DESC`);
                 const arraySolicitudesAprobadasFirmadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND firmaContrato= "NO" ORDER BY fechaSolicitud DESC');
                 const arraySolicitudesAtrasadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="Aprobada" AND atraso > 0');
                 const arrayNotificacionAtrasoDB = await pool.query(`SELECT novedades_atrasos.idSolicitud, idNovedadAtraso, solicitudes.nombre, solicitudes.apellido, novedades_atrasos.celular, novedades_atrasos.ruta, novedades_atrasos.atraso, fechaNovedad  FROM novedades_atrasos, solicitudes WHERE novedades_atrasos.idSolicitud = solicitudes.idSolicitud ORDER BY fechaNovedad DESC`);

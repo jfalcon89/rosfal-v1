@@ -3,32 +3,34 @@ const express = require("express");
 const router = express.Router();
 const moment = require("moment");
 const pool = require("../database");
+const { obtenerConteos } = require("../services/conteosService");
 
 
 // 1
 // RENDERIZANDO Y MOSTRANDO TODOS LOS MENSAJES NUEVOS
-router.get('/mensajes', async(req, res) => {
+router.get("/mensajes", async(req, res) => {
     if (req.session.loggedin) {
-        // console.log('entro el mmg')
         try {
-            console.log('entro al try')
+            console.log("entro al try");
 
+            const permiso_A = "Administrador";
+            const permiso_B = "Representante";
+            const permiso_C = "Cliente App";
 
-            const permiso_A = 'Administrador'
-            const permiso_B = 'Representante'
-            const permiso_C = 'Cliente App'
-            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+            // Aquí usas el servicio centralizado
+            const conteos = await obtenerConteos();
 
-            const arrayMensajesDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ORDER BY fechaMensaje DESC');
-            const arrayMensajesLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="Leido" ');
-            const arrayMensajesNoLeidosDB = await pool.query('SELECT * FROM mensajes WHERE estadoMensaje="No Leido" ');
+            console.log('Conteos: ', conteos)
 
-            // console.log('valido las consultas')
+            const arrayMensajesDB = await pool.query(
+                'SELECT * FROM mensajes WHERE estadoMensaje="Nuevo" ORDER BY fechaMensaje DESC'
+            );
+            const arrayMensajesLeidosDB = await pool.query(
+                'SELECT * FROM mensajes WHERE estadoMensaje="Leido"'
+            );
+            const arrayMensajesNoLeidosDB = await pool.query(
+                'SELECT * FROM mensajes WHERE estadoMensaje="No Leido"'
+            );
 
             res.render("mensajes", {
                 arrayMensajes: arrayMensajesDB,
@@ -40,33 +42,22 @@ router.get('/mensajes', async(req, res) => {
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                arrayUsuarios,
-                arrayClientes,
-                arraySolicitudes,
-                arrayMensajesNuevos,
-                arrayVisitas,
-                arrayTestimoniosNuevos
-
+                conteos // ahora en la vista tienes todo junto (totalUsuarios, totalClientes, etc.)
             });
-
-            // console.log('hizo el render a mensajes')
-
         } catch (error) {
-            console.log('este es el error' + error)
+            console.log("este es el error: " + error);
             res.render("404", {
                 error: true,
                 mensaje: "no se encuentra el id seleccionado"
             });
         }
-
     } else {
-        res.render('login', {
+        res.render("login", {
             login: false,
-            name: 'Debe iniciar sesión',
-            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
+            name: "Debe iniciar sesión",
+            device: req.useragent.isMobile ? "Mobile" : "Desktop"
         });
     }
-
 });
 
 

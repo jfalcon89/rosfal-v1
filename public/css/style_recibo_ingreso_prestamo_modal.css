@@ -1,0 +1,255 @@
+/* Contenedor principal del modal */
+
+.modal-container {
+    display: flex;
+    flex-direction: column;
+    /* Organiza los elementos en columna */
+    width: 95%;
+    max-width: 1200px;
+    height: 90vh;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+
+/* Encabezado del modal */
+
+.modal-header {
+    background: linear-gradient(to right, #eaf6ff, #a5d3ff);
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+
+/* Contenedor para el contenido principal y el panel de acciones */
+
+.content-wrapper {
+    display: flex;
+    flex-grow: 1;
+    /* Permite que este contenedor ocupe el espacio restante */
+}
+
+
+/* Sección de búsqueda */
+
+.search-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-bottom: 1px solid #ccc;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 5px 10px;
+    border: 1px solid #99c8ff;
+    border-radius: 5px;
+}
+
+.search-options {
+    display: flex;
+    gap: 10px;
+}
+
+.search-options input {
+    display: none;
+}
+
+.search-options label {
+    padding: 5px 10px;
+    border: 1px solid #99c8ff;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    font-size: 0.9rem;
+}
+
+.search-options input:checked+label {
+    background-color: #a5d3ff;
+    border-color: #55aaff;
+    color: #333;
+}
+
+.date-fields {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+}
+
+.date-input {
+    width: 90px;
+    padding: 5px;
+    border: 1px solid #99c8ff;
+    border-radius: 5px;
+}
+
+
+/* Contenedor del contenido principal con scroll */
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    /* Permite el desplazamiento vertical solo en esta sección */
+    background-color: #fafcff;
+    /* Nuevo color de fondo */
+}
+
+
+/* Tablas de datos */
+
+.data-grid {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: auto;
+    /* Permite el scroll horizontal para tablas anchas */
+}
+
+.data-row {
+    display: flex;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+}
+
+.data-row:hover {
+    background-color: #e6f2ff;
+}
+
+.header-row {
+    background-color: #e6f2ff;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.cell {
+    flex: 1;
+    padding: 8px 5px;
+    border-right: 1px solid #e1e1e1;
+    text-align: center;
+    font-size: 0.85rem;
+    min-width: 80px;
+}
+
+.client-name-cell {
+    flex: 2;
+    text-align: left;
+    padding-left: 10px;
+}
+
+
+/* Sección de detalles */
+
+.details-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.details-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.details-right {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.detail-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.detail-group label {
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.details-section input {
+    padding: 3px 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 0.8rem;
+}
+
+.loan-details-table {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.loan-details-table h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    color: #444;
+}
+
+
+/* Panel de acciones */
+
+.action-panel {
+    background-color: #e6f2ff;
+    width: 200px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.action-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #a5d3ff;
+    border: 1px solid #66b3ff;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.action-button:hover {
+    background-color: #89c1f0;
+}
+
+.icon {
+    font-size: 1.2rem;
+    color: #3a80c9;
+}

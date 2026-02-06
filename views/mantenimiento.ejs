@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <div class=" shadow d-flex justify-content-center flex-wrap">
+    <div style="border-radius: 20px" class=" shadow d-flex justify-content-center flex-wrap">
 
         <div class="m-4 mt-4">
             <div class="d-flex justify-content-center flex-column">
@@ -204,10 +204,10 @@
         </div> -->
     </div>
 
-    <hr>
 
-    <div class="p-lg-3">
-        <h6 class="m-1">ARCHIVOS RELACIONADOS A CLIENTES</h6>
+
+    <div class="p-lg-3 mt-4">
+        <h6 style="background: #e0e0e0; border-radius: 50px;" class="m-2 d-flex justify-content-center">Archivos Clientes</h6>
 
         <div class="text-end mb-3">
             <% if(rol == permiso_A || rol == permiso_B){ %>
@@ -223,7 +223,7 @@
             </button>
         </div>
         <div class="container-table table-responsive">
-            <table id="datatable" class="display responsive nowrap" style="width:100%">
+            <table id="datatable" class="display responsive nowrap compact" style="width:100%">
                 <thead class="thead-dark">
                     <tr>
                         <th>ID del Archivo</th>
@@ -233,7 +233,7 @@
                         <th>Nombre del Archivo</th>
                         <th>Fecha de Subida</th>
                         <th>Tamaño del archivo</th>
-                        <th>Acciones</th>
+                        <th>Descargar</th>
                     </tr>
                 </thead>
                 <tbody id="archivos-table-body">
@@ -357,26 +357,17 @@
                             <option value="" selected>Seleccionar</option>
                             <% if (arraySolicitudesAprobadas.length > 0) { %>
                                 <% arraySolicitudesAprobadas.forEach(cliente=> { %>
-                            <option value="<%= cliente.idSolicitud %>" >
-                                <%= cliente.idSolicitud %> <%= cliente.nombre %> <%= cliente.apellido %>
+                            <option value="<%= cliente.idSolicitud %>" ><span>Solicitud:</span>
+                                <%= cliente.idSolicitud %> <span>Monto:</span> <%= cliente.saldoFinal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(cliente.saldoFinal) %> 
                             </option>
                             <% }) %>
                             <% } %>
                         </select>
 
+                                <!-- <label for="celular">Telefono Cliente Asociado</label> -->
 
 
-                                <label for="celular">Telefono Cliente Asociado</label>
-                                <select name="celular" class="form-control" id="celular" required>
-                            <option value="" selected>Seleccionar</option>
-                            <% if (arraySolicitudesAprobadas.length > 0) { %>
-                                <% arraySolicitudesAprobadas.forEach(cliente=> { %>
-                            <option value="<%= cliente.celular%>" >
-                                <%= cliente.idSolicitud %> <%= cliente.celular %> <%= cliente.nombre %> <%= cliente.apellido %>
-                            </option>
-                            <% }) %>
-                            <% } %>
-                        </select>
+
 
                                 <label for="prestamo_id">Tipo de Documento</label>
                                 <select name="tipo_documento" class="form-control" id="tipo_documento" required>

@@ -7,43 +7,75 @@ const bcrypt = require('bcryptjs');
 const ipapi = require('ipapi.co');
 const nodemailer = require("nodemailer");
 const useragent = require('express-useragent');
+const { obtenerConteos } = require("../services/conteosService");
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 
+
+
+
+// VISTA DE CLIENTES GENERALES
 router.get('/app-clientes', async(req, res) => {
     if (req.session.loggedin) {
 
-        const permiso_A = 'Administrador'
-        const permiso_B = 'Representante'
-        const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+        let m = 0;
 
 
-        const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-        const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
-        const clienteDB = await pool.query('SELECT * FROM app_clientes ');
-        res.render("app-clientes", {
-            arrayClientesV: arrayClientesVDB,
-            arrayUsuariosV: arrayUsuariosVDB,
-            cliente: clienteDB[0],
+        try {
+            // Aquí usas el servicio centralizado
+            const conteos = await obtenerConteos();
+            // const arrayArchivosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where celular = '${clienteDB[0].telefono}'`);
+            const permiso_A = 'Administrador'
+            const permiso_B = 'Representante'
+            const permiso_C = 'Cliente App'
+            const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
+            const arrayClientesVDB = await pool.query(`SELECT 
+    c.*, 
+    COALESCE(s.nombre, '') AS nombre_solicitud, 
+    COALESCE(s.apellido, '') AS apellido_solicitud,
+    COALESCE(u.user, '') AS usuario
+FROM 
+    app_clientes c
+LEFT JOIN (
+    SELECT 
+        celular, 
+        nombre, 
+        apellido 
+    FROM 
+        solicitudes 
+    GROUP BY 
+        celular
+) s 
+    ON c.telefono = s.celular
+LEFT JOIN 
+    users u 
+    ON c.telefono = u.user;`);
+            const clienteDB = await pool.query('SELECT * FROM app_clientes');
+            const arrayArchivosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos`);
 
-            login: true,
-            name: req.session.name,
-            rol: req.session.rol,
-            permiso_A,
-            permiso_B,
-            permiso_C,
-            arrayUsuarios,
-            arrayClientes,
-            arraySolicitudes,
-            arrayMensajesNuevos,
-            arrayVisitas,
-            arrayTestimoniosNuevos
-        });
+            res.render("app-clientes", {
+                arrayClientesV: arrayClientesVDB,
+                arrayUsuariosV: arrayUsuariosVDB,
+                cliente: clienteDB[0],
+                conteos,
+                login: true,
+                name: req.session.name,
+                rol: req.session.rol,
+                permiso_A,
+                permiso_B,
+                permiso_C,
+                arrayArchivosCliente: arrayArchivosClienteDB,
+                m
+            });
+        } catch (error) {
+            console.log('entro al catch')
+            console.log("este es el error: " + error);
+            res.render("404", {
+                error: true,
+                mensaje: `no se encuentra el id seleccionado en una consulta a la base de datos`
+            });
+        }
     } else {
         res.render('login', {
             login: false,
@@ -55,20 +87,16 @@ router.get('/app-clientes', async(req, res) => {
 });
 
 
-//RENDERIZANDO Y MOSTRANDO TODAS LAS RUTAS CREADAS VISTA CREAR RUTA
+// VISTA CREAR CLIENTE **ELIMINAR**
 router.get('/app-clientes/crear-cliente', async(req, res) => {
     if (req.session.loggedin) {
+
+        // Aquí usas el servicio centralizado
+        const conteos = await obtenerConteos();
 
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
-
         const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
         const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
         res.render("crear-cliente", {
@@ -80,12 +108,7 @@ router.get('/app-clientes/crear-cliente', async(req, res) => {
             permiso_A,
             permiso_B,
             permiso_C,
-            arrayUsuarios,
-            arrayClientes,
-            arraySolicitudes,
-            arrayMensajesNuevos,
-            arrayVisitas,
-            arrayTestimoniosNuevos
+            conteos,
 
         });
     } else {
@@ -98,17 +121,25 @@ router.get('/app-clientes/crear-cliente', async(req, res) => {
 })
 
 
-//CREANDO NUEVO CLIENTE ****************
+// POST CREAR CLIENTE
 router.post("/app-clientes/crear-cliente", async(req, res) => {
     const { telefono, pass, estado_cliente } = req.body;
 
+    let m = 0
+
+
     // Validación básica
     if (!telefono || !pass || !estado_cliente) {
-        return res.status(400).json({
+        return res.json({
             success: false,
-            alertTitle: "Error",
-            alertMessage: "Datos incompletos.",
-            alertIcon: 'error'
+            alertTitle: "Favor verificar",
+            alertMessage: "¡Datos incompletoss.!",
+            alertIcon: 'warning',
+            showConfirmButton: true,
+            confirmButtonText: "Reintentar",
+            showCancelButton: true, // Mostrar botón "Iniciar sesión"
+            cancelButtonText: "Ver Clientes",
+            ruta: '/panel-administracion'
         });
     }
 
@@ -125,12 +156,17 @@ router.post("/app-clientes/crear-cliente", async(req, res) => {
     let passwordHash;
     try {
         passwordHash = await bcrypt.hash(pass, 8); // Hash de contraseña
-    } catch (error) {
-        return res.status(500).json({
+    } catch {
+        return res.json({
             success: false,
-            alertTitle: "Error",
-            alertMessage: "Error al encriptar la contraseña.",
-            alertIcon: 'error'
+            alertTitle: "Favor verificar",
+            alertMessage: "¡Error al encriptar la contraseña.!",
+            alertIcon: 'error',
+            showConfirmButton: true,
+            confirmButtonText: "Reintentar",
+            showCancelButton: true, // Mostrar botón "Iniciar sesión"
+            cancelButtonText: "Ver Clientes",
+            ruta: '/panel-administracion'
         });
     }
 
@@ -287,6 +323,8 @@ router.post("/app-clientes/crear-cliente", async(req, res) => {
 router.get('/app-clientes/editar-cliente', async(req, res) => {
     if (req.session.loggedin) {
 
+        let m = 0;
+
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
@@ -313,7 +351,8 @@ router.get('/app-clientes/editar-cliente', async(req, res) => {
             arraySolicitudes,
             arrayMensajesNuevos,
             arrayVisitas,
-            arrayTestimoniosNuevos
+            arrayTestimoniosNuevos,
+            m
 
         });
     } else {
@@ -332,16 +371,16 @@ router.get("/app-clientes/editar-cliente/:id", async(req, res) => {
         const id = req.params.id
         console.log(req.params)
 
+        let m = 0;
+
+        // Aquí usas el servicio centralizado
+        const conteos = await obtenerConteos();
+
 
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
 
         try {
             const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
@@ -365,12 +404,9 @@ router.get("/app-clientes/editar-cliente/:id", async(req, res) => {
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                arrayUsuarios,
-                arrayClientes,
-                arraySolicitudes,
-                arrayMensajesNuevos,
-                arrayVisitas,
-                arrayTestimoniosNuevos
+
+                conteos,
+                m
             });
 
         } catch (error) {
@@ -395,24 +431,112 @@ router.get("/app-clientes/editar-cliente/:id", async(req, res) => {
 router.post('/app-clientes/editar-cliente/:id', async(req, res) => {
     const id = req.params.id;
     console.log('Cliente ID:', id);
+    console.log('actualizando entro a app-clientes/editar-cliente')
 
-    const { telefono, pass, estado_cliente, origen } = req.body;
-    const actualizacionCliente = { telefono, estado_cliente, origen };
-    const name = 'Usuario Externo';
-    const rol = 'Cliente App';
+    let m = 0;
+
+    const {
+        cedula,
+        nombre,
+        apellido,
+        sexo,
+        estadoCivil,
+        direccion,
+        direccionNegocio,
+        email,
+        telefono,
+        celular,
+        nacionalidad,
+        nombreFamilia,
+        direccionFamilia,
+        parentescoFamilia,
+        telefonoFamilia,
+        apodoFamilia,
+        empresa,
+        salario,
+        puesto,
+        dirEmpresa,
+        telefonoEmpresa,
+        departamento,
+        tiempoEmpresa,
+        nombreRefPers1,
+        nombreRefPers2,
+        telefonoRefPer1,
+        telefonoRefPer2,
+        banco,
+        numeroCuenta,
+        tiempoNegocio,
+        ruta,
+        clasificacionCliente,
+        token_registro_sms,
+        ip_app_cliente,
+        pass,
+        // fecha_creacion,
+        estado_cliente,
+        origen,
+        credito,
+        tipoPrestamo,
+        montoSolicitado
+    } = req.body;
+
+    const actualizacionCliente = {
+        cedula,
+        nombre,
+        apellido,
+        sexo,
+        estadoCivil,
+        direccion,
+        direccionNegocio,
+        email,
+        telefono,
+        celular,
+        nacionalidad,
+        nombreFamilia,
+        direccionFamilia,
+        parentescoFamilia,
+        telefonoFamilia,
+        apodoFamilia,
+        empresa,
+        salario,
+        puesto,
+        dirEmpresa,
+        telefonoEmpresa,
+        departamento,
+        tiempoEmpresa,
+        nombreRefPers1,
+        nombreRefPers2,
+        telefonoRefPer1,
+        telefonoRefPer2,
+        banco,
+        numeroCuenta,
+        tiempoNegocio,
+        ruta,
+        clasificacionCliente,
+        // token_registro_sms,
+        // ip_app_cliente,
+        // pass,
+        // fecha_creacion,
+        estado_cliente,
+        // origen,  
+        credito,
+        tipoPrestamo,
+        montoSolicitado
+    };
+    // const name = 'Usuario Externo';
+    // const rol = 'Cliente App';
 
     try {
         // Verifica si el cliente existe
-        const clienteDB = await pool.query("SELECT * FROM app_clientes WHERE cliente_id = ?", [id]);
+        // const clienteDB = await pool.query("SELECT * FROM app_clientes WHERE cliente_id = ?", [id]);
 
-        if (clienteDB.length === 0) {
-            return res.status(404).send('Cliente no encontrado');
-        }
+        // if (clienteDB.length === 0) {
+        //     return res.status(404).send('Cliente no encontrado');
+        // }
 
-        const telefono = clienteDB[0].telefono;
+        // const telefono = clienteDB[0].telefono;
 
         // Verifica si existe un usuario con el teléfono en `users`
-        const userDB = await pool.query("SELECT * FROM users WHERE user = ?", [telefono]);
+        // const userDB = await pool.query("SELECT * FROM users WHERE user = ?", [telefono]);
 
         // Si hay contraseña, actualiza tanto en `app_clientes` como en `users`
         if (pass) {
@@ -523,7 +647,18 @@ router.post('/app-clientes/editar-cliente/:id', async(req, res) => {
                 // fin envio de correo
 
             // Redirige y termina la ejecución
-            return res.redirect('/app-clientes');
+            // return res.redirect('/app-clientes');
+            // Respuesta de éxito
+            console.log('satisfatorio la insercion')
+            return res.json({
+                success: true,
+                alertTitle: "Excelente",
+                alertMessage: "¡CLIENTE CREADO CORRECTAMENTE!",
+                alertIcon: 'success',
+                timer: 1500,
+                ruta: '/app-clientes'
+            });
+
         }
 
         // Si no hay contraseña, actualiza solo los demás campos en `app_clientes`
@@ -531,6 +666,7 @@ router.post('/app-clientes/editar-cliente/:id', async(req, res) => {
 
         // Redirige después de la actualización
         res.redirect('/app-clientes');
+
     } catch (error) {
         console.error('Error durante la actualización:', error);
         res.status(500).send('Hubo un error actualizando el cliente.');
@@ -543,20 +679,16 @@ router.get("/app-clientes/eliminar-cliente/:id", async(req, res) => {
 
     console.log(id)
 
-    const clienteDB = await pool.query("SELECT * FROM app_clientes WHERE cliente_id = ?", [id]);
+    // const clienteDB = await pool.query("SELECT * FROM app_clientes WHERE cliente_id = ?", [id]);
 
     // Verifica si existe un usuario con el teléfono en `users`
-    const userDB = await pool.query("SELECT * FROM users WHERE user = ?", [clienteDB[0].telefono]);
+    // const userDB = await pool.query("SELECT * FROM users WHERE user = ?", [clienteDB[0].telefono]);
 
     try {
-        if (userDB.length > 0) {
-            await pool.query("DELETE FROM users WHERE user = ?", [userDB[0].user]);
-            await pool.query("DELETE FROM app_clientes WHERE cliente_id = ?", [id]);
-            return res.redirect('/app-clientes');
-        } else {
-            await pool.query("DELETE FROM app_clientes WHERE cliente_id = ?", [id]);
-            res.redirect("/app-clientes");
-        }
+
+        await pool.query("DELETE FROM app_clientes WHERE cliente_id = ?", [id]);
+        res.redirect("/app-clientes");
+
     } catch (error) {
         console.log(error)
     }

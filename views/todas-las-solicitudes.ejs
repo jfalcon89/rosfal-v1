@@ -44,8 +44,8 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light  ">
-        <div class="container-fluid  " style="background-color: #ececec;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(to right, #eaf6ff, #a5d3ff); border-radius: 0px 0px 15px 15px;">
+        <div class="container-fluid  ">
 
             <div class="d-flex">
                 <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
@@ -109,7 +109,7 @@
     </div>
 
     <div class=" p-2 d-lg-flex flex-sm-row mt-4 " style="background-color: #ececec;">
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex">
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-nuevas-solicitudes.svg" alt="Solicitudes Nuevas">
@@ -124,7 +124,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex ">
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-solicitudes-aprobadas.svg" alt="Solicitudes Aprobadas">
@@ -139,7 +139,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex">
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-solicitudes-declinadas.svg" alt="Solicitudes Declinadas">
@@ -154,7 +154,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex">
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-solicitudes-en-revision.svg" alt="Solicitudes en Revision">
@@ -169,18 +169,18 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid mt-3 mb-3 d-flex" style="background-color: #d4d4d4;">
+        <div class="container-fluid mt-3 mb-3 d-flex holographic-card" style="background-color: #d4d4d4; border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-total-solicitudes.svg" alt="Solicitudes en Revision">
                 </div>
                 <div class="container-titulo">
                     <div class="indicador">
-                        <h3>
+                        <h3 style="color: #2f6eaa;">
                             <%= arrayTotalSolicitudes.length %>
                         </h3>
                     </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/todas-las-solicitudes">Todas las Solicitudes</a></div>
+                    <div class="titulo"><a style="color: #2f6eaa;" class="text-decoration-none fs-5" href="/todas-las-solicitudes">Todas las Solicitudes</a></div>
                 </div>
             </div>
         </div>
@@ -190,8 +190,8 @@
 
 
     <div class="container-fluid p-4 mt-5">
-        <h3 class="text-secondary"><strong>REPORTES</strong> TOTAL DE SOLICITUDES</h3>
-        <div class="container-fluid p-4">
+        <h3 style="color: #2f6eaa;" class=""><strong>REPORTES</strong> TOTAL DE SOLICITUDES</h3>
+        <div style="border-radius: 50px; box-shadow:  20px 20px 60px #bebebe, -20px -20px 60px #ffffff;" class="container-fluid p-4">
             <div class="container-table table-responsive">
                 <table id="datatable" class="display responsive nowrap" style="width:100%">
                     <!-- <table id="datatable" class="display table table-sm table-hover  " style="width: 100%;"> -->
@@ -202,8 +202,9 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellido</th>
                             <th scope="col">Cedula</th>
+                            <th class="p-0">Celular</th>
+                            <th class="p-0">Cliente id</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Telefono</th>
                             <th scope="col">Fecha Solicitud</th>
                             <th scope="col">Monto Solicitud</th>
                             <th scope="col">Saldo Final</th>
@@ -211,7 +212,7 @@
                             <th scope="col">Firma</th>
                             <th scope="col">Estado Solicitud</th>
                             <th scope="col">Clasificacion</th>
-                            <th scope="col">Acciones</th>
+                            <th scope="col">Ver Solicitud</th>
 
                         </tr>
                     </thead>
@@ -235,11 +236,19 @@
                                         <%= solicitud.cedula %>
                                     </td>
                                     <td>
-                                        <%= solicitud.email %>
-                                    </td>
-                                    <td>
                                         <%= solicitud.celular %>
                                     </td>
+                                    <td>
+                                        <% if(solicitud.cliente_id) { %>
+                                            <%= solicitud.cliente_id %>
+                                                <% }else { %>
+                                                    <span style="color: red;">Solicitud sin Cliente</span>
+                                                    <% } %>
+                                    </td>
+                                    <td>
+                                        <%= solicitud.email %>
+                                    </td>
+
                                     <td>
                                         <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                     </td>
@@ -289,9 +298,8 @@
                                                             </p>
                                                             <% } %>
                                     </td>
-                                    <td class="w-0 "><a href="/solicitudes-nuevas/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>
-                                        <a id="eventoAct-Inact" href="/solicitudes-nuevas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Ver Solicitud"><i class="bi bi-folder2-open "></i></a>
-                                        <!-- <a href="/solicitudes-nuevas/<%=  %>" type="submit" class=" btn me-lg-3"><i class="bi bi-x-lg me-lg-3" title="Eliminar Solicitud"></i></a> -->
+                                    <td class="w-0 "><a href="/solicitudes/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+
                                     </td>
                                 </tr>
 

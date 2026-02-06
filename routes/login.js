@@ -44,6 +44,7 @@ router.post('/auth', async(req, res) => {
                 req.session.user = results[0].user;
                 req.session.name = results[0].name;
                 req.session.rol = results[0].rol;
+                // req.session.rutaAnterior = results[0].rutaAnterior;
 
                 pool.query('SET @usuario_actual = ?', [req.session.user], (error, results, fields) => {
                     if (error) throw error;

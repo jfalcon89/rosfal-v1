@@ -12,8 +12,23 @@
 
     <!-- linkeado css propio -->
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style_form_prestamos.css">
     <!-- icons bootstrap cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Librería print-js -->
+    <!-- <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script> -->
+
+    <!-- Librería jsPDF -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
+
+    <!-- Otra -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script> -->
+
     <!-- generador de pdf cdn -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <!-- moment.js cdn -->
@@ -28,8 +43,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light  ">
-        <div class="container-fluid  " style="background-color: #ececec;">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(to right, #eaf6ff, #a5d3ff); border-radius: 0px 0px 15px 15px;">
+        <div class="container-fluid  ">
 
             <div class="d-flex">
                 <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
@@ -51,7 +66,7 @@
                         <div class="user-container me-2 d-flex">
                             <% if (login) { %>
                                 <div>
-                                    <h4 type="" class="" style="color: #aeaeae;">
+                                    <h4 type="" class="">
                                         <%= name %>
                                     </h4>
                                     <h6>
@@ -93,7 +108,7 @@
     </div>
 
     <div class=" p-2 d-lg-flex flex-sm-row mt-4 " style="background-color: #ececec;">
-        <div class="container-fluid mt-3 mb-3 me-lg-3 d-flex bg-white">
+        <div class="container-fluid mt-3 mb-3 me-lg-3 d-flex bg-white holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-nuevas-solicitudes.svg" alt="Solicitudes Nuevas">
@@ -108,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex ">
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-solicitudes-aprobadas.svg" alt="Solicitudes Aprobadas">
@@ -123,7 +138,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex">
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-solicitudes-declinadas.svg" alt="Solicitudes Declinadas">
@@ -138,7 +153,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex">
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-solicitudes-en-revision.svg" alt="Solicitudes en Revision">
@@ -153,7 +168,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 mb-3 d-flex">
+        <div class="container-fluid bg-white mt-3 mb-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <img style="width: 60px;" src="/img/img-icons/img-total-solicitudes.svg" alt="Solicitudes en Revision">
@@ -175,7 +190,7 @@
 
 
     <div class="container-fluid p-4 mt-5">
-        <h3 class="text-secondary">EDITAR SOLICITUD</h3>
+        <!-- <h3 class="text-secondary">EDITAR SOLICITUD</h3> -->
 
         <div class="container mt-3">
 
@@ -183,31 +198,85 @@
 
                 <script>
                     document.getElementById("uploadSolicitud").addEventListener("submit", function(event) {
+                        event.preventDefault(); // Evita el envío inmediato en todos los casos
+
                         let estadoSolicitud = document.getElementById("estadoSolicitud").value;
                         let saldoFinal = document.getElementById("saldoFinal").value.trim();
 
                         if (estadoSolicitud === "Aprobada" && saldoFinal === "") {
-                            event.preventDefault(); // Evita que el formulario se envíe
-                            alert("Si se va a aprobar una solicitud, el campo saldoFinal debe estar lleno.");
+                            Swal.fire({
+                                title: 'Atención',
+                                text: 'Si se va a aprobar una solicitud, el campo saldoFinal debe estar lleno.',
+                                icon: 'warning',
+                                confirmButtonText: 'Entendido',
+                                confirmButtonColor: '#ffc107'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Actualización exitosa',
+                                text: 'La solicitud ha sido actualizada correctamente.',
+                                icon: 'success',
+                                confirmButtonText: 'Aceptar',
+                                confirmButtonColor: '#28a745', // Verde corporativo
+                                showConfirmButton: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Enviar el formulario manualmente después de dar clic en OK
+                                    document.getElementById("uploadSolicitud").submit();
+                                }
+                            });
                         }
                     });
                 </script>
 
-                <div class="d-lg-flex justify-content-end">
+                <div class="d-lg-flex  ">
 
+                    <!-- <% if(rol == permiso_A){ %>
+                        <% if(!obtenerPrestamo[0]) { %>
+                            <div style="text-align: left;" class="d-flex text-truncate">
+                                <button type="button" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2 " data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                     APROBAR PRESTAMO
+                        </button>
+                            </div>
+                            <% }else { %>
+                                <div style="text-align: left;" class="d-flex text-truncate">
+                                    <button id="btnAlerta" type="button" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2 ">
+                     APROBAR PRESTAMO
+                        </button>
+                                </div>
+                                <script>
+                                    document.getElementById('btnAlerta').addEventListener('click', function() {
+                                        Swal.fire({
+                                            title: 'Atención',
+                                            text: 'Este cliente tiene un préstamo activo',
+                                            icon: 'warning',
+                                            confirmButtonText: 'Entendido',
+                                            confirmButtonColor: '#ffc107'
+                                        });
+                                    });
+                                </script>
+                                <% } %>
+                                    <% }%> -->
+
+                    <button id="btnAlerta_saldo" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i
+                                                    class="bi bi-check-lg me-lg-2" ></i>GUARDAR CAMBIOS</button>
                     <a class="btn btn-secondary btn-block p-2 mb-2 me-lg-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"><i
-                        class="bi bi-file-earmark-text me-lg-2"></i>VER OBSERVACIONES</a>
+                        class="bi bi-file-earmark-text me-lg-2"></i>OBSERVACIONES</a>
                     <% if(rol == permiso_A){ %>
-                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-danger btn-block p-2 mb-2 me-lg-2"><i class="bi bi-x-lg me-lg-2"></i>ELIMINAR SOLICITUD</i></a>
+                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2"><i class="bi bi-x-lg me-lg-2"></i>ELIMINAR SOLICITUD</i></a>
                         <% } %>
 
-                            <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i
-                    class="bi bi-check-lg me-lg-2" ></i>GUARDAR CAMBIOS</button>
 
 
-                            <a class="btn btn-primary p-2 mb-2 dropdown-toggle" type="button" data-bs-toggle="collapse" href="#collapseExampleNotificacion" aria-expanded="false">
+
+
+
+
+                            <a class="btn btn-secondary p-2 mb-2 dropdown-toggle me-lg-2" type="button" data-bs-toggle="collapse" href="#collapseExampleNotificacion" aria-expanded="false">
                                 NOTIFICAR CLIENTE
                             </a>
+                            <a href="/solicitudes/imprimir-contrato/<%= solicitud.idSolicitud %>" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2"><i class="bi bi-printer me-lg-2"></i>CONTRATO</a>
+                            <a href="/solicitudes/imprimir-solicitud/<%= solicitud.idSolicitud %>" class="btn btn-secondary btn-block p-2 mb-2 "><i class="bi bi-printer me-lg-2"></i>SOLICITUD</a>
 
                 </div>
 
@@ -263,8 +332,8 @@
                                         <script src="/js/enviar-email-cliente-legal.js"></script>
                                         <% } %>
 
-
                 </ul>
+
 
 
 
@@ -288,7 +357,25 @@
                                                 <div class="form-group mt-2 me-lg-2 ">
                                                     <div class="input-group ">
                                                         <div class="input-group-prepend">
-                                                            <span id="idSolicitud" class="input-group-text">ID Solicitud: <%=
+                                                            <% if(solicitud.cliente_id) { %>
+
+                                                                <span id="idSolicitud" class="input-group-text">Cliente: 
+                                                                   <%= solicitud.cliente_id %> 
+                                                                </span>
+                                                                <% }else { %>
+                                                                    <span style="color: red;" id="idSolicitud" class="input-group-text">Solicitud sin Cliente
+                                                    
+                                                                 </span>
+
+                                                                    <% } %>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mt-2 me-lg-2 ">
+                                                    <div class="input-group ">
+                                                        <div class="input-group-prepend">
+                                                            <span id="idSolicitud" class="input-group-text">Solicitud: <%=
                                                                     solicitud.idSolicitud %> </span>
                                                         </div>
                                                     </div>
@@ -296,7 +383,7 @@
                                                 <div class="form-group mt-2 me-lg-2 ">
                                                     <div class="input-group ">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text">Contrato Firmado</span>
+                                                            <span class="input-group-text">Contrato Firma</span>
                                                         </div>
                                                         <select name="firmaContrato" class="form-control" id="firmaContrato">
                                                             <option value="<%= solicitud.firmaContrato %>" selected>
@@ -332,7 +419,7 @@
                                                 <div class="form-group mt-2 me-lg-2 ">
                                                     <div class="input-group ">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text">Estado Solicitud</span>
+                                                            <span class="input-group-text">Estado</span>
                                                         </div>
                                                         <select name="estadoSolicitud" class="form-control" id="estadoSolicitud">
                                                             <option value="<%= solicitud.estadoSolicitud %>" selected>
@@ -467,10 +554,10 @@
                                     </div>
 
                                     <div class="form-group me-lg-5 ">
-                                        <label for="nacionadlidad" class="  p-2">Nacionadlidad</label>
-                                        <select name="nacionadlidad" class="form-control p-2" id="nacionadlidad">
-                                            <option value="<%= solicitud.nacionadlidad %>" selected>
-                                                <%= solicitud.nacionadlidad %>
+                                        <label for="nacionalidad" class="  p-2">Nacionalidad</label>
+                                        <select name="nacionalidad" class="form-control p-2" id="nacionalidad">
+                                            <option value="<%= solicitud.nacionalidad %>" selected>
+                                                <%= solicitud.nacionalidad %>
                                             </option>
                                             <option value="Dominicano/a">Dominicano/a</option>
                                             <option value="Extranjero/a">Extranjero/a</option>
@@ -645,82 +732,13 @@
                                     </div>
                                 </div>
 
-                                <!-- <button id="btnGuardarDatos" class="btn btn-success btn-block p-2 mt-4 mb-3" type="submit"><i class="bi bi-check-lg me-lg-2"></i>Guardar datos</button>
-                                <a href="/" class="btn btn-danger btn-block p-2 mt-4 mb-3"><i class="bi bi-arrow-left me-lg-2"></i>Cancelar</a> -->
+
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Modal 2 -->
 
-                <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog modal-xl">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel">Observaciones</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-
-
-                                <div class="mb-3">
-
-                                    <h6>
-                                        <%= solicitud.idSolicitud %>
-                                            <%= solicitud.nombre %>
-                                                <%= solicitud.apellido %>
-                                    </h6>
-
-
-                                    <div class="container-table table-responsive">
-                                        <table id="datatable" class="display responsive nowrap table-striped table table-success " style="width:100%">
-                                            <thead class="thead-ligth">
-                                                <tr>
-
-                                                    <th scope="col">Observacion</th>
-                                                    <th scope="col">Usuario</th>
-                                                    <th scope="col">Fecha Observacion</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <% if (arrayObservaciones.length> 0) { %>
-                                                    <% arrayObservaciones.forEach(observacion=> { %>
-
-                                                        <tr>
-
-                                                            <td>
-                                                                <%= observacion.observacion %>
-                                                            </td>
-                                                            <td>
-                                                                <%= observacion.name %>
-                                                            </td>
-                                                            <td>
-                                                                <%= observacion.fechaObservacion.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
-                                                            </td>
-
-                                                        </tr>
-
-                                                        <% }) %>
-                                                            <% }else { %>
-                                                                <div><strong>Sin observaciones</strong></div>
-                                                                <% } %>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-
-                                </div>
-                                <div class="modal-footer border-0">
-                                    <a href="/solicitudes-aprobadas/ver-solicitud/<%= solicitud.idSolicitud %>" class="btn btn-success btn-block p-2 mb-2 me-lg-2"><i
-                                        class="bi bi-check-lg me-lg-2"></i>Agregar Observacion</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
         </div>
 
         <!-- modal atrasos -->
@@ -816,6 +834,302 @@
     </div>
     </div>
 
+    <!-- Modal observaciones -->
+    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel">Observaciones</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <input class="d-none" name="idSolicitud" value="<%= solicitud.idSolicitud %>">
+                        <input class="d-none" name="name" value="<%= name %>">
+                        <h6>
+                            <%= solicitud.idSolicitud %>
+                                <%= solicitud.nombre %>
+                                    <%= solicitud.apellido %>
+                        </h6>
+
+                        <form id="modal_obs_alert" action="/Solicitudes/agregar-observacion-solicitud/<%= solicitud.idSolicitud %>" method="POST" enctype="">
+
+
+                            <div class="d-flex ">
+                                <textarea class="form-control" name="observacion" id="message-text" placeholder="Observaciones Aqui"></textarea>
+                                <button type="submit" class="btn btn-success">Agregar</button>
+                            </div>
+                        </form>
+                        <script>
+                            document.getElementById("modal_obs_alert").addEventListener("submit", function(event) {
+                                event.preventDefault(); // Evita el envío inmediato en todos los casos
+
+                                let message_text = document.getElementById("message-text").value;
+
+
+                                if (!message_text) {
+                                    Swal.fire({
+                                        title: 'Atención',
+                                        text: 'Favor llenar el campo observacion',
+                                        icon: 'warning',
+                                        confirmButtonText: 'Entendido',
+                                        confirmButtonColor: '#ffc107'
+                                    });
+                                } else {
+                                    Swal.fire({
+                                        title: 'Observacion Registrada',
+                                        text: 'Su observacion fue agregada correctamente.',
+                                        icon: 'success',
+                                        confirmButtonText: 'Aceptar',
+                                        confirmButtonColor: '#28a745', // Verde corporativo
+                                        showConfirmButton: true
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // Enviar el formulario manualmente después de dar clic en OK
+                                            document.getElementById("modal_obs_alert").submit();
+                                        }
+                                    });
+                                }
+                            });
+                        </script>
+                        <div class="container-table table-responsive">
+                            <table id="datatable" class="display responsive nowrap table-striped table table-success " style="width:100%">
+                                <thead class="thead-ligth">
+                                    <tr>
+                                        <th scope="col">Observacion</th>
+                                        <th scope="col">Usuario</th>
+                                        <th scope="col">Fecha Observacion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <% if (arrayObservaciones.length > 0) { %>
+                                        <% arrayObservaciones.forEach(observacion=> { %>
+
+                                            <tr>
+
+                                                <td>
+                                                    <%= observacion.observacion %>
+                                                </td>
+                                                <td>
+                                                    <%= observacion.name %>
+                                                </td>
+                                                <td>
+                                                    <%= observacion.fechaObservacion.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
+                                                </td>
+
+                                            </tr>
+
+                                            <% }) %>
+                                                <% }else { %>
+                                                    <div>Sin observaciones</div>
+                                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal aprobacion prestamos -->
+    <div class="modal fade  mt-4" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+
+
+            <div style="border-radius: 10px; border: none;" class="modal-content ">
+
+
+                <form action="/prestamo_cliente/<%= solicitud.idSolicitud %>" method="POST" enctype="">
+                    <!-- Campo para ingresar el ID del préstamo -->
+
+                    <!-- Nuevo -->
+
+
+                    <div class="container app-container">
+                        <div class="header-title">Apertura de prestamos</div>
+
+                        <div class="row mb-3 align-items-end">
+                            <div class="col-md-7">
+                                <label for="cliente" class="form-label">Cliente:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="<%= solicitud.nombre %> <%= solicitud.apellido %>">
+                                    <input type="text" class="form-control d-none" name="cliente_id" value="<%= solicitud.cliente_id %>">
+                                    <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="prestado" class="form-label">Prestado:</label>
+                                <input type="text" class="form-control" id="prestado" value="0.00">
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label for="monto" class="form-label">Monto</label>
+                                            <input type="number" class="form-control" name="monto" value="<%= solicitud.montoSolicitado %>" style="border-color: red;">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="apertura" class="form-label">Apertura</label>
+                                            <div class="input-group">
+                                                <input type="date" class="form-control" name="apertura" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="tipo_plazo" class="form-label">Tipo plazo</label>
+                                            <select class="form-select" name="tipo_plazo">
+                                                <option value="<%= solicitud.frecuenciaPagos %>" selected>
+                                                                <%= solicitud.frecuenciaPagos %>
+                                                            </option>
+                                            <option>Pagos mensuales</option>
+                                            <option>Pagos quincenales</option>
+                                            <option>Pagos diarios</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="primer_pago" class="form-label">Primer Pago</label>
+                                            <div class="input-group">
+                                                <input type="date" class="form-control" name="primer_pago" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="plazo" class="form-label">Plazo</label>
+                                            <input type="number" class="form-control" name="plazo" value="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="monto_cuota" class="form-label">Monto Cuotas</label>
+                                            <input type="text" class="form-control" name="monto_cuota" value="0.00">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="tasa" class="form-label">Tasa</label>
+                                            <input type="number" class="form-control" name="tasa" value="0.00">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="desembolso" class="form-label">Desembolso</label>
+                                            <input type="text" class="form-control" name="desembolso" value="0.00">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="amortizacion" class="form-label">Amortización</label>
+                                            <select class="form-select" id="amortizacion">
+                            <option>Saldo Absoluto</option>
+                        </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="gastos_cierre" class="form-label">Gastos cierre</label>
+                                            <input type="text" class="form-control" name="gastos_cierre" value="0.00">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="mora_porcentaje" class="form-label">Mora %</label>
+                                            <input type="number" class="form-control" name="mora_porcentaje" value="0">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="fecha_vencimiento" class="form-label">Vencimiento</label>
+                                            <input type="date" class="form-control" name="fecha_vencimiento" value="">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-check mt-3">
+                                                <input class="form-check-input" type="checkbox" id="permitirAbonos" checked>
+                                                <label class="form-check-label" for="permitirAbonos">Permitir abonos / saldo:</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label for="tipo" class="form-label">Tipo</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="tipo">
+                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-pencil-square"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="garantia" class="form-label">Garantía</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="garantia">
+                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-pencil-square"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="banco" class="form-label">Banco</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="banco">
+                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-pencil-square"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-4">
+                                            <div class="form-check mb-2">
+                                                <input class="form-check-input" type="checkbox" id="gastosCierreCheck">
+                                                <label class="form-check-label" for="gastosCierreCheck">Financiar gasto de cierre</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="interesesCorteFecha">
+                                                <label class="form-check-label" for="interesesCorteFecha">Interes en corte de fecha</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-header">Registro y Detalle de la Garantía</div>
+                            <textarea class="form-control" rows="3" name="detalle_garantia"></textarea>
+                        </div>
+
+                        <div class="section-box">
+                            <div class="section-header">
+                                <div class="row align-items-center">
+                                    <div class="col">Cuota No.</div>
+                                    <div class="col">Capital</div>
+                                    <div class="col">Interes</div>
+                                    <div class="col">Seguro</div>
+                                    <div class="col">Cuota</div>
+                                    <div class="col">Vencimiento</div>
+                                    <div class="col">Balance</div>
+                                    <div class="col">Restan</div>
+                                </div>
+                            </div>
+                            <textarea class="form-control" rows="5"></textarea>
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <input type="text" class="form-control" value="0">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" value="0.00">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" value="0.00">
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" value="0.00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="footer-buttons">
+                            <button class="btn btn-blue"><i class="bi bi-save me-2"></i>Guardar</button>
+                            <button class="btn btn-info"><i class="bi bi-eraser me-2"></i>Limpiar</button>
+                            <button class="btn btn-danger"><i class="bi bi-x-circle me-2"></i>Salir</button>
+                        </div>
+                    </div>
+
+                    <!-- Nuevo -->
+
+                </form>
+            </div>
+
+        </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

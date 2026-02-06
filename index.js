@@ -14,6 +14,13 @@ const useragent = require('express-useragent');
 const pool = require("./database");
 const { database } = require('./keys');
 
+// const cors = require('cors');
+// app.use(cors());
+
+// app.use(cors({
+//     origin: 'http://localhost:3005' // o el dominio donde se está cargando Swagger UI
+// }));
+
 //rutas requiere
 const inicioRoutes = require("./routes/inicio");
 const quienes_somosRoutes = require("./routes/quienes-somos");
@@ -24,6 +31,7 @@ const loginRoutes = require("./routes/login");
 const registerRoutes = require("./routes/register");
 const panel_administracionRoutes = require("./routes/panel-administracion");
 const solicitudesRoutes = require("./routes/solicitudes");
+// const prestamosRoutes = require("./routes/prestamos");
 const mensajesRoutes = require("./routes/mensajes");
 const usuariosRoutes = require("./routes/usuarios");
 const clientesRoutes = require("./routes/clientes");
@@ -35,6 +43,9 @@ const controlesAnuncios = require("./routes/controles-anuncios");
 const visitasWeb = require("./routes/visitas-web");
 const mantenimiento = require("./routes/mantenimiento");
 const promociones = require("./routes/promociones");
+
+
+// const obtenerConteos = require("../services/conteosService");
 
 // rutas app movil
 const appRegistro = require("./routes/app-registro");
@@ -56,12 +67,20 @@ app.use(session({
     saveUninitialized: true
 }));
 
+// middleware global
 //función para limpiar la caché luego del logout
 app.use(function(req, res, next) {
     if (!req.user)
         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
     next();
 });
+
+// app.use((req, res, next) => {
+//     if (req.headers.referer) {
+//         req.session.rutaAnterior = new URL(req.headers.referer).pathname.replace(/^\//, "");
+//     }
+//     next();
+// });
 
 //Logout
 //Destruye la sesión.
@@ -75,6 +94,8 @@ app.get('/logout', function(req, res) {
 //CONFIGURACION PARA LEER EL BODY
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// Middleware para leer JSON
+app.use(express.json());
 
 app.use(useragent.express());
 
@@ -93,6 +114,7 @@ app.use("/", loginRoutes);
 app.use("/", registerRoutes);
 app.use("/", panel_administracionRoutes);
 app.use("/", solicitudesRoutes);
+// app.use("/", prestamosRoutes);
 app.use("/", mensajesRoutes);
 app.use("/", usuariosRoutes);
 app.use("/", clientesRoutes);
@@ -104,6 +126,8 @@ app.use("/", controlesAnuncios);
 app.use("/", visitasWeb);
 app.use("/", mantenimiento);
 app.use("/", promociones);
+app.use('/node_modules', express.static('node_modules'));
+// app.use("/", obtenerConteos);
 
 //------------ VISTAS APP MOVIL-----------------------//
 app.use("/", appRegistro);

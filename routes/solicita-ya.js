@@ -25,7 +25,45 @@ router.get('/solicita-ya', (req, res) => {
 
 //INSERTAR NUEVA SOLICITUD A MYSQL****************
 router.post("/solicita-ya", async(req, res) => {
-    const { cedula, nombre, apellido, sexo, estadoCivil, direccion, direccionNegocio, tiempoNegocio, email, telefono, celular, nacionadlidad, nombreFamilia, direccionFamilia, parentescoFamilia, telefonoFamilia, apodoFamilia, empresa, salario, puesto, dirEmpresa, telefonoEmpresa, departamento, tiempoEmpresa, nombreRefPers1, nombreRefPers2, telefonoRefPer1, telefonoRefPer2, tipoPrestamo, banco, numeroCuenta, montoSolicitado, frecuenciaPagos, cantidadPagosSemanales, cantidadPagosDiarios, cantidadPagosQuincenales, cantidadPagosMensuales } = req.body;
+    const {
+        cedula,
+        nombre,
+        apellido,
+        sexo,
+        estadoCivil,
+        direccion,
+        direccionNegocio,
+        tiempoNegocio,
+        email,
+        telefono,
+        celular,
+        nacionalidad,
+        nombreFamilia,
+        direccionFamilia,
+        parentescoFamilia,
+        telefonoFamilia,
+        apodoFamilia,
+        empresa,
+        salario,
+        puesto,
+        dirEmpresa,
+        telefonoEmpresa,
+        departamento,
+        tiempoEmpresa,
+        nombreRefPers1,
+        nombreRefPers2,
+        telefonoRefPer1,
+        telefonoRefPer2,
+        tipoPrestamo,
+        banco,
+        numeroCuenta,
+        montoSolicitado,
+        frecuenciaPagos,
+        cantidadPagosSemanales,
+        cantidadPagosDiarios,
+        cantidadPagosQuincenales,
+        cantidadPagosMensuales
+    } = req.body;
 
     const permiso_C = 'Cliente App'
 
@@ -298,7 +336,7 @@ router.post("/solicita-ya", async(req, res) => {
         email,
         telefono,
         celular,
-        nacionadlidad,
+        nacionalidad,
         nombreFamilia,
         direccionFamilia,
         parentescoFamilia,
@@ -327,7 +365,58 @@ router.post("/solicita-ya", async(req, res) => {
 
     };
 
+    const actualizaCliente = {
+        cedula,
+        nombre,
+        apellido,
+        sexo,
+        estadoCivil,
+        direccion,
+        direccionNegocio,
+        tiempoNegocio,
+        email,
+        celular,
+        nacionalidad,
+        nombreFamilia,
+        direccionFamilia,
+        parentescoFamilia,
+        telefonoFamilia,
+        apodoFamilia,
+        empresa,
+        salario,
+        puesto,
+        dirEmpresa,
+        telefonoEmpresa,
+        departamento,
+        tiempoEmpresa,
+        nombreRefPers1,
+        nombreRefPers2,
+        telefonoRefPer1,
+        telefonoRefPer2,
+        tipoPrestamo,
+        banco,
+        numeroCuenta,
+        montoSolicitado
+    };
+
+
+
     await pool.query('INSERT INTO solicitudes set ?', [nuevaSolicitud]);
+
+    await pool.query("UPDATE app_clientes set ? WHERE telefono = ?", [actualizaCliente, celular]);
+
+    const app_clientedDB = await pool.query("SELECT cliente_id FROM app_clientes WHERE telefono = ?", [celular]);
+    console.log(app_clientedDB[0].cliente_id + " cliente id tab app_clientes")
+
+    const solicitudDB = await pool.query(`SELECT idSolicitud, celular FROM solicitudes WHERE celular = ${celular} ORDER BY idSolicitud DESC LIMIT 1`)
+
+    console.log(solicitudDB[0].celular + " Celular cliente solicitud")
+
+
+    const actualizaCliente_id = { cliente_id: app_clientedDB[0].cliente_id }
+
+    await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [actualizaCliente_id, solicitudDB[0].idSolicitud]);
+
     // req.flash('success', 'Link guardado correctamente');
     // res.redirect('/');
 

@@ -10,8 +10,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+
+
     <!-- linkeado css propio -->
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style_form_clientes.css">
+    <link rel="stylesheet" href="/css/style_form_prestamos.css">
+    <link rel="stylesheet" href="/css/style_recibo_ingreso_prestamo_modal.css">
     <!-- icons bootstrap cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <!-- generador de pdf cdn -->
@@ -38,8 +51,8 @@
         <a class="btn-ws " href="https://bit.ly/4co7WFg" target="_blank"><img class="img-fluid" src="/img/logo-ws.png" alt="logo ws"></a>
     </div>
 
-    <nav class="navbar navbar-expand-xxl navbar-light ">
-        <div class="container-fluid  " style="background-color: #ececec;">
+    <nav class="navbar navbar-expand-xxl navbar-light " style="background: linear-gradient(to right, #eaf6ff, #a5d3ff); border-radius: 0px 0px 15px 15px;">
+        <div class="container-fluid  ">
             <div class="d-flex">
                 <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px; height: 70px;" class="me-2">
                 <h5 class="text-dark m-2 d-flex align-items-center" style="font-size: large;"></h5>
@@ -63,7 +76,7 @@
                         <div class="user-container me-2 d-flex">
                             <% if (login) { %>
                                 <div>
-                                    <h4 type="" class="" style="color: #aeaeae;">
+                                    <h4 type="" class="">
                                         <% if (SolicitudesCliente.length > 0) { %>
                                             <% SolicitudesCliente.forEach(SolicitudesCliente=> { %>
                                                 <% if(SolicitudesCliente.celular == usuario.user){ %>
@@ -78,7 +91,8 @@
                                         <%= rol %>
                                     </h6>
                                 </div>
-                                <%}  %>
+                                <% console.log('SolicitudesCliente datos' + SolicitudesCliente) %>
+                                    <%}  %>
                         </div>
                     </div>
                 </div>
@@ -86,7 +100,7 @@
         </div>
     </nav>
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+    <div style="border-radius: 10px;" class="offcanvas offcanvas-start " tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="navbarOffcanvasLabel">
                 <h5 class="text-dark m-2" style="font-size: large;">PANER ADMINISTRACION</h5>
@@ -126,7 +140,7 @@
 
     <% if (rol == permiso_C){ %>
 
-        <div style="background-size: cover; background-position: center; background-image: url(/img/background-solicita-ya.png) " class="d-flex justify-content-center">
+        <div style="background-size: cover; background-position: center; background-image: url(/img/background-solicita-ya.png) " class="d-flex justify-content-center mt-3">
             <div style="text-align: center; background-color: #f0f8ffaf; margin: 20px; border-radius: 15px; padding: 15px;">
 
                 <img class="" width="60px" src="/img/solicita-ya.png" alt="">
@@ -296,8 +310,8 @@
         <!-- Modal -->
         <div class="modal fade   " id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
             <div style="display: contents;" class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <button type="button" class="close border-0" data-bs-dismiss="modal" aria-label="Close">
+                <div style="border-radius: 0px 0px 15px 15px;" class="modal-content">
+                    <button style="background: linear-gradient(to right, #eaf6ff, #a5d3ff);" type="button" class="close border-0" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="bi bi-x-circle fs-4"></i></span>
           </button>
                     <ul style="border-radius: 15px; margin-top: 10px;" class="list-group">
@@ -306,14 +320,14 @@
                                 <div>Prestamos Activo <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes aprobadas vs todas las solicitudes recibidas"></i></div>
                                 <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
                                     <span class=" badge-primary badge-pill text-success"><%= montoPrestado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoPrestado) %></span>
-                                    <span class=" badge-primary badge-pill text-black"><%= porcentajeAprobaciones %>% Aprobaciones</span>
+
                                 </li>
                             </div>
                             <div class="card-header">
                                 <div>Liquidado <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje del total de prestamos saldados"></i></div>
                                 <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
                                     <span class=" badge-primary badge-pill text-success"><%= montoLiquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoLiquidado) %></span>
-                                    <span class=" badge-primary badge-pill text-black"><%= porcentajeLiquidado %>% Liquidados</span>
+
                                 </li>
                             </div>
                             <% if(prestamosEnLegalValidacion > 0){ %>
@@ -321,7 +335,7 @@
                                     <div>En Legal <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en legal"></i></div>
                                     <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
                                         <span class=" badge-primary badge-pill text-danger"><%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosEnLegal) %></span>
-                                        <span class=" badge-primary badge-pill text-black"><%= porcentajeEnLegal %>% Monto En Legal</span>
+
                                     </li>
                                 </div>
                                 <% } %>
@@ -329,7 +343,7 @@
                                         <div>Atrasos <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en atrasos"></i></div>
                                         <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
                                             <span class=" badge-primary badge-pill text-danger"><%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosAtrasos) %></span>
-                                            <span class=" badge-primary badge-pill text-black"><%= porcentajeAtraso %>% Monto En Atraso</span>
+
                                         </li>
                                     </div>
 
@@ -345,7 +359,7 @@
                                     </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                         </div>
                     </ul>
                 </div>
@@ -362,53 +376,49 @@
             <!-- Modal -->
             <div class="modal fade    " id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div style="display: contents;" class="modal-dialog " role="document">
-                    <div class="modal-content">
-                        <button type="button" class="close border-0" data-bs-dismiss="modal" aria-label="Close">
+                    <div style="border-radius: 0px 0px 15px 15px;" class="modal-content">
+                        <button style="background: linear-gradient(to right, #eaf6ff, #a5d3ff);" type="button" class="close border-0" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="bi bi-x-circle fs-4"></i></span>
           </button>
                         <ul style="border-radius: 15px; margin-top: 10px;" class="list-group">
                             <div class="d-xxl-flex justify-content-around">
                                 <div class="card-header">
                                     Resumen
-                                    <li class="align-items-start d-flex flex-column ">
-                                        <span class=" badge-primary badge-pill text-black"><%= porcentajeDeclinaciones %>% Declinadas</span>
-                                        <span class=" badge-primary badge-pill text-black"><%= porcentajeEnRevision %>% En Revision</span>
-                                        <span class=" badge-primary badge-pill text-black"><%= porcentajeNuevas %>% Nuevas</span>
-                                    </li>
+
                                 </div>
                                 <div class="card-header">
                                     <div>Prestamos Activo <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes aprobadas vs todas las solicitudes recibidas"></i></div>
                                     <li class=" list-group-item flex-xxl-column d-flex justify-content-between  ">
                                         <span class=" badge-primary badge-pill text-success me-5"><%= montoPrestado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoPrestado) %></span>
-                                        <span class=" badge-primary badge-pill text-black"><%= porcentajeAprobaciones %>% Aprobaciones</span>
+
                                     </li>
                                 </div>
                                 <div class="card-header">
                                     <div>Liquidado <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje del total de prestamos saldados"></i></div>
                                     <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
                                         <span class=" badge-primary badge-pill text-success me-5"><%= montoLiquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoLiquidado) %></span>
-                                        <span class=" badge-primary badge-pill text-black"><%= porcentajeLiquidado %>% Liquidados</span>
+
                                     </li>
                                 </div>
                                 <div class="card-header">
                                     <div>En Legal <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en legal"></i></div>
                                     <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
                                         <span class=" badge-primary badge-pill text-danger me-5"><%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosEnLegal) %></span>
-                                        <span class=" badge-primary badge-pill text-black"><%= porcentajeEnLegal %>% Monto En Legal</span>
+
                                     </li>
                                 </div>
                                 <div class="card-header">
                                     <div>Atrasos <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en atrasos"></i></div>
                                     <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
                                         <span class=" badge-primary badge-pill text-danger me-5"><%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosAtrasos) %></span>
-                                        <span class=" badge-primary badge-pill text-black"><%= porcentajeAtraso %>% Monto En Atraso</span>
+
                                     </li>
                                 </div>
                                 <div class="card-header">
                                     <div>Incobrables <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de prestamos que no fueron pagados"></i></div>
                                     <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
                                         <span class=" badge-primary badge-pill text-danger me-5"><%= prestamosIncobrables=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosIncobrables) %></span>
-                                        <span class=" badge-primary badge-pill text-black"><%= porcentajeIncobrable %>% Incobrable</span>
+
                                     </li>
                                 </div>
                                 <div class="card-header">
@@ -417,13 +427,13 @@
                                         <div>Cant. Atrasos</div>
                                     </div>
                                     <li class="list-group-item d-flex justify-content-between ">
-                                        <span class=" badge-primary badge-pill text-success"><%= cantPrestamos %></span>
-                                        <span class=" badge-primary badge-pill text-danger"><%= cantAtrasos %></span>
+                                        <span class=" badge-primary badge-pill text-success"><%= conteos.totalSolicitudesAprobadas %></span>
+                                        <span class=" badge-primary badge-pill text-danger"><%= conteos.totalAtrasos %></span>
                                     </li>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                             </div>
                         </ul>
 
@@ -438,7 +448,7 @@
                 <% if (rol == permiso_A){ %>
 
                     <div class=" p-2 d-xxl-flex flex-sm-row mt-4 justify-content-md-between " style="background-color: #ececec;">
-                        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #e28724; border-radius: 7px; ">
+                        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #c8c6c6; border-radius: 7px; ">
                             <div class="container-fluid d-flex p-3">
                                 <div class="container-nuevas d-flex">
                                     <div class="container-img m-2 me-lg-3">
@@ -446,20 +456,41 @@
                                     </div>
                                     <div class="container-titulo">
                                         <div class="indicador">
-                                            <h1 class="text-white">
-                                                <%= arraySolicitudes.length %>
+                                            <h1 class="text-secondary">
+                                                <%= conteos.totalSolicitudesNuevas %>
                                             </h1>
                                         </div>
-                                        <div class="titulo"><a class="text-decoration-none text-white fs-5">Nuevas Solicitudes</a></div>
+                                        <div class="titulo"><a class="text-decoration-none fs-5 text-secondary">Nuevas Solicitudes</a></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a href="/solicitudes-nuevas" class="text-light text-decoration-none d-block  text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+                                <a href="/solicitudes-nuevas" class="text-secondary text-decoration-none d-block  text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
                             </div>
                         </div>
 
-                        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="border-radius: 7px; background-color: #17b75f; ">
+                        <!-- <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #c8c6c6; border-radius: 7px; ">
+                            <div class="container-fluid d-flex p-3">
+                                <div class="container-nuevas d-flex">
+                                    <div class="container-img m-2 me-lg-3">
+                                        <img style="width: 60px;" src="/img/img-icons/img-nuevas-solicitudes.svg" alt="Nuevas Solicitudes">
+                                    </div>
+                                    <div class="container-titulo">
+                                        <div class="indicador">
+                                            <h1 class="text-secondary">
+                                                <%= conteos.totalSolicitudesNuevas %>
+                                            </h1>
+                                        </div>
+                                        <div class="titulo"><a class="text-decoration-none fs-5 text-secondary">Prestamos</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="/prestamos-activos" class="text-secondary text-decoration-none d-block  text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+                            </div>
+                        </div> -->
+
+                        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="border-radius: 7px; background-color: #c8c6c6; ">
                             <div class="container-fluid d-flex p-3 ">
                                 <div class="container-nuevas d-flex">
                                     <div class="container-img m-2 me-lg-3">
@@ -467,20 +498,20 @@
                                     </div>
                                     <div class="container-titulo">
                                         <div class="indicador">
-                                            <h1 class="text-white">
-                                                <%= arrayMensajesNuevos.length %>
+                                            <h1 class="text-secondary">
+                                                <%= conteos.totalMensajesNuevos %>
                                             </h1>
                                         </div>
-                                        <div class="titulo"><a class="text-decoration-none text-white fs-5">Nuevos Mensajes</a></div>
+                                        <div class="titulo"><a class="text-decoration-none text-secondary fs-5">Nuevos Mensajes</a></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a href="/mensajes" class="text-light d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+                                <a href="/mensajes" class="text-secondary d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
                             </div>
                         </div>
 
-                        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="border-radius: 7px; background-color: #17A1B7;">
+                        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="border-radius: 7px; background-color: #c8c6c6;">
                             <div class="container-fluid d-flex p-3">
                                 <div class="container-nuevas w-100 d-flex">
                                     <div class="container-img m-2 me-lg-3">
@@ -490,28 +521,28 @@
 
                                         <div class="container-titulo">
                                             <div class="indicador">
-                                                <h1 class="text-white">
-                                                    <%= arrayClientes.length %>
+                                                <h1 class="text-secondary">
+                                                    <%= conteos.totalClientes %>
                                                 </h1>
                                             </div>
-                                            <div class="titulo"><a class="text-decoration-none text-white fs-5">Clientes App</a></div>
+                                            <div class="titulo"><a class="text-decoration-none text-secondary fs-5">Clientes</a></div>
                                         </div>
                                         <div class="container-titulo">
                                             <div class="indicador">
-                                                <h1 class="text-white">
-                                                    <%= arrayUsuarios.length %>
+                                                <h1 class="text-secondary">
+                                                    <%= conteos.totalUsuarios %>
                                                 </h1>
                                             </div>
-                                            <div class="titulo"><a class="text-decoration-none text-white fs-5">Usuarios</a></div>
+                                            <div class="titulo"><a class="text-decoration-none text-secondary fs-5">Usuarios</a></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a href="/app-clientes" class="  text-light d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+                                <a href="/app-clientes" class="  text-secondary d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
                             </div>
                         </div>
-                        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #9ed181; border-radius: 7px;">
+                        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #c8c6c6; border-radius: 7px;">
                             <div class="container-fluid d-flex p-3">
                                 <div class="container-nuevas d-flex">
                                     <div class="container-img m-2 me-lg-3">
@@ -519,19 +550,19 @@
                                     </div>
                                     <div class="container-titulo">
                                         <div class="indicador">
-                                            <h1 class="text-white">
-                                                <%= arrayRutas.length %>
+                                            <h1 class="text-secondary">
+                                                <%= conteos.totalRutas %>
                                             </h1>
                                         </div>
-                                        <div class="titulo"><a class="text-decoration-none text-white fs-5">Rutas</a></div>
+                                        <div class="titulo"><a class="text-decoration-none text-secondary fs-5">Rutas</a></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer ">
-                                <a href="/rutas" class=" text-light d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+                                <a href="/rutas" class=" text-secondary d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
                             </div>
                         </div>
-                        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #aeaeae; border-radius: 7px;">
+                        <div class="container-fluid mt-3 mb-3 shadow m-xxl-3" style="background-color: #c8c6c6; border-radius: 7px;">
                             <div class="container-fluid d-flex p-3">
                                 <div class="container-nuevas d-flex">
                                     <div class="container-img m-2 me-lg-3">
@@ -539,16 +570,16 @@
                                     </div>
                                     <div class="container-titulo">
                                         <div class="indicador">
-                                            <h1 class="text-white">
-                                                <%= arrayTestimoniosNuevos.length %>
+                                            <h1 class="text-secondary">
+                                                <%= conteos.totalTestimoniosNuevos %>
                                             </h1>
                                         </div>
-                                        <div class="titulo"><a class="text-decoration-none text-white fs-5">Testimonios</a></div>
+                                        <div class="titulo"><a class="text-decoration-none text-secondary fs-5">Testimonios</a></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a href="/testimonios" class=" text-light d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
+                                <a href="/testimonios" class=" text-secondary d-block text-decoration-none text-end"> VER DETALLE <img style="width: 40px;" src="/img/img-icons/btn-ver detalle.svg"></a>
                             </div>
                         </div>
 
@@ -556,6 +587,8 @@
 
                     </div>
                     <% } %>
+
+
 
                         <div style="border-radius: 15px;" class="container-fluid  mt-5  ">
 
@@ -571,22 +604,22 @@
                                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-headingOne">
                                             <div class="accordion-body">
                                                 <div class="container-table table-responsive">
-                                                    <table id="datatable" class="display responsive nowrap" style="width:100%">
+                                                    <table id="datatable" class="display responsive nowrap compact" style="width:100%">
                                                         <thead class="thead-ligth">
-                                                            <tr>
+                                                            <tr class="p-0">
 
-                                                                <th scope="col"></th>
-                                                                <th scope="col">ID Solicitud</th>
-                                                                <th scope="col">Nombre</th>
-                                                                <th scope="col">Apellido</th>
-                                                                <th scope="col">Cedula</th>
-                                                                <th scope="col">Fecha Solicitud</th>
-                                                                <th scope="col">Monto Aprobado</th>
-                                                                <th scope="col">Saldo Final</th>
-                                                                <th scope="col">Estado Solicitud</th>
-                                                                <th scope="col">Clasificacion</th>
+                                                                <th class="p-0" scope="col"></th>
+                                                                <th class="p-0" scope="col">ID Solicitud</th>
+                                                                <th class="p-0" scope="col">Nombre</th>
+                                                                <th class="p-0" scope="col">Apellido</th>
+                                                                <th class="p-0" scope="col">Cedula</th>
+                                                                <th class="p-0" scope="col">Fecha Solicitud</th>
+                                                                <th class="p-0" scope="col">Monto Aprobado</th>
+                                                                <th class="p-0" scope="col">Saldo Final</th>
+                                                                <th class="p-0" scope="col">Estado Solicitud</th>
+                                                                <th class="p-0" scope="col">Clasificacion</th>
                                                                 <% if(rol == permiso_A || rol == permiso_B){ %>
-                                                                    <th scope="col">Acciones</th>
+                                                                    <th class="p-0" scope="col">Acciones</th>
                                                                     <% } %>
 
                                                             </tr>
@@ -663,22 +696,22 @@
                                                                     <!-- Modal -->
                                                                     <div class="modal fade" id="prestamosAprobadosModalCenter<%= solicitud.idSolicitud %>" tabindex="-1" role="dialog" aria-labelledby="prestamosAprobadosModalCenterTitle" aria-hidden="true">
                                                                         <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                            <div style="border-radius: 15px;" class="modal-content">
+                                                                            <div style="border-radius: 15px; box-shadow: 0px 0px 15px #bebebe;" class="modal-content border-0">
                                                                                 <div class="modal-header">
                                                                                     <div>
-                                                                                        <h5 class="modal-title" id="prestamosAprobadosModalLongTitle"><strong>Datelle de Prestamo</strong>
+                                                                                        <h5 class="modal-title d-flex justify-content-center" id="prestamosAprobadosModalLongTitle"><strong>Datelle de Prestamo</strong>
 
                                                                                         </h5>
-                                                                                        <h6>
+                                                                                        <h6 class="modal-title d-flex justify-content-center">
                                                                                             <%= solicitud.idSolicitud %>
                                                                                                 <%= solicitud.nombre%>
                                                                                                     <%= solicitud.apellido %>
 
                                                                                         </h6>
                                                                                     </div>
-                                                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                                                    <!-- <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+          </button> -->
                                                                                 </div>
                                                                                 <div style="background-color: #ececec;" class="modal-body">
                                                                                     <div style="background-color: #ffffff; border-radius: 15px;">
@@ -886,7 +919,7 @@
                                                                                         </div>
                                                                                         <!-- </div> -->
                                                                                         <div class="modal-footer">
-                                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                                                                         </div>
                                                                                 </div>
                                                                             </div>
@@ -1864,6 +1897,25 @@
 
                                                                 <script src="/js/notificacion-atrasos.js">
                                                                 </script>
+
+
+
+                                                                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+                                                                <% if (typeof alert != "undefined")  { %>
+                                                                    <script>
+                                                                        Swal.fire({
+                                                                            title: '<%= alertTitle %>',
+                                                                            text: '<%= alertMessage %>',
+                                                                            icon: '<%= alertIcon %>',
+                                                                            showConfirmButton: <%= showConfirmButton %>,
+                                                                            timer: <%= timer %>
+                                                                        }).then(() => {
+                                                                            window.location = '/<%= ruta %>'
+                                                                        })
+                                                                    </script>
+                                                                    <% } %>
+
+
 
 
 
