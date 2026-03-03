@@ -406,16 +406,20 @@ router.post("/solicita-ya", async(req, res) => {
     await pool.query("UPDATE app_clientes set ? WHERE telefono = ?", [actualizaCliente, celular]);
 
     const app_clientedDB = await pool.query("SELECT cliente_id FROM app_clientes WHERE telefono = ?", [celular]);
-    console.log(app_clientedDB[0].cliente_id + " cliente id tab app_clientes")
 
-    const solicitudDB = await pool.query(`SELECT idSolicitud, celular FROM solicitudes WHERE celular = ${celular} ORDER BY idSolicitud DESC LIMIT 1`)
+    if (app_clientedDB > 0) {
 
-    console.log(solicitudDB[0].celular + " Celular cliente solicitud")
+        // console.log(app_clientedDB[0].cliente_id + " cliente id tab app_clientes")
+
+        const solicitudDB = await pool.query(`SELECT idSolicitud, celular FROM solicitudes WHERE celular = ${celular} ORDER BY idSolicitud DESC LIMIT 1`)
+
+        console.log(solicitudDB[0].celular + " Celular cliente solicitud")
 
 
-    const actualizaCliente_id = { cliente_id: app_clientedDB[0].cliente_id }
+        const actualizaCliente_id = { cliente_id: app_clientedDB[0].cliente_id }
 
-    await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [actualizaCliente_id, solicitudDB[0].idSolicitud]);
+        await pool.query("UPDATE solicitudes set ? WHERE idSolicitud = ?", [actualizaCliente_id, solicitudDB[0].idSolicitud]);
+    }
 
     // req.flash('success', 'Link guardado correctamente');
     // res.redirect('/');
