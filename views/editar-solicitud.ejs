@@ -229,6 +229,41 @@
                     });
                 </script>
 
+                <!-- Eliminar una solicitud sin terminar -->
+                <script>
+                    document.getElementById("eliminarSolicitud").addEventListener("click", function(event) {
+                        event.preventDefault(); // Evita el envío inmediato en todos los casos
+                        console.log('click eliminar')
+
+                        let estadoSolicitud = document.getElementById("estadoSolicitud").value;
+                        let saldoFinal = document.getElementById("saldoFinal").value.trim();
+
+                        if (estadoSolicitud === "Aprobada" && saldoFinal === "") {
+                            Swal.fire({
+                                title: 'Atención',
+                                text: 'Si se va a aprobar una solicitud, el campo saldoFinal debe estar lleno.',
+                                icon: 'warning',
+                                confirmButtonText: 'Entendido',
+                                confirmButtonColor: '#ffc107'
+                            });
+                        } else {
+                            Swal.fire({
+                                title: 'Actualización exitosa',
+                                text: 'La solicitud ha sido actualizada correctamente.',
+                                icon: 'success',
+                                confirmButtonText: 'Aceptar',
+                                confirmButtonColor: '#28a745', // Verde corporativo
+                                showConfirmButton: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Enviar el formulario manualmente después de dar clic en OK
+                                    document.getElementById("eliminarSolicitud").click();
+                                }
+                            });
+                        }
+                    });
+                </script>
+
                 <div class="d-lg-flex  ">
 
                     <!-- <% if(rol == permiso_A){ %>
@@ -263,7 +298,7 @@
                     <a class="btn btn-secondary btn-block p-2 mb-2 me-lg-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"><i
                         class="bi bi-file-earmark-text me-lg-2"></i>OBSERVACIONES</a>
                     <% if(rol == permiso_A){ %>
-                        <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2"><i class="bi bi-x-lg me-lg-2"></i>ELIMINAR SOLICITUD</i></a>
+                        <a id="eliminarSolicitud" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2"><i class="bi bi-x-lg me-lg-2"></i>ELIMINAR SOLICITUD</i></a>
                         <% } %>
 
 

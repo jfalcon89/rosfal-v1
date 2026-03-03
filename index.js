@@ -58,14 +58,41 @@ app.listen(app.get("port"), () => {
     console.log("servidor funcionando en el puerto", app.get("port"))
 });
 
-
-//7- variables de session 
+// Nuevo 
 const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+
+app.set('trust proxy', 1); // importante si usas Cloudflare
+
+const sessionStore = new MySQLStore({
+    host: process.env.HOST,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
+});
+
 app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
+    key: 'rosfal_session',
+    secret: process.env.SESSION_SECRET || 'rosfal_super_secret_2026',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+    rolling: true, // renueva expiración en cada request
+    cookie: {
+        httpOnly: true,
+        secure: false, // poner true si ya tienes HTTPS activo
+        maxAge: 1000 * 60 * 60 * 8 // 8 horas
+    }
 }));
+
+// apagado temporal 
+//7- variables de session 
+// const session = require('express-session');
+// app.use(session({
+//     secret: 'secret',
+//     resave: true,
+//     saveUninitialized: true
+// }));
 
 // middleware global
 //función para limpiar la caché luego del logout
@@ -82,6 +109,30 @@ app.use(function(req, res, next) {
 //     next();
 // });
 
+
+// Nuevo
+app.get('/logout', (req, res) => {
+
+    if (!req.session) {
+        return res.redirect('/login');
+    }
+
+    req.session.destroy((err) => {
+
+        if (err) {
+            console.error("Error destruyendo sesión:", err);
+            return res.redirect('/panel-administracion');
+        }
+
+        // 🔐 Eliminar cookie manualmente
+        res.clearCookie('rosfal_session');
+
+        return res.redirect('/login');
+    });
+
+});
+
+// Apagado termporal 
 //Logout
 //Destruye la sesión.
 app.get('/logout', function(req, res) {

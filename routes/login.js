@@ -16,41 +16,64 @@ router.get('/login', (req, res) => {
 })
 
 
-//11 - Metodo para la autenticacion
 router.post('/auth', async(req, res) => {
-    const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
-    const user = req.body.user;
-    const pass = req.body.pass;
-    let passwordHash = await bcrypt.hash(pass, 8);
-    if (user && pass) {
-        pool.query('SELECT * FROM users WHERE user = ?', [user], async(error, results, fields) => {
-            if (results.length == 0 || !(await bcrypt.compare(pass, results[0].pass))) {
-                res.render('login', {
-                    device: device,
-                    alert: true,
-                    alertTitle: "Error",
-                    alertMessage: "USUARIO y/o PASSWORD incorrectas",
-                    alertIcon: 'error',
-                    showConfirmButton: true,
-                    timer: false,
-                    ruta: 'login'
-                });
 
-                //Mensaje simple y poco vistoso
-                //res.send('Incorrect Username and/or Password!');				
-            } else {
-                //creamos una var de session y le asignamos true si INICIO SESSION       
+    const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
+    const { user, pass } = req.body;
+
+    if (!user || !pass) {
+        return res.render('login', {
+            device,
+            alert: true,
+            alertTitle: "Error",
+            alertMessage: "Ingrese usuario y contraseña",
+            alertIcon: 'error',
+            showConfirmButton: true,
+            timer: false,
+            ruta: 'login'
+        });
+    }
+
+    pool.query('SELECT * FROM users WHERE user = ?', [user], async(error, results) => {
+
+        if (error) {
+            console.error(error);
+            return res.send("Error interno del servidor");
+        }
+
+        if (results.length === 0 || !(await bcrypt.compare(pass, results[0].pass))) {
+
+            return res.render('login', {
+                device,
+                alert: true,
+                alertTitle: "Error",
+                alertMessage: "USUARIO y/o PASSWORD incorrectas",
+                alertIcon: 'error',
+                showConfirmButton: true,
+                timer: false,
+                ruta: 'login'
+            });
+
+        } else {
+
+            // 🔐 MUY IMPORTANTE → regenerar sesión
+            req.session.regenerate((err) => {
+
+                if (err) {
+                    console.error(err);
+                    return res.send("Error al iniciar sesión");
+                }
+
                 req.session.loggedin = true;
+                req.session.userId = results[0].id;
                 req.session.user = results[0].user;
                 req.session.name = results[0].name;
                 req.session.rol = results[0].rol;
-                // req.session.rutaAnterior = results[0].rutaAnterior;
 
-                pool.query('SET @usuario_actual = ?', [req.session.user], (error, results, fields) => {
-                    if (error) throw error;
-                });
-                res.render('login', {
-                    device: device,
+                pool.query('SET @usuario_actual = ?', [req.session.user]);
+
+                return res.render('login', {
+                    device,
                     alert: true,
                     alertTitle: "Conexión exitosa",
                     alertMessage: "¡LOGIN CORRECTO!",
@@ -59,14 +82,65 @@ router.post('/auth', async(req, res) => {
                     timer: 1500,
                     ruta: 'panel-administracion'
                 });
-            }
-            res.end();
-        });
-    } else {
-        res.send('Please enter user and Password!');
-        res.end();
-    }
+
+            });
+        }
+    });
 });
+
+
+// Apagado temporalmente 
+//11 - Metodo para la autenticacion
+// router.post('/auth', async(req, res) => {
+//     const device = req.useragent.isMobile ? 'Mobile' : 'Desktop';
+//     const user = req.body.user;
+//     const pass = req.body.pass;
+//     let passwordHash = await bcrypt.hash(pass, 8);
+//     if (user && pass) {
+//         pool.query('SELECT * FROM users WHERE user = ?', [user], async(error, results, fields) => {
+//             if (results.length == 0 || !(await bcrypt.compare(pass, results[0].pass))) {
+//                 res.render('login', {
+//                     device: device,
+//                     alert: true,
+//                     alertTitle: "Error",
+//                     alertMessage: "USUARIO y/o PASSWORD incorrectas",
+//                     alertIcon: 'error',
+//                     showConfirmButton: true,
+//                     timer: false,
+//                     ruta: 'login'
+//                 });
+
+//                 //Mensaje simple y poco vistoso
+//                 //res.send('Incorrect Username and/or Password!');				
+//             } else {
+//                 //creamos una var de session y le asignamos true si INICIO SESSION       
+//                 req.session.loggedin = true;
+//                 req.session.user = results[0].user;
+//                 req.session.name = results[0].name;
+//                 req.session.rol = results[0].rol;
+//                 // req.session.rutaAnterior = results[0].rutaAnterior;
+
+//                 pool.query('SET @usuario_actual = ?', [req.session.user], (error, results, fields) => {
+//                     if (error) throw error;
+//                 });
+//                 res.render('login', {
+//                     device: device,
+//                     alert: true,
+//                     alertTitle: "Conexión exitosa",
+//                     alertMessage: "¡LOGIN CORRECTO!",
+//                     alertIcon: 'success',
+//                     showConfirmButton: false,
+//                     timer: 1500,
+//                     ruta: 'panel-administracion'
+//                 });
+//             }
+//             res.end();
+//         });
+//     } else {
+//         res.send('Please enter user and Password!');
+//         res.end();
+//     }
+// });
 
 
 
