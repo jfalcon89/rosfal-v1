@@ -72,15 +72,45 @@ router.post('/auth', async(req, res) => {
 
                 pool.query('SET @usuario_actual = ?', [req.session.user]);
 
-                return res.render('login', {
-                    device,
-                    alert: true,
-                    alertTitle: "Conexión exitosa",
-                    alertMessage: "¡LOGIN CORRECTO!",
-                    alertIcon: 'success',
-                    showConfirmButton: false,
-                    timer: 1500,
-                    ruta: 'panel-administracion'
+                // 🔥 Forzar guardado en MySQL
+                req.session.save((err) => {
+
+                    if (err) {
+                        console.error("Error guardando sesión:", err);
+                        return res.send("Error guardando sesión");
+                    }
+
+                    // 🔥 Ahora sí actualizamos columnas adicionales
+                    pool.query(
+                        `UPDATE sessions 
+             SET user_id = ?, user = ?, name = ?, rol = ?
+             WHERE session_id = ?`, [
+                            req.session.userId,
+                            req.session.user,
+                            req.session.name,
+                            req.session.rol,
+                            req.sessionID
+                        ],
+                        (error) => {
+
+                            if (error) {
+                                console.error("Error actualizando sesión:", error);
+                            }
+
+                            return res.render('login', {
+                                device,
+                                alert: true,
+                                alertTitle: "Conexión exitosa",
+                                alertMessage: "¡LOGIN CORRECTO!",
+                                alertIcon: 'success',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                ruta: 'panel-administracion'
+                            });
+
+                        }
+                    );
+
                 });
 
             });
