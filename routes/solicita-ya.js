@@ -403,11 +403,12 @@ router.post("/solicita-ya", async(req, res) => {
 
     await pool.query('INSERT INTO solicitudes set ?', [nuevaSolicitud]);
 
-    await pool.query("UPDATE app_clientes set ? WHERE telefono = ?", [actualizaCliente, celular]);
 
     const app_clientedDB = await pool.query("SELECT cliente_id FROM app_clientes WHERE telefono = ?", [celular]);
 
     if (app_clientedDB > 0) {
+
+        await pool.query("UPDATE app_clientes set ? WHERE telefono = ?", [actualizaCliente, celular]);
 
         // console.log(app_clientedDB[0].cliente_id + " cliente id tab app_clientes")
 

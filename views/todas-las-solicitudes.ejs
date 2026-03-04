@@ -239,8 +239,8 @@
                                         <%= solicitud.celular %>
                                     </td>
                                     <td>
-                                        <% if(solicitud.cliente_id) { %>
-                                            <%= solicitud.cliente_id %>
+                                        <% if(solicitud.cliente_id_validacion) { %>
+                                            <%= solicitud.cliente_id_validacion %>
                                                 <% }else { %>
                                                     <span style="color: red;">Solicitud sin Cliente</span>
                                                     <% } %>

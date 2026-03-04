@@ -392,10 +392,10 @@
                                                 <div class="form-group mt-2 me-lg-2 ">
                                                     <div class="input-group ">
                                                         <div class="input-group-prepend">
-                                                            <% if(solicitud.cliente_id) { %>
+                                                            <% if(solicitud.cliente_id_validacion) { %>
 
                                                                 <span id="idSolicitud" class="input-group-text">Cliente: 
-                                                                   <%= solicitud.cliente_id %> 
+                                                                   <%= solicitud.cliente_id_validacion %> 
                                                                 </span>
                                                                 <% }else { %>
                                                                     <span style="color: red;" id="idSolicitud" class="input-group-text">Solicitud sin Cliente
