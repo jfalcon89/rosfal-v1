@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const moment = require("moment");
 const pool = require("../database");
-
+const { obtenerConteos } = require("../services/conteosService");
 
 const permiso_A = 'Administrador'
 const permiso_B = 'Representante'
@@ -13,39 +13,21 @@ const permiso_C = 'Cliente App'
 router.get('/rutas', async(req, res) => {
     if (req.session.loggedin) {
 
-        const arrayUsuariosDB = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientesDB = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevosDB = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitasDB = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevosDB = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
-
+        const conteos = await obtenerConteos();
 
         const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
         const rutaDB = await pool.query('SELECT * FROM rutas ');
-        // const arraySolicitudesAprobadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="aprobada"');
-        // const arraySolicitudesDeclinadasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="declinada"');
-        // const arraySolicitudesEnRevisionDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="En Revision"');
         console.log(arrayRutasDB)
         res.render("rutas", {
             arrayRutas: arrayRutasDB,
             ruta: rutaDB[0],
-            // arraySolicitudesAprobadas: arraySolicitudesAprobadasDB,
-            // arraySolicitudesDeclinadas: arraySolicitudesDeclinadasDB,
-            // arraySolicitudesEnRevision: arraySolicitudesEnRevisionDB,
             login: true,
             name: req.session.name,
             rol: req.session.rol,
             permiso_A,
             permiso_B,
             permiso_C,
-            arrayUsuarios: arrayUsuariosDB,
-            arrayClientes: arrayClientesDB,
-            arraySolicitudes: arraySolicitudesDB,
-            arrayMensajesNuevos: arrayMensajesNuevosDB,
-            arrayVisitas: arrayVisitasDB,
-            arrayTestimoniosNuevos: arrayTestimoniosNuevosDB
-
+            conteos
         });
 
     } else {
@@ -63,22 +45,14 @@ router.get('/rutas', async(req, res) => {
 router.get('/rutas/crear-ruta', async(req, res) => {
     if (req.session.loggedin) {
 
-        const arrayUsuariosDB = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientesDB = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevosDB = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitasDB = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevosDB = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+        const conteos = await obtenerConteos();
+
+
 
         const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
         res.render("crear-ruta", {
             arrayRutas: arrayRutasDB,
-            arrayUsuarios: arrayUsuariosDB,
-            arrayClientes: arrayClientesDB,
-            arraySolicitudes: arraySolicitudesDB,
-            arrayMensajesNuevos: arrayMensajesNuevosDB,
-            arrayVisitas: arrayVisitasDB,
-            arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
+            conteos,
             login: true,
             name: req.session.name,
             rol: req.session.rol,
@@ -103,7 +77,7 @@ router.get('/rutas/crear-ruta', async(req, res) => {
 //CREANDO NUEVA RUTA ****************
 router.post("/rutas/crear-ruta", async(req, res) => {
     const { nombreRuta, fechaCreacion, estadoRuta } = req.body;
-
+    const conteos = await obtenerConteos();
     const nuevaRuta = {
         nombreRuta,
         fechaCreacion,
@@ -125,6 +99,7 @@ router.post("/rutas/crear-ruta", async(req, res) => {
         permiso_B,
         permiso_C,
         arrayRutas: arrayRutasDB,
+        conteos,
         alert: true,
         alertTitle: "Excelente !!",
         alertMessage: "¡RUTA CREADA CORRECTAMENTE!",
@@ -141,13 +116,8 @@ router.post("/rutas/crear-ruta", async(req, res) => {
 //RENDERIZANDO Y MOSTRANDO TODAS LAS RUTAS CREADAS VISTA EDITAR RUTA
 router.get('/rutas/editar-ruta', async(req, res) => {
     if (req.session.loggedin) {
+        const conteos = await obtenerConteos();
 
-        const arrayUsuariosDB = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientesDB = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevosDB = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitasDB = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevosDB = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
         res.render('editar-ruta', {
@@ -163,7 +133,8 @@ router.get('/rutas/editar-ruta', async(req, res) => {
             rol: req.session.rol,
             permiso_A,
             permiso_B,
-            permiso_C
+            permiso_C,
+            conteos
 
         });
 
@@ -181,16 +152,9 @@ router.get('/rutas/editar-ruta', async(req, res) => {
 //EDITAR SOLICITUD EN ESTADO NUEVA ************
 router.get("/rutas/editar-ruta/:id", async(req, res) => {
     if (req.session.loggedin) {
-
+        const conteos = await obtenerConteos();
         const id = req.params.id
         console.log(req.params)
-
-        const arrayUsuariosDB = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientesDB = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevosDB = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitasDB = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevosDB = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         try {
 
@@ -202,18 +166,13 @@ router.get("/rutas/editar-ruta/:id", async(req, res) => {
             res.render("editar-ruta", {
                 ruta: rutaDB[0],
                 arrayRutas: arrayRutasDB,
-                arrayUsuarios: arrayUsuariosDB,
-                arrayClientes: arrayClientesDB,
-                arraySolicitudes: arraySolicitudesDB,
-                arrayMensajesNuevos: arrayMensajesNuevosDB,
-                arrayVisitas: arrayVisitasDB,
-                arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
                 login: true,
                 name: req.session.name,
                 rol: req.session.rol,
                 permiso_A,
                 permiso_B,
-                permiso_C
+                permiso_C,
+                conteos
             });
 
         } catch (error) {
@@ -238,7 +197,7 @@ router.get("/rutas/editar-ruta/:id", async(req, res) => {
 router.post('/rutas/editar-ruta/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
-
+    const conteos = await obtenerConteos();
     const { nombreRuta, fechaCreacion, estadoRuta } = req.body;
 
     const nuevaRuta = {

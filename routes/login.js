@@ -96,17 +96,30 @@ router.post('/auth', async(req, res) => {
                             if (error) {
                                 console.error("Error actualizando sesión:", error);
                             }
+                            if (req.session.rol == 'Encuestador') {
+                                return res.render('login', {
+                                    device,
+                                    alert: true,
+                                    alertTitle: "Conexión exitosa",
+                                    alertMessage: "¡LOGIN CORRECTO!",
+                                    alertIcon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    ruta: 'encuesta'
+                                });
+                            } else {
 
-                            return res.render('login', {
-                                device,
-                                alert: true,
-                                alertTitle: "Conexión exitosa",
-                                alertMessage: "¡LOGIN CORRECTO!",
-                                alertIcon: 'success',
-                                showConfirmButton: false,
-                                timer: 1500,
-                                ruta: 'panel-administracion'
-                            });
+                                return res.render('login', {
+                                    device,
+                                    alert: true,
+                                    alertTitle: "Conexión exitosa",
+                                    alertMessage: "¡LOGIN CORRECTO!",
+                                    alertIcon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    ruta: 'panel-administracion'
+                                });
+                            }
 
                         }
                     );

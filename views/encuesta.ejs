@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css y js bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- linkeado css propio -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- icons bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- generador de pdf cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <!-- moment.js cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <link rel="icon" href="/img/favicon/logo-favicon.png">
+    <title>Rosfal - Estudio de Mercado Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+         :root {
+            --rosfal-blue: #0f172a;
+            --rosfal-accent: #2563eb;
+        }
+        
+        body {
+            background-color: #cbd5e1;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .paper {
+            background-color: white;
+            min-height: 100vh;
+            max-width: 850px;
+            margin: 0 auto;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section-header {
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 10px 20px;
+            font-weight: 800;
+            color: var(--rosfal-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        /* Estilo para los radio buttons personalizados */
+        
+        .custom-radio {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #94a3b8;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            display: grid;
+            place-content: center;
+            transition: border-color 0.2s;
+        }
+        
+        .custom-radio:checked {
+            border-color: var(--rosfal-accent);
+        }
+        
+        .custom-radio::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            background-color: var(--rosfal-accent);
+        }
+        
+        .custom-radio:checked::before {
+            transform: scale(1);
+        }
+        /* Estilo para los números de escala 1-10 */
+        
+        .scale-dot {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        
+        input.scale-input:checked+.scale-dot {
+            background-color: var(--rosfal-accent);
+            border-color: var(--rosfal-accent);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        input.scale-input {
+            display: none;
+        }
+        
+        .line-input {
+            border: none;
+            border-bottom: 1px solid #94a3b8;
+            outline: none;
+            width: 100%;
+            padding: 2px 5px;
+        }
+        
+        .line-input:focus {
+            border-bottom: 2px solid var(--rosfal-accent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- <div class="container-fluid  " style="background-color: #ececec;">
+        <div class=" d-flex align-items-center justify-content-between">
+            <div class="d-flex">
+
+                <button onclick="imprimirDocumento();">imprimir</button>
+            </div>
+            <div class="btn-group">
+                <% if (login) { %>
+                    <button type="button" class="btn btn-info"><%= name %></button>
+                    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden">Toggle Dropdown</span>
+                </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/solicitudes/editar-solicitud/<%=  %>">Volver a Solicitud</a></li>
+                        <li><a class="dropdown-item" href="/">Ir a ROSFAL PAGE</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/logout">Cerrar Session</a></li>
+
+                    </ul>
+                    <%}  %>
+            </div>
+
+        </div>
+    </div> -->
+
+
+
+
+    <div class=" p-4 ">
+
+        <form class="" autocomplete="off" action="" method="POST">
+
+            <div class="container bg-light pb-32">
+                <!-- Navbar superior estilo App -->
+                <nav class="bg-white border-b d-lg-flex justify-between items-center px-6 py-3 sticky top-0 z-50 ">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">R</div>
+                        <span class="text-xl font-black text-blue-900 tracking-tighter">ROSFAL</span>
+                    </div>
+                    <div class="text-center font-bold text-gray-700 hidden md:block">ESTUDIO DE MERCADO</div>
+                    <div class="d-flex d-lg-flex gap-4 justify-content-end">
+
+                        <button class="text-gray-500 flex items-center gap-1 text-sm font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                </svg> Encuestas
+            </button>
+                        <button class="text-gray-500 flex items-center gap-1 text-sm font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011-1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                </svg> Inicio
+            </button>
+                        <a class="bg-danger btn text-light d-flex p-1" href="/logout">Cerrar Sesion</a>
+                    </div>
+                </nav>
+
+                <!-- Encabezado de Datos -->
+                <div class="px-8 py-6 grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 border-b">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold">Ruta:</span>
+                        <!-- <input type="text" class="line-input bg-transparent"> -->
+                        <select name="ruta" class="form-control" id="">
+                            <option value="Seleccionar" selected>
+                                Seleccionar
+                            </option>
+                            <% if (arrayRutas.length> 0) { %>
+                            <% arrayRutas.forEach(ruta=> { %>
+                            <option value="<%= ruta.nombreRuta %>">
+                            <%= ruta.nombreRuta %>
+                            </option>
+                            <% }) %>
+                            <% } %>
+                            </select>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold">Fecha:</span>
+                        <input name="fecha" type="date" class="line-input bg-transparent text-sm">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold">Encuestador:</span>
+                        <input name="encuestador" type="text" class="line-input bg-transparent" placeholder="Nombre..." value="<%= name %>">
+                    </div>
+                </div>
+
+
+                <!-- SECCIÓN I -->
+                <div class="section-header">
+                    <span>👤</span> I. PERFIL DEL ESTABLECIMIENTO
+                </div>
+
+                <div class="px-10 py-6 space-y-4">
+                    <div class="d-lg-flex items-center gap-3">
+                        <span class="font-semibold text-gray-700">• Nombre del Negocio:</span>
+                        <input name="negocio_nombre" type="text" class="line-input flex-1">
+                    </div>
+                    <div class="d-lg-flex items-center gap-3">
+                        <span class="font-semibold text-gray-700">• Dueño/Encargado:</span>
+                        <input name="encargado_nombre" type="text" class="line-input flex-1">
+                    </div>
+
+                    <div class="space-y-2">
+                        <span class="font-semibold text-gray-700">• Tipo de Negocio:</span>
+                        <div class="flex flex-wrap gap-4 mt-1 ">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="tipo_negocio" value="Colmado" class="custom-radio">Colmado</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="tipo_negocio" value="Salón de Belleza" class="custom-radio">Salón de Belleza</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="tipo_negocio" value="Peluqueria" class="custom-radio">Peluquería</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="tipo_negocio" value="Otro" class="custom-radio"> Otro: <input name="tipo_negocio_otro" type="text" class="line-input w-32 ml-1"></label>
+                        </div>
+                    </div>
+
+                    <div class="d-lg-flex items-center gap-3">
+                        <span class="font-semibold text-gray-700">• Ubicación/Calle:</span>
+                        <input name="ubicacion_calle" type="text" class="line-input flex-1">
+                    </div>
+
+                    <div class="space-y-2">
+                        <span class="font-semibold text-gray-700">• Años en Operación:</span>
+                        <div class="d-lg-flex gap-6 mt-1">
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="anos_operacion" value="<1" class="custom-radio"> Menos de 1 año</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="anos_operacion" value="1-2" class="custom-radio"> 1-2 años</label>
+                            <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="anos_operacion" value=">2" class="custom-radio"> Más de 2 años</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- SECCIÓN II -->
+                <div class="section-header">
+                    <span>📈</span> II. DINÁMICA COMERCIAL (Marque con una X)
+                </div>
+
+                <div class="px-10 py-6 space-y-8">
+                    <div>
+                        <p class="font-bold text-gray-800 mb-4">1. ¿Cómo califica el flujo de clientes en sus horas pico? (1 bajo y 10 muy alto)</p>
+                        <div class="flex flex-wrap gap-3 justify-between  mx-auto justify-content-start">
+                            <script>
+                                for (let i = 1; i <= 10; i++) {
+                                    document.write(`
+                                <label>
+                                    <input type="radio" name="flujo_clientes_score" value="${i}" class="scale-input">
+                                    <div class="scale-dot">${i}</div>
+                                </label>
+                            `);
+                                }
+                            </script>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <p class="font-bold text-gray-800">2. ¿Con qué frecuencia requiere capital extra para surtir mercancía?</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="Semanal" class="custom-radio">Semanal</label>
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="Quincenal/Mensual"  class="custom-radio">Quincenal / Mensual</label>
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="Emergencias"  class="custom-radio"> Solo en emergencias o temporadas altas</label>
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="EfectivoPropio"  class="custom-radio"> Casi nunca / Se maneja con efectivo propio</label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <p class="font-bold text-gray-800 italic">3. Si recibiera una inversión de RD$20,000 hoy, ¿cuál sería su prioridad?</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="prioridad_inversion" value="Inventario"  class="custom-radio"> Comprar más inventario/mercancía</label>
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="prioridad_inversion" value="Equipos"  class="custom-radio"> Reparar o comprar equipos</label>
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="prioridad_inversion" value="Remodelación"  class="custom-radio"> Remodelar el local / Pintura</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN III -->
+                <div class="section-header">
+                    <span>💸​</span> III. PREFERENCIAS DE FINANCIAMIENTO
+                </div>
+
+                <div class="px-10 py-6 space-y-8">
+                    <div class="space-y-4">
+                        <p class="font-bold text-gray-800">4. ¿Qué modalidad de pago se adapta mejor a su negocio?</p>
+                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="modalidad_pago_preferida" value="Diario" class="custom-radio"> Cuotas diarias (Lun-Sab)</label>
+                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="modalidad_pago_preferida" value="Semanal"  class="custom-radio"> Pago semanal</label>
+                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="modalidad_pago_preferida" value="Quincenal" class="custom-radio"> Pagos quincenales</label>
+                        <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="modalidad_pago_preferida" value="Mensual" class="custom-radio"> Pagos mensuales</label>
+                    </div>
+
+                    <div>
+                        <p class="font-bold text-gray-800 mb-4">5. ¿Qué tan satisfecho está con el trato de los préstamos actuales?</p>
+                        <div class="flex flex-wrap gap-3 justify-between mx-auto justify-content-start">
+                            <script>
+                                for (let i = 1; i <= 10; i++) {
+                                    document.write(`
+                                <label>
+                                    <input type="radio" name="satisfaccion_prestamos_actuales" value="${i}" class="scale-input">
+                                    <div class="scale-dot">${i}</div>
+                                </label>
+                            `);
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción Estilo App -->
+                <div class="fixed bottom-0 left-0 right-0 p-4 bg-white/90 backdrop-blur-sm border-t flex gap-4 justify-center max-w-[850px] mx-auto z-50">
+                    <button type="submit" class="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-black rounded-lg shadow-lg flex-1 md:flex-none uppercase tracking-widest text-sm transition-all active:scale-95">
+                GUARDAR ENCUESTA
+            </button>
+                    <button type="button " class="px-8 py-3 bg-white border-2 border-gray-300 text-gray-600 font-bold rounded-lg flex-1 md:flex-none hover:bg-gray-100 transition-all " onclick="if(confirm( '¿Limpiar formulario?')) document.getElementById(
+                        'mainForm').reset() ">
+                CANCELAR
+            </button>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <% if (typeof alert !="undefined" ) { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '/<%= ruta %>'
+            })
+        </script>
+        <% } %>
+
+
+            <script>
+                function imprimirDocumento() {
+                    window.print();
+                }
+            </script>
+
+            <script src="/js/ver-solicitud-event.js "></script>
+
+</body>
+
+</html>
