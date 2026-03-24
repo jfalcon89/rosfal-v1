@@ -597,14 +597,44 @@ router.get('/solicitudes-nuevas', async(req, res) => {
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
 
-
+        const arrayEncuestasDB = await pool.query('SELECT * FROM encuestas ');
+        const arrayClientesPotencialesDB = await pool.query(`
+                                SELECT 
+                                negocio_nombre,
+                                encargado_nombre,
+                                tipo_negocio, -- Columna solicitada agregada
+                                ruta,
+                                ubicacion_calle,
+                                flujo_clientes_score,
+                                prioridad_inversion,
+                                tipo_negocio_otro,
+                                creado_el,
+                                
+                                -- Cálculo del Score de Potencial
+                                ( (flujo_clientes_score * 5) + 
+                                (CASE WHEN anos_operacion = '>2' THEN 30 ELSE 15 END) +
+                                (CASE WHEN prioridad_inversion = 'Inventario' THEN 20 ELSE 10 END)
+                                ) AS score_potencial 
+        
+                            FROM encuestas 
+        
+                            -- Doble validación: Flujo real y Score mínimo de confianza
+                            WHERE flujo_clientes_score > 5
+                            AND (
+                                (flujo_clientes_score * 5) + 
+                                (CASE WHEN anos_operacion = '>2' THEN 30 ELSE 15 END) +
+                                (CASE WHEN prioridad_inversion = 'Inventario' THEN 20 ELSE 10 END)
+                            ) > 70
+        
+                            ORDER BY score_potencial DESC;
+                            `);
 
 
         // Vista
         // const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva" ORDER BY fechaSolicitud DESC');
         const arraySolicitudesNuevasDB = await pool.query('SELECT s.*, c.cliente_id AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("Nueva") ORDER BY s.fechaSolicitud DESC');
 
-        const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
+        const arrayTotalSolicitudesDB = await pool.query('SELECT * FROM solicitudes ');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
         const arraySolicitudesEnRevisionDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="En Revision"');
@@ -620,7 +650,9 @@ router.get('/solicitudes-nuevas', async(req, res) => {
             permiso_A,
             permiso_B,
             permiso_C,
-            conteos
+            conteos,
+            arrayClientesPotenciales: arrayClientesPotencialesDB,
+            arrayEncuestas: arrayEncuestasDB
         });
 
     } else {

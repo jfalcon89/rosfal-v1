@@ -76,12 +76,13 @@ router.get('/rutas/crear-ruta', async(req, res) => {
 
 //CREANDO NUEVA RUTA ****************
 router.post("/rutas/crear-ruta", async(req, res) => {
-    const { nombreRuta, fechaCreacion, estadoRuta } = req.body;
+    const { nombreRuta, fechaCreacion, estadoRuta, localizacion_map } = req.body;
     const conteos = await obtenerConteos();
     const nuevaRuta = {
         nombreRuta,
         fechaCreacion,
-        estadoRuta
+        estadoRuta,
+        localizacion_map
 
     };
 
@@ -198,12 +199,13 @@ router.post('/rutas/editar-ruta/:id', async(req, res) => {
     const id = req.params.id;
     console.log(req.params.id)
     const conteos = await obtenerConteos();
-    const { nombreRuta, fechaCreacion, estadoRuta } = req.body;
+    const { nombreRuta, fechaCreacion, estadoRuta, localizacion_map } = req.body;
 
     const nuevaRuta = {
         nombreRuta,
         fechaCreacion,
-        estadoRuta
+        estadoRuta,
+        localizacion_map
 
     };
 

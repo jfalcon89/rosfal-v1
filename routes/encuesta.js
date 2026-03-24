@@ -35,6 +35,40 @@ router.get('/encuesta', async(req, res) => {
     }
 
 });
+router.get('/mapa-rutas', async(req, res) => {
+    if (req.session.loggedin) {
+
+
+        const conteos = await obtenerConteos();
+
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_D = 'Encuestador'
+
+        const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+
+        console.log(arrayRutasDB)
+
+        res.render("mapa-rutas", {
+            login: true,
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_D,
+            permiso_A,
+            permiso_B,
+            conteos,
+            arrayRutas: arrayRutasDB,
+            rutaParaMostrar: [{ lat: 18.482183, lng: -69.974393 }, { lat: 18.479362516705706, lng: -69.96499775400336 }]
+        });
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
+        });
+    }
+
+});
 
 
 //CREANDO NUEVA ENCUESTA ****************
@@ -109,6 +143,8 @@ router.get('/encuestas-administracion', async(req, res) => {
                         ubicacion_calle,
                         flujo_clientes_score,
                         prioridad_inversion,
+                        tipo_negocio_otro,
+                        creado_el,
                         
                         -- Cálculo del Score de Potencial
                         ( (flujo_clientes_score * 5) + 

@@ -38,34 +38,11 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
     <link rel="icon" href="/img/favicon/logo-favicon.png">
-    <title>Rosfal - Panel de Inteligencia de Mercado</title>
+    <title>Rosfal - Mapa de Rutas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        /* body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9;
-        } */
-        /* .card {
-            @apply bg-white p-6 rounded-xl shadow-sm border border-slate-200;
-        }
-        
-        .score-high {
-            @apply bg-emerald-100 text-emerald-700;
-        }
-        
-        .score-mid {
-            @apply bg-amber-100 text-amber-700;
-        } */
-        /* Asegurar altura para los contenedores de los gráficos */
-        
-        .chart-container {
-            position: relative;
-            height: 250px;
-            width: 100%;
-        }
-    </style>
+
 </head>
 
 <body style="background-color: white;">
@@ -133,7 +110,6 @@
             <%- include('template/navbar-menu') %>
         </div>
     </div>
-
     <div class=" p-2 d-lg-flex flex-sm-row mt-4 " style="background-color: #ececec;">
         <div class="container-fluid mt-3 mb-3 me-lg-3 d-flex holographic-card bg-white" style=" border-radius: 50px;">
             <div class="container-nuevas d-flex">
@@ -148,13 +124,15 @@
                     </div>
                     <div class="titulo">
                         <a style="color: #2f6eaa;" class="text-decoration-none fs-5" href="/encuestas-administracion">
+                            
                                  Dashboard
+                        
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid  mt-3 mb-3 me-lg-3 d-flex holographic-card" style="background-color: #d4d4d4; border-radius: 50px;">
+        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <span style="font-size:50px ">📝</span>
@@ -169,7 +147,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
+        <div class="container-fluid  mt-3 mb-3 me-lg-3 d-flex holographic-card" style=" background-color: #d4d4d4; border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <span style="font-size:50px ">📍</span>
@@ -184,7 +162,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 me-lg-3 mb-3 d-flex holographic-card" style="border-radius: 50px;">
+        <div class="container-fluid bg-white  mt-3 me-lg-3 mb-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
                     <span style="font-size:50px ">⚙️</span>
@@ -201,112 +179,122 @@
         </div>
     </div>
 
-
-    <!-- Main Content -->
-    <main class="flex-1 p-4 md:p-8 overflow-y-auto ">
-
-        <!-- Potenciales Clientes Table -->
-        <div class="card mb-5 border-0">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="font-bold text-slate-800 text-lg">Ranking de Prospectos Potenciales</h3>
-                <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded font-bold">ACTUALIZADO AHORA</span>
-            </div>
-            <div style="border-radius: 50px; box-shadow:  20px 20px 60px #bebebe, -20px -20px 60px #ffffff;" class="container-fluid p-4">
-                <div class="overflow-x-auto">
-                    <table id="datatable2" class="w-full text-left min-w-[600px] ">
-                        <thead>
-                            <tr class="text-slate-400 text-sm border-b">
-                                <th class="pb-3 font-semibold">ID</th>
-                                <th class="pb-3 font-semibold">NEGOCIO</th>
-                                <th class="pb-3 font-semibold">TIPO</th>
-                                <th class="pb-3 font-semibold">OTRO</th>
-                                <th class="pb-3 font-semibold">RUTA</th>
-                                <th class="pb-3 font-semibold">UBICACION CALLE</th>
-                                <th class="pb-3 font-semibold text-center">AÑOS OPERACIONES</th>
-                                <th class="pb-3 font-semibold text-center">FLUJO CLIENTES</th>
-                                <th class="pb-3 font-semibold">PRIORIDAD</th>
-                                <th class="pb-3 font-semibold">FRECUENCIA CAPITAL</th>
-                                <th class="pb-3 font-semibold text-center">SATISF. OTROS PRESTAMOS</th>
-                                <th class="pb-3 font-semibold">ENCUESTADOR</th>
-                                <th class="pb-3 font-semibold">CREADO</th>
-                                <th class="pb-3 font-semibold text-center">SCORE POTENCIAL</th>
-                                <th class="pb-3 font-semibold text-center">ES POTENCIAL</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-slate-700">
-                            <% if (arrayEncuestas.length > 0) { %>
-                                <% arrayEncuestas.forEach(encuesta=> { %>
-
-                                    <tr class="border-b hover:bg-slate-50 transition-colors">
-                                        <td class="py-4 text-sm">
-                                            <%= encuesta.id_encuesta %>
-                                        </td>
-                                        <td class="py-4">
-                                            <div class="font-bold">
-                                                <%= encuesta.negocio_nombre %>
-                                            </div>
-                                            <div class=" text-slate-400">
-                                                <%= encuesta.encargado_nombre %>
-                                            </div>
-                                        </td>
-                                        <td class="py-4 text-sm">
-                                            <%= encuesta.tipo_negocio %>
-                                        </td>
-                                        <td class="py-4 text-sm">
-                                            <%= encuesta.tipo_negocio_otro %>
-                                        </td>
-                                        <td class="py-4 text-sm">
-                                            <%= encuesta.ruta %>
-                                        </td>
-                                        <td class="py-4 text-sm">
-                                            <%= encuesta.ubicacion_calle %>
-                                        </td>
-                                        <td class="py-4 text-sm text-center">
-                                            <%= encuesta.anos_operacion %>
-                                        </td>
-                                        <td class="py-4">
-                                            <div class="flex justify-center">
-                                                <span class="px-2 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold"><%= encuesta.flujo_clientes_score %> / 10</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-4 text-sm">
-                                            <%= encuesta.prioridad_inversion %>
-                                        </td>
-                                        <td class="py-4 text-sm">
-                                            <%= encuesta.frecuencia_capital %>
-                                        </td>
-                                        <td class="py-4 text-sm text-center">
-                                            <%= encuesta.satisfaccion_prestamos_actuales %>
-                                        </td>
-                                        <td class="py-4 text-sm">
-                                            <%= encuesta.encuestador %>
-                                        </td>
-                                        <td class="py-4 text-sm">
-                                            <%= encuesta.creado_el.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %>
-                                        </td>
-                                        <td class="py-4 text-center">
-                                            <span class="px-3 py-1 rounded-full score-high font-bold text-sm"><%= encuesta.score_potencial %> pts</span>
-                                        </td>
-                                        <td class="py-4  text-center">
-                                            <% if(encuesta.es_potencial == 'SI'){ %>
-                                                <i style="color: green;" class="bi bi-check-square-fill"></i>
-                                                <span class=" "><%= encuesta.es_potencial %></span>
-                                                <% }else{ %>
-                                                    <span style="color: #f85e5e;"><i class="bi bi-x-square-fill"></i>
-                                                    <span class=""><%= encuesta.es_potencial %></span>
-                                                    <% } %>
-                                        </td>
-                                    </tr>
-
-                                    <% }) %>
-                                        <% } %>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    <div class="flex items-center justify-between mb-6 p-4 bg-white rounded-lg shadow">
+        <div>
+            <h1 class="text-xl font-bold text-slate-900">Rutas</h1>
+            <select id="selectRuta" class="mt-2 p-2 border rounded border-slate-300 w-80 text-sm">
+            <option value="">Seleccione una ruta...</option>
+            <% if (arrayRutas.length > 0) { %>
+                <% arrayRutas.forEach(ruta => { %>
+                    <option value="<%= ruta.localizacion_map %>"><%= ruta.nombreRuta %></option>
+                <% }) %>
+            <% } %>
+        </select>
         </div>
-    </main>
+        <div class="flex gap-2">
+            <button id="btnVerCards" class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-700 transition text-sm">
+            Ver Rutas
+        </button>
+            <button id="btnDestrazar" class="bg-red-600 text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition text-sm">
+            Limpiar
+        </button>
+        </div>
+    </div>
+
+    <div id="contenedorCards" class="hidden mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% if (arrayRutas.length > 0) { %>
+                <% arrayRutas.forEach(ruta => { %>
+                    <div class="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-lg transition-all border border-slate-200 overflow-hidden" onclick="cargarRutaDesdeCard('<%= ruta.localizacion_map %>')">
+                        <div class="h-40 bg-slate-100 relative">
+                            <iframe src="<%= ruta.localizacion_map %>" width="100%" height="100%" style="border:0; pointer-events: none;"></iframe>
+                            <div class="absolute inset-0 bg-transparent"></div>
+                        </div>
+                        <div class="p-4">
+                            <span class="font-bold text-slate-800"><%= ruta.nombreRuta %></span>
+                        </div>
+                    </div>
+                    <% }) %>
+                        <% } %>
+        </div>
+    </div>
+
+    <div id="contenedorMapaPrincipal" class="hidden w-100 rounded-xl overflow-hidden shadow-lg border border-slate-200">
+        <iframe id="mapaIframe" src="about:blank" width="100%" height="800" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+
+    <script>
+        const selectRuta = document.getElementById('selectRuta');
+        const mapaIframe = document.getElementById('mapaIframe');
+        const contenedorMapaPrincipal = document.getElementById('contenedorMapaPrincipal');
+        const contenedorCards = document.getElementById('contenedorCards');
+        const btnVerCards = document.getElementById('btnVerCards');
+        const btnDestrazar = document.getElementById('btnDestrazar');
+
+        // Función unificada para mostrar el mapa grande
+        function mostrarMapaGrande(url) {
+            if (url && url !== "" && url !== "about:blank") {
+                mapaIframe.src = url;
+                contenedorMapaPrincipal.classList.remove('hidden'); // Muestra el div
+
+                // Opcional: Desplazar la vista al mapa
+                setTimeout(() => {
+                    contenedorMapaPrincipal.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }, 200);
+            } else {
+                mapaIframe.src = "about:blank";
+                contenedorMapaPrincipal.classList.add('hidden'); // Oculta si no hay URL
+            }
+        }
+
+        // Función global para las Cards (necesaria para el onclick)
+        window.cargarRutaDesdeCard = function(url) {
+            selectRuta.value = url; // Sincroniza el select
+            mostrarMapaGrande(url);
+        };
+
+        // Evento al cambiar el Select
+        selectRuta.addEventListener('change', function() {
+            mostrarMapaGrande(this.value);
+        });
+
+        // Evento para el botón "Ver Rutas" (Mostrar/Ocultar catálogo de cards)
+        btnVerCards.addEventListener('click', function() {
+            if (contenedorCards.classList.contains('hidden')) {
+                contenedorCards.classList.remove('hidden');
+                this.textContent = "Ocultar Rutas";
+                this.classList.replace('bg-blue-600', 'bg-slate-600');
+            } else {
+                contenedorCards.classList.add('hidden');
+                this.textContent = "Ver Rutas";
+                this.classList.replace('bg-slate-600', 'bg-blue-600');
+            }
+        });
+
+        // Botón Limpiar/Destrazar
+        btnDestrazar.addEventListener('click', function() {
+            selectRuta.value = "";
+            mostrarMapaGrande("");
+            contenedorCards.classList.add('hidden'); // Opcional: oculta las cards también
+            btnVerCards.textContent = "Ver Rutas";
+            btnVerCards.classList.replace('bg-slate-600', 'bg-blue-600');
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
 
 
 
