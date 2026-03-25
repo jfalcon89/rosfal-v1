@@ -3,22 +3,17 @@ const express = require("express");
 const router = express.Router();
 const moment = require("moment");
 const pool = require("../database");
-
+const { obtenerConteos } = require("../services/conteosService");
 
 // 1
 // RENDERIZANDO Y MOSTRANDO TODOS LOS TESTIMONIOS NUEVOS
 router.get('/testimonios', async(req, res) => {
     if (req.session.loggedin) {
 
+        const conteos = await obtenerConteos();
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
         const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
@@ -34,12 +29,7 @@ router.get('/testimonios', async(req, res) => {
             permiso_A,
             permiso_B,
             permiso_C,
-            arrayUsuarios,
-            arrayClientes,
-            arraySolicitudes,
-            arrayMensajesNuevos,
-            arrayVisitas,
-            arrayTestimoniosNuevos
+            conteos
 
 
         });
@@ -64,16 +54,11 @@ router.get("/testimonios/ver-testimonio/:id", async(req, res) => {
         console.log(req.params)
 
         try {
-
+            const conteos = await obtenerConteos();
             const permiso_A = 'Administrador'
             const permiso_B = 'Representante'
             const permiso_C = 'Cliente App'
-            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
 
             const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
@@ -94,12 +79,7 @@ router.get("/testimonios/ver-testimonio/:id", async(req, res) => {
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                arrayUsuarios,
-                arrayClientes,
-                arraySolicitudes,
-                arrayMensajesNuevos,
-                arrayVisitas,
-                arrayTestimoniosNuevos
+                conteos
 
             });
 
@@ -166,16 +146,11 @@ router.get("/testimonios/eliminar-testimonio/:id", async(req, res) => {
 router.get('/testimonios-activos', async(req, res) => {
     if (req.session.loggedin) {
 
-
+        const conteos = await obtenerConteos();
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
 
         const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
@@ -191,12 +166,7 @@ router.get('/testimonios-activos', async(req, res) => {
             permiso_A,
             permiso_B,
             permiso_C,
-            arrayUsuarios,
-            arrayClientes,
-            arraySolicitudes,
-            arrayMensajesNuevos,
-            arrayVisitas,
-            arrayTestimoniosNuevos
+            conteos
 
         });
 
@@ -220,16 +190,11 @@ router.get("/testimonios-activos/ver-testimonio-activo/:id", async(req, res) => 
 
         try {
 
-
+            const conteos = await obtenerConteos();
             const permiso_A = 'Administrador'
             const permiso_B = 'Representante'
             const permiso_C = 'Cliente App'
-            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
 
             const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
@@ -250,12 +215,7 @@ router.get("/testimonios-activos/ver-testimonio-activo/:id", async(req, res) => 
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                arrayUsuarios,
-                arrayClientes,
-                arraySolicitudes,
-                arrayMensajesNuevos,
-                arrayVisitas,
-                arrayTestimoniosNuevos
+                conteos
             });
 
         } catch (error) {
@@ -320,16 +280,11 @@ router.get("/testimonios-activos/eliminar-testimonio:id", async(req, res) => {
 router.get('/testimonios-inactivos', async(req, res) => {
     if (req.session.loggedin) {
 
-
+        const conteos = await obtenerConteos();
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
 
         const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
         const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
@@ -345,12 +300,7 @@ router.get('/testimonios-inactivos', async(req, res) => {
             permiso_A,
             permiso_B,
             permiso_C,
-            arrayUsuarios,
-            arrayClientes,
-            arraySolicitudes,
-            arrayMensajesNuevos,
-            arrayVisitas,
-            arrayTestimoniosNuevos
+            conteos
 
 
         });
@@ -374,16 +324,11 @@ router.get("/testimonios-inactivos/ver-testimonio-inactivo/:id", async(req, res)
         console.log(req.params)
 
         try {
-
+            const conteos = await obtenerConteos();
             const permiso_A = 'Administrador'
             const permiso_B = 'Representante'
             const permiso_C = 'Cliente App'
-            const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-            const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-            const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-            const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-            const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-            const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+
 
             const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
@@ -404,12 +349,7 @@ router.get("/testimonios-inactivos/ver-testimonio-inactivo/:id", async(req, res)
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                arrayUsuarios,
-                arrayClientes,
-                arraySolicitudes,
-                arrayMensajesNuevos,
-                arrayVisitas,
-                arrayTestimoniosNuevos
+                conteos
             });
 
         } catch (error) {
@@ -448,7 +388,7 @@ router.post('/testimonios-inactivos/ver-testimonio-inactivo/:id', async(req, res
 });
 
 //ELIMINAR TESTIMONIO INACTIVO
-router.get("/testimonios-inactivos/eliminar-testimonio:id", async(req, res) => {
+router.get("/testimonios/eliminar-testimonio:id", async(req, res) => {
     const { id } = req.params;
 
     console.log(id)

@@ -360,9 +360,9 @@
                                         <h1 class="h3 fw-bold text-dark mb-1">Análisis de Solicitudes</h1>
                                         <p class="text-muted mb-0">Resultados en tiempo real de recepciones</p>
                                     </div>
-                                    <div class="d-flex gap-2 w-100 w-md-auto">
+                                    <div class="d-flex gap-2 w-md-auto">
                                         <button class="btn btn-outline-secondary flex-fill flex-md-none fw-semibold shadow-sm">Exportar PDF</button>
-                                        <button class="btn btn-dark flex-fill flex-md-none fw-semibold shadow-sm">Filtros Avanzados</button>
+                                        <button class="btn btn-primary flex-fill flex-md-none fw-semibold shadow-sm">Filtros Avanzados</button>
                                     </div>
                                 </header>
 
@@ -424,22 +424,7 @@
                                 </div>
 
                                 <% 
-        const totalInventario = arrayEncuestas.filter(e => e.prioridad_inversion === 'Inventario').length;
-        const totalEquipos = arrayEncuestas.filter(e => e.prioridad_inversion === 'Equipos').length;
-        const totalRemodelacion = arrayEncuestas.filter(e => e.prioridad_inversion === 'Remodelación').length;
-
-        const totalColmados = arrayEncuestas.filter(e => e.tipo_negocio === 'Colmado').length;
-        const totalSalones = arrayEncuestas.filter(e => e.tipo_negocio === 'Salón de Belleza').length;
-        const totalPeluquerias = arrayEncuestas.filter(e => e.tipo_negocio === 'Peluquería').length;
-        const totalOtros = arrayEncuestas.filter(e => e.tipo_negocio === 'Otro').length;
-
-        const conteoRutas = {}; 
-        arrayEncuestas.forEach(encuesta => {
-            const nombreRuta = encuesta.ruta || 'Sin Ruta'; 
-            conteoRutas[nombreRuta] = (conteoRutas[nombreRuta] || 0) + 1;
-        });
-        const etiquetasRutas = Object.keys(conteoRutas);
-        const valoresRutas = Object.values(conteoRutas);
+       
 
         const conteoEncuestadores = {}; 
         arrayEncuestas.forEach(encuesta => {
@@ -451,6 +436,7 @@
     %>
 
                                     <div class="row g-4 mb-4">
+                                        <p class="text-muted mb-0">Mercado General</p>
                                         <div class="col-12 col-lg-6">
                                             <div class="card border-0 shadow-sm p-4 h-100">
                                                 <h3 class="h6 fw-bold text-secondary mb-4">Frecuencias de Pagos Solicitudes</h3>
@@ -460,7 +446,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-lg-6 d-lg-flex">
-                                            <div class="col-6 col-lg-6 mb-4">
+                                            <div class="col-6 col-lg-6 ">
                                                 <div class="card border-0 shadow-sm p-4 h-100">
                                                     <h3 class="h6 fw-bold text-secondary mb-4">Tipos de Solicitudes (Personal/Comercial)</h3>
                                                     <div style="position: relative; height:300px;">
@@ -468,7 +454,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 col-lg-6 d-lg-flex">
+                                            <div class="col-lg-6 col-lg-6 ">
                                                 <div class="card border-0 shadow-sm p-4 h-100">
                                                     <h3 class="h6 fw-bold text-secondary mb-4">Clasificacion por Solicitudes</h3>
                                                     <div style="position: relative; height:300px;">
@@ -619,7 +605,7 @@
                                                 datasets: [{
                                                     label: 'Número de Negocios',
                                                     data: [`<%= frecuencias.diarios %>`, `<%= frecuencias.semanales %>`, `<%= frecuencias.quincenales %>`, `<%= frecuencias.mensuales %>`],
-                                                    backgroundColor: ['#2563eb', '#64748b', '#cbd5e1'],
+                                                    backgroundColor: ['#60a5fa', '#64748b', '#cbd5e1', '#2B7FFF'],
                                                     borderRadius: 8
                                                 }]
                                             },
@@ -649,7 +635,7 @@
                                                 labels: ['Personal', 'Comercial'],
                                                 datasets: [{
                                                     data: [`<%= tiposPrestamo.personal %>`, `<%= tiposPrestamo.comercial %>`],
-                                                    backgroundColor: ['#0f172a', '#2563eb', '#60a5fa', '#e2e8f0'],
+                                                    backgroundColor: ['#60a5fa', '#cbd5e1'],
                                                     borderWidth: 0
                                                 }]
                                             },
@@ -731,7 +717,7 @@
                                                 datasets: [{
                                                     data: valoresRutasPrestamos,
                                                     backgroundColor: [
-                                                        '#0f172a', // Slate 900
+                                                        '#0f173q', // Slate 900
                                                         '#2563eb', // Blue 600
                                                         '#60a5fa', // Blue 400
                                                         '#94a3b8', // Slate 400
@@ -799,7 +785,7 @@
                                                 datasets: [{
                                                     label: 'Encuestas Realizadas',
                                                     data: <%- JSON.stringify(valoresEncuestadores) %>,
-                                                    backgroundColor: '#2563eb', // Un azul sólido profesional
+                                                    backgroundColor: '#60a5fa', // Un azul sólido profesional
                                                     borderRadius: 5,
                                                     borderWidth: 0
                                                 }]

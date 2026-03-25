@@ -70,67 +70,65 @@
 
 <body style="background-color: white;">
 
-    <nav class="navbar navbar-expand-lg navbar-light" style="background: linear-gradient(to right, #eaf6ff, #a5d3ff); border-radius: 0px 0px 15px 15px;">
-        <div class="container-fluid  ">
-
-            <div class="d-flex">
-                <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
-                <h5 class="text-dark m-2 d-flex align-items-center" style="font-size: large;">SOLICITUDES</h5>
-            </div>
-            <button class="navbar-toggler  " type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon "></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <div class="offcanvas-body ">
-
-                    <div class="d-flex">
-                        <div class="btn-group ">
-                            <button type="button" class="hola navbar-toggler d-block me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon show "></span>
-                            </button>
-                            <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
-                        </div>
-                        <div class="user-container me-2 d-flex">
-                            <% if (login) { %>
-                                <div>
-                                    <h4 type="" class="">
-                                        <%= name %>
-                                    </h4>
-                                    <h6>
-                                        <%= rol %>
-                                    </h6>
-                                </div>
-                                <%}  %>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <nav class="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-[#eaf6ff] to-[#a5d3ff] rounded-b-[15px] shadow-sm">
+        <div class="flex items-center space-x-3">
+            <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" class="w-[80px]">
+            <h5 class="text-gray-800 font-semibold text-lg uppercase tracking-wider">Encuestas</h5>
         </div>
-    </nav>
 
-    <div class="offcanvas offcanvas-start" tabindex="100" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="navbarOffcanvasLabel">
-                <h5 class="text-dark m-2" style="font-size: large;">SOLICITUDES</h5>
-            </h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div class="user-container me-2 d-flex align-content-center" style="background-color: #ececec;">
+        <button class="lg:hidden text-gray-600 focus:outline-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m4 6h16"></path>
+        </svg>
+    </button>
+
+        <div class="hidden lg:flex items-center space-x-4">
+            <div class="flex items-center bg-white/40 px-4 py-1 rounded-full border border-blue-200">
+                <i class="bi bi-person-square text-[30px] text-blue-600 mr-3"></i>
                 <% if (login) { %>
-                    <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
-                    <div>
-                        <h4 type="" class="" style="color: #aeaeae;">
+                    <div class="leading-tight">
+                        <h4 class="text-sm font-bold text-gray-700 uppercase">
                             <%= name %>
                         </h4>
-                        <h6>
+                        <h6 class="text-xs text-blue-800 font-medium">
                             <%= rol %>
                         </h6>
                     </div>
-                    <%}  %>
+                    <% } %>
             </div>
-            <hr class="dropdown-divider">
-            <%- include('template/navbar-menu') %>
+
+            <button class="p-2 hover:bg-blue-100 rounded-full transition-colors" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas">
+            <i class="bi bi-list text-2xl"></i>
+        </button>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start !border-none !rounded-r-2xl shadow-2xl" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+        <div class="flex items-center justify-between p-4 border-b border-gray-100">
+            <h5 class="text-blue-900 font-bold text-lg italic" id="navbarOffcanvasLabel">ROSFAL MENU</h5>
+            <button type="button" class="text-gray-400 hover:text-black transition-colors" data-bs-dismiss="offcanvas">
+            <i class="bi bi-x-lg text-xl"></i>
+        </button>
+        </div>
+
+        <div class="p-4">
+            <div class="flex items-center p-3 bg-gray-50 rounded-xl mb-6">
+                <% if (login) { %>
+                    <i class="bi bi-person-square text-[40px] text-gray-400 mr-4"></i>
+                    <div>
+                        <h4 class="text-gray-600 font-bold text-base leading-none mb-1">
+                            <%= name %>
+                        </h4>
+                        <p class="text-xs text-gray-400 uppercase tracking-tighter">
+                            <%= rol %>
+                        </p>
+                    </div>
+                    <% } %>
+            </div>
+
+            <div class="space-y-2">
+                <%- include('template/navbar-menu') %>
+            </div>
         </div>
     </div>
 
@@ -197,37 +195,13 @@
                             <%=  %>
                         </h3>
                     </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/solicitudes-en-revision">Configuración</a></div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/rutas">Configuración</a></div>
                 </div>
             </div>
         </div>
-
-
-
     </div>
 
-    <!-- Sidebar -->
-    <!-- <aside class="w-full md:w-64 bg-slate-900 text-white p-6 flex flex-col gap-8">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-black text-xl">R</div>
-            <span class="text-2xl font-black tracking-tighter">ROSFAL</span>
-        </div>
 
-        <nav class="flex flex-col gap-2">
-            <a href="#" class="flex items-center gap-3 p-3 bg-blue-600 rounded-lg font-semibold transition-all">
-                <span>📊</span> Dashboard
-            </a>
-            <a href="#" class="flex items-center gap-3 p-3 hover:bg-slate-800 rounded-lg text-slate-400 transition-all">
-                <span>📝</span> Encuestas Realizadas
-            </a>
-            <a href="#" class="flex items-center gap-3 p-3 hover:bg-slate-800 rounded-lg text-slate-400 transition-all">
-                <span>📍</span> Mapas de Rutas
-            </a>
-            <a href="#" class="flex items-center gap-3 p-3 hover:bg-slate-800 rounded-lg text-slate-400 transition-all">
-                <span>⚙️</span> Configuración
-            </a>
-        </nav>
-    </aside> -->
 
     <!-- Main Content -->
     <main class="flex-1 p-4 md:p-8 overflow-y-auto ">
@@ -238,7 +212,7 @@
             </div>
             <div class="flex gap-3 w-full md:w-auto">
                 <button class="flex-1 md:flex-none bg-white border px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-all">Exportar PDF</button>
-                <button class="flex-1 md:flex-none bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition-all">Filtros Avanzados</button>
+                <button class="flex-1 md:flex-none btn-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-slate-800 transition-all">Filtros Avanzados</button>
             </div>
         </header>
 
@@ -471,7 +445,7 @@
                         datasets: [{
                             label: 'Número de Negocios',
                             data: [`<%= totalInventario %>`, `<%= totalEquipos %>`, `<%= totalRemodelacion %>`],
-                            backgroundColor: ['#2563eb', '#64748b', '#cbd5e1'],
+                            backgroundColor: ['#60a5fa', '#64748b', '#cbd5e1'],
                             borderRadius: 8
                         }]
                     },
@@ -501,7 +475,7 @@
                         labels: ['Colmados', 'Salones', 'Peluquerías', 'Otros'],
                         datasets: [{
                             data: [`<%= totalColmados %>`, `<%= totalSalones %>`, `<%= totalPeluquerias %>`, `<%= totalOtros %>`],
-                            backgroundColor: ['#0f172a', '#2563eb', '#60a5fa', '#e2e8f0'],
+                            backgroundColor: ['#60a5fa', '#2563eb', '#64748b', '#e2e8f0'],
                             borderWidth: 0
                         }]
                     },
@@ -532,8 +506,15 @@
                         datasets: [{
                             data: <%- JSON.stringify(valoresRutas) %>,
                             backgroundColor: [
-                                '#0f172a', '#2563eb', '#60a5fa', '#94a3b8',
-                                '#475569', '#38bdf8', '#1e293b', '#cbd5e1'
+                                // --- LA BASE ROSFAL (Azules) ---
+                                '#00BFFF',
+                                '#ADD8E6',
+                                '#B0C4DE',
+                                '#C0C0C0',
+                                '#2984D1',
+                                '#53EAFD',
+                                '#51A2FF',
+                                '#cbd5e1'
                             ],
                             borderWidth: 0
                         }]
@@ -577,7 +558,7 @@
                         datasets: [{
                             label: 'Encuestas Realizadas',
                             data: <%- JSON.stringify(valoresEncuestadores) %>,
-                            backgroundColor: '#2563eb', // Un azul sólido profesional
+                            backgroundColor: '#60a5fa', // Un azul sólido profesional
                             borderRadius: 5,
                             borderWidth: 0
                         }]

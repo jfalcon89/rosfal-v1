@@ -261,6 +261,30 @@ router.get('/encuestas-general', async(req, res) => {
 });
 
 
+//ELIMINAR ENCUESTA
+router.get("/encuestas-general/eliminar-encuesta/:id", async(req, res) => {
+    if (req.session.loggedin) {
+        const { id } = req.params;
+        try {
+            // 1. Borramos de verdad
+            await pool.query("DELETE FROM encuestas WHERE id_encuesta = ?", [id]);
+
+            // 2. Redireccionamos a la lista general 
+            // Esto limpia la URL y evita que al refrescar se intente borrar de nuevo
+            res.redirect("/encuestas-general");
+        } catch (error) {
+            console.log(error);
+            res.redirect("/encuestas-general");
+        }
+    } else {
+        res.render('login', { login: false, name: 'Debe iniciar sesión' });
+    }
+});
+
+
+
+
+
 //RENDERIZANDO Y MOSTRANDO TODAS LAS RUTAS CREADAS VISTA CREAR RUTA
 router.get('/clientes-promociones-adm', async(req, res) => {
     if (req.session.loggedin) {
