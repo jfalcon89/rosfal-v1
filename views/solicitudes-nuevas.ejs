@@ -289,65 +289,141 @@
     const tasaAprobacion = (100 - tasaInsatisfaccion).toFixed(1);
 %>
 
+                <% 
+    // 1. Definimos los estados que queremos sumar
+    const estadosValidos = ['Aprobada', 'En Legal'];
 
-                <main class="flex-grow-1 p-3 p-md-4 overflow-auto bg-light">
-                    <header class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
-                        <div>
-                            <h1 class="h3 fw-bold text-dark mb-1">Análisis de Solicitudes</h1>
-                            <p class="text-muted mb-0">Resultados en tiempo real de recepciones</p>
-                        </div>
-                        <div class="d-flex gap-2 w-100 w-md-auto">
-                            <button class="btn btn-outline-secondary flex-fill flex-md-none fw-semibold shadow-sm">Exportar PDF</button>
-                            <button class="btn btn-dark flex-fill flex-md-none fw-semibold shadow-sm">Filtros Avanzados</button>
-                        </div>
-                    </header>
+    // 2. Filtramos y sumamos el monto de las solicitudes que coincidan
+    const montoTotalActivo = arrayTotalSolicitudes.reduce((acumulador, s) => {
+        // Normalizamos el estado para evitar errores de mayúsculas o espacios
+        const estado = s.estadoSolicitud ? s.estadoSolicitud.trim() : '';
+        
+        if (estadosValidos.includes(estado)) {
+            // Limpiamos el string (quitamos RD$, comas, etc.) y convertimos a número
+            const montoLimpio = parseFloat(s.montoSolicitado.replace(/[^0-9.]/g, '')) || 0;
+            return acumulador + montoLimpio;
+        }
+        return acumulador;
+    }, 0);
 
-                    <div class="row g-4 mb-4">
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="card border-0 shadow-sm h-100 p-3">
-                                <p class="text-muted small fw-bold text-uppercase mb-2">Total Solicitudes Nuevas</p>
-                                <h2 class="display-6 fw-black text-dark mb-1">
-                                    <%= arraySolicitudesNuevas.length %>
-                                </h2>
-                                <span class="text-success small fw-bold">↑ <%= porcentajeSemana %>% Porcentaje esta semana</span>
-                                <span class="text-success small fw-bold">↑ <%= totalSemana %> Recibidas esta semana</span>
-                            </div>
-                        </div>
 
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="card border-0 shadow-sm h-100 p-3">
-                                <% let sumaFlujo = 0; arrayEncuestas.forEach(encuesta => {sumaFlujo += encuesta.flujo_clientes_score;}); const flujoPromedio = arrayEncuestas.length > 0 ? (sumaFlujo / arrayEncuestas.length).toFixed(1) : 0; %>
-                                    <p class="text-muted small fw-bold text-uppercase mb-2">Monto Promedio</p>
-                                    <h2 class="display-6 fw-black text-dark mb-1">
-                                        RD
-                                        <%= montoPromedio=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoPromedio) %>
-                                    </h2>
-                                    <span class="text-muted small">Puntuación de mercado</span>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="card border-0 shadow-sm h-100 p-3">
-                                <p class="text-muted small fw-bold text-uppercase mb-2">Aprobaciones Solicitudes Potenciales</p>
-                                <h2 class="display-6 fw-black text-primary mb-1">
-                                    <%= arrayClientesPotenciales.length %>
-                                </h2>
-                                <span class="text-muted small">Score > 70 puntos</span>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6 col-md-3">
-                            <div class="card border-0 shadow-sm h-100 p-3">
-                                <p class="text-muted small fw-bold text-uppercase mb-2">Tasa de Declinacion</p>
-
-                                <h2 class="display-6 fw-black text-danger mb-1">
-                                    <%= tasaInsatisfaccion %>%</h2>
-                                <span class="text-muted small">Oportunidad de captura</span>
-                            </div>
-                        </div>
-                    </div>
+    // 3. Contar cuántas solicitudes representan ese monto
+    const cantidadSolicitudesActivas = arrayTotalSolicitudes.filter(s => 
+        estadosValidos.includes(s.estadoSolicitud ? s.estadoSolicitud.trim() : '')
+    ).length;
+%>
 
                     <% 
+    // 1. Estados que definen cartera activa o en recuperación
+    const estadosCartera = ['Aprobada', 'En Legal'];
+
+    // 2. Cálculo del Saldo Pendiente Total
+    const saldoTotalPendiente = arrayTotalSolicitudes.reduce((total, s) => {
+        const estado = s.estadoSolicitud ? s.estadoSolicitud.trim() : '';
+        
+        if (estadosCartera.includes(estado)) {
+            // Convertimos a número: eliminamos cualquier cosa que no sea número o punto
+            // s.saldoFinal suele ser varchar(10) según tu estructura
+            const valorSaldo = parseFloat(String(s.saldoFinal).replace(/[^0-9.]/g, '')) || 0;
+            return total + valorSaldo;
+        }
+        return total;
+    }, 0);
+
+    // 3. Conteo de préstamos con saldo pendiente
+    const prestamosConSaldo = arrayTotalSolicitudes.filter(s => {
+        const estado = s.estadoSolicitud ? s.estadoSolicitud.trim() : '';
+        const saldo = parseFloat(String(s.saldoFinal).replace(/[^0-9.]/g, '')) || 0;
+        return estadosCartera.includes(estado) && saldo > 0;
+    }).length;
+%>
+
+                        <% 
+    // 1. Filtrar solo las solicitudes con estado 'Declinada'
+    const solicitudesRechazadas = arrayTotalSolicitudes.filter(s => 
+        s.estadoSolicitud && s.estadoSolicitud.trim().toLowerCase() === 'declinada'
+    );
+
+    // 2. Sumar el monto solicitado de estas solicitudes
+    const montoTotalDeclinado = solicitudesRechazadas.reduce((total, s) => {
+        // Limpiamos el varchar(10) para convertirlo a número sumable
+        const monto = parseFloat(String(s.montoSolicitado).replace(/[^0-9.]/g, '')) || 0;
+        return total + monto;
+    }, 0);
+
+    // 3. Cantidad de solicitudes declinadas
+    const cantidadDeclinadas = solicitudesRechazadas.length;
+%>
+                            <main class="flex-grow-1 p-3 p-md-4 overflow-auto bg-light">
+                                <header class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+                                    <div>
+                                        <h1 class="h3 fw-bold text-dark mb-1">Análisis de Solicitudes</h1>
+                                        <p class="text-muted mb-0">Resultados en tiempo real de recepciones</p>
+                                    </div>
+                                    <div class="d-flex gap-2 w-100 w-md-auto">
+                                        <button class="btn btn-outline-secondary flex-fill flex-md-none fw-semibold shadow-sm">Exportar PDF</button>
+                                        <button class="btn btn-dark flex-fill flex-md-none fw-semibold shadow-sm">Filtros Avanzados</button>
+                                    </div>
+                                </header>
+
+                                <div class="row g-6 mb-4">
+                                    <div class="d-lg-flex justify-content-between">
+                                        <div class="col-lg-2 mb-2">
+                                            <div class="card border-0 shadow-sm h-100 p-3">
+                                                <p class="text-muted small fw-bold text-uppercase mb-2">Total Solicitudes Nuevas</p>
+                                                <h2 class="display-6 fw-black text-dark mb-1">
+                                                    <%= arraySolicitudesNuevas.length %>
+                                                </h2>
+                                                <span class="text-success small fw-bold">↑ <%= porcentajeSemana %>% Porcentaje esta semana</span>
+                                                <span class="text-success small fw-bold">↑ <%= totalSemana %> Recibidas esta semana</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 mb-2">
+                                            <div class="card border-0 shadow-sm h-100 p-3">
+                                                <% let sumaFlujo = 0; arrayEncuestas.forEach(encuesta => {sumaFlujo += encuesta.flujo_clientes_score;}); const flujoPromedio = arrayEncuestas.length > 0 ? (sumaFlujo / arrayEncuestas.length).toFixed(1) : 0; %>
+                                                    <p class="text-muted small fw-bold text-uppercase mb-2">Monto Promedio</p>
+                                                    <h2 class="display-6 fw-black text-dark mb-1">
+                                                        RD
+                                                        <%= montoPromedio=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoPromedio) %>
+                                                    </h2>
+                                                    <span class="text-muted small">Puntuación de mercado general</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 mb-2">
+                                            <div class="card border-0 shadow-sm h-100 p-3">
+                                                <p class="text-muted small fw-bold text-uppercase mb-2">Aprobaciones Solicitudes Potenciales</p>
+                                                <h2 class="display-6 fw-black text-primary mb-1">
+                                                    RD$
+                                                    <%= montoTotalActivo.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
+                                                </h2>
+                                                <span class="text-muted small">Proyeccion Solicitudes Declinadas <span class="text-danger"><%= montoTotalDeclinado.toLocaleString('en-US', { minimumFractionDigits: 2 }) %></span></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 mb-2">
+                                            <div class="card border-0 shadow-sm h-100 p-3">
+                                                <p class="text-muted small fw-bold text-uppercase mb-2">Proyeccion Prestamos Aprobados</p>
+                                                <h2 class="display-6 fw-black text-success mb-1">
+                                                    RD$
+                                                    <%= saldoTotalPendiente.toLocaleString('en-US', { minimumFractionDigits: 2 }) %>
+                                                </h2>
+                                                <span class="text-muted small">Tasa amortizada</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 mb-2">
+                                            <div class="card border-0 shadow-sm h-100 p-3">
+                                                <p class="text-muted small fw-bold text-uppercase mb-2">Tasa de Declinacion</p>
+
+                                                <h2 class="display-6 fw-black text-danger mb-1">
+                                                    <%= tasaInsatisfaccion %>%</h2>
+                                                <span class="text-muted small">Oportunidad de captura</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <% 
         const totalInventario = arrayEncuestas.filter(e => e.prioridad_inversion === 'Inventario').length;
         const totalEquipos = arrayEncuestas.filter(e => e.prioridad_inversion === 'Equipos').length;
         const totalRemodelacion = arrayEncuestas.filter(e => e.prioridad_inversion === 'Remodelación').length;
@@ -374,424 +450,424 @@
         const valoresEncuestadores = Object.values(conteoEncuestadores);
     %>
 
-                        <div class="row g-4 mb-4">
-                            <div class="col-12 col-lg-6">
-                                <div class="card border-0 shadow-sm p-4 h-100">
-                                    <h3 class="h6 fw-bold text-secondary mb-4">Frecuencias de Pagos Solicitudes</h3>
-                                    <div style="position: relative; height:300px;">
-                                        <canvas id="priorityChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6 col-lg-6 d-flex">
-                                <div class="col-6 col-lg-6">
-                                    <div class="card border-0 shadow-sm p-4 h-100">
-                                        <h3 class="h6 fw-bold text-secondary mb-4">Tipos de Solicitudes (Personal/Comercial)</h3>
-                                        <div style="position: relative; height:300px;">
-                                            <canvas id="businessTypeChart"></canvas>
+                                    <div class="row g-4 mb-4">
+                                        <div class="col-12 col-lg-6">
+                                            <div class="card border-0 shadow-sm p-4 h-100">
+                                                <h3 class="h6 fw-bold text-secondary mb-4">Frecuencias de Pagos Solicitudes</h3>
+                                                <div style="position: relative; height:300px;">
+                                                    <canvas id="priorityChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-lg-6 d-lg-flex">
+                                            <div class="col-6 col-lg-6 mb-4">
+                                                <div class="card border-0 shadow-sm p-4 h-100">
+                                                    <h3 class="h6 fw-bold text-secondary mb-4">Tipos de Solicitudes (Personal/Comercial)</h3>
+                                                    <div style="position: relative; height:300px;">
+                                                        <canvas id="businessTypeChart"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-lg-6 d-lg-flex">
+                                                <div class="card border-0 shadow-sm p-4 h-100">
+                                                    <h3 class="h6 fw-bold text-secondary mb-4">Clasificacion por Solicitudes</h3>
+                                                    <div style="position: relative; height:300px;">
+                                                        <canvas id="clasificacionSolicitudes"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="card border-0 shadow-sm p-4 h-100">
+                                                <h3 class="h6 fw-bold text-secondary mb-4">Solicitudes por Rutas</h3>
+                                                <div style="position: relative; height:300px;">
+                                                    <canvas id="encuestasRutas"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="card border-0 shadow-sm p-4 h-100">
+                                                <h3 class="h6 fw-bold text-secondary mb-4">Encuestas por Encuestador</h3>
+                                                <div style="position: relative; height:300px;">
+                                                    <canvas id="encuestasStaff"></canvas>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-6 col-lg-6">
-                                    <div class="card border-0 shadow-sm p-4 h-100">
-                                        <h3 class="h6 fw-bold text-secondary mb-4">Clasificacion por Solicitudes</h3>
-                                        <div style="position: relative; height:300px;">
-                                            <canvas id="clasificacionSolicitudes"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <div class="card border-0 shadow-sm p-4 h-100">
-                                    <h3 class="h6 fw-bold text-secondary mb-4">Solicitudes por Rutas</h3>
-                                    <div style="position: relative; height:300px;">
-                                        <canvas id="encuestasRutas"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6">
-                                <div class="card border-0 shadow-sm p-4 h-100">
-                                    <h3 class="h6 fw-bold text-secondary mb-4">Encuestas por Encuestador</h3>
-                                    <div style="position: relative; height:300px;">
-                                        <canvas id="encuestasStaff"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                </main>
+                            </main>
 
-                <div class="container-fluid p-4 mt-5">
-                    <h3 style="color: #2f6eaa;" class="">NUEVAS</h3>
-                    <div style="border-radius: 50px; box-shadow:  20px 20px 60px #bebebe, -20px -20px 60px #ffffff;" class="container-fluid p-4">
-                        <div class="container-table table-responsive">
-                            <table id="datatable" class="display responsive nowrap compact" style="width:100%">
-                                <!-- <table id="datatable" class="display table table-sm table-hover  " style="width: 100%;"> -->
-                                <thead class="thead-ligth">
-                                    <tr>
-                                        <th class="p-0">ID Solicitud</th>
-                                        <th class="p-0">Nombre</th>
-                                        <th class="p-0">Apellido</th>
-                                        <th class="p-0">Cedula</th>
-                                        <th class="p-0">Celular</th>
-                                        <th class="p-0">Cliente id</th>
-                                        <th scope="col">Email</th>
-                                        <th class="p-0">Fecha Solicitud</th>
-                                        <th class="p-0">Monto Solicitud</th>
-                                        <th class="p-0">Tipo de Prestamo</th>
-                                        <th class="p-0">Estado Solicitud</th>
-                                        <th class="p-0">Clasificacion</th>
-                                        <th class="p-0">Ver Solicitud</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                            <div class="container-fluid p-4 mt-5">
+                                <h3 style="color: #2f6eaa;" class="">NUEVAS</h3>
+                                <div style="border-radius: 50px; box-shadow:  20px 20px 60px #bebebe, -20px -20px 60px #ffffff;" class="container-fluid p-4">
+                                    <div class="container-table table-responsive">
+                                        <table id="datatable" class="display responsive nowrap compact" style="width:100%">
+                                            <!-- <table id="datatable" class="display table table-sm table-hover  " style="width: 100%;"> -->
+                                            <thead class="thead-ligth">
+                                                <tr>
+                                                    <th class="p-0">ID Solicitud</th>
+                                                    <th class="p-0">Nombre</th>
+                                                    <th class="p-0">Apellido</th>
+                                                    <th class="p-0">Cedula</th>
+                                                    <th class="p-0">Celular</th>
+                                                    <th class="p-0">Cliente id</th>
+                                                    <th scope="col">Email</th>
+                                                    <th class="p-0">Fecha Solicitud</th>
+                                                    <th class="p-0">Monto Solicitud</th>
+                                                    <th class="p-0">Tipo de Prestamo</th>
+                                                    <th class="p-0">Estado Solicitud</th>
+                                                    <th class="p-0">Clasificacion</th>
+                                                    <th class="p-0">Ver Solicitud</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                    <% if (arraySolicitudesNuevas.length > 0) { %>
-                                        <% arraySolicitudesNuevas.forEach(solicitud=> { %>
+                                                <% if (arraySolicitudesNuevas.length > 0) { %>
+                                                    <% arraySolicitudesNuevas.forEach(solicitud=> { %>
 
-                                            <tr>
+                                                        <tr>
 
-                                                <td>
-                                                    <%= solicitud.idSolicitud %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.nombre %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.apellido %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.cedula %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.celular %>
-                                                </td>
-                                                <td>
-                                                    <% if(solicitud.cliente_id_validacion) { %>
-                                                        <%= solicitud.cliente_id_validacion %>
-                                                            <% }else { %>
-                                                                <span style="color: red;">Solicitud sin Cliente</span>
-                                                                <% } %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.email %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.montoSolicitado %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.tipoPrestamo %>
-                                                </td>
-                                                <td>
-                                                    <%= solicitud.estadoSolicitud %>
-                                                </td>
-                                                <td>
-                                                    <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
-                                                        <p style="background-color: gray; color: white;">
-                                                            <%= solicitud.clasificacionCliente %>
-                                                        </p>
-                                                        <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
-                                                            <p style="background-color: green; color: white;">
-                                                                <%= solicitud.clasificacionCliente %>
-                                                            </p>
-                                                            <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
-                                                                <p style="background-color: yellow; color: black;">
-                                                                    <%= solicitud.clasificacionCliente %>
-                                                                </p>
-                                                                <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
-                                                                    <p style="background-color: orange; color: black;">
+                                                            <td>
+                                                                <%= solicitud.idSolicitud %>
+                                                            </td>
+                                                            <td>
+                                                                <%= solicitud.nombre %>
+                                                            </td>
+                                                            <td>
+                                                                <%= solicitud.apellido %>
+                                                            </td>
+                                                            <td>
+                                                                <%= solicitud.cedula %>
+                                                            </td>
+                                                            <td>
+                                                                <%= solicitud.celular %>
+                                                            </td>
+                                                            <td>
+                                                                <% if(solicitud.cliente_id_validacion) { %>
+                                                                    <%= solicitud.cliente_id_validacion %>
+                                                                        <% }else { %>
+                                                                            <span style="color: red;">Solicitud sin Cliente</span>
+                                                                            <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <%= solicitud.email %>
+                                                            </td>
+                                                            <td>
+                                                                <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
+                                                            </td>
+                                                            <td>
+                                                                <%= solicitud.montoSolicitado %>
+                                                            </td>
+                                                            <td>
+                                                                <%= solicitud.tipoPrestamo %>
+                                                            </td>
+                                                            <td>
+                                                                <%= solicitud.estadoSolicitud %>
+                                                            </td>
+                                                            <td>
+                                                                <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
+                                                                    <p style="background-color: gray; color: white;">
                                                                         <%= solicitud.clasificacionCliente %>
                                                                     </p>
-                                                                    <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
-                                                                        <p style="background-color: darkred; color: white;">
+                                                                    <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
+                                                                        <p style="background-color: green; color: white;">
                                                                             <%= solicitud.clasificacionCliente %>
                                                                         </p>
-                                                                        <% } %>
-                                                </td>
-                                                <td class="w-0 "><a href="/solicitudes/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>
+                                                                        <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
+                                                                            <p style="background-color: yellow; color: black;">
+                                                                                <%= solicitud.clasificacionCliente %>
+                                                                            </p>
+                                                                            <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
+                                                                                <p style="background-color: orange; color: black;">
+                                                                                    <%= solicitud.clasificacionCliente %>
+                                                                                </p>
+                                                                                <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
+                                                                                    <p style="background-color: darkred; color: white;">
+                                                                                        <%= solicitud.clasificacionCliente %>
+                                                                                    </p>
+                                                                                    <% } %>
+                                                            </td>
+                                                            <td class="w-0 "><a href="/solicitudes/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>
 
-                                                </td>
-                                            </tr>
+                                                            </td>
+                                                        </tr>
 
-                                            <% }) %>
-                                                <% } %>
+                                                        <% }) %>
+                                                            <% } %>
 
-                                </tbody>
-                                <!-- <button id="excel">descargar</button> -->
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100"></div>
-                <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
-                </div>
-
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // Configuración del Gráfico de Prioridades
-                        const ctxPriority = document.getElementById('priorityChart');
-                        if (ctxPriority) {
-                            new Chart(ctxPriority, {
-                                type: 'bar',
-                                data: {
-                                    labels: ['Pagos Diarios', 'Pagos Semanales', 'Pagos Quincenales', 'Pagos Mensuales'],
-                                    datasets: [{
-                                        label: 'Número de Negocios',
-                                        data: [`<%= frecuencias.diarios %>`, `<%= frecuencias.semanales %>`, `<%= frecuencias.quincenales %>`, `<%= frecuencias.mensuales %>`],
-                                        backgroundColor: ['#2563eb', '#64748b', '#cbd5e1'],
-                                        borderRadius: 8
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    plugins: {
-                                        legend: {
-                                            display: false
-                                        }
-                                    },
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
-                                    }
-                                }
-                            });
-                        }
-
-                        // Configuración del Gráfico de Tipos de Negocio
-                        const ctxBusiness = document.getElementById('businessTypeChart');
-                        if (ctxBusiness) {
-                            new Chart(ctxBusiness, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: ['Personal', 'Comercial'],
-                                    datasets: [{
-                                        data: [`<%= tiposPrestamo.personal %>`, `<%= tiposPrestamo.comercial %>`],
-                                        backgroundColor: ['#0f172a', '#2563eb', '#60a5fa', '#e2e8f0'],
-                                        borderWidth: 0
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    plugins: {
-                                        legend: {
-                                            position: 'left',
-                                            labels: {
-                                                padding: 20
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        }
+                                            </tbody>
+                                            <!-- <button id="excel">descargar</button> -->
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
 
 
+                            <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100"></div>
+                            <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+                            </div>
 
-                        // Configuración del Gráfico clasificacion por solicitudes
-                        const ctxClasificacion = document.getElementById('clasificacionSolicitudes');
 
-                        if (ctxClasificacion) {
-                            new Chart(ctxClasificacion, {
-                                type: 'doughnut',
-                                data: {
-                                    // El orden de labels debe coincidir con el orden de data abajo
-                                    labels: ['A-Premium', 'B-Regular', 'C-Riesgo', 'D-Desestimado', 'Sin Clasificación'],
-                                    datasets: [{
-                                        data: [
-                                            <%= clasificacion.A_Primium %>,
-                                            <%= clasificacion.B_Regular %>,
-                                            <%= clasificacion.C_Riesgo %>,
-                                            <%= clasificacion.D_Desestimado %>,
-                                            <%= clasificacion.Sin_Clasificacion %>
-                                        ],
-                                        // Añadí un color extra porque tienes 5 categorías y solo había 4 colores
-                                        backgroundColor: ['#2563eb', '#60a5fa', '#f59e0b', '#ef4444', '#94a3b8'],
-                                        borderWidth: 2,
-                                        borderColor: '#ffffff'
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    cutout: '65%',
-                                    plugins: {
-                                        legend: {
-                                            position: 'left',
-                                            labels: {
-                                                padding: 15,
-                                                usePointStyle: true,
-                                                font: {
-                                                    family: "'Inter', sans-serif",
-                                                    size: 12
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    // Configuración del Gráfico de Prioridades
+                                    const ctxPriority = document.getElementById('priorityChart');
+                                    if (ctxPriority) {
+                                        new Chart(ctxPriority, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['Pagos Diarios', 'Pagos Semanales', 'Pagos Quincenales', 'Pagos Mensuales'],
+                                                datasets: [{
+                                                    label: 'Número de Negocios',
+                                                    data: [`<%= frecuencias.diarios %>`, `<%= frecuencias.semanales %>`, `<%= frecuencias.quincenales %>`, `<%= frecuencias.mensuales %>`],
+                                                    backgroundColor: ['#2563eb', '#64748b', '#cbd5e1'],
+                                                    borderRadius: 8
+                                                }]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                plugins: {
+                                                    legend: {
+                                                        display: false
+                                                    }
+                                                },
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true
+                                                    }
                                                 }
                                             }
-                                        }
+                                        });
                                     }
-                                }
-                            });
-                        }
 
-                        // Configuración del Gráfico de solicitudes por Rutas (Préstamos)
-                        const ctxRutasPrestamos = document.getElementById('encuestasRutas');
+                                    // Configuración del Gráfico de Tipos de Negocio
+                                    const ctxBusiness = document.getElementById('businessTypeChart');
+                                    if (ctxBusiness) {
+                                        new Chart(ctxBusiness, {
+                                            type: 'doughnut',
+                                            data: {
+                                                labels: ['Personal', 'Comercial'],
+                                                datasets: [{
+                                                    data: [`<%= tiposPrestamo.personal %>`, `<%= tiposPrestamo.comercial %>`],
+                                                    backgroundColor: ['#0f172a', '#2563eb', '#60a5fa', '#e2e8f0'],
+                                                    borderWidth: 0
+                                                }]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                plugins: {
+                                                    legend: {
+                                                        position: 'left',
+                                                        labels: {
+                                                            padding: 20
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
 
-                        if (ctxRutasPrestamos) {
-                            // 1. Extraemos los datos de la variable que procesamos en EJS
-                            // etiquetasRutasPrestamos será algo como ["Ruta 1", "Ruta 2"]
-                            // valoresRutasPrestamos será algo como [15, 8]
-                            const etiquetasRutasPrestamos = <%- JSON.stringify(Object.keys(solicitudesPorRuta)) %>;
-                            const valoresRutasPrestamos = <%- JSON.stringify(Object.values(solicitudesPorRuta)) %>;
 
-                            new Chart(ctxRutasPrestamos, {
-                                type: 'doughnut',
-                                data: {
-                                    labels: etiquetasRutasPrestamos,
-                                    datasets: [{
-                                        data: valoresRutasPrestamos,
-                                        backgroundColor: [
-                                            '#0f172a', // Slate 900
-                                            '#2563eb', // Blue 600
-                                            '#60a5fa', // Blue 400
-                                            '#94a3b8', // Slate 400
-                                            '#38bdf8', // Sky 400
-                                            '#1e293b', // Slate 800
-                                            '#475569', // Slate 600
-                                            '#cbd5e1' // Slate 200
-                                        ],
-                                        borderWidth: 2,
-                                        borderColor: '#ffffff' // Espacio blanco entre segmentos
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    cutout: '70%', // Hace el agujero del centro más grande (estilo moderno)
-                                    plugins: {
-                                        legend: {
-                                            position: 'left',
-                                            align: 'center',
-                                            labels: {
-                                                padding: 20,
-                                                usePointStyle: true, // Círculos en lugar de cuadrados
-                                                pointStyle: 'circle',
-                                                font: {
-                                                    size: 13,
-                                                    family: "'Inter', 'Segoe UI', sans-serif",
-                                                    weight: '500'
+
+                                    // Configuración del Gráfico clasificacion por solicitudes
+                                    const ctxClasificacion = document.getElementById('clasificacionSolicitudes');
+
+                                    if (ctxClasificacion) {
+                                        new Chart(ctxClasificacion, {
+                                            type: 'doughnut',
+                                            data: {
+                                                // El orden de labels debe coincidir con el orden de data abajo
+                                                labels: ['A-Premium', 'B-Regular', 'C-Riesgo', 'D-Desestimado', 'Sin Clasificación'],
+                                                datasets: [{
+                                                    data: [
+                                                        <%= clasificacion.A_Primium %>,
+                                                        <%= clasificacion.B_Regular %>,
+                                                        <%= clasificacion.C_Riesgo %>,
+                                                        <%= clasificacion.D_Desestimado %>,
+                                                        <%= clasificacion.Sin_Clasificacion %>
+                                                    ],
+                                                    // Añadí un color extra porque tienes 5 categorías y solo había 4 colores
+                                                    backgroundColor: ['#2563eb', '#60a5fa', '#f59e0b', '#ef4444', '#94a3b8'],
+                                                    borderWidth: 2,
+                                                    borderColor: '#ffffff'
+                                                }]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                cutout: '65%',
+                                                plugins: {
+                                                    legend: {
+                                                        position: 'left',
+                                                        labels: {
+                                                            padding: 15,
+                                                            usePointStyle: true,
+                                                            font: {
+                                                                family: "'Inter', sans-serif",
+                                                                size: 12
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                    // Configuración del Gráfico de solicitudes por Rutas (Préstamos)
+                                    const ctxRutasPrestamos = document.getElementById('encuestasRutas');
+
+                                    if (ctxRutasPrestamos) {
+                                        // 1. Extraemos los datos de la variable que procesamos en EJS
+                                        // etiquetasRutasPrestamos será algo como ["Ruta 1", "Ruta 2"]
+                                        // valoresRutasPrestamos será algo como [15, 8]
+                                        const etiquetasRutasPrestamos = <%- JSON.stringify(Object.keys(solicitudesPorRuta)) %>;
+                                        const valoresRutasPrestamos = <%- JSON.stringify(Object.values(solicitudesPorRuta)) %>;
+
+                                        new Chart(ctxRutasPrestamos, {
+                                            type: 'doughnut',
+                                            data: {
+                                                labels: etiquetasRutasPrestamos,
+                                                datasets: [{
+                                                    data: valoresRutasPrestamos,
+                                                    backgroundColor: [
+                                                        '#0f172a', // Slate 900
+                                                        '#2563eb', // Blue 600
+                                                        '#60a5fa', // Blue 400
+                                                        '#94a3b8', // Slate 400
+                                                        '#38bdf8', // Sky 400
+                                                        '#1e293b', // Slate 800
+                                                        '#475569', // Slate 600
+                                                        '#cbd5e1' // Slate 200
+                                                    ],
+                                                    borderWidth: 2,
+                                                    borderColor: '#ffffff' // Espacio blanco entre segmentos
+                                                }]
+                                            },
+                                            options: {
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                cutout: '70%', // Hace el agujero del centro más grande (estilo moderno)
+                                                plugins: {
+                                                    legend: {
+                                                        position: 'left',
+                                                        align: 'center',
+                                                        labels: {
+                                                            padding: 20,
+                                                            usePointStyle: true, // Círculos en lugar de cuadrados
+                                                            pointStyle: 'circle',
+                                                            font: {
+                                                                size: 13,
+                                                                family: "'Inter', 'Segoe UI', sans-serif",
+                                                                weight: '500'
+                                                            },
+                                                            color: '#475569'
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        backgroundColor: '#1e293b',
+                                                        padding: 12,
+                                                        titleFont: {
+                                                            size: 14
+                                                        },
+                                                        bodyFont: {
+                                                            size: 13
+                                                        },
+                                                        displayColors: true
+                                                    }
                                                 },
-                                                color: '#475569'
+                                                layout: {
+                                                    padding: {
+                                                        left: 20,
+                                                        right: 20,
+                                                        top: 10,
+                                                        bottom: 10
+                                                    }
+                                                }
                                             }
-                                        },
-                                        tooltip: {
-                                            backgroundColor: '#1e293b',
-                                            padding: 12,
-                                            titleFont: {
-                                                size: 14
-                                            },
-                                            bodyFont: {
-                                                size: 13
-                                            },
-                                            displayColors: true
-                                        }
-                                    },
-                                    layout: {
-                                        padding: {
-                                            left: 20,
-                                            right: 20,
-                                            top: 10,
-                                            bottom: 10
-                                        }
+                                        });
                                     }
-                                }
-                            });
-                        }
 
-                        // Configuración del Gráfico de Rendimiento por Encuestador
-                        const ctxStaff = document.getElementById('encuestasStaff');
+                                    // Configuración del Gráfico de Rendimiento por Encuestador
+                                    const ctxStaff = document.getElementById('encuestasStaff');
 
-                        if (ctxStaff) {
-                            new Chart(ctxStaff, {
-                                type: 'bar', // Cambiado a barras para mejor lectura de nombres
-                                data: {
-                                    labels: <%- JSON.stringify(etiquetasEncuestadores) %>,
-                                    datasets: [{
-                                        label: 'Encuestas Realizadas',
-                                        data: <%- JSON.stringify(valoresEncuestadores) %>,
-                                        backgroundColor: '#2563eb', // Un azul sólido profesional
-                                        borderRadius: 5,
-                                        borderWidth: 0
-                                    }]
-                                },
-                                options: {
-                                    indexAxis: 'y', // Hace que las barras sean horizontales
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    plugins: {
-                                        legend: {
-                                            display: false
-                                        } // Ocultamos la leyenda para ganar espacio
-                                    },
-                                    scales: {
-                                        x: {
-                                            beginAtZero: true,
-                                            grid: {
-                                                display: false
+                                    if (ctxStaff) {
+                                        new Chart(ctxStaff, {
+                                            type: 'bar', // Cambiado a barras para mejor lectura de nombres
+                                            data: {
+                                                labels: <%- JSON.stringify(etiquetasEncuestadores) %>,
+                                                datasets: [{
+                                                    label: 'Encuestas Realizadas',
+                                                    data: <%- JSON.stringify(valoresEncuestadores) %>,
+                                                    backgroundColor: '#2563eb', // Un azul sólido profesional
+                                                    borderRadius: 5,
+                                                    borderWidth: 0
+                                                }]
                                             },
-                                            ticks: {
-                                                stepSize: 1
-                                            } // Solo números enteros
-                                        },
-                                        y: {
-                                            grid: {
-                                                display: false
+                                            options: {
+                                                indexAxis: 'y', // Hace que las barras sean horizontales
+                                                responsive: true,
+                                                maintainAspectRatio: false,
+                                                plugins: {
+                                                    legend: {
+                                                        display: false
+                                                    } // Ocultamos la leyenda para ganar espacio
+                                                },
+                                                scales: {
+                                                    x: {
+                                                        beginAtZero: true,
+                                                        grid: {
+                                                            display: false
+                                                        },
+                                                        ticks: {
+                                                            stepSize: 1
+                                                        } // Solo números enteros
+                                                    },
+                                                    y: {
+                                                        grid: {
+                                                            display: false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            </script>
+
+
+                            <script>
+                                $(document).ready(function() {
+                                    $('#datatable').DataTable({
+                                        order: [
+                                            [0, 'desc']
+                                        ],
+
+
+                                        language: {
+                                            "decimal": "",
+                                            "emptyTable": "No hay información",
+                                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                                            "infoPostFix": "",
+                                            "thousands": ",",
+                                            "lengthMenu": "Mostrar _MENU_ Entradas",
+                                            "loadingRecords": "Cargando...",
+                                            "processing": "Procesando...",
+                                            "search": "Buscar:",
+                                            "zeroRecords": "Sin resultados encontrados",
+                                            "paginate": {
+                                                "first": "Primero",
+                                                "last": "Ultimo",
+                                                "next": "Siguiente",
+                                                "previous": "Anterior"
                                             }
                                         }
-                                    }
-                                }
-                            });
-                        }
-                    });
-                </script>
+                                    });
 
-
-                <script>
-                    $(document).ready(function() {
-                        $('#datatable').DataTable({
-                            order: [
-                                [0, 'desc']
-                            ],
-
-
-                            language: {
-                                "decimal": "",
-                                "emptyTable": "No hay información",
-                                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                                "infoPostFix": "",
-                                "thousands": ",",
-                                "lengthMenu": "Mostrar _MENU_ Entradas",
-                                "loadingRecords": "Cargando...",
-                                "processing": "Procesando...",
-                                "search": "Buscar:",
-                                "zeroRecords": "Sin resultados encontrados",
-                                "paginate": {
-                                    "first": "Primero",
-                                    "last": "Ultimo",
-                                    "next": "Siguiente",
-                                    "previous": "Anterior"
-                                }
-                            }
-                        });
-
-                    });
-                </script>
+                                });
+                            </script>
 
 
 
