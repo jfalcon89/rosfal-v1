@@ -18,13 +18,25 @@ router.get('/encuesta', async(req, res) => {
         const permiso_D = 'Encuestador'
 
         const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+        const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre = 'encuestas' AND descripcion = 'Activo'");
+
+        console.log(rows)
+
+        // Resultado esperado: { pregunta_1: 'Valor1', pregunta_2: 'Valor2' }
+        const config = rows.reduce((acc, row) => {
+            acc[row.parametro_clave] = row.parametro_valor;
+            return acc;
+        }, {});
+
+        console.log(config)
 
         res.render("encuesta", {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
             permiso_D,
-            arrayRutas: arrayRutasDB
+            arrayRutas: arrayRutasDB,
+            config
         });
     } else {
         res.render('login', {

@@ -260,7 +260,11 @@
                                                             <p style="background-color: darkred; color: white;">
                                                                 <%= solicitud.clasificacionCliente %>
                                                             </p>
-                                                            <% } %>
+                                                            <% } else if (solicitud.clasificacionCliente == 'E-Penalizado') { %>
+                                                                <p style="background-color: rgb(0, 0, 0); color: white;">
+                                                                    <%= solicitud.clasificacionCliente %>
+                                                                </p>
+                                                                <% } %>
                                     </td>
 
                                     <td class="w-0 "><a href="/solicitudes/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>

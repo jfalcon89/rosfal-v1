@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- css y js bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+    <!-- linkeado css propio -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- icons bootstrap cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- generador de pdf cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <!-- moment.js cdn -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
+    <!-- DATATABLE -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
+    <link rel="icon" href="/img/favicon/logo-favicon.png">
+    <title>Rosfal - Mantenedor de Parametros</title>
+</head>
+
+<body>
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-light  ">
+        <div class="container-fluid  " style="background-color: #ececec;">
+
+            <div class="d-flex">
+                <img src="/img/LOGO-ROSFAL.png" alt="logo-rosfal" style="width: 80px;" class="me-2">
+                <h5 class="text-dark m-2 d-flex align-items-center" style="font-size: large;">MANTENEDOR DE PARAMETROS</h5>
+            </div>
+            <button class="navbar-toggler  " type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon "></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="offcanvas-body ">
+
+                    <div class="d-flex">
+                        <div class="btn-group ">
+                            <button type="button" class="hola navbar-toggler d-block me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon show "></span>
+                            </button>
+                            <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
+                        </div>
+                        <div class="user-container me-2 d-flex">
+                            <% if (login) { %>
+                                <div>
+                                    <h4 type="" class="" style="color: #aeaeae;">
+                                        <%= name %>
+                                    </h4>
+                                    <h6>
+                                        <%= rol %>
+                                    </h6>
+                                </div>
+                                <%}  %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="navbarOffcanvasLabel">
+                <h5 class="text-dark m-2" style="font-size: large;">MANTENEDOR DE PARAMETROS</h5>
+            </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="user-container me-2 d-flex align-content-center" style="background-color: #ececec;">
+                <% if (login) { %>
+                    <i class="bi bi-person-square me-2" style="font-size: 40px;"></i>
+                    <div>
+                        <h4 type="" class="" style="color: #aeaeae;">
+                            <%= name %>
+                        </h4>
+                        <h6>
+                            <%= rol %>
+                        </h6>
+                    </div>
+                    <%}  %>
+            </div>
+            <hr class="dropdown-divider">
+            <%- include('template/navbar-menu') %>
+        </div>
+    </div>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white"><b>Módulos</b></div>
+                    <div class="list-group list-group-flush" id="lista-modulos">
+                        <% modulos.forEach(m => { %>
+                            <button class="list-group-item list-group-item-action" onclick="cargarVistas('<%= m.modulo %>')">
+                                <%= m.modulo %>
+                            </button>
+                            <% }) %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white"><b>Vista</b></div>
+                    <div class="list-group list-group-flush" id="lista-vistas">
+                        <div class="p-3 text-muted">Seleccione un módulo...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                        <b id="titulo-parametros">Parámetros</b>
+                        <button class="btn btn-primary btn-sm" id="btnNuevo" style="display:none" onclick="mostrarModalNuevo()">+ Crear Parámetro</button>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Clave</th>
+                                    <th>Valor</th>
+                                    <th class="text-center">Estado</th>
+                                    <th class="text-end">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vista-body">
+                                <tr>
+                                    <td colspan="4" class="text-center">Seleccione una vista...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalNuevoParametro" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nuevo Parámetro para <span id="span-vista"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formNuevo">
+                        <div class="mb-3">
+                            <label class="form-label">Clave del Parámetro</label>
+                            <input type="text" id="new_clave" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Valor</label>
+                            <input type="text" id="new_valor" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Estado Inicial</label>
+                            <select id="new_estado" class="form-select">
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarNuevo()">Guardar Parámetro</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let moduloSeleccionado = '';
+        let vistaSeleccionada = '';
+        let modalInstancia;
+
+        async function cargarVistas(modulo) {
+            moduloSeleccionado = modulo;
+            const res = await fetch(`/api/vistas/${modulo}`);
+            const vistas = await res.json();
+            const contenedor = document.getElementById('lista-vistas');
+
+            contenedor.innerHTML = vistas.map(t => `
+                <button class="list-group-item list-group-item-action" onclick="cargarParametros('${t.vista_nombre}')">
+                    ${t.vista_nombre}
+                </button>
+            `).join('');
+        }
+
+        async function cargarParametros(vista) {
+            vistaSeleccionada = vista;
+            document.getElementById('titulo-parametros').innerText = `Parámetros: ${vista}`;
+            document.getElementById('btnNuevo').style.display = 'block';
+
+            const res = await fetch(`/api/parametros/${vista}`);
+            const params = await res.json();
+            const body = document.getElementById('vista-body');
+
+            body.innerHTML = params.map(p => {
+                const esActivo = p.descripcion === 'Activo';
+                return `
+                <tr>
+                    <td><small class="text-muted">${p.parametro_clave}</small></td>
+                    <td><input type="text" class="form-control form-control-sm" value="${p.parametro_valor}" id="val-${p.id}"></td>
+                    <td class="text-center">
+                        <div class="form-check form-switch d-inline-block">
+                            <input class="form-check-input" type="checkbox" role="switch" id="sw-${p.id}" ${esActivo ? 'checked' : ''} onchange="toggleEstado(${p.id})">
+                            <label class="form-check-label small ${esActivo ? 'text-success' : 'text-danger'}" id="lbl-${p.id}">${p.descripcion || 'Activo'}</label>
+                        </div>
+                    </td>
+                    <td class="text-end">
+                        <button class="btn btn-success btn-sm" onclick="guardar(${p.id})">✔</button>
+                        <button class="btn btn-danger btn-sm" onclick="eliminar(${p.id})">🗑</button>
+                    </td>
+                </tr>
+            `
+            }).join('');
+        }
+
+        async function toggleEstado(id) {
+            const check = document.getElementById(`sw-${id}`);
+            const label = document.getElementById(`lbl-${id}`);
+            const nuevoEstado = check.checked ? 'Activo' : 'Inactivo';
+
+            label.innerText = nuevoEstado;
+            label.className = `form-check-label small ${check.checked ? 'text-success' : 'text-danger'}`;
+
+            // Llamada rápida al servidor para actualizar solo el estado
+            await fetch('/api/parametros/update-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id,
+                    estado: nuevoEstado
+                })
+            });
+        }
+
+        async function guardar(id) {
+            const valor = document.getElementById(`val-${id}`).value;
+            const estado = document.getElementById(`sw-${id}`).checked ? 'Activo' : 'Inactivo';
+
+            await fetch('/api/parametros/guardar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id,
+                    parametro_valor: valor,
+                    estado: estado
+                })
+            });
+            alert('Cambios guardados');
+        }
+
+        async function eliminar(id) {
+            if (!confirm('¿Desea eliminar este parámetro?')) return;
+            await fetch(`/api/parametros/eliminar/${id}`, {
+                method: 'DELETE'
+            });
+            cargarParametros(vistaSeleccionada);
+        }
+
+        function mostrarModalNuevo() {
+            document.getElementById('span-vista').innerText = vistaSeleccionada;
+            document.getElementById('formNuevo').reset();
+            modalInstancia = new bootstrap.Modal(document.getElementById('modalNuevoParametro'));
+            modalInstancia.show();
+        }
+
+        async function guardarNuevo() {
+            const data = {
+                modulo: moduloSeleccionado,
+                vista_nombre: vistaSeleccionada,
+                parametro_clave: document.getElementById('new_clave').value,
+                parametro_valor: document.getElementById('new_valor').value,
+                estado: document.getElementById('new_estado').value
+            };
+
+            if (!data.parametro_clave || !data.parametro_valor) return alert("Complete los campos");
+
+            try {
+                const res = await fetch('/api/parametros/guardar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if ((await res.json()).success) {
+                    modalInstancia.hide();
+                    cargarParametros(vistaSeleccionada);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    </script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <% if (typeof alert !="undefined" ) { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showConfirmButton %>,
+                timer: <%= timer %>
+            }).then(() => {
+                window.location = '/<%= ruta %>'
+            })
+        </script>
+        <% } %>
+
+
+            <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
+                <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    $('#datatable').DataTable({
+                        language: {
+                            "decimal": "",
+                            "emptyTable": "No hay información",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar _MENU_ Entradas",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscar:",
+                            "zeroRecords": "Sin resultados encontrados",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            }
+                        }
+                    });
+                });
+            </script>
+
+
+</body>
+
+</html>

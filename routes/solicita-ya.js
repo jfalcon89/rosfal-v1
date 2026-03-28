@@ -14,12 +14,38 @@ const useragent = require('express-useragent');
 
 
 //RENDERIZANDO LA VISTA SOLICITA YA
-router.get('/solicita-ya', (req, res) => {
+router.get('/solicita-ya', async(req, res) => {
     const permiso_C = 'Cliente App'
+
+    const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Solicitudes', 'Permisos-Solicitudes') AND descripcion = 'Activo'");
+
+    // console.log(rows)
+
+    const config = rows.reduce((acc, row) => {
+        const clave = row.parametro_clave;
+        const valor = row.parametro_valor;
+
+        if (acc[clave]) {
+            // Si ya existe la clave, verificamos si ya es un arreglo
+            if (Array.isArray(acc[clave])) {
+                acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+            } else {
+                // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                acc[clave] = [acc[clave], valor];
+            }
+        } else {
+            // Si es la primera vez, lo guardamos como un valor simple (String)
+            acc[clave] = valor;
+        }
+        return acc;
+    }, {});
+
+    // console.log(config)
 
     res.render('solicita-ya', {
         rol: req.session.rol,
-        permiso_C
+        permiso_C,
+        config
     });
 })
 

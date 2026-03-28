@@ -258,7 +258,10 @@
                                             <%= encuesta.ruta %>
                                         </td>
                                         <td class="py-4 text-sm">
-                                            <%= encuesta.ubicacion_calle %>
+                                            <a href="<%= encuesta.ubicacion_calle %>" target="_blank">
+                                                <%= encuesta.ubicacion_calle %>
+                                            </a>
+
                                         </td>
                                         <td class="py-4 text-sm text-center">
                                             <%= encuesta.anos_operacion %>

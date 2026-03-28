@@ -266,52 +266,26 @@
 
                 <div class="d-lg-flex  ">
 
-                    <!-- <% if(rol == permiso_A){ %>
-                        <% if(!obtenerPrestamo[0]) { %>
-                            <div style="text-align: left;" class="d-flex text-truncate">
-                                <button type="button" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2 " data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                     APROBAR PRESTAMO
-                        </button>
-                            </div>
-                            <% }else { %>
-                                <div style="text-align: left;" class="d-flex text-truncate">
-                                    <button id="btnAlerta" type="button" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2 ">
-                     APROBAR PRESTAMO
-                        </button>
-                                </div>
-                                <script>
-                                    document.getElementById('btnAlerta').addEventListener('click', function() {
-                                        Swal.fire({
-                                            title: 'Atención',
-                                            text: 'Este cliente tiene un préstamo activo',
-                                            icon: 'warning',
-                                            confirmButtonText: 'Entendido',
-                                            confirmButtonColor: '#ffc107'
-                                        });
-                                    });
-                                </script>
-                                <% } %>
-                                    <% }%> -->
 
                     <button id="btnAlerta_saldo" class="btn btn-success btn-block p-2 mb-2 me-lg-2" type="submit"><i
                                                     class="bi bi-check-lg me-lg-2" ></i>GUARDAR CAMBIOS</button>
                     <a class="btn btn-secondary btn-block p-2 mb-2 me-lg-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop2"><i
                         class="bi bi-file-earmark-text me-lg-2"></i>OBSERVACIONES</a>
-                    <% if(rol == permiso_A){ %>
-                        <a id="eliminarSolicitud" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2"><i class="bi bi-x-lg me-lg-2"></i>ELIMINAR SOLICITUD</i></a>
-                        <% } %>
 
 
+                    <% const permiso = config.Eliminar_solicitud.includes(rol); %>
+                        <% console.log(permiso) %>
+                            <% if(permiso){ %>
 
 
+                                <a id="eliminarSolicitud" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2"><i class="bi bi-x-lg me-lg-2"></i>ELIMINAR SOLICITUD</i></a>
+                                <% } %>
 
-
-
-                            <a class="btn btn-secondary p-2 mb-2 dropdown-toggle me-lg-2" type="button" data-bs-toggle="collapse" href="#collapseExampleNotificacion" aria-expanded="false">
+                                    <a class="btn btn-secondary p-2 mb-2 dropdown-toggle me-lg-2" type="button" data-bs-toggle="collapse" href="#collapseExampleNotificacion" aria-expanded="false">
                                 NOTIFICAR CLIENTE
                             </a>
-                            <a href="/solicitudes/imprimir-contrato/<%= solicitud.idSolicitud %>" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2"><i class="bi bi-printer me-lg-2"></i>CONTRATO</a>
-                            <a href="/solicitudes/imprimir-solicitud/<%= solicitud.idSolicitud %>" class="btn btn-secondary btn-block p-2 mb-2 "><i class="bi bi-printer me-lg-2"></i>SOLICITUD</a>
+                                    <a href="/solicitudes/imprimir-contrato/<%= solicitud.idSolicitud %>" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2"><i class="bi bi-printer me-lg-2"></i>CONTRATO</a>
+                                    <a href="/solicitudes/imprimir-solicitud/<%= solicitud.idSolicitud %>" class="btn btn-secondary btn-block p-2 mb-2 "><i class="bi bi-printer me-lg-2"></i>SOLICITUD</a>
 
                 </div>
 
@@ -460,22 +434,33 @@
                                                             <option value="<%= solicitud.estadoSolicitud %>" selected>
                                                                 <%= solicitud.estadoSolicitud %>
                                                             </option>
-                                                            <option value="En Revision">En Revision</option>
-                                                            <% if(rol == permiso_A){ %>
-                                                                <option value="Nueva">Nueva</option>
-                                                            <option value="Aprobada">Aprobada</option>
-                                                            <option value="Declinada">Declinada</option>
-                                                            <option value="En Legal">En Legal</option>
-                                                            <option value="Liquidado">Liquidado</option>
-                                                            <option value="Incobrable">Incobrable</option>
+                                                            
+                                                            <% if(rol == config.permiso_A){ %>
+                                                            <% if (config.estadoSolicitud.length> 0) { %>
+                                                                <% config.estadoSolicitud.forEach(estadoSolicitud=> { %>
+
+                                                            <option value="<%= estadoSolicitud %>"><%= estadoSolicitud %></option>
+                                                           
+                                                            <% }) %>
                                                             <% } %>
+                                                                <% }else{ %>
+                                                                
+                                                            
+                                                            <% if (config.estadoSolicitud_permiso_B) { %>
+                                                                <% config.estadoSolicitud_permiso_B.forEach(estadoSolicitud_permiso_B=> { %>
+
+                                                            <option value="<%= estadoSolicitud_permiso_B %>"><%= estadoSolicitud_permiso_B %></option>
+                                                           
+                                                            <% }) %>
+                                                            <% } %>
+                                                                <% } %>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group mt-2 me-lg-2 ">
                                                     <div class="form-group d-lg-flex">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text">Tipo de Prestamo</span>
+                                                            <span class="input-group-text">Tipo</span>
                                                         </div>
                                                         <select name="tipoPrestamo" class="form-control" id="inputTipPrestamo">
                                                             <option value="<%= solicitud.tipoPrestamo %>" selected>
@@ -493,9 +478,15 @@
                                             <div class="">
                                                 <div class="form-group   ">
                                                     <div class="input-group ">
-                                                        <div class=" me-lg-5">
+                                                        <div class="me-lg-5">
                                                             <label class="p-2">Cedula</label>
-                                                            <input type="number" name="cedula" class="form-control " id="cedula" value="<%= solicitud.cedula %>">
+
+                                                            <% const Editar_Cedula = (config.Editar_Cedula || []).includes(rol); %>
+                                                                <% if (Editar_Cedula) { %>
+                                                                    <input type="number" name="cedula" class="form-control" id="cedula" value="<%= solicitud.cedula %>">
+                                                                    <% } else { %>
+                                                                        <input type="number" name="cedula" class="form-control" id="cedula" value="<%= solicitud.cedula %>" readonly>
+                                                                        <% } %>
                                                         </div>
                                                         <div class="me-lg-5">
                                                             <label for="sexo" class="p-2">Sexo</label>
@@ -503,8 +494,11 @@
                                                             <option value="<%= solicitud.sexo %>" selected>
                                                                 <%= solicitud.sexo %>
                                                             </option>
-                                                            <option value="Hombre">Hombre</option>
-                                                            <option value="Mujer">Mujer</option>
+                                                            <% if (config.Sexo) { %>
+                                                                <% config.Sexo.forEach(Sexo=> { %>
+                                                            <option value="<%= Sexo %>"><%= Sexo %></option>
+                                                            <% }) %>
+                                                                        <% } %>
                                                         </select>
                                                         </div>
                                                         <div class="me-lg-5">
@@ -513,9 +507,12 @@
                                                             <option value="<%= solicitud.estadoCivil %>" selected>
                                                                 <%= solicitud.estadoCivil %>
                                                             </option>
-                                                            <option value="Casado/a">Casado/a</option>
-                                                            <option value="Soltero/a">Soltero/a</option>
-                                                            <option value="Union Libre">Union Libre</option>
+                                                            <% if (config.EstadoCivil) { %>
+                                                                <% config.EstadoCivil.forEach(EstadoCivil=> { %>
+                                                            <option value="<%= EstadoCivil %>"><%= EstadoCivil %></option>
+                                                                    <% }) %>
+                                                                        <% } %>
+                                                            
                                                         </select>
                                                         </div>
                                                         <div class="me-lg-5">
@@ -524,10 +521,13 @@
                                                             <option value="<%= solicitud.clasificacionCliente %>" selected>
                                                                 <%= solicitud.clasificacionCliente %>
                                                             </option>
-                                                            <option value="A-Premium" data-toggle="tooltip" data-placement="top" title="Clientes de alto valor que generan ingresos significativos y tienen una alta lealtad.">A-Premium </option>
-                                                            <option value="B-Regular" data-toggle="tooltip" data-placement="top" title="Clientes consistentes que generan ingresos moderados, pero que no se destacan ni por ser los mejores ni los peores.">B-Regular</option>
-                                                            <option value="C-Riesgo" data-toggle="tooltip" data-placement="top" title="Clientes que muestran señales de disminución en la actividad o insatisfacción, y podrían perderse si no se gestionan adecuadamente.">C-Riesgo</option>
-                                                            <option value="D-Desestimado" data-toggle="tooltip" data-placement="top" title="Clientes que no son rentables o que no encajan con la estrategia del negocio y por lo tanto, no se les dará más seguimiento.">D-Desestimado</option>
+                                                            <% if (config.clasificacionCliente) { %>
+                                                                <% config.clasificacionCliente.forEach(clasificacionCliente=> { %>
+                                                                    <option value="<%= clasificacionCliente %>">
+                                                                        <%= clasificacionCliente %>
+                                                                    </option>
+                                                                    <% }) %>
+                                                                        <% } %>
                                                         </select>
                                                         </div>
 
@@ -580,12 +580,22 @@
 
                                 <div class="form-group ">
                                     <label for="email" class=" p-2">Email</label>
-                                    <input type="email" name="email" class="form-control p-2" id="email" aria-describedby="emailHelp" value="<%= solicitud.email %>">
+                                    <% const Editar_Email = (config.Editar_Email || []).includes(rol); %>
+                                        <% if (Editar_Email) { %>
+                                            <input type="email" name="email" class="form-control p-2" id="email" value="<%= solicitud.email %>">
+                                            <% } else { %>
+                                                <input type="email" name="email" class="form-control p-2" id="email" value="<%= solicitud.email %>" readonly>
+                                                <% } %>
                                 </div>
-                                <div class="d-flex">
-                                    <div class="form-group me-lg-5">
-                                        <label for="celular" class="  p-2">Celular</label>
-                                        <input type="number" name="celular" class="form-control p-2" id="celular" aria-describedby="emailHelp" value="<%= solicitud.celular %>">
+                                <div class=" d-flex ">
+                                    <div class="form-group me-lg-5 ">
+                                        <label for="celular " class=" p-2 ">Celular</label>
+                                        <% const Editar_Celular = (config.Editar_Celular || []).includes(rol); %>
+                                            <% if (Editar_Celular) { %>
+                                                <input type="number" name="celular" class="form-control p-2 " id="celular " aria-describedby="emailHelp" value="<%= solicitud.celular %>">
+                                                <% } else { %>
+                                                    <input type="number" name="celular" class="form-control p-2 " id="celular" aria-describedby="emailHelp " value="<%= solicitud.celular %>" readonly>
+                                                    <% } %>
                                     </div>
 
                                     <div class="form-group me-lg-5 ">
@@ -594,8 +604,12 @@
                                             <option value="<%= solicitud.nacionalidad %>" selected>
                                                 <%= solicitud.nacionalidad %>
                                             </option>
-                                            <option value="Dominicano/a">Dominicano/a</option>
-                                            <option value="Extranjero/a">Extranjero/a</option>
+                                            <% if (config.Nacionalidad) { %>
+                                                <% config.Nacionalidad.forEach(Nacionalidad=> { %>
+                                            <option value="<%= Nacionalidad %>"><%= Nacionalidad %></option>
+                                                    <% }) %>
+                                                        <% } %>
+                                            
                                         </select>
                                     </div>
                                 </div>
@@ -722,7 +736,13 @@
                                 </div>
                                 <div class="form-group ">
                                     <label for="numeroCuenta" class="  p-2">Numero de Cuenta</label>
-                                    <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" value="<%= solicitud.numeroCuenta %>">
+                                    <% const Encriptar_No_Cuenta = (config.Encriptar_No_Cuenta || []).includes(rol); %>
+                                        <% if (Encriptar_No_Cuenta) { %>
+                                            <input type="number" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" value="<%= solicitud.numeroCuenta %>">
+                                            <% } else { %>
+                                                <input type="password" name="numeroCuenta" class="form-control p-2" id="numeroCuenta" aria-describedby="emailHelp" value="<%= solicitud.numeroCuenta %>" readonly>
+                                                <% } %>
+
                                 </div>
                                 <div class="form-group  ">
                                     <label for="montoSolicitado" class="  p-2">Monto Solicitado</label>
@@ -970,201 +990,7 @@
     </div>
 
 
-    <!-- Modal aprobacion prestamos -->
-    <div class="modal fade  mt-4" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
 
-
-            <div style="border-radius: 10px; border: none;" class="modal-content ">
-
-
-                <form action="/prestamo_cliente/<%= solicitud.idSolicitud %>" method="POST" enctype="">
-                    <!-- Campo para ingresar el ID del préstamo -->
-
-                    <!-- Nuevo -->
-
-
-                    <div class="container app-container">
-                        <div class="header-title">Apertura de prestamos</div>
-
-                        <div class="row mb-3 align-items-end">
-                            <div class="col-md-7">
-                                <label for="cliente" class="form-label">Cliente:</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" value="<%= solicitud.nombre %> <%= solicitud.apellido %>">
-                                    <input type="text" class="form-control d-none" name="cliente_id" value="<%= solicitud.cliente_id %>">
-                                    <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <label for="prestado" class="form-label">Prestado:</label>
-                                <input type="text" class="form-control" id="prestado" value="0.00">
-                            </div>
-                        </div>
-
-                        <div class="section-box">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <label for="monto" class="form-label">Monto</label>
-                                            <input type="number" class="form-control" name="monto" value="<%= solicitud.montoSolicitado %>" style="border-color: red;">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="apertura" class="form-label">Apertura</label>
-                                            <div class="input-group">
-                                                <input type="date" class="form-control" name="apertura" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="tipo_plazo" class="form-label">Tipo plazo</label>
-                                            <select class="form-select" name="tipo_plazo">
-                                                <option value="<%= solicitud.frecuenciaPagos %>" selected>
-                                                                <%= solicitud.frecuenciaPagos %>
-                                                            </option>
-                                            <option>Pagos mensuales</option>
-                                            <option>Pagos quincenales</option>
-                                            <option>Pagos diarios</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="primer_pago" class="form-label">Primer Pago</label>
-                                            <div class="input-group">
-                                                <input type="date" class="form-control" name="primer_pago" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="plazo" class="form-label">Plazo</label>
-                                            <input type="number" class="form-control" name="plazo" value="">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="monto_cuota" class="form-label">Monto Cuotas</label>
-                                            <input type="text" class="form-control" name="monto_cuota" value="0.00">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="tasa" class="form-label">Tasa</label>
-                                            <input type="number" class="form-control" name="tasa" value="0.00">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="desembolso" class="form-label">Desembolso</label>
-                                            <input type="text" class="form-control" name="desembolso" value="0.00">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="amortizacion" class="form-label">Amortización</label>
-                                            <select class="form-select" id="amortizacion">
-                            <option>Saldo Absoluto</option>
-                        </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="gastos_cierre" class="form-label">Gastos cierre</label>
-                                            <input type="text" class="form-control" name="gastos_cierre" value="0.00">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="mora_porcentaje" class="form-label">Mora %</label>
-                                            <input type="number" class="form-control" name="mora_porcentaje" value="0">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="fecha_vencimiento" class="form-label">Vencimiento</label>
-                                            <input type="date" class="form-control" name="fecha_vencimiento" value="">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-check mt-3">
-                                                <input class="form-check-input" type="checkbox" id="permitirAbonos" checked>
-                                                <label class="form-check-label" for="permitirAbonos">Permitir abonos / saldo:</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="row g-3">
-                                        <div class="col-12">
-                                            <label for="tipo" class="form-label">Tipo</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="tipo">
-                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-pencil-square"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="garantia" class="form-label">Garantía</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="garantia">
-                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-pencil-square"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="banco" class="form-label">Banco</label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="banco">
-                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
-                                                <button class="btn btn-outline-secondary" type="button"><i class="bi bi-pencil-square"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mt-4">
-                                            <div class="form-check mb-2">
-                                                <input class="form-check-input" type="checkbox" id="gastosCierreCheck">
-                                                <label class="form-check-label" for="gastosCierreCheck">Financiar gasto de cierre</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="interesesCorteFecha">
-                                                <label class="form-check-label" for="interesesCorteFecha">Interes en corte de fecha</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="section-box">
-                            <div class="section-header">Registro y Detalle de la Garantía</div>
-                            <textarea class="form-control" rows="3" name="detalle_garantia"></textarea>
-                        </div>
-
-                        <div class="section-box">
-                            <div class="section-header">
-                                <div class="row align-items-center">
-                                    <div class="col">Cuota No.</div>
-                                    <div class="col">Capital</div>
-                                    <div class="col">Interes</div>
-                                    <div class="col">Seguro</div>
-                                    <div class="col">Cuota</div>
-                                    <div class="col">Vencimiento</div>
-                                    <div class="col">Balance</div>
-                                    <div class="col">Restan</div>
-                                </div>
-                            </div>
-                            <textarea class="form-control" rows="5"></textarea>
-                            <div class="row mt-2">
-                                <div class="col">
-                                    <input type="text" class="form-control" value="0">
-                                </div>
-                                <div class="col">
-                                    <input type="text" class="form-control" value="0.00">
-                                </div>
-                                <div class="col">
-                                    <input type="text" class="form-control" value="0.00">
-                                </div>
-                                <div class="col">
-                                    <input type="text" class="form-control" value="0.00">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="footer-buttons">
-                            <button class="btn btn-blue"><i class="bi bi-save me-2"></i>Guardar</button>
-                            <button class="btn btn-info"><i class="bi bi-eraser me-2"></i>Limpiar</button>
-                            <button class="btn btn-danger"><i class="bi bi-x-circle me-2"></i>Salir</button>
-                        </div>
-                    </div>
-
-                    <!-- Nuevo -->
-
-                </form>
-            </div>
-
-        </div>
-    </div>
 
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

@@ -351,17 +351,22 @@
                                                                     <label for="sexo" class="p-2">Sexo</label>
                                                                     <select name="sexo" class="form-control" id="sexo">
                                                         <option value="seleccionar" selected>Seleccionar</option>
-                                                        <option value="Hombre">Hombre</option>
-                                                        <option value="Mujer">Mujer</option>
+                                                        <% if (config.Sexo) { %>
+                                                                <% config.Sexo.forEach(Sexo=> { %>
+                                                            <option value="<%= Sexo %>"><%= Sexo %></option>
+                                                            <% }) %>
+                                                                        <% } %>
                                                     </select>
                                                                 </div>
                                                                 <div class="me-lg-5">
                                                                     <label for="sexo" class="p-2">Estado Civil</label>
                                                                     <select name="estadoCivil" class="form-control" id="estadoCivil">
                                                         <option value="seleccionar" selected>Seleccionar</option>
-                                                        <option value="Casado/a">Casado/a</option>
-                                                        <option value="Soltero/a">Soltero/a</option>
-                                                        <option value="Union Libre">Union Libre</option>
+                                                        <% if (config.EstadoCivil) { %>
+                                                                <% config.EstadoCivil.forEach(EstadoCivil=> { %>
+                                                            <option value="<%= EstadoCivil %>"><%= EstadoCivil %></option>
+                                                                    <% }) %>
+                                                                        <% } %>
                                                     </select>
                                                                 </div>
                                                             </div>
@@ -410,9 +415,13 @@
                                                 <div class="form-group me-lg-5 ">
                                                     <label for="nacionalidad" class="  p-2">Nacionalidad</label>
                                                     <select name="nacionalidad" class="form-control p-2" id="nacionalidad">
-                                        <option value="Seleccionar">Seleccionar</option>
-                                        <option value="Dominicano/a">Dominicano/a</option>
-                                        <option value="Extranjero/a">Extranjero/a</option>
+                                        <option value="Seleccionar" selected>Seleccionar</option>
+                                         <% if (config.Nacionalidad) { %>
+                                                <% config.Nacionalidad.forEach(Nacionalidad=> { %>
+                                            <option value="<%= Nacionalidad %>"><%= Nacionalidad %></option>
+                                                    <% }) %>
+                                                        <% } %>
+                                        
                                     </select>
                                                 </div>
                                             </div>

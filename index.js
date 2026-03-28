@@ -43,6 +43,7 @@ const controlesAnuncios = require("./routes/controles-anuncios");
 const visitasWeb = require("./routes/visitas-web");
 const mantenimiento = require("./routes/mantenimiento");
 const promociones = require("./routes/promociones");
+const mantenedor_parametros = require("./routes/mantenedor-parametros");
 
 
 // const obtenerConteos = require("../services/conteosService");
@@ -177,6 +178,7 @@ app.use("/", controlesAnuncios);
 app.use("/", visitasWeb);
 app.use("/", mantenimiento);
 app.use("/", promociones);
+app.use("/", mantenedor_parametros);
 app.use('/node_modules', express.static('node_modules'));
 // app.use("/", obtenerConteos);
 

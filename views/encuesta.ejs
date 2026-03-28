@@ -123,32 +123,7 @@
 
 <body>
 
-    <!-- <div class="container-fluid  " style="background-color: #ececec;">
-        <div class=" d-flex align-items-center justify-content-between">
-            <div class="d-flex">
 
-                <button onclick="imprimirDocumento();">imprimir</button>
-            </div>
-            <div class="btn-group">
-                <% if (login) { %>
-                    <button type="button" class="btn btn-info"><%= name %></button>
-                    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/solicitudes/editar-solicitud/<%=  %>">Volver a Solicitud</a></li>
-                        <li><a class="dropdown-item" href="/">Ir a ROSFAL PAGE</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="/logout">Cerrar Session</a></li>
-
-                    </ul>
-                    <%}  %>
-            </div>
-
-        </div>
-    </div> -->
 
 
 
@@ -256,10 +231,13 @@
                 <div class="section-header">
                     <span>📈</span> II. DINÁMICA COMERCIAL (Marque con una X)
                 </div>
-
                 <div class="px-10 py-6 space-y-8">
                     <div>
-                        <p class="font-bold text-gray-800 mb-4">1. ¿Cómo califica el flujo de clientes en sus horas pico? (1 bajo y 10 muy alto)</p>
+
+                        <p class="font-bold text-gray-800 mb-4">
+                            <%= config.Pregunta_1 || 'No definida' %>
+
+                        </p>
                         <div class="flex flex-wrap gap-3 justify-between  mx-auto justify-content-start">
                             <script>
                                 for (let i = 1; i <= 10; i++) {
@@ -275,14 +253,24 @@
                     </div>
 
                     <div class="space-y-4">
-                        <p class="font-bold text-gray-800">2. ¿Con qué frecuencia requiere capital extra para surtir mercancía?</p>
+                        <p class="font-bold text-gray-800">
+
+
+                            <%= config.Pregunta_2 || 'No definida' %>
+
+
+                        </p>
                         <div class="space-y-2">
-                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="Semanal" class="custom-radio">Semanal</label>
-                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="Quincenal/Mensual"  class="custom-radio">Quincenal / Mensual</label>
-                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="Emergencias"  class="custom-radio"> Solo en emergencias o temporadas altas</label>
-                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="EfectivoPropio"  class="custom-radio"> Casi nunca / Se maneja con efectivo propio</label>
+
+
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="Semanal" class="custom-radio"><%= config.Respuesta_2_Opcion_1 %></label>
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="Quincenal/Mensual"  class="custom-radio"><%= config.Respuesta_2_Opcion_2 %></label>
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="Emergencias"  class="custom-radio"><%= config.Respuesta_2_Opcion_3 %></label>
+                            <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="frecuencia_capital" value="EfectivoPropio"  class="custom-radio"><%= config.Respuesta_2_Opcion_4 %></label>
                         </div>
                     </div>
+
+
 
                     <div class="space-y-4">
                         <p class="font-bold text-gray-800 italic">3. Si recibiera una inversión de RD$20,000 hoy, ¿cuál sería su prioridad?</p>
@@ -340,6 +328,8 @@
 
         </form>
     </div>
+
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

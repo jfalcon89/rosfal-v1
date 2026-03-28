@@ -877,18 +877,42 @@ router.get('/todas-las-solicitudes', async(req, res) => {
 router.get("/Solicitudes/editar-solicitud/:id", async(req, res) => {
     if (req.session.loggedin) {
 
-        const conteos = await obtenerConteos();
-        // const obtenerPrestamo = await obtenerPrestamosCliente();
-        const id = req.params.id
-        const permiso_A = 'Administrador'
-        const permiso_B = 'Representante'
-        const permiso_C = 'Cliente App'
-
-
-
         try {
-            const obtenerPrestamo = await pool.query(`SELECT * FROM prestamos where prestamos.idSolicitud = ${req.params.id}`);
-            console.log('prestamo cliente', obtenerPrestamo)
+
+            const conteos = await obtenerConteos();
+            // const obtenerPrestamo = await obtenerPrestamosCliente();
+            const id = req.params.id
+            const permiso_A = 'Administrador'
+            const permiso_B = 'Representante'
+            const permiso_C = 'Cliente App'
+
+            const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Solicitudes', 'Permisos-Solicitudes') AND descripcion = 'Activo'");
+
+            // console.log(rows)
+
+            const config = rows.reduce((acc, row) => {
+                const clave = row.parametro_clave;
+                const valor = row.parametro_valor;
+
+                if (acc[clave]) {
+                    // Si ya existe la clave, verificamos si ya es un arreglo
+                    if (Array.isArray(acc[clave])) {
+                        acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                    } else {
+                        // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                        acc[clave] = [acc[clave], valor];
+                    }
+                } else {
+                    // Si es la primera vez, lo guardamos como un valor simple (String)
+                    acc[clave] = valor;
+                }
+                return acc;
+            }, {});
+
+            console.log(config)
+
+
+
 
             const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
             const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="Aprobada" OR estadoSolicitud = "En Legal"');
@@ -929,14 +953,14 @@ router.get("/Solicitudes/editar-solicitud/:id", async(req, res) => {
                 permiso_C,
                 documentosCliente: documentosClienteDB,
                 conteos,
-                obtenerPrestamo
+                config: config || {}
             });
 
         } catch (error) {
             console.log(error)
-            res.render("editar-solicitud", {
+            res.render("404", {
                 error: true,
-                mensaje: "no se encuentra el id seleccionado"
+                mensaje: error
             });
         }
 
@@ -1057,7 +1081,7 @@ router.post('/Solicitudes/editar-solicitud/:id', async(req, res) => {
         montoCuota
     };
 
-
+    console.log(nuevaSolicitud)
     const atrasoDB = await pool.query(`SELECT novedades_atrasos.atraso FROM novedades_atrasos WHERE novedades_atrasos.idSolicitud = ${id}`);
 
 
