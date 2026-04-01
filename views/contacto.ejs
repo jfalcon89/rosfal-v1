@@ -93,47 +93,45 @@
 
 
     <div class="container">
-
-        <h3 class="d-flex mt-5 mb-5" style="color: #0B5495;"><strong>Formulario de Contacto</strong></h3>
-
-        <form class="" autocomplete="off" action="" method="POST">
-            <!-- <input type="text" name="estadoMensaje" class="form-control " value="Nuevo"> -->
-
-            <div class="  d-lg-flex flex-lg-row">
-                <div class="form-group me-lg-3 mb-3 w-100 ">
-                    <!-- <label for="nombre" class=" text-black-50 p-2"><strong>Nombre</strong></label> -->
-                    <input type="text" name="nombre" class="form-control p-2 " id="nombre" aria-describedby="" placeholder="Nombre" required>
-                </div>
-                <div class="form-group  mb-3 w-100 ">
-                    <!-- <label for="apellido" class="p-2">Apellido</label> -->
-                    <input type="tel" name="telefono" class="form-control p-2" id="telefono" aria-describedby="" placeholder="Telefono" required>
-                </div>
+        <h3 class="d-flex mt-5 mb-5" style="color: #0B5495;"><strong>Contacto</strong></h3>
+        <form class="needs-validation" autocomplete="off" action="" method="POST">
+            <div style="display:none;">
+                <label>Si ves esto, no lo llenes:</label>
+                <input type="text" name="honeypot" value="">
             </div>
+
             <div class="d-lg-flex flex-lg-row">
                 <div class="form-group me-lg-3 mb-3 w-100">
-                    <!-- <label for="direccion" class="p-2">Direccion </label> -->
-                    <input type="email" name="email" class="form-control p-2" id="email" aria-describedby="" placeholder="Email">
+                    <input type="text" name="nombre" class="form-control p-2" id="nombre" placeholder="Nombre completo" pattern="^[a-zA-ZÀ-ÿ\s]{3,40}$" required>
                 </div>
                 <div class="form-group mb-3 w-100">
-                    <!-- <label for="direccionNegocio" class=" p-2">Direccion del Negocio</label> -->
-                    <!-- <input type="text" name="asunto" class="form-control p-2" id="asunto" aria-describedby="" placeholder="Asunto" required> -->
-                    <select name="asunto" id="" class="form-control p-2 form-select text-secondary" required>
-                        <option value="" selected>Asunto</option>
-                        <option value="Reenganche">Reenganche</option>
-                        <option value="Prestamo Nuevo">Préstamo Nuevo</option>
-                        <option value="Acuerdo de Pago">Acuerdo de Pago</option>
-                        <option value="Reporte de Queja">Reporte de Queja</option>
-                        <option value="Otras Solicitudes">Otras Solicitudes</option>
-                    </select>
+                    <input type="tel" name="telefono" class="form-control p-2" id="telefono" placeholder="Teléfono (809XXXXXXX)" pattern="^(809|829|849)\d{7}$" title="Debe tener 10 dígitos y empezar con 809, 829 o 849" required>
                 </div>
             </div>
-            <div class="form-group ">
-                <!-- <label for="email" class=" p-2">Email</label> -->
-                <textarea maxlength="250" type="text" v name="mensaje" class="form-control p-2" id="mensaje" aria-describedby="" placeholder="Mensaje" required></textarea>
+
+            <div class="d-lg-flex flex-lg-row">
+                <div class="form-group me-lg-3 mb-3 w-100">
+                    <input type="email" name="email" class="form-control p-2" id="email" placeholder="Correo electrónico" required>
+                </div>
+                <div class="form-group mb-3 w-100">
+                    <select name="asunto" id="asunto" class="form-control p-2 form-select text-secondary" required>
+                <option value="" disabled selected>Seleccione un asunto</option>
+                <option value="Reenganche">Reenganche</option>
+                <option value="Prestamo Nuevo">Préstamo Nuevo</option>
+                <option value="Acuerdo de Pago">Acuerdo de Pago</option>
+                <option value="Reporte de Queja">Reporte de Queja</option>
+                <option value="Otras Solicitudes">Otras Solicitudes</option>
+            </select>
+                </div>
             </div>
 
-            <button class="btn p-2 mt-5 mb-4 text-white" style="background-color: #0B5495;" type="submit"><i class="bi bi-check-lg me-lg-2"></i>ENVIAR</button>
+            <div class="form-group">
+                <textarea maxlength="250" name="mensaje" class="form-control p-2" id="mensaje" placeholder="Escriba su mensaje aquí..." minlength="10" required></textarea>
+            </div>
 
+            <button class="btn p-2 mt-5 mb-4 text-white w-100 w-lg-auto" style="background-color: #0B5495;" type="submit">
+        <i class="bi bi-check-lg me-lg-2"></i> ENVIAR MENSAJE
+    </button>
         </form>
 
         <div class="container-dir mt-2 mb-5">

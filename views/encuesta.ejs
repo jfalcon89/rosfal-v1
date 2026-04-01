@@ -128,13 +128,13 @@
 
 
 
-    <div class=" p-4 ">
+    <div class=" p-lg-4 ">
 
         <form class="" autocomplete="off" action="" method="POST">
 
             <div class="container bg-light pb-32">
                 <!-- Navbar superior estilo App -->
-                <nav class="bg-white border-b d-lg-flex justify-between items-center px-6 py-3 sticky top-0 z-50 ">
+                <nav class="bg-white border-b d-lg-flex justify-between items-center px-lg-6 py-3 sticky top-0 z-50 ">
                     <div class="flex items-center gap-2">
                         <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">R</div>
                         <span class="text-xl font-black text-blue-900 tracking-tighter">ROSFAL</span>
@@ -157,7 +157,7 @@
                 </nav>
 
                 <!-- Encabezado de Datos -->
-                <div class="px-8 py-6 grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 border-b">
+                <div class="px-lg-8 py-6 grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 border-b">
                     <div class="flex items-center gap-2">
                         <span class="font-bold">Ruta:</span>
                         <!-- <input type="text" class="line-input bg-transparent"> -->
@@ -181,7 +181,7 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="font-bold">Encuestador:</span>
-                        <input name="encuestador" type="text" class="line-input bg-transparent" placeholder="Nombre..." value="<%= name %>">
+                        <input name="encuestador" type="text" class="line-input bg-transparent" placeholder="Nombre..." value="<%= name %>" readonly>
                     </div>
                 </div>
 
@@ -191,7 +191,7 @@
                     <span>👤</span> I. PERFIL DEL ESTABLECIMIENTO
                 </div>
 
-                <div class="px-10 py-6 space-y-4">
+                <div class="px-lg-10 py-6 space-y-4">
                     <div class="d-lg-flex items-center gap-3">
                         <span class="font-semibold text-gray-700">• Nombre del Negocio:</span>
                         <input name="negocio_nombre" type="text" class="line-input flex-1">
@@ -231,7 +231,7 @@
                 <div class="section-header">
                     <span>📈</span> II. DINÁMICA COMERCIAL (Marque con una X)
                 </div>
-                <div class="px-10 py-6 space-y-8">
+                <div class="px-lg-10 py-6 space-y-8">
                     <div>
 
                         <p class="font-bold text-gray-800 mb-4">
@@ -287,7 +287,7 @@
                     <span>💸​</span> III. PREFERENCIAS DE FINANCIAMIENTO
                 </div>
 
-                <div class="px-10 py-6 space-y-8">
+                <div class="px-lg-10 py-6 space-y-8">
                     <div class="space-y-4">
                         <p class="font-bold text-gray-800">4. ¿Qué modalidad de pago se adapta mejor a su negocio?</p>
                         <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="modalidad_pago_preferida" value="Diario" class="custom-radio"> Cuotas diarias (Lun-Sab)</label>

@@ -17,6 +17,31 @@ router.get('/adm-usuarios', async(req, res) => {
         let i = '';
 
         try {
+            const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Usuarios', 'Usuarios') AND descripcion = 'Activo'");
+
+            // console.log(rows)
+
+            const config = rows.reduce((acc, row) => {
+                const clave = row.parametro_clave;
+                const valor = row.parametro_valor;
+
+                if (acc[clave]) {
+                    // Si ya existe la clave, verificamos si ya es un arreglo
+                    if (Array.isArray(acc[clave])) {
+                        acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                    } else {
+                        // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                        acc[clave] = [acc[clave], valor];
+                    }
+                } else {
+                    // Si es la primera vez, lo guardamos como un valor simple (String)
+                    acc[clave] = valor;
+                }
+                return acc;
+            }, {});
+
+            console.log(config)
+
             const permiso_A = 'Administrador'
             const permiso_B = 'Representante'
             const permiso_C = 'Cliente App'
@@ -35,7 +60,8 @@ router.get('/adm-usuarios', async(req, res) => {
                 permiso_B,
                 permiso_C,
                 conteos,
-                i
+                i,
+                config
 
 
             }, (err, html) => {

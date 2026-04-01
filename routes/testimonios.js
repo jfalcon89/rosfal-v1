@@ -59,13 +59,38 @@ router.get("/testimonios/ver-testimonio/:id", async(req, res) => {
             const permiso_B = 'Representante'
             const permiso_C = 'Cliente App'
 
+            const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Testimonios') AND descripcion = 'Activo'");
+
+            // console.log(rows)
+
+            const config = rows.reduce((acc, row) => {
+                const clave = row.parametro_clave;
+                const valor = row.parametro_valor;
+
+                if (acc[clave]) {
+                    // Si ya existe la clave, verificamos si ya es un arreglo
+                    if (Array.isArray(acc[clave])) {
+                        acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                    } else {
+                        // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                        acc[clave] = [acc[clave], valor];
+                    }
+                } else {
+                    // Si es la primera vez, lo guardamos como un valor simple (String)
+                    acc[clave] = valor;
+                }
+                return acc;
+            }, {});
+
+            console.log(config)
+
 
             const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosInactivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Inactivo" ORDER BY fechaTestimonio DESC');
 
-            const arrayTestimoniosDB = await pool.query(`SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo"  `);
-            const testimonioDB = await pool.query(`SELECT * FROM testimonios WHERE idTestimonio =${id} AND estadoTestimonio="Nuevo" `);
+            const arrayTestimoniosDB = await pool.query(`SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" `);
+            const testimonioDB = await pool.query(`SELECT * FROM testimonios WHERE idTestimonio =${id} `);
             console.log(arrayTestimoniosDB[0]);
             res.render("ver-testimonio", {
                 arrayTestimonios: arrayTestimoniosDB,
@@ -79,7 +104,8 @@ router.get("/testimonios/ver-testimonio/:id", async(req, res) => {
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                conteos
+                conteos,
+                config
 
             });
 
@@ -195,6 +221,31 @@ router.get("/testimonios-activos/ver-testimonio-activo/:id", async(req, res) => 
             const permiso_B = 'Representante'
             const permiso_C = 'Cliente App'
 
+            const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Testimonios') AND descripcion = 'Activo'");
+
+            // console.log(rows)
+
+            const config = rows.reduce((acc, row) => {
+                const clave = row.parametro_clave;
+                const valor = row.parametro_valor;
+
+                if (acc[clave]) {
+                    // Si ya existe la clave, verificamos si ya es un arreglo
+                    if (Array.isArray(acc[clave])) {
+                        acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                    } else {
+                        // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                        acc[clave] = [acc[clave], valor];
+                    }
+                } else {
+                    // Si es la primera vez, lo guardamos como un valor simple (String)
+                    acc[clave] = valor;
+                }
+                return acc;
+            }, {});
+
+            console.log(config)
+
 
             const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
@@ -215,7 +266,8 @@ router.get("/testimonios-activos/ver-testimonio-activo/:id", async(req, res) => 
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                conteos
+                conteos,
+                config
             });
 
         } catch (error) {
@@ -329,6 +381,31 @@ router.get("/testimonios-inactivos/ver-testimonio-inactivo/:id", async(req, res)
             const permiso_B = 'Representante'
             const permiso_C = 'Cliente App'
 
+            const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Testimonios') AND descripcion = 'Activo'");
+
+            // console.log(rows)
+
+            const config = rows.reduce((acc, row) => {
+                const clave = row.parametro_clave;
+                const valor = row.parametro_valor;
+
+                if (acc[clave]) {
+                    // Si ya existe la clave, verificamos si ya es un arreglo
+                    if (Array.isArray(acc[clave])) {
+                        acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                    } else {
+                        // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                        acc[clave] = [acc[clave], valor];
+                    }
+                } else {
+                    // Si es la primera vez, lo guardamos como un valor simple (String)
+                    acc[clave] = valor;
+                }
+                return acc;
+            }, {});
+
+            console.log(config)
+
 
             const arrayTestimoniosNuevosVDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
             const arrayTestimoniosActivosDB = await pool.query('SELECT * FROM testimonios WHERE estadoTestimonio="Activo" ORDER BY fechaTestimonio DESC');
@@ -349,7 +426,8 @@ router.get("/testimonios-inactivos/ver-testimonio-inactivo/:id", async(req, res)
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                conteos
+                conteos,
+                config
             });
 
         } catch (error) {

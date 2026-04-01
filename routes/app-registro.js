@@ -62,7 +62,6 @@ router.get('/app-inicio', (req, res) => {
     res.render('app-inicio');
 })
 
-
 // VISTA REGISTRO DE TELEFONO
 router.get('/app-registro', (req, res) => {
 
@@ -245,7 +244,6 @@ router.post('/app-registro', async(req, res) => {
 
 });
 
-
 // app-validacion-registro
 router.get('/app-validacion-registro', async(req, res) => {
     console.log('datos compartidos get ' + datosCompartidos)
@@ -295,8 +293,6 @@ router.post('/app-validacion-registro', async(req, res) => {
         });
     }
 });
-
-
 
 // app-validacion-registro 2
 router.get('/app-validacion-registro-2/:id', async(req, res) => {
@@ -386,7 +382,6 @@ router.post('/app-validacion-registro-2/:id', async(req, res) => {
 
 });
 
-
 // VISTA REGISTRO DE TELEFONO
 router.get('/app-update-pass', (req, res) => {
 
@@ -394,7 +389,6 @@ router.get('/app-update-pass', (req, res) => {
 
     res.render('app-update-pass');
 })
-
 
 // ACTUALIZA LA CONTRASEÑA
 router.post('/app-update-pass', async(req, res) => {
@@ -573,7 +567,6 @@ router.post('/app-update-pass', async(req, res) => {
 
 });
 
-
 // app-update-pass-validacion
 router.get('/app-update-pass-validacion', async(req, res) => {
     console.log('datos compartidos get ' + datosCompartidos)
@@ -623,7 +616,6 @@ router.post('/app-update-pass-validacion', async(req, res) => {
         });
     }
 });
-
 
 // app-validacion-registro 2
 router.get('/app-update-pass-validacion-registro-2/:id', async(req, res) => {

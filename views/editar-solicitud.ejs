@@ -273,9 +273,9 @@
                         class="bi bi-file-earmark-text me-lg-2"></i>OBSERVACIONES</a>
 
 
-                    <% const permiso = config.Eliminar_solicitud.includes(rol); %>
-                        <% console.log(permiso) %>
-                            <% if(permiso){ %>
+                    <% const Eliminar_solicitud = (config.Eliminar_solicitud || []).includes(rol); %>
+                        <% console.log(Eliminar_solicitud) %>
+                            <% if(Eliminar_solicitud){ %>
 
 
                                 <a id="eliminarSolicitud" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-secondary btn-block p-2 mb-2 me-lg-2"><i class="bi bi-x-lg me-lg-2"></i>ELIMINAR SOLICITUD</i></a>

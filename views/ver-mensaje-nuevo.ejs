@@ -217,11 +217,12 @@
                         <%= mensaje.asunto %>
                     </h3>
                     <div class="d-flex justify-content-md-end ">
-                        <% if(rol == permiso_A){ %>
-                            <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-danger me-lg-2">ELIMINAR MENSAJE</i></a>
-                            <% } %>
-                                <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
-                                <select class="" name="estadoMensaje" id="" autofocus>
+                        <% const Eliminar_Mensaje = (config.Eliminar_Mensaje || []).includes(rol); %>
+                            <% if (Eliminar_Mensaje) { %>
+                                <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class=" btn btn-danger me-lg-2">ELIMINAR MENSAJE</i></a>
+                                <% } %>
+                                    <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
+                                    <select class="" name="estadoMensaje" id="" autofocus>
                         <option value="Leido">Leido</option>
                         <option value="No Leido">No Leido</option>
                     </select>

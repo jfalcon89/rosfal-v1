@@ -229,7 +229,10 @@
                                 <th class="pb-3 font-semibold">CREADO</th>
                                 <th class="pb-3 font-semibold text-center">SCORE POTENCIAL</th>
                                 <th class="pb-3 font-semibold text-center">ES POTENCIAL</th>
-                                <th class="pb-3 font-semibold text-center">ACCION</th>
+                                <% const Eliminar_Encuesta = (config.Eliminar_Encuesta || []).includes(rol); %>
+                                    <% if (Eliminar_Encuesta) { %>
+                                        <th class="pb-3 font-semibold text-center">ACCION</th>
+                                        <% } %>
                             </tr>
                         </thead>
                         <tbody class="text-slate-700">
@@ -298,9 +301,11 @@
                                                         <span class=""><%= encuesta.es_potencial %></span>
                                                     <% } %>
                                         </td>
-                                        <td class="py-4 text-center">
-                                            <a href="javascript:void(0)" onclick="confirmarBaja('<%= encuesta.id_encuesta %>')" class="btn-delete">Eliminar</a>
-                                        </td>
+                                        <% if (Eliminar_Encuesta) { %>
+                                            <td class="py-4 text-center">
+                                                <a href="javascript:void(0)" onclick="confirmarBaja('<%= encuesta.id_encuesta %>')" class="btn-delete">Eliminar</a>
+                                            </td>
+                                            <% } %>
                                     </tr>
 
                                     <% }) %>

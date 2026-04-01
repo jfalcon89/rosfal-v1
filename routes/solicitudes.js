@@ -1081,7 +1081,6 @@ router.post('/Solicitudes/editar-solicitud/:id', async(req, res) => {
         montoCuota
     };
 
-    console.log(nuevaSolicitud)
     const atrasoDB = await pool.query(`SELECT novedades_atrasos.atraso FROM novedades_atrasos WHERE novedades_atrasos.idSolicitud = ${id}`);
 
 

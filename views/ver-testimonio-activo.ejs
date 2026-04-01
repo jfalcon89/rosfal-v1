@@ -206,11 +206,12 @@
                         <%= testimonio.ciudad %>
                     </h3>
                     <div class="d-flex justify-content-md-end ">
-                        <% if(rol == permiso_A) { %>
-                            <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class=" btn btn-danger me-lg-2">ELIMINAR TESTIMONIO</i></a>
-                            <% } %>
-                                <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
-                                <select class="" name="estadoTestimonio" id="">
+                        <% const Eliminar_Testimonio = (config.Eliminar_Testimonio || []).includes(rol); %>
+                            <% if (Eliminar_Testimonio) { %>
+                                <a data-bs-toggle="modal" data-bs-target="#staticBackdrop" class=" btn btn-danger me-lg-2">ELIMINAR TESTIMONIO</i></a>
+                                <% } %>
+                                    <button class="btn btn-secondary me-lg-2" type="submit">GUARDAR COMO</button>
+                                    <select class="" name="estadoTestimonio" id="">
                             <option value="Activo">Activo</option>
                             <option value="Inactivo">Inactivo</option>
                         </select>

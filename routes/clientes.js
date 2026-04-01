@@ -23,6 +23,31 @@ router.get('/app-clientes', async(req, res) => {
 
 
         try {
+            const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Clientes') AND descripcion = 'Activo'");
+
+            // console.log(rows)
+
+            const config = rows.reduce((acc, row) => {
+                const clave = row.parametro_clave;
+                const valor = row.parametro_valor;
+
+                if (acc[clave]) {
+                    // Si ya existe la clave, verificamos si ya es un arreglo
+                    if (Array.isArray(acc[clave])) {
+                        acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                    } else {
+                        // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                        acc[clave] = [acc[clave], valor];
+                    }
+                } else {
+                    // Si es la primera vez, lo guardamos como un valor simple (String)
+                    acc[clave] = valor;
+                }
+                return acc;
+            }, {});
+
+            console.log(config)
+
             // Aquí usas el servicio centralizado
             const conteos = await obtenerConteos();
             // const arrayArchivosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where celular = '${clienteDB[0].telefono}'`);
@@ -66,7 +91,8 @@ LEFT JOIN
                 permiso_B,
                 permiso_C,
                 arrayArchivosCliente: arrayArchivosClienteDB,
-                m
+                m,
+                config
             });
         } catch (error) {
             console.log('entro al catch')

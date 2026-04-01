@@ -20,7 +20,6 @@ router.get('/encuesta', async(req, res) => {
         const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
         const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre = 'encuestas' AND descripcion = 'Activo'");
 
-        console.log(rows)
 
         // Resultado esperado: { pregunta_1: 'Valor1', pregunta_2: 'Valor2' }
         const config = rows.reduce((acc, row) => {
@@ -92,6 +91,15 @@ router.post("/encuesta", async(req, res) => {
     const permiso_D = 'Encuestador'
     const permiso_C = 'Cliente App'
 
+    const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre = 'encuestas' AND descripcion = 'Activo'");
+
+
+    // Resultado esperado: { pregunta_1: 'Valor1', pregunta_2: 'Valor2' }
+    const config = rows.reduce((acc, row) => {
+        acc[row.parametro_clave] = row.parametro_valor;
+        return acc;
+    }, {});
+
     const nuevaEncuenta = {
         ruta,
         fecha,
@@ -131,7 +139,8 @@ router.post("/encuesta", async(req, res) => {
         alertIcon: 'success',
         showConfirmButton: false,
         timer: 2000,
-        ruta: 'encuesta'
+        ruta: 'encuesta',
+        config
     });
 
 });
@@ -144,6 +153,31 @@ router.get('/encuestas-administracion', async(req, res) => {
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_D = 'Encuestador'
+
+        const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Encuestas') AND descripcion = 'Activo'");
+
+        // console.log(rows)
+
+        const config = rows.reduce((acc, row) => {
+            const clave = row.parametro_clave;
+            const valor = row.parametro_valor;
+
+            if (acc[clave]) {
+                // Si ya existe la clave, verificamos si ya es un arreglo
+                if (Array.isArray(acc[clave])) {
+                    acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                } else {
+                    // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                    acc[clave] = [acc[clave], valor];
+                }
+            } else {
+                // Si es la primera vez, lo guardamos como un valor simple (String)
+                acc[clave] = valor;
+            }
+            return acc;
+        }, {});
+
+        console.log(config)
 
         const arrayEncuestasDB = await pool.query('SELECT * FROM encuestas ');
         const arrayClientesPotencialesDB = await pool.query(`
@@ -187,7 +221,8 @@ router.get('/encuestas-administracion', async(req, res) => {
             permiso_B,
             conteos,
             arrayClientesPotenciales: arrayClientesPotencialesDB,
-            arrayEncuestas: arrayEncuestasDB
+            arrayEncuestas: arrayEncuestasDB,
+            config
         });
     } else {
         res.render('login', {
@@ -207,6 +242,31 @@ router.get('/encuestas-general', async(req, res) => {
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_D = 'Encuestador'
+
+        const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Encuestas') AND descripcion = 'Activo'");
+
+        // console.log(rows)
+
+        const config = rows.reduce((acc, row) => {
+            const clave = row.parametro_clave;
+            const valor = row.parametro_valor;
+
+            if (acc[clave]) {
+                // Si ya existe la clave, verificamos si ya es un arreglo
+                if (Array.isArray(acc[clave])) {
+                    acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                } else {
+                    // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                    acc[clave] = [acc[clave], valor];
+                }
+            } else {
+                // Si es la primera vez, lo guardamos como un valor simple (String)
+                acc[clave] = valor;
+            }
+            return acc;
+        }, {});
+
+        console.log(config)
 
 
         const arrayEncuestasDB = await pool.query(`
@@ -259,8 +319,8 @@ router.get('/encuestas-general', async(req, res) => {
             permiso_A,
             permiso_B,
             conteos,
-
-            arrayEncuestas: arrayEncuestasDB
+            arrayEncuestas: arrayEncuestasDB,
+            config
         });
     } else {
         res.render('login', {

@@ -115,40 +115,66 @@ router.post("/rutas/crear-ruta", async(req, res) => {
 
 
 //RENDERIZANDO Y MOSTRANDO TODAS LAS RUTAS CREADAS VISTA EDITAR RUTA
-router.get('/rutas/editar-ruta', async(req, res) => {
-    if (req.session.loggedin) {
-        const conteos = await obtenerConteos();
+// router.get('/rutas/editar-ruta', async(req, res) => {
+//     if (req.session.loggedin) {
+//         const conteos = await obtenerConteos();
+
+//         const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Rutas') AND descripcion = 'Activo'");
+
+//         // console.log(rows)
+
+//         const config = rows.reduce((acc, row) => {
+//             const clave = row.parametro_clave;
+//             const valor = row.parametro_valor;
+
+//             if (acc[clave]) {
+//                 // Si ya existe la clave, verificamos si ya es un arreglo
+//                 if (Array.isArray(acc[clave])) {
+//                     acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+//                 } else {
+//                     // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+//                     acc[clave] = [acc[clave], valor];
+//                 }
+//             } else {
+//                 // Si es la primera vez, lo guardamos como un valor simple (String)
+//                 acc[clave] = valor;
+//             }
+//             return acc;
+//         }, {});
+
+//         console.log(config)
 
 
-        const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
-        res.render('editar-ruta', {
-            arrayUsuarios: arrayUsuariosDB,
-            arrayClientes: arrayClientesDB,
-            arraySolicitudes: arraySolicitudesDB,
-            arrayMensajesNuevos: arrayMensajesNuevosDB,
-            arrayVisitas: arrayVisitasDB,
-            arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
-            arrayRutas: arrayRutasDB,
-            login: true,
-            name: req.session.name,
-            rol: req.session.rol,
-            permiso_A,
-            permiso_B,
-            permiso_C,
-            conteos
+//         const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+//         res.render('editar-ruta', {
+//             arrayUsuarios: arrayUsuariosDB,
+//             arrayClientes: arrayClientesDB,
+//             arraySolicitudes: arraySolicitudesDB,
+//             arrayMensajesNuevos: arrayMensajesNuevosDB,
+//             arrayVisitas: arrayVisitasDB,
+//             arrayTestimoniosNuevos: arrayTestimoniosNuevosDB,
+//             arrayRutas: arrayRutasDB,
+//             login: true,
+//             name: req.session.name,
+//             rol: req.session.rol,
+//             permiso_A,
+//             permiso_B,
+//             permiso_C,
+//             conteos,
+//             config
 
-        });
+//         });
 
 
-    } else {
-        res.render('login', {
-            login: false,
-            name: 'Debe iniciar sesión',
-            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
-        });
-    }
+//     } else {
+//         res.render('login', {
+//             login: false,
+//             name: 'Debe iniciar sesión',
+//             device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
+//         });
+//     }
 
-})
+// })
 
 //EDITAR SOLICITUD EN ESTADO NUEVA ************
 router.get("/rutas/editar-ruta/:id", async(req, res) => {
@@ -158,6 +184,31 @@ router.get("/rutas/editar-ruta/:id", async(req, res) => {
         console.log(req.params)
 
         try {
+
+            const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Rutas') AND descripcion = 'Activo'");
+
+            // console.log(rows)
+
+            const config = rows.reduce((acc, row) => {
+                const clave = row.parametro_clave;
+                const valor = row.parametro_valor;
+
+                if (acc[clave]) {
+                    // Si ya existe la clave, verificamos si ya es un arreglo
+                    if (Array.isArray(acc[clave])) {
+                        acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                    } else {
+                        // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                        acc[clave] = [acc[clave], valor];
+                    }
+                } else {
+                    // Si es la primera vez, lo guardamos como un valor simple (String)
+                    acc[clave] = valor;
+                }
+                return acc;
+            }, {});
+
+            console.log(config)
 
             const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
 
@@ -173,7 +224,8 @@ router.get("/rutas/editar-ruta/:id", async(req, res) => {
                 permiso_A,
                 permiso_B,
                 permiso_C,
-                conteos
+                conteos,
+                config
             });
 
         } catch (error) {

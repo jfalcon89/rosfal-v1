@@ -135,23 +135,24 @@
                 </div>
             </div>
         </div>
-        <% if(rol == permiso_A) { %>
-            <div class="container-fluid bg-white d-flex mt-3 mb-3 me-lg-3 shadow-sm">
-                <div class="container-nuevas d-flex">
-                    <div class="container-img m-2 me-lg-3">
-                        <img style="width: 60px;" src="/img/agregar-cliente.png" alt="Crear Nuevo Cliente">
-                    </div>
-                    <div class="container-titulo">
-                        <div class="indicador">
-                            <h3>
-                                <%=  %>
-                            </h3>
+        <% const Crear_Cliente_Accion = (config.Crear_Cliente_Accion || []).includes(rol); %>
+            <% if (Crear_Cliente_Accion) { %>
+                <div class="container-fluid bg-white d-flex mt-3 mb-3 me-lg-3 shadow-sm">
+                    <div class="container-nuevas d-flex">
+                        <div class="container-img m-2 me-lg-3">
+                            <img style="width: 60px;" src="/img/agregar-cliente.png" alt="Crear Nuevo Cliente">
                         </div>
-                        <div class="titulo"><a class="btn text-decoration-none text-secondary fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal2">Crear Cliente</a></div>
+                        <div class="container-titulo">
+                            <div class="indicador">
+                                <h3>
+                                    <%=  %>
+                                </h3>
+                            </div>
+                            <div class="titulo"><a class="btn text-decoration-none text-secondary fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal2">Crear Cliente</a></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <% } %>
+                <% } %>
     </div>
 
     <!-- Modal crear cliente -->
@@ -201,9 +202,10 @@
                                 <th scope="col">Estado</th>
                                 <th scope="col">Origen</th>
                                 <th scope="col">Usuario</th>
-                                <% if(rol == permiso_A){ %>
-                                    <th scope="col">Acciones</th>
-                                    <% } %>
+                                <% const Editar_Cliente_Accion = (config.Editar_Cliente_Accion || []).includes(rol); %>
+                                    <% if (Editar_Cliente_Accion) { %>
+                                        <th scope="col">Acciones</th>
+                                        <% } %>
                             </tr>
                         </thead>
                         <tbody>
@@ -252,7 +254,7 @@
                                                     <i style="color: red;" class="bi bi-x-square-fill"></i> <span class="text-danger">Usuario no Registrado</span>
                                                     <% } %>
                                         </td>
-                                        <% if(rol == permiso_A){ %>
+                                        <% if (Editar_Cliente_Accion) { %>
                                             <td class="w-0 ">
                                                 <a id="eventoAct-Inact" href="/app-clientes/editar-cliente/<%= cliente.cliente_id %>" class="btn " data-bs-toggle="modal" data-bs-target="#modalEditarCliente<%= m %>" class="btn " title="Editar Cliente"><i class="bi bi-pencil-square "></i></a>
 
@@ -279,7 +281,10 @@
                                                                         <div class="form-section-edit" id="seccion-personales-edit">
                                                                             <div class=" d-flex justify-content-end">
                                                                                 <button type="submit" class="btn btn-primary btn-block p-2 mt-1 mb-3 me-3"><i class="bi bi-save me-2"></i>Guardar Cambios</button>
-                                                                                <a class="btn btn-danger btn-block p-2 mt-1 mb-3" data-bs-toggle="modal" data-bs-target="#modalEliminarCliente<%= m %>">Eliminar Cliente</a>
+                                                                                <% const Eliminar_Cliente = (config.Eliminar_Cliente || []).includes(rol); %>
+                                                                                    <% if (Eliminar_Cliente) { %>
+                                                                                        <a class="btn btn-danger btn-block p-2 mt-1 mb-3" data-bs-toggle="modal" data-bs-target="#modalEliminarCliente<%= m %>">Eliminar Cliente</a>
+                                                                                        <% } %>
                                                                             </div>
                                                                             <div class="form-section-header">Datos personales</div>
                                                                             <div class="row g-3 mb-4">
@@ -297,7 +302,12 @@
                                                                                 </div>
                                                                                 <div class="col-md-3">
                                                                                     <label class="form-label" for="cedula">Cédula</label>
-                                                                                    <input type="text" class="form-control" name="cedula" value="<%= cliente.cedula %>">
+                                                                                    <% const Editar_Cedula = (config.Editar_Cedula || []).includes(rol); %>
+                                                                                        <% if (Editar_Cedula) { %>
+                                                                                            <input type="number" name="cedula" class="form-control" id="cedula" value="<%= cliente.cedula %>">
+                                                                                            <% } else { %>
+                                                                                                <input type="number" name="cedula" class="form-control" id="cedula" value="<%= cliente.cedula %>" readonly>
+                                                                                                <% } %>
                                                                                 </div>
                                                                                 <div class="col-md-3">
                                                                                     <label class="form-label" for="estado">Estado</label>
@@ -339,10 +349,33 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-6">
-                                                                                <div class="mb-3"><label class="form-label">Teléfono</label><input name="telefono" value="<%= cliente.telefono %>" type="text" class="form-control"></div>
-                                                                                <div class="mb-3"><label class="form-label">Celular</label><input name="celular" value="<%= cliente.celular %>" type="text" class="form-control"></div>
+                                                                                <div class="mb-3"><label class="form-label">Teléfono</label>
 
-                                                                                <div class="mb-3"><label class="form-label">Email</label><input name="email" value="<%= cliente.email %>" type="email" class="form-control"></div>
+                                                                                    <% const Editar_Telefono = (config.Editar_Telefono || []).includes(rol); %>
+                                                                                        <% if (Editar_Telefono) { %>
+                                                                                            <input type="number" name="telefono" class="form-control p-2 " id="telefono " aria-describedby="emailHelp" value="<%= cliente.celular %>">
+                                                                                            <% } else { %>
+                                                                                                <input type="number" name="telefono" class="form-control p-2 " id="telefono" aria-describedby="emailHelp " value="<%= cliente.celular %>" readonly>
+                                                                                                <% } %>
+                                                                                </div>
+                                                                                <div class="mb-3"><label class="form-label">Celular</label>
+
+                                                                                    <% const Editar_Celular = (config.Editar_Celular || []).includes(rol); %>
+                                                                                        <% if (Editar_Celular) { %>
+                                                                                            <input type="number" name="celular" class="form-control p-2 " id="celular " aria-describedby="emailHelp" value="<%= cliente.celular %>">
+                                                                                            <% } else { %>
+                                                                                                <input type="number" name="celular" class="form-control p-2 " id="celular" aria-describedby="emailHelp " value="<%= cliente.celular %>" readonly>
+                                                                                                <% } %>
+                                                                                </div>
+
+                                                                                <div class="mb-3"><label class="form-label">Email</label>
+                                                                                    <% const Editar_Email = (config.Editar_Email || []).includes(rol); %>
+                                                                                        <% if (Editar_Email) { %>
+                                                                                            <input type="email" name="email" class="form-control p-2" id="email" value="<%= cliente.email %>">
+                                                                                            <% } else { %>
+                                                                                                <input type="email" name="email" class="form-control p-2" id="email" value="<%= cliente.email %>" readonly>
+                                                                                                <% } %>
+                                                                                </div>
                                                                                 <div class="mb-3">
                                                                                     <label class="form-label">Nacionalidad</label>
                                                                                     <select class="form-select" name="nacionalidad">

@@ -18,36 +18,37 @@
     <!-- moment.js cdn -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment-with-locales.min.js"></script>s -->
     <link rel="icon" href="/img/favicon/logo-favicon.png">
-    <title>Rosfal - Registrar</title>
+    <title>Rosfal - App Update Pass</title>
 </head>
 
-<body style="height: 100vh; background-size: cover;  background-repeat: no-repeat; background-attachment: fixed; background-image: url(/img/APP-REGISTRO.jpg)">
-    <div class="whatsapp">
-        <a class="btn-ws " href="https://bit.ly/3xzs0RV" target="_blank"><img class="img-fluid" src="/img/logo-ws.png" alt="logo ws"></a>
-    </div>
-    <div class="" style=" width: 100%; padding-top: 200px; ">
-        <h6 class="d-flex text-secondary pt-4" style="padding-left: 15px; padding-right: 15px;"><strong>Cual es su numero de telefono ?</strong></h6>
-        <!-- <p class="d-flex text-secondary" style="padding-left: 15px; padding-right: 15px;">Enviaremos un codigo de validacion por SMS a este numero</p> -->
-        <form id="form-validacion" autocomplete="off" action="/app-update-pass" method="POST" style="padding: 15px;">
-            <div class="form-group">
+<body class="d-flex justify-content-center">
+    <div style="height: 100vh; background-size: cover;  background-repeat: no-repeat; background-image: url(/img/APP-REGISTRO.jpg); box-shadow: 0 19px 38px rgb(0 0 0 / 30%), 0 15px 12px rgb(0 0 0 / 22%)">
+        <div class="whatsapp">
+            <a class="btn-ws " href="https://bit.ly/3xzs0RV" target="_blank"><img class="img-fluid" src="/img/logo-ws.png" alt="logo ws"></a>
+        </div>
 
-                <label for="telefono" class="text-secondary ">Enviaremos un codigo de validacion por SMS a este numero para actualizar su contraseña</label>
-
-                <input style="" type="number" name="telefono" class="form-control p-2" id="telefono" autocomplete="off" aria-describedby="" placeholder="Digite su numero de telefono" required>
+        <div class="d-flex align-items-center h-100">
+            <div>
+                <div class="px-lg-5 pt-5">
+                    <h6 class="d-flex text-secondary pt-4" style="padding-left: 15px; padding-right: 15px;"><strong>Cual es su numero de telefono ?</strong></h6>
+                    <!-- <p class="d-flex text-secondary" style="padding-left: 15px; padding-right: 15px;">Enviaremos un codigo de validacion por SMS a este numero</p> -->
+                    <form id="form-validacion" autocomplete="off" action="/app-update-pass" method="POST" style="padding: 15px;">
+                        <div class="form-group">
+                            <label for="telefono" class="text-secondary ">Enviaremos un codigo de validacion por SMS a este numero para actualizar su contraseña</label>
+                            <input style="" type="number" name="telefono" class="form-control p-2" id="telefono" autocomplete="off" aria-describedby="" placeholder="Digite su numero de telefono" required>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <button style="background-color: #014c90; border-color: #639cc9;" type="submit" class="btn btn-primary m-3 p-2 w-100" id="btn">Enviar codigo</button>
+                        </div>
+                    </form>
+                </div>
+                <div style="" class="d-flex justify-content-center w-100">
+                    <a href="/app-inicio" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+                </div>
             </div>
-            <br>
-            <div class="d-flex justify-content-center">
-                <button style="background-color: #014c90; border-color: #639cc9;" type="submit" class="btn btn-primary m-3 p-2 w-100" id="btn">Enviar codigo</button>
-            </div>
-        </form>
+        </div>
     </div>
-
-
-    <div style="" class="d-flex justify-content-center w-100">
-
-        <a href="/app-inicio" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
-    </div>
-
 
     <script>
         // Captura el envío del formulario
