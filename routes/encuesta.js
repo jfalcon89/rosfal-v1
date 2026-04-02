@@ -154,7 +154,7 @@ router.get('/encuestas-administracion', async(req, res) => {
         const permiso_B = 'Representante'
         const permiso_D = 'Encuestador'
 
-        const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Encuestas') AND descripcion = 'Activo'");
+        const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Encuestas', 'encuestas') AND descripcion = 'Activo'");
 
         // console.log(rows)
 
@@ -223,6 +223,104 @@ router.get('/encuestas-administracion', async(req, res) => {
             arrayClientesPotenciales: arrayClientesPotencialesDB,
             arrayEncuestas: arrayEncuestasDB,
             config
+        });
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
+        });
+    }
+
+});
+
+router.get('/encuestas-metricas-usuario', async(req, res) => {
+    if (req.session.loggedin) {
+
+        const conteos = await obtenerConteos();
+
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const permiso_D = 'Encuestador'
+
+        const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Encuestas',    'encuestas') AND descripcion = 'Activo'");
+
+        // console.log(rows)
+
+        const config = rows.reduce((acc, row) => {
+            const clave = row.parametro_clave;
+            const valor = row.parametro_valor;
+
+            if (acc[clave]) {
+                // Si ya existe la clave, verificamos si ya es un arreglo
+                if (Array.isArray(acc[clave])) {
+                    acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                } else {
+                    // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                    acc[clave] = [acc[clave], valor];
+                }
+            } else {
+                // Si es la primera vez, lo guardamos como un valor simple (String)
+                acc[clave] = valor;
+            }
+            return acc;
+        }, {});
+
+        console.log(config)
+
+        const arrayEncuestasDB = await pool.query(`SELECT * FROM encuestas where encuestas.encuestador = "${req.session.name}"`);
+
+
+
+        res.render("encuestas-metricas-usuario", {
+            login: true,
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_D,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            conteos,
+            arrayEncuestas: arrayEncuestasDB,
+            config
+        });
+    } else {
+        res.render('login', {
+            login: false,
+            name: 'Debe iniciar sesión',
+            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
+        });
+    }
+
+});
+
+router.get('/mapa-rutas-usuario', async(req, res) => {
+    if (req.session.loggedin) {
+
+
+        const conteos = await obtenerConteos();
+
+        const permiso_A = 'Administrador'
+        const permiso_B = 'Representante'
+        const permiso_C = 'Cliente App'
+        const permiso_D = 'Encuestador'
+
+        const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+
+        console.log(arrayRutasDB)
+
+        res.render("mapa-rutas-usuario", {
+            login: true,
+            name: req.session.name,
+            rol: req.session.rol,
+            permiso_D,
+            permiso_A,
+            permiso_B,
+            permiso_C,
+            conteos,
+            arrayRutas: arrayRutasDB,
+            rutaParaMostrar: [{ lat: 18.482183, lng: -69.974393 }, { lat: 18.479362516705706, lng: -69.96499775400336 }]
         });
     } else {
         res.render('login', {

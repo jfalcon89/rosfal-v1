@@ -105,7 +105,7 @@
 
     <div class="offcanvas offcanvas-start !border-none !rounded-r-2xl shadow-2xl" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
         <div class="flex items-center justify-between p-4 border-b border-gray-100">
-            <h5 class="text-blue-900 font-bold text-lg italic" id="navbarOffcanvasLabel">ROSFAL MENU</h5>
+            <h5 class="text-blue-900 font-bold text-lg italic" id="navbarOffcanvasLabel">ROSFAL ENCUESTAS</h5>
             <button type="button" class="text-gray-400 hover:text-black transition-colors" data-bs-dismiss="offcanvas">
             <i class="bi bi-x-lg text-xl"></i>
         </button>
@@ -145,30 +145,16 @@
                         </h3>
                     </div>
                     <div class="titulo">
-                        <a style="color: #2f6eaa;" class="text-decoration-none fs-5" href="/encuestas-administracion">
+                        <a style="color: #2f6eaa;" class="text-decoration-none fs-5" href="/encuestas-metricas-usuario">
                             
-                                 Dashboard
+                                 Metricas
                         
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
-            <div class="container-nuevas d-flex">
-                <div class="container-img m-2 me-lg-3">
-                    <span style="font-size:50px ">📝</span>
-                </div>
-                <div class="container-titulo d-flex align-items-center">
-                    <div class="indicador">
-                        <h1>
-                            <%=  %>
-                        </h1>
-                    </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/encuestas-general">Encuestas Realizadas</a></div>
-                </div>
-            </div>
-        </div>
+
         <div class="container-fluid bg-white mt-3 mb-3 me-lg-3 d-flex holographic-card" style="border-radius: 50px;">
             <div class="container-nuevas d-flex">
                 <div class="container-img m-2 me-lg-3">
@@ -180,25 +166,11 @@
                             <%=  %>
                         </h3>
                     </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/mapa-rutas">Mapas de Rutas</a></div>
+                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/mapa-rutas-usuario">Mapas de Rutas</a></div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid bg-white mt-3 me-lg-3 mb-3 d-flex holographic-card" style="border-radius: 50px;">
-            <div class="container-nuevas d-flex">
-                <div class="container-img m-2 me-lg-3">
-                    <span style="font-size:50px ">⚙️</span>
-                </div>
-                <div class="container-titulo d-flex align-items-center">
-                    <div class="indicador">
-                        <h3>
-                            <%=  %>
-                        </h3>
-                    </div>
-                    <div class="titulo"><a class="text-decoration-none text-secondary fs-5" href="/rutas">Configuración</a></div>
-                </div>
-            </div>
-        </div>
+
     </div>
 
     <% 
@@ -239,7 +211,9 @@
         <main class="flex-1 p-4 md:p-8 overflow-y-auto ">
             <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                 <div>
-                    <h1 class="text-2xl font-bold text-slate-800">Análisis de Mercado</h1>
+                    <h1 class="text-2xl font-bold text-slate-800">Metricas de Encuentas
+                        <%= name %>
+                    </h1>
                     <p class="text-slate-500">Resultados en tiempo real de encuestadores</p>
                 </div>
                 <div class="flex gap-3 w-full md:w-auto">
@@ -255,68 +229,39 @@
                     <h2 class="text-3xl font-black text-slate-800">
                         <%= arrayEncuestas.length %>
                     </h2>
-                    <span class="text-emerald-500 text-xs font-bold">↑ 12% esta semana</span>
+
                 </div>
                 <div class="card">
                     <% let sumaFlujo = 0; arrayEncuestas.forEach(encuesta => {sumaFlujo += encuesta.flujo_clientes_score;}); const flujoPromedio = arrayEncuestas.length > 0 ? (sumaFlujo / arrayEncuestas.length).toFixed(1) : 0; %>
-                        <p class="text-slate-500 text-sm font-semibold">Flujo Promedio</p>
+                        <p class="text-slate-500 text-sm font-semibold">Encuestas de la Semana</p>
                         <h2 class="text-3xl font-black text-slate-800">
-                            <%= flujoPromedio %> / 10</h2>
-                        <span class="text-slate-400 text-xs">Escala 1/10 flujo de clientes</span>
+                            <%= totalSemana %>
+                        </h2>
+                        <span class="text-slate-400 text-xs">Realizadas desde el <strong><%= fechaLunes.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %></strong> hasta el <strong><%= fechaDomingo.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %></strong></span>
                 </div>
                 <div class="card">
-                    <p class="text-slate-500 text-sm font-semibold">Meta de la semana por encuestador</p>
+                    <p class="text-slate-500 text-sm font-semibold">Meta de la semana</p>
                     <h2 class="text-3xl font-black text-blue-600">
                         <%= config.Usuario_Meta_Semana %>
                     </h2>
-                    <span class="text-slate-400 text-xs">Meta > <strong><%= config.Usuario_Meta_Gral %></strong> Encuestas por encuestado</span>
+                    <span class="text-slate-400 text-xs">Meta >= <strong><%= config.Usuario_Meta_Gral %></strong> Encuestas al final (Periodo)</span>
                 </div>
-                <div class="card">
-                    <p class="text-slate-500 text-sm font-semibold">Meta total de la semana</p>
-                    <h2 class="text-3xl font-black text-blue-600">
-                        <%= config.Meta_Total_Semana %>
-                    </h2>
-                    <span class="text-slate-400 text-xs">Meta Gral >= <strong><%= config.Meta_Gral %></strong> Encuestas al final (Periodo)</span>
-                </div>
-                <div class="card">
-                    <p class="text-slate-500 text-sm font-semibold">Encuestas de la Semana</p>
-                    <h2 class="text-3xl font-black text-slate-800">
-                        <%= totalSemana %>
-                    </h2>
-                    <span class="text-slate-400 text-xs">Realizadas desde el <strong><%= fechaLunes.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %></strong> hasta el <strong><%= fechaDomingo.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %></strong></span>
-                </div>
-                <div class="card">
-                    <p class="text-slate-500 text-sm font-semibold">Tasa de Insatisfacción</p>
-                    <h2 class="text-3xl font-black text-rose-500">
-                        <% const insatisfacción = (arrayEncuestas.length-arrayClientesPotenciales.length)/arrayEncuestas.length*100  %>
-                            <%= insatisfacción.toFixed() %>%</h2>
-                    <span class="text-slate-400 text-xs">Oportunidad de captura</span>
-                </div>
+                <div class=" d-flex flex-nowrap justify-content-around">
+                    <div>
+                        <p class="text-slate-500 text-sm font-semibold">Porcentaje meta de la semana</p>
+                        <h2 class="text-3xl font-black text-rose-500">
 
-                <div class="card">
-                    <p class="text-slate-500 text-sm font-semibold">Porcentaje meta de la semana</p>
-                    <h2 class="text-3xl font-black text-rose-500">
+                            <% const porcentaje_semana = (totalSemana/config.Usuario_Meta_Semana)*100  %>
+                                <%= porcentaje_semana.toFixed() %>%</h2>
 
-                        <% const porcentaje_semana = (totalSemana/config.Meta_Total_Semana)*100  %>
-                            <%= porcentaje_semana.toFixed() %>%</h2>
-                    <span class="text-slate-400 text-xs">Meta = <strong><%= config.Meta_Total_Semana %></strong> Encuestas al final (Semana)</span>
-                </div>
-                <div class="card">
-                    <p class="text-slate-500 text-sm font-semibold">Porcentaje meta Gnral</p>
-                    <h2 class="text-3xl font-black text-rose-500">
-                        <% const porcentaje_total = (arrayEncuestas.length/config.Meta_Gral)*100  %>
-                            <%= porcentaje_total.toFixed() %>%</h2>
+                    </div>
+                    <div>
+                        <p class="text-slate-500 text-sm font-semibold">Porcentaje meta Gnral</p>
+                        <h2 class="text-3xl font-black text-rose-500">
+                            <% const porcentaje_total = (arrayEncuestas.length/config.Usuario_Meta_Gral)*100  %>
+                                <%= porcentaje_total.toFixed() %>%</h2>
 
-                </div>
-
-
-
-                <div class="card">
-                    <p class="text-slate-500 text-sm font-semibold">Potenciales Clientes</p>
-                    <h2 class="text-3xl font-black text-blue-600">
-                        <%= arrayClientesPotenciales.length %>
-                    </h2>
-                    <span class="text-slate-400 text-xs">Score > 70 puntos</span>
+                    </div>
                 </div>
             </div>
 
@@ -376,7 +321,7 @@
                             <!-- Charts Grid -->
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                                 <div class="card">
-                                    <h3 class="font-bold text-slate-700 mb-4">Prioridad de Inversión (RD$20,000)</h3>
+                                    <h3 class="font-bold text-slate-700 mb-4">Prioridad de Inversión</h3>
                                     <div class="chart-container">
                                         <canvas id="priorityChart"></canvas>
                                     </div>
@@ -394,7 +339,7 @@
                                     </div>
                                 </div>
                                 <div class="card">
-                                    <h3 class="font-bold text-slate-700 mb-4">Encuestas por Encuestador</h3>
+                                    <h3 class="font-bold text-slate-700 mb-4">Encuestas</h3>
                                     <div class="chart-container mb-4">
                                         <canvas id="encuestasStaff"></canvas>
                                     </div>
@@ -404,7 +349,7 @@
                             <!-- Potenciales Clientes Table -->
                             <div class="card mb-5 border-0">
                                 <div class="flex justify-between items-center mb-6">
-                                    <h3 class="font-bold text-slate-800 text-lg">Ranking de Prospectos Potenciales</h3>
+                                    <h3 class="font-bold text-slate-800 text-lg">Listado de Prospectos Encuestados</h3>
                                     <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded font-bold">ACTUALIZADO AHORA</span>
                                 </div>
                                 <div style="border-radius: 50px; box-shadow:  20px 20px 60px #bebebe, -20px -20px 60px #ffffff;" class="container-fluid p-4">
@@ -419,13 +364,12 @@
                                                     <th class="pb-3 font-semibold">UBICACION CALLE</th>
                                                     <th class="pb-3 font-semibold text-center">FLUJO CLIENTES</th>
                                                     <th class="pb-3 font-semibold">PRIORIDAD</th>
-                                                    <th class="pb-3 font-semibold text-center">SCORE POTENCIAL</th>
                                                     <th class="pb-3 font-semibold text-center">FECHA</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-slate-700">
-                                                <% if (arrayClientesPotenciales.length > 0) { %>
-                                                    <% arrayClientesPotenciales.forEach(encuesta=> { %>
+                                                <% if (arrayEncuestas.length > 0) { %>
+                                                    <% arrayEncuestas.forEach(encuesta=> { %>
 
                                                         <tr class="border-b hover:bg-slate-50 transition-colors">
                                                             <td class="py-4">
@@ -456,9 +400,7 @@
                                                             <td class="py-4 text-sm">
                                                                 <%= encuesta.prioridad_inversion %>
                                                             </td>
-                                                            <td class="py-4 text-center">
-                                                                <span class="px-3 py-1 rounded-full score-high font-bold text-sm"><%= encuesta.score_potencial %> pts</span>
-                                                            </td>
+
                                                             <td class="py-4 text-sm text-center">
                                                                 <%= encuesta.creado_el.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 10) %>
                                                             </td>
@@ -477,7 +419,7 @@
             $(document).ready(function() {
                 $('#datatable').DataTable({
                     order: [
-                        [8, 'desc']
+                        [7, 'desc']
                     ],
 
                     language: {
@@ -668,7 +610,7 @@
 
 
         <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100"></div>
-        <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 m-4 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+        <a href="/encuesta" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 m-4 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
         </div>
 
 
