@@ -24,6 +24,7 @@ router.get('/panel-administracion', async(req, res) => {
     let device = '';
 
     if (req.session.loggedin) {
+        console.log(req.session.idUsuario, 'sesion activa')
 
         // Aquí usas el servicio centralizado
         const conteos = await obtenerConteos();
@@ -248,6 +249,7 @@ router.get('/panel-administracion', async(req, res) => {
             const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos `);
             const SolicitudesCliente = ''
 
+            const usuarioDB = await pool.query('SELECT * FROM users WHERE user = ?', [req.session.user]);
             // const cantPrestamosDB = await pool.query("SELECT COUNT(idSolicitud) cantPrestamos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' OR estadoSolicitud = 'En Legal'")
             // const cantAtrasosDB = await pool.query("SELECT COUNT(idSolicitud) cantAtrasos FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND atraso > 0")
 
@@ -302,12 +304,15 @@ router.get('/panel-administracion', async(req, res) => {
                 name: req.session.name,
                 rol: req.session.rol,
                 user: req.session.user,
+                idUsuario: req.session.idUsuario,
                 permiso_A,
                 permiso_B,
                 permiso_C,
                 documentosCliente: documentosClienteDB,
                 pagosPromociones: pagosPromocionesDB,
-                device
+                device,
+                usuario: usuarioDB[0]
+
             });
         };
 

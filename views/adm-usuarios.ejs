@@ -205,6 +205,7 @@
                                 <th scope="col">Fecha Creacion</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Cliente Id</th>
+                                <th scope="col">Foto</th>
                                 <% const Editar_Usuario_Accion = (config.Editar_Usuario_Accion || []).includes(rol); %>
                                     <% if (Editar_Usuario_Accion) { %>
                                         <th scope="col">Acciones</th>
@@ -217,6 +218,7 @@
                                     <span class="d-none"><%= i++ %></span>
                                     <tr>
                                         <td>
+
                                             <%= usuario.idUsuario %>
                                         </td>
                                         <td>
@@ -240,6 +242,9 @@
                                                 <% }else{ %>
                                                     <i style="color: red;" class="bi bi-x-square-fill"></i> <span class="text-danger">Cliente no Registrado</span>
                                                     <% } %>
+                                        </td>
+                                        <td>
+                                            <img id="imgPerfil" src="<%= usuario.foto_perfil_url || '/img/default-user.png' %>" class="rounded-circle shadow" style="width: 50px; height: 50px; object-fit: cover; border: 3px solid #f0ad4e;">
                                         </td>
                                         <% if (Editar_Usuario_Accion) { %>
                                             <td class="w-0 ">

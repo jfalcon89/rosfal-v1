@@ -65,7 +65,7 @@ router.post('/auth', async(req, res) => {
                 }
 
                 req.session.loggedin = true;
-                req.session.userId = results[0].id;
+                req.session.idUsuario = results[0].idUsuario;
                 req.session.user = results[0].user;
                 req.session.name = results[0].name;
                 req.session.rol = results[0].rol;
@@ -83,9 +83,9 @@ router.post('/auth', async(req, res) => {
                     // 🔥 Ahora sí actualizamos columnas adicionales
                     pool.query(
                         `UPDATE sessions 
-             SET user_id = ?, user = ?, name = ?, rol = ?
+             SET idUsuario = ?, user = ?, name = ?, rol = ?
              WHERE session_id = ?`, [
-                            req.session.userId,
+                            req.session.idUsuario,
                             req.session.user,
                             req.session.name,
                             req.session.rol,

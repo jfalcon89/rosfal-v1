@@ -22,7 +22,6 @@ router.get('/mantenedor-parametros', async(req, res) => {
 
             res.render('mantenedor-parametros', {
                 modulos,
-                user: req.session.user,
                 title: 'Mantenedor de Parámetros',
                 permiso_A,
                 permiso_B,
@@ -30,7 +29,9 @@ router.get('/mantenedor-parametros', async(req, res) => {
                 conteos,
                 login: true,
                 name: req.session.name,
-                rol: req.session.rol
+                rol: req.session.rol,
+                user: req.session.user,
+                idUsuario: req.session.idUsuario
             });
         } catch (error) {
             console.error(error);
@@ -134,6 +135,8 @@ router.get('/rutas', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_A,
             permiso_B,
             permiso_C,
@@ -166,6 +169,8 @@ router.get('/rutas/crear-ruta', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_A,
             permiso_B,
             permiso_C
@@ -206,6 +211,8 @@ router.post("/rutas/crear-ruta", async(req, res) => {
         login: true,
         name: req.session.name,
         rol: req.session.rol,
+        user: req.session.user,
+        idUsuario: req.session.idUsuario,
         permiso_A,
         permiso_B,
         permiso_C,
@@ -242,6 +249,8 @@ router.get('/rutas/editar-ruta', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_A,
             permiso_B,
             permiso_C,
@@ -280,6 +289,8 @@ router.get("/rutas/editar-ruta/:id", async(req, res) => {
                 login: true,
                 name: req.session.name,
                 rol: req.session.rol,
+                user: req.session.user,
+                idUsuario: req.session.idUsuario,
                 permiso_A,
                 permiso_B,
                 permiso_C,

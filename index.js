@@ -54,6 +54,7 @@ const appRegistro = require("./routes/app-registro");
 
 //--------------CONEXION AL SERVIDOR-----------------//
 app.set("port", process.env.PORT || 3006);
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 app.listen(app.get("port"), () => {
     console.log("servidor funcionando en el puerto", app.get("port"))
@@ -64,6 +65,8 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 
 app.set('trust proxy', 1); // importante si usas Cloudflare
+// 2. Hacer que la carpeta de fotos sea accesible públicamente vía URL
+app.use('/uploads', express.static('public/uploads'));
 
 const sessionStore = new MySQLStore({
     host: process.env.HOST,

@@ -35,6 +35,8 @@ router.get('/promociones', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_A,
             permiso_B,
             permiso_C,
@@ -95,6 +97,8 @@ router.get('/clientes-promociones-adm', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_A,
             permiso_B,
             permiso_C,
@@ -141,6 +145,8 @@ router.post("/promociones", async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_A,
             permiso_B,
             permiso_C,
@@ -176,6 +182,8 @@ router.post("/promociones", async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_A,
             permiso_B,
             permiso_C,
@@ -230,6 +238,8 @@ router.post("/promociones/editar-promocion/:id", async(req, res) => {
         login: true,
         name: req.session.name,
         rol: req.session.rol,
+        user: req.session.user,
+        idUsuario: req.session.idUsuario,
         permiso_A,
         permiso_B,
         permiso_C,
@@ -306,6 +316,8 @@ router.post("/clientes-promociones-adm/editar-promocion-cliente/:id", async(req,
         login: true,
         name: req.session.name,
         rol: req.session.rol,
+        user: req.session.user,
+        idUsuario: req.session.idUsuario,
         permiso_A,
         permiso_B,
         permiso_C,
@@ -363,48 +375,50 @@ router.get("/clientes-promociones/eliminar-promocion-cliente/:id", async(req, re
 
 
 // ---------------------------------------------------------------------------------
-
+//ELIMINAR
 //RENDERIZANDO Y MOSTRANDO TODAS LAS RUTAS CREADAS VISTA EDITAR RUTA
-router.get('/app-clientes/editar-cliente', async(req, res) => {
-    if (req.session.loggedin) {
+// router.get('/app-clientes/editar-cliente', async(req, res) => {
+//     if (req.session.loggedin) {
 
-        const permiso_A = 'Administrador'
-        const permiso_B = 'Representante'
-        const permiso_C = 'Cliente App'
-        const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
-        const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
-        const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
-        const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
-        const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
-        const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
+//         const permiso_A = 'Administrador'
+//         const permiso_B = 'Representante'
+//         const permiso_C = 'Cliente App'
+//         const arrayUsuarios = await pool.query('SELECT idUsuario FROM users ');
+//         const arrayClientes = await pool.query('SELECT cliente_id FROM app_clientes ');
+//         const arraySolicitudes = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
+//         const arrayMensajesNuevos = await pool.query('SELECT idMensaje FROM mensajes WHERE estadoMensaje="Nuevo"');
+//         const arrayVisitas = await pool.query('SELECT idVisita FROM visitas ');
+//         const arrayTestimoniosNuevos = await pool.query('SELECT idTestimonio FROM testimonios WHERE estadoTestimonio="Nuevo" ORDER BY fechaTestimonio DESC');
 
-        const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-        const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
-        res.render('editar-cliente', {
-            arrayClientesV: arrayClientesVDB,
-            arrayUsuariosV: arrayUsuariosVDB,
-            login: true,
-            name: req.session.name,
-            rol: req.session.rol,
-            permiso_A,
-            permiso_B,
-            permiso_C,
-            arrayUsuarios,
-            arrayClientes,
-            arraySolicitudes,
-            arrayMensajesNuevos,
-            arrayVisitas,
-            arrayTestimoniosNuevos
+//         const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
+//         const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
+//         res.render('editar-cliente', {
+//             arrayClientesV: arrayClientesVDB,
+//             arrayUsuariosV: arrayUsuariosVDB,
+//             login: true,
+//             name: req.session.name,
+//             rol: req.session.rol,
+//             user: req.session.user,
+//             idUsuario: req.session.idUsuario,
+//             permiso_A,
+//             permiso_B,
+//             permiso_C,
+//             arrayUsuarios,
+//             arrayClientes,
+//             arraySolicitudes,
+//             arrayMensajesNuevos,
+//             arrayVisitas,
+//             arrayTestimoniosNuevos
 
-        });
-    } else {
-        res.render('login', {
-            login: false,
-            name: 'Debe iniciar sesión',
-            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
-        });
-    }
-})
+//         });
+//     } else {
+//         res.render('login', {
+//             login: false,
+//             name: 'Debe iniciar sesión',
+//             device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
+//         });
+//     }
+// })
 
 //EDITAR SOLICITUD EN ESTADO NUEVA ************
 // router.get("/app-clientes/editar-cliente/:id", async(req, res) => {

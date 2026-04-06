@@ -38,16 +38,18 @@
     <nav class="navbar navbar-expand-lg navbar-light  ">
         <div class="container-fluid  " style="">
             <div class="w-100 m-2 d-flex justify-content-between align-items-center">
+                <% if(rol == permiso_D){ %>
+                    <a href="/encuestas-metricas-usuario">
+                        <% }else{ %>
+                            <a href="/panel-administracion">
+                                <% } %>
+                                    <i class="bi bi-arrow-left fs-4"></i>
+                            </a>
 
-                <a href="/panel-administracion">
+                            <div class="w-100 d-flex justify-content-center">
 
-                    <i class="bi bi-arrow-left fs-4"></i>
-                </a>
-
-                <div class="w-100 d-flex justify-content-center">
-
-                    <p class="m-0">Datos Personales</p>
-                </div>
+                                <p class="m-0">Datos Personales</p>
+                            </div>
             </div>
 
         </div>
@@ -57,94 +59,156 @@
 
     <div class="container-fluid d-lg-flex ">
         <div class="container-fluid p-2 ">
-            <form id="form-validacion" class="" autocomplete="off" action="" method="POST">
-                <div style="border-radius: 10px;" class="container bg-white mt-2  pb-2 pt-2 shadow">
-                    <div class="d-flex justify-content-center">
-                        <div class="input-group mb-3">
-                            <div class="">
-                                <p class="me-2" id="estado_usuario">Estado</p>
-                            </div>
-                            <div class="">
-                                <p class="text-secondary" id="estado_usuario">
-                                    <%= usuario.estado_usuario %>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end input-group mb-3">
-
-                            <div class="d-flex ">
-                                <p class="text-secondary" id="estado_usuario">
-                                    <%= usuario.rol %>
-                                </p>
-                            </div>
-                        </div>
+            <div style="border-radius: 10px;" class="container bg-white mt-2 pb-4 pt-2 shadow">
+                <h5 class="text-secondary text-center"><strong>HOLA, </strong>
+                    <% if (SolicitudesCliente.length > 0) { %>
+                        <% SolicitudesCliente.forEach(solicitud => { %>
+                            <% if(solicitud.celular == usuario.user){ %>
+                                <%= solicitud.nombre %>
+                                    <% } %>
+                                        <% }) %>
+                                            <% } else { %>
+                                                <%= name %>
+                                                    <% } %>
+                </h5>
+                <div class="text-center mb-3">
+                    <div class="position-relative d-inline-block">
+                        <img id="imgPerfil" src="<%= usuario.foto_perfil_url || '/img/default-user.png' %>" class="rounded-circle shadow" style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #f0ad4e;">
+                        <button type="button" class="btn btn-sm btn-warning position-absolute bottom-0 end-0 rounded-circle" data-bs-toggle="modal" data-bs-target="#modalFoto">
+                            <i class="bi bi-camera-fill"></i>
+                        </button>
                     </div>
-
-                    <h5 class="text-secondary text-center"><strong>HOLA, </strong>
-                        <% if (SolicitudesCliente.length > 0) { %>
-                            <% SolicitudesCliente.forEach(SolicitudesCliente=> { %>
-                                <% if(SolicitudesCliente.celular == usuario.user){ %>
-                                    <%= SolicitudesCliente.nombre %>
-                                        <% } %>
-                                            <% }) %>
-                                                <% }else{ %>
-                                                    <%= name %>
-                                                        <% } %>
-
-                    </h5>
-                    <hr>
-
-
-
-
-                    <div class="d-flex justify-content-center ">
-                        <p class="" id="user">Fecha Registro</p>
-                    </div>
-
-
-
-                    <div class="d-flex justify-content-center">
-                        <p class="text-secondary" id="user">
-                            <%= usuario.fecha_creacion.toLocaleString('es-US', { timeZone: 'America/Santo_Domingo'}).slice(0,10) %>
-                        </p>
-                    </div>
-                    <hr>
-
-
-                    <div class="d-flex justify-content-center">
-                        <p class="" id="user">Numero Registrado</p>
-                    </div>
-
-
-                    <div class="d-flex justify-content-center">
-                        <p class="text-secondary" id="user">
-                            <%= usuario.user %>
-                        </p>
-                    </div>
-
-
-
-                    <div class="input-group mb-3">
-                        <div class="d-flex">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="pass">Password</span>
-                            </div>
-                            <input class="form-control " type="password" name="" value="<%= usuario.pass %>" id="pass" placeholder="" aria-describedby="pass"><a class="btn btn-secondary  btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">CAMBIAR</a>
-                        </div>
-                    </div>
-
-
-                    <!-- <div>
-                        <div class="d-lg-flex justify-content-center mt-3">
-                            <button id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 me-lg-3" type="submit">GUARDAR CAMBIOS</button>
-
-                        </div>
-                    </div> -->
                 </div>
-            </form>
+
+                <div class="d-flex justify-content-center">
+                    <div class="input-group mb-3">
+                        <div class="">
+                            <p class="me-2">Estado:</p>
+                        </div>
+                        <div="">
+                            <p class="text-secondary">
+                                <%= usuario.estado_usuario %>
+                            </p>
+                    </div>
+                </div>
+                <div class="d-flex  input-group mb-3">
+                    <div class="">
+                        <p class="me-2">Rol:</p>
+                    </div>
+                    <div class="d-flex ">
+                        <p class="text-secondary">
+                            <%= usuario.rol %>
+                        </p>
+                    </div>
+                </div>
+
+
+
+                <hr>
+
+                <div class="d-flex justify-content-center ">
+                    <p>Fecha Registro</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p class="text-secondary">
+                        <%= usuario.fecha_creacion.toLocaleString('es-US', { timeZone: 'America/Santo_Domingo'}).slice(0,10) %>
+                    </p>
+                </div>
+                <hr>
+
+                <div class="d-flex justify-content-center ">
+                    <p>Número Registrado</p>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <p class="text-secondary">
+                        <%= usuario.user %>
+                    </p>
+                </div>
+
+                <div class="input-group mb-3 d-flex justify-content-center">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Password</span>
+                    </div>
+                    <input class="form-control w-50" type="password" value="<%= usuario.pass %>" readonly>
+                    <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">CAMBIAR</button>
+                </div>
+
+            </div>
         </div>
     </div>
 
+
+    <div class="modal fade" id="modalFoto" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualizar Foto de Perfil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <input type="file" id="inputFileFoto" class="form-control mb-3" accept="image/*">
+                    <p class="text-muted small">Formatos permitidos: JPG, PNG. Máximo 2MB.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-warning" onclick="uploadFoto()">Guardar Foto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+    </div> -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <script>
+        async function uploadFoto() {
+            const fileInput = document.getElementById('inputFileFoto');
+            const file = fileInput.files[0];
+            const userId = "<%= usuario.idUsuario %>"; // Asegúrate de pasar el ID del usuario desde el backend
+
+            if (!file) {
+                return Swal.fire('Error', 'Por favor selecciona una imagen', 'error');
+            }
+
+            const formData = new FormData();
+            formData.append('foto', file);
+
+            // Mostrar cargando
+            Swal.fire({
+                title: 'Subiendo...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            try {
+                // Cambia esta URL por la de tu ruta en Node.js
+                const response = await fetch(`/api/usuarios/upload-profile/${userId}`, {
+                    method: 'POST',
+                    body: formData
+                });
+                console.log('response', response)
+                console.log('usuario', userId)
+                const result = await response.json();
+
+                if (response.ok) {
+                    Swal.fire('¡Éxito!', 'Foto actualizada correctamente', 'success').then(() => {
+                        document.getElementById('imgPerfil').src = result.url; // Actualiza la imagen en la vista
+                        $('#modalFoto').modal('hide');
+                    });
+                } else {
+                    Swal.fire('Error', result.error || 'No se pudo subir la foto', 'error');
+                }
+            } catch (error) {
+                console.error("DETALLE DEL ERROR:", error); // Esto te dirá si es un 404, 500 o error de red
+                Swal.fire('Error', 'Hubo un problema con la conexión 1', 'error');
+            }
+        }
+    </script>
 
 
 

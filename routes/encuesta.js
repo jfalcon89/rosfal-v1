@@ -33,6 +33,8 @@ router.get('/encuesta', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_D,
             arrayRutas: arrayRutasDB,
             config
@@ -64,6 +66,8 @@ router.get('/mapa-rutas', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_D,
             permiso_A,
             permiso_B,
@@ -128,6 +132,8 @@ router.post("/encuesta", async(req, res) => {
         login: true,
         name: req.session.name,
         rol: req.session.rol,
+        user: req.session.user,
+        idUsuario: req.session.idUsuario,
         permiso_D,
         permiso_A,
         permiso_B,
@@ -216,6 +222,8 @@ router.get('/encuestas-administracion', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_D,
             permiso_A,
             permiso_B,
@@ -277,6 +285,8 @@ router.get('/encuestas-metricas-usuario', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_D,
             permiso_A,
             permiso_B,
@@ -314,6 +324,8 @@ router.get('/mapa-rutas-usuario', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_D,
             permiso_A,
             permiso_B,
@@ -413,6 +425,8 @@ router.get('/encuestas-general', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_D,
             permiso_A,
             permiso_B,
@@ -454,312 +468,312 @@ router.get("/encuestas-general/eliminar-encuesta/:id", async(req, res) => {
 
 
 
+//ELIMINAR
+// //RENDERIZANDO Y MOSTRANDO TODAS LAS RUTAS CREADAS VISTA CREAR RUTA
+// router.get('/clientes-promociones-adm', async(req, res) => {
+//     if (req.session.loggedin) {
+//         let i = 0;
 
-//RENDERIZANDO Y MOSTRANDO TODAS LAS RUTAS CREADAS VISTA CREAR RUTA
-router.get('/clientes-promociones-adm', async(req, res) => {
-    if (req.session.loggedin) {
-        let i = 0;
+//         // Aquí usas el servicio centralizado
+//         const conteos = await obtenerConteos();
+//         const permiso_A = 'Administrador'
+//         const permiso_B = 'Representante'
+//         const permiso_C = 'Cliente App'
+//         const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
+//         const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
+//         const promocionesClienteDB = await pool.query(`SELECT 
+//                                                             p.*, 
+//                                                             u.user AS usuario, 
+//                                                             CASE 
+//                                                                 WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' THEN 'Credito' 
+//                                                                 ELSE 'Debito' 
+//                                                             END AS tipo_bono
+//                                                         FROM 
+//                                                             promociones_clientes p
+//                                                         LEFT JOIN 
+//                                                             users u ON p.cliente_id = u.idUsuario;`);
+//         const pagosPromocionesDB = await pool.query(`SELECT 
+//                                                         SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS creditos_aprobado,
+//                                                         SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS creditos_en_revision,
+//                                                         SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS creditos_liquidado,
+//                                                         SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Declinado' THEN p.valor_credito ELSE 0 END) AS creditos_declinado,
+//                                                         SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS debitos_aprobado,
+//                                                         SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS debitos_en_revision,
+//                                                         SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS debitos_liquidado
+//                                                     FROM 
+//                                                         promociones_clientes p
+//                                                     LEFT JOIN 
+//                                                         users u ON p.cliente_id = u.idUsuario;`);
 
-        // Aquí usas el servicio centralizado
-        const conteos = await obtenerConteos();
-        const permiso_A = 'Administrador'
-        const permiso_B = 'Representante'
-        const permiso_C = 'Cliente App'
-        const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-        const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
-        const promocionesClienteDB = await pool.query(`SELECT 
-                                                            p.*, 
-                                                            u.user AS usuario, 
-                                                            CASE 
-                                                                WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' THEN 'Credito' 
-                                                                ELSE 'Debito' 
-                                                            END AS tipo_bono
-                                                        FROM 
-                                                            promociones_clientes p
-                                                        LEFT JOIN 
-                                                            users u ON p.cliente_id = u.idUsuario;`);
-        const pagosPromocionesDB = await pool.query(`SELECT 
-                                                        SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS creditos_aprobado,
-                                                        SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS creditos_en_revision,
-                                                        SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS creditos_liquidado,
-                                                        SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Declinado' THEN p.valor_credito ELSE 0 END) AS creditos_declinado,
-                                                        SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS debitos_aprobado,
-                                                        SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS debitos_en_revision,
-                                                        SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS debitos_liquidado
-                                                    FROM 
-                                                        promociones_clientes p
-                                                    LEFT JOIN 
-                                                        users u ON p.cliente_id = u.idUsuario;`);
+//         res.render("clientes-promociones-adm", {
+//             i,
+//             arrayClientesV: arrayClientesVDB,
+//             arrayUsuariosV: arrayUsuariosVDB,
+//             login: true,
+//             name: req.session.name,
+//             rol: req.session.rol,
+//             permiso_A,
+//             permiso_B,
+//             permiso_C,
+//             conteos,
+//             promocionesCliente: promocionesClienteDB,
+//             pagosPromociones: pagosPromocionesDB
 
-        res.render("clientes-promociones-adm", {
-            i,
-            arrayClientesV: arrayClientesVDB,
-            arrayUsuariosV: arrayUsuariosVDB,
-            login: true,
-            name: req.session.name,
-            rol: req.session.rol,
-            permiso_A,
-            permiso_B,
-            permiso_C,
-            conteos,
-            promocionesCliente: promocionesClienteDB,
-            pagosPromociones: pagosPromocionesDB
-
-        });
-    } else {
-        res.render('login', {
-            login: false,
-            name: 'Debe iniciar sesión',
-            device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
-        });
-    }
-})
-
-
-//CREANDO NUEVO CLIENTE ****************
-router.post("/promociones", async(req, res) => {
-    const { codigo_promocion, valor_credito, inicio_vigencia, fin_vigencia, estado_promocion, origen_bono } = req.body;
-    let i = 0;
-    // Aquí usas el servicio centralizado
-    const conteos = await obtenerConteos();
-    const permiso_A = 'Administrador'
-    const permiso_B = 'Representante'
-    const permiso_C = 'Cliente App'
-    const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-    const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
-    const clienteDB = await pool.query('SELECT * FROM app_clientes ');
-    const promocionesDB = await pool.query(`SELECT * FROM promociones `);
+//         });
+//     } else {
+//         res.render('login', {
+//             login: false,
+//             name: 'Debe iniciar sesión',
+//             device: req.useragent.isMobile ? 'Mobile' : 'Desktop'
+//         });
+//     }
+// })
 
 
-    // Verificar si el código de promoción existe
-    const promocionesValidacionDB = await pool.query(`SELECT * FROM promociones WHERE codigo_promocion = "${codigo_promocion}" `);
-
-    if (promocionesValidacionDB.length > 0) {
-        // Parámetros para la alerta de código inválido
-        return res.render('promociones', {
-            i,
-            arrayClientesV: arrayClientesVDB,
-            arrayUsuariosV: arrayUsuariosVDB,
-            cliente: clienteDB[0],
-            login: true,
-            name: req.session.name,
-            rol: req.session.rol,
-            permiso_A,
-            permiso_B,
-            permiso_C,
-            conteos,
-            promociones: promocionesDB,
-            alert: true,
-            alertTitle: "Código inválido",
-            alertMessage: "El código de promoción ingresado esta cargado.",
-            alertIcon: "error",
-            showConfirmButton: true,
-            timer: 4000, // 4 segundos
-            ruta: `/promociones`
-        });
-    }
+// //CREANDO NUEVO CLIENTE ****************
+// router.post("/promociones", async(req, res) => {
+//     const { codigo_promocion, valor_credito, inicio_vigencia, fin_vigencia, estado_promocion, origen_bono } = req.body;
+//     let i = 0;
+//     // Aquí usas el servicio centralizado
+//     const conteos = await obtenerConteos();
+//     const permiso_A = 'Administrador'
+//     const permiso_B = 'Representante'
+//     const permiso_C = 'Cliente App'
+//     const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
+//     const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
+//     const clienteDB = await pool.query('SELECT * FROM app_clientes ');
+//     const promocionesDB = await pool.query(`SELECT * FROM promociones `);
 
 
-    const nuevaPromocion = {
-        codigo_promocion,
-        valor_credito,
-        estado_promocion,
-        origen_bono
-    };
+//     // Verificar si el código de promoción existe
+//     const promocionesValidacionDB = await pool.query(`SELECT * FROM promociones WHERE codigo_promocion = "${codigo_promocion}" `);
 
-    await pool.query("INSERT INTO promociones SET ?", nuevaPromocion);
-
-    if (promocionesValidacionDB.length === 0) {
-        // Parámetros para la alerta de código inválido
-        return res.render('promociones', {
-            i,
-            arrayClientesV: arrayClientesVDB,
-            arrayUsuariosV: arrayUsuariosVDB,
-            cliente: clienteDB[0],
-            login: true,
-            name: req.session.name,
-            rol: req.session.rol,
-            permiso_A,
-            permiso_B,
-            permiso_C,
-            conteos,
-            promociones: promocionesDB,
-            alert: true,
-            alertTitle: "Promoción Agregada",
-            alertMessage: "Código de promoción agregado satisfactoriamente.",
-            alertIcon: "success",
-            showConfirmButton: true,
-            timer: 4000, // 4 segundos
-            ruta: `/promociones`
-        });
-    }
-
-    // res.redirect('/promociones');
-
-});
-
-//ACTUALIZA PROMOCION ****************
-router.post("/promociones/editar-promocion/:id", async(req, res) => {
-    const { codigo_promocion, valor_credito, inicio_vigencia, fin_vigencia, estado_promocion, origen_bono } = req.body;
-    const id = req.params.id;
-    let i = 0;
-
-    // Aquí usas el servicio centralizado
-    const conteos = await obtenerConteos();
-    const permiso_A = 'Administrador'
-    const permiso_B = 'Representante'
-    const permiso_C = 'Cliente App'
-    const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-    const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
-    const clienteDB = await pool.query('SELECT * FROM app_clientes ');
-    const promocionesDB = await pool.query(`SELECT * FROM promociones `);
+//     if (promocionesValidacionDB.length > 0) {
+//         // Parámetros para la alerta de código inválido
+//         return res.render('promociones', {
+//             i,
+//             arrayClientesV: arrayClientesVDB,
+//             arrayUsuariosV: arrayUsuariosVDB,
+//             cliente: clienteDB[0],
+//             login: true,
+//             name: req.session.name,
+//             rol: req.session.rol,
+//             permiso_A,
+//             permiso_B,
+//             permiso_C,
+//             conteos,
+//             promociones: promocionesDB,
+//             alert: true,
+//             alertTitle: "Código inválido",
+//             alertMessage: "El código de promoción ingresado esta cargado.",
+//             alertIcon: "error",
+//             showConfirmButton: true,
+//             timer: 4000, // 4 segundos
+//             ruta: `/promociones`
+//         });
+//     }
 
 
-    const actualizacionPromocion = {
-        codigo_promocion,
-        valor_credito,
-        estado_promocion,
-        origen_bono
-    };
+//     const nuevaPromocion = {
+//         codigo_promocion,
+//         valor_credito,
+//         estado_promocion,
+//         origen_bono
+//     };
 
-    await pool.query("UPDATE promociones SET ? WHERE id_promocion = ?", [actualizacionPromocion, id]);
+//     await pool.query("INSERT INTO promociones SET ?", nuevaPromocion);
 
-    // Parámetros para la alerta de código inválido
-    return res.render('promociones', {
-        i,
-        arrayClientesV: arrayClientesVDB,
-        arrayUsuariosV: arrayUsuariosVDB,
-        cliente: clienteDB[0],
-        login: true,
-        name: req.session.name,
-        rol: req.session.rol,
-        permiso_A,
-        permiso_B,
-        permiso_C,
-        conteos,
-        promociones: promocionesDB,
-        alert: true,
-        alertTitle: "Promoción Actualizada",
-        alertMessage: "Código de promoción actualizado satisfactoriamente.",
-        alertIcon: "success",
-        showConfirmButton: true,
-        timer: 3000, // 3 segundos
-        ruta: "/promociones"
-    });
+//     if (promocionesValidacionDB.length === 0) {
+//         // Parámetros para la alerta de código inválido
+//         return res.render('promociones', {
+//             i,
+//             arrayClientesV: arrayClientesVDB,
+//             arrayUsuariosV: arrayUsuariosVDB,
+//             cliente: clienteDB[0],
+//             login: true,
+//             name: req.session.name,
+//             rol: req.session.rol,
+//             permiso_A,
+//             permiso_B,
+//             permiso_C,
+//             conteos,
+//             promociones: promocionesDB,
+//             alert: true,
+//             alertTitle: "Promoción Agregada",
+//             alertMessage: "Código de promoción agregado satisfactoriamente.",
+//             alertIcon: "success",
+//             showConfirmButton: true,
+//             timer: 4000, // 4 segundos
+//             ruta: `/promociones`
+//         });
+//     }
 
+//     // res.redirect('/promociones');
 
-    // res.redirect('/promociones');
+// });
 
-});
+// //ACTUALIZA PROMOCION ****************
+// router.post("/promociones/editar-promocion/:id", async(req, res) => {
+//     const { codigo_promocion, valor_credito, inicio_vigencia, fin_vigencia, estado_promocion, origen_bono } = req.body;
+//     const id = req.params.id;
+//     let i = 0;
 
-//ACTUALIZA PROMOCION CLIENTE ****************
-router.post("/clientes-promociones-adm/editar-promocion-cliente/:id", async(req, res) => {
-    const { codigo_promocion, valor_credito, inicio_vigencia, fin_vigencia, estado_promocion, origen_bono } = req.body;
-    const id = req.params.id;
-    let i = 0;
-    // Aquí usas el servicio centralizado
-    const conteos = await obtenerConteos();
-    const permiso_A = 'Administrador'
-    const permiso_B = 'Representante'
-    const permiso_C = 'Cliente App'
-    const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-    const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
-    const clienteDB = await pool.query('SELECT * FROM app_clientes ');
-    const promocionesDB = await pool.query(`SELECT * FROM promociones `);
-    const promocionesClienteDB = await pool.query(`SELECT 
-        p.*, 
-        CASE 
-            WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' THEN 'Credito' 
-            ELSE 'Debito' 
-        END AS tipo_bono
-    FROM 
-        promociones_clientes p
-    LEFT JOIN 
-        users u ON p.cliente_id = u.idUsuario;`);
-    const pagosPromocionesDB = await pool.query(`SELECT 
-        SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS creditos_aprobado,
-        SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS creditos_en_revision,
-        SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS creditos_liquidado,
-        SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS debitos_aprobado,
-        SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS debitos_en_revision,
-        SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS debitos_liquidado
-    FROM 
-        promociones_clientes p
-    LEFT JOIN 
-        users u ON p.cliente_id = u.idUsuario;`);
+//     // Aquí usas el servicio centralizado
+//     const conteos = await obtenerConteos();
+//     const permiso_A = 'Administrador'
+//     const permiso_B = 'Representante'
+//     const permiso_C = 'Cliente App'
+//     const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
+//     const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
+//     const clienteDB = await pool.query('SELECT * FROM app_clientes ');
+//     const promocionesDB = await pool.query(`SELECT * FROM promociones `);
 
 
-    const actualizacionPromocion = {
-        codigo_promocion,
-        valor_credito,
-        estado_promocion,
-        origen_bono
-    };
+//     const actualizacionPromocion = {
+//         codigo_promocion,
+//         valor_credito,
+//         estado_promocion,
+//         origen_bono
+//     };
 
-    await pool.query("UPDATE promociones_clientes SET ? WHERE id_promocion = ?", [actualizacionPromocion, id]);
+//     await pool.query("UPDATE promociones SET ? WHERE id_promocion = ?", [actualizacionPromocion, id]);
 
-    // Parámetros para la alerta de código inválido
-    return res.render('clientes-promociones-adm', {
-        i,
-        promocionesCliente: promocionesClienteDB,
-        pagosPromociones: pagosPromocionesDB,
-        arrayClientesV: arrayClientesVDB,
-        arrayUsuariosV: arrayUsuariosVDB,
-        cliente: clienteDB[0],
-        login: true,
-        name: req.session.name,
-        rol: req.session.rol,
-        permiso_A,
-        permiso_B,
-        permiso_C,
-        conteos,
-        promociones: promocionesDB,
-        alert: true,
-        alertTitle: "Promoción Actualizada",
-        alertMessage: "Código de promoción actualizado satisfactoriamente.",
-        alertIcon: "success",
-        showConfirmButton: true,
-        timer: 3000, // 3 segundos
-        ruta: `/clientes-promociones-adm`
-    });
+//     // Parámetros para la alerta de código inválido
+//     return res.render('promociones', {
+//         i,
+//         arrayClientesV: arrayClientesVDB,
+//         arrayUsuariosV: arrayUsuariosVDB,
+//         cliente: clienteDB[0],
+//         login: true,
+//         name: req.session.name,
+//         rol: req.session.rol,
+//         permiso_A,
+//         permiso_B,
+//         permiso_C,
+//         conteos,
+//         promociones: promocionesDB,
+//         alert: true,
+//         alertTitle: "Promoción Actualizada",
+//         alertMessage: "Código de promoción actualizado satisfactoriamente.",
+//         alertIcon: "success",
+//         showConfirmButton: true,
+//         timer: 3000, // 3 segundos
+//         ruta: "/promociones"
+//     });
 
 
-    // res.redirect('/promociones');
+//     // res.redirect('/promociones');
 
-});
+// });
 
-//ELIMINAR PROMOCION SISTEMA 
-router.get("/promociones/eliminar-promocion/:id", async(req, res) => {
-    const { id } = req.params;
+// //ACTUALIZA PROMOCION CLIENTE ****************
+// router.post("/clientes-promociones-adm/editar-promocion-cliente/:id", async(req, res) => {
+//     const { codigo_promocion, valor_credito, inicio_vigencia, fin_vigencia, estado_promocion, origen_bono } = req.body;
+//     const id = req.params.id;
+//     let i = 0;
+//     // Aquí usas el servicio centralizado
+//     const conteos = await obtenerConteos();
+//     const permiso_A = 'Administrador'
+//     const permiso_B = 'Representante'
+//     const permiso_C = 'Cliente App'
+//     const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
+//     const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
+//     const clienteDB = await pool.query('SELECT * FROM app_clientes ');
+//     const promocionesDB = await pool.query(`SELECT * FROM promociones `);
+//     const promocionesClienteDB = await pool.query(`SELECT 
+//         p.*, 
+//         CASE 
+//             WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' THEN 'Credito' 
+//             ELSE 'Debito' 
+//         END AS tipo_bono
+//     FROM 
+//         promociones_clientes p
+//     LEFT JOIN 
+//         users u ON p.cliente_id = u.idUsuario;`);
+//     const pagosPromocionesDB = await pool.query(`SELECT 
+//         SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS creditos_aprobado,
+//         SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS creditos_en_revision,
+//         SUM(CASE WHEN u.name = 'Usuario Externo' AND u.rol = 'Cliente App' AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS creditos_liquidado,
+//         SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Aprobado' THEN p.valor_credito ELSE 0 END) AS debitos_aprobado,
+//         SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'En revision' THEN p.valor_credito ELSE 0 END) AS debitos_en_revision,
+//         SUM(CASE WHEN (u.name != 'Usuario Externo' OR u.rol != 'Cliente App') AND p.estado_promocion = 'Liquidado' THEN p.valor_credito ELSE 0 END) AS debitos_liquidado
+//     FROM 
+//         promociones_clientes p
+//     LEFT JOIN 
+//         users u ON p.cliente_id = u.idUsuario;`);
 
-    console.log(id)
 
-    try {
+//     const actualizacionPromocion = {
+//         codigo_promocion,
+//         valor_credito,
+//         estado_promocion,
+//         origen_bono
+//     };
 
-        await pool.query("DELETE FROM promociones WHERE id_promocion = ?", [id]);
+//     await pool.query("UPDATE promociones_clientes SET ? WHERE id_promocion = ?", [actualizacionPromocion, id]);
 
-        res.redirect("/promociones");
+//     // Parámetros para la alerta de código inválido
+//     return res.render('clientes-promociones-adm', {
+//         i,
+//         promocionesCliente: promocionesClienteDB,
+//         pagosPromociones: pagosPromocionesDB,
+//         arrayClientesV: arrayClientesVDB,
+//         arrayUsuariosV: arrayUsuariosVDB,
+//         cliente: clienteDB[0],
+//         login: true,
+//         name: req.session.name,
+//         rol: req.session.rol,
+//         permiso_A,
+//         permiso_B,
+//         permiso_C,
+//         conteos,
+//         promociones: promocionesDB,
+//         alert: true,
+//         alertTitle: "Promoción Actualizada",
+//         alertMessage: "Código de promoción actualizado satisfactoriamente.",
+//         alertIcon: "success",
+//         showConfirmButton: true,
+//         timer: 3000, // 3 segundos
+//         ruta: `/clientes-promociones-adm`
+//     });
 
-    } catch (error) {
-        console.log(error)
-    }
-});
-//ELIMINAR PROMOCION CLIENTES 
-router.get("/clientes-promociones/eliminar-promocion-cliente/:id", async(req, res) => {
-    const { id } = req.params;
 
-    console.log(id)
+//     // res.redirect('/promociones');
 
-    try {
+// });
 
-        await pool.query("DELETE FROM promociones_clientes WHERE id_promocion = ?", [id]);
+// //ELIMINAR PROMOCION SISTEMA 
+// router.get("/promociones/eliminar-promocion/:id", async(req, res) => {
+//     const { id } = req.params;
 
-        res.redirect("/clientes-promociones-adm");
+//     console.log(id)
 
-    } catch (error) {
-        console.log(error)
-    }
-});
+//     try {
+
+//         await pool.query("DELETE FROM promociones WHERE id_promocion = ?", [id]);
+
+//         res.redirect("/promociones");
+
+//     } catch (error) {
+//         console.log(error)
+//     }
+// });
+// //ELIMINAR PROMOCION CLIENTES 
+// router.get("/clientes-promociones/eliminar-promocion-cliente/:id", async(req, res) => {
+//     const { id } = req.params;
+
+//     console.log(id)
+
+//     try {
+
+//         await pool.query("DELETE FROM promociones_clientes WHERE id_promocion = ?", [id]);
+
+//         res.redirect("/clientes-promociones-adm");
+
+//     } catch (error) {
+//         console.log(error)
+//     }
+// });
 
 
 

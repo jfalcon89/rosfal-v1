@@ -32,7 +32,10 @@ router.get('/visitas-web', async(req, res) => {
             ipad: ipadDB[0],
             visitasPorMes: visitasPorMesDB,
             login: true,
-            name: req.session.name
+            name: req.session.name,
+            rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario
 
 
         });

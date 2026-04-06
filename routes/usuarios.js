@@ -6,6 +6,8 @@ const pool = require("../database");
 const bcrypt = require('bcryptjs');
 const ipapi = require('ipapi.co');
 const { obtenerConteos } = require("../services/conteosService");
+const multer = require('multer');
+const path = require('path');
 
 
 router.get('/adm-usuarios', async(req, res) => {
@@ -56,6 +58,8 @@ router.get('/adm-usuarios', async(req, res) => {
                 login: true,
                 name: req.session.name,
                 rol: req.session.rol,
+                user: req.session.user,
+                idUsuario: req.session.idUsuario,
                 permiso_A,
                 permiso_B,
                 permiso_C,
@@ -110,6 +114,8 @@ router.get('/adm-usuarios/crear-usuario', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_A,
             permiso_B,
             permiso_C,
@@ -223,6 +229,8 @@ router.get('/adm-usuarios/editar-usuario', async(req, res) => {
             login: true,
             name: req.session.name,
             rol: req.session.rol,
+            user: req.session.user,
+            idUsuario: req.session.idUsuario,
             permiso_A,
             permiso_B,
             permiso_C,
@@ -269,6 +277,8 @@ router.get("/adm-usuarios/editar-usuario/:id", async(req, res) => {
                 login: true,
                 name: req.session.name,
                 rol: req.session.rol,
+                user: req.session.user,
+                idUsuario: req.session.idUsuario,
                 permiso_A,
                 permiso_B,
                 permiso_C,
@@ -289,6 +299,8 @@ router.get("/adm-usuarios/editar-usuario/:id", async(req, res) => {
                 login: true,
                 name: req.session.name,
                 rol: req.session.rol,
+                user: req.session.user,
+                idUsuario: req.session.idUsuario,
                 permiso_A,
                 permiso_B,
                 permiso_C,
@@ -370,6 +382,8 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
         const permiso_A = 'Administrador'
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
+        const permiso_D = 'Encuestador'
+        const permiso_E = 'Cobrador'
         const arrayClientesVDB = await pool.query('SELECT * FROM app_clientes ');
         const arrayUsuariosVDB = await pool.query("SELECT * FROM users");
         const usuarioDB = await pool.query("SELECT * FROM users WHERE idUsuario = ?", [id]);
@@ -392,9 +406,13 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
                 login: true,
                 name: req.session.name,
                 rol: req.session.rol,
+                user: req.session.user,
+                idUsuario: req.session.idUsuario,
                 permiso_A,
                 permiso_B,
                 permiso_C,
+                permiso_D,
+                permiso_E,
                 conteos,
                 arrayArchivos: arrayArchivosDB,
                 arraySolicitudesAprobadas: arraySolicitudesAprobadasDB
@@ -412,9 +430,13 @@ router.get("/adm-usuarios/editar-usuario-app/:id", async(req, res) => {
                 login: true,
                 name: req.session.name,
                 rol: req.session.rol,
+                user: req.session.user,
+                idUsuario: req.session.idUsuario,
                 permiso_A,
                 permiso_B,
                 permiso_C,
+                permiso_D,
+                permiso_E,
                 conteos,
                 arrayArchivos: arrayArchivosDB,
                 arraySolicitudesAprobadas: arraySolicitudesAprobadasDB
@@ -471,6 +493,9 @@ router.get("/adm-usuarios/promociones-cliente/:id", async(req, res) => {
                 login: true,
                 name: req.session.name,
                 rol: req.session.rol,
+                user: req.session.user,
+                idUsuario: req.session.idUsuario,
+                ol,
                 permiso_A,
                 permiso_B,
                 permiso_C,
@@ -495,9 +520,13 @@ router.get("/adm-usuarios/promociones-cliente/:id", async(req, res) => {
                 arrayClientesV: arrayClientesVDB,
                 cliente: clienteDB[0],
                 usuario: usuarioDB[0],
+                SolicitudesCliente: SolicitudesClienteDB,
+                promocionesCliente: promocionesClienteDB,
                 login: true,
                 name: req.session.name,
                 rol: req.session.rol,
+                user: req.session.user,
+                idUsuario: req.session.idUsuario,
                 permiso_A,
                 permiso_B,
                 permiso_C,
@@ -522,8 +551,6 @@ router.get("/adm-usuarios/promociones-cliente/:id", async(req, res) => {
         });
     }
 });
-
-
 
 // //CREAR PROMOCIONES CLIENTES
 router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
@@ -585,6 +612,8 @@ router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
                     login: true,
                     name: req.session.name,
                     rol: req.session.rol,
+                    user: req.session.user,
+                    idUsuario: req.session.idUsuario,
                     alert: true,
                     alertTitle: "Código inválido",
                     alertMessage: "El código de promoción ingresado no es válido.",
@@ -617,6 +646,8 @@ router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
                     login: true,
                     name: req.session.name,
                     rol: req.session.rol,
+                    user: req.session.user,
+                    idUsuario: req.session.idUsuario,
                     alert: true,
                     alertTitle: "Código inválido",
                     alertMessage: "El código de promoción ingresado ya esta utilizado.",
@@ -677,6 +708,8 @@ router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
                 login: true,
                 name: req.session.name,
                 rol: req.session.rol,
+                user: req.session.user,
+                idUsuario: req.session.idUsuario,
                 alert: true,
                 alertTitle: "Promoción Agregada",
                 alertMessage: "Código de promoción agregado satisfactoriamente.",
@@ -702,10 +735,6 @@ router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
         });
     }
 });
-
-
-
-
 
 // //GUARDAR ACTUALIZACION DE SOLICITUD DESDE NUEVAS
 router.post('/adm-usuarios/editar-usuario-app/:id', async(req, res) => {
@@ -758,7 +787,6 @@ router.post('/adm-usuarios/editar-usuario-app/:id', async(req, res) => {
     }
 });
 
-
 // //ELIMINAR USUARIO 
 router.get("/adm-usuarios/eliminar-usuario/:id", async(req, res) => {
     const { id } = req.params;
@@ -782,6 +810,57 @@ router.get("/adm-usuarios/eliminar-usuario/:id", async(req, res) => {
 });
 
 
+
+// 1. Definir dónde y cómo se guardarán las fotos físicamente
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/uploads/profiles/'); // Carpeta física en el servidor
+    },
+    filename: (req, file, cb) => {
+        // Renombrar el archivo para evitar duplicados (ej: 167890123.jpg)
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, 'profile-' + uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 2 * 1024 * 1024 }, // Límite de 2MB
+    fileFilter: (req, file, cb) => {
+        const filetypes = /jpeg|jpg|png/;
+        const mimetype = filetypes.test(file.mimetype);
+        if (mimetype) return cb(null, true);
+        cb(new Error("Solo se permiten imágenes (jpeg, jpg, png)"));
+    }
+});
+
+
+
+// 3. Ruta para subir la foto
+router.post('/api/usuarios/upload-profile/:id', upload.single('foto'), (req, res) => {
+    const idUsuario = req.params.id;
+
+    if (!req.file) {
+        return res.status(400).send('No se subió ninguna imagen.');
+    }
+
+    // Generar la URL que se guardará en la BD
+    const urlImagen = `/uploads/profiles/${req.file.filename}`;
+
+    // Actualizar solo la URL en la base de datos
+    const sql = "UPDATE users SET foto_perfil_url = ? WHERE idUsuario = ?";
+
+    pool.query(sql, [urlImagen, idUsuario], (err, result) => {
+        if (err) {
+            console.log(err)
+            return res.status(500).json({ error: "Error al guardar en BD" });
+        }
+        res.json({
+            message: "Foto actualizada correctamente",
+            url: urlImagen
+        });
+    });
+});
 
 
 
