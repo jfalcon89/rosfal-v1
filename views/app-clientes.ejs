@@ -171,10 +171,9 @@
                             <input class="form-control mt-3 mb-3" type="number" name="telefono" id="telefono" placeholder="Telefono" autofocus>
                             <input class="form-control mt-3 mb-3" type="password" name="pass" placeholder="Password">
                             <select class="form-control" name="estado_cliente" id="estado_cliente">
-                        
-                        <option value="Activo" selected>Activo</option>
-                        <option value="Inactivo">Inactivo</option>
-                    </select>
+                                <option value="Vigente" selected>Vigente</option>
+                                <option value="No Vigente">No Vigente</option>
+                            </select>
                             <div class="d-flex justify-content-center">
                                 <button id="btn" class="btn btn-success btn-block p-2 mt-4 mb-3 w-100" style="background-color: #0B5496;" type="submit">CREAR CLIENTE</button>
                             </div>
@@ -238,9 +237,9 @@
                                             <%= cliente.fecha_creacion.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                         </td>
                                         <td>
-                                            <% if(cliente.estado_cliente == 'Activo'){ %>
+                                            <% if(cliente.estado_cliente == 'Vigente'){ %>
                                                 <span style="background-color: green; color: white;"> <%= cliente.estado_cliente %></span>
-                                                <%} else if(cliente.estado_cliente == 'No Aprobado'){ %>
+                                                <%} else if(cliente.estado_cliente == 'No Vigente'){ %>
                                                     <span class="bg-danger text-light"><%= cliente.estado_cliente %></span>
                                                     <% } %>
                                         </td>
@@ -316,8 +315,8 @@
                                                                                             <option value="<%= cliente.estado_cliente %>" selected>
                                                                                                 <%= cliente.estado_cliente %>
                                                                                             </option>
-                                                                                            <option value="Activo">Activo</option>
-                                                                                            <option value="Inactivo">Inactivo</option>
+                                                                                            <option value="Vigente">Vigente</option>
+                                                                                            <option value="No Vigente">No Vigente</option>
                                                                                         </select>
                                                                                     </div>
                                                                                 </div>
@@ -353,9 +352,9 @@
 
                                                                                     <% const Editar_Telefono = (config.Editar_Telefono || []).includes(rol); %>
                                                                                         <% if (Editar_Telefono) { %>
-                                                                                            <input type="number" name="telefono" class="form-control p-2 " id="telefono " aria-describedby="emailHelp" value="<%= cliente.celular %>">
+                                                                                            <input type="number" name="telefono" class="form-control p-2 " id="telefono " aria-describedby="emailHelp" value="<%= cliente.telefono %>">
                                                                                             <% } else { %>
-                                                                                                <input type="number" name="telefono" class="form-control p-2 " id="telefono" aria-describedby="emailHelp " value="<%= cliente.celular %>" readonly>
+                                                                                                <input type="number" name="telefono" class="form-control p-2 " id="telefono" aria-describedby="emailHelp " value="<%= cliente.telefono %>" readonly>
                                                                                                 <% } %>
                                                                                 </div>
                                                                                 <div class="mb-3"><label class="form-label">Celular</label>
@@ -538,8 +537,8 @@
 
             const telefono = document.getElementById('telefono').value;
             const pass = document.querySelector('input[name="pass"]').value;
-            const estado_cliente = document.querySelector('select[name="estado_cliente"]').value;
-
+            const estado_cliente = document.querySelector('select[id="estado_cliente"]').value;
+            // console.log('en el front ', estado_cliente)
 
             // Enviar datos al backend sin recargar la página usando fetch
             fetch('/app-clientes/crear-cliente', {

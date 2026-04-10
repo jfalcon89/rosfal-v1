@@ -149,8 +149,8 @@
 
     </div>
 
-    <div class="flex items-center justify-between mb-6 p-4 bg-white rounded-lg shadow">
-        <div>
+    <div class=" items-center justify-lg-between mb-6 p-4 bg-white rounded-lg shadow">
+        <div class="">
             <h1 class="text-xl font-bold text-slate-900">Rutas</h1>
             <select id="selectRuta" class="mt-2 p-2 border rounded border-slate-300 w-80 text-sm">
             <option value="">Seleccione una ruta...</option>
@@ -159,15 +159,18 @@
                     <option value="<%= ruta.localizacion_map %>"><%= ruta.nombreRuta %></option>
                 <% }) %>
             <% } %>
-        </select>
+            </select>
         </div>
-        <div class="flex gap-2">
-            <button id="btnVerCards" class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-700 transition text-sm">
-            Ver Rutas
-        </button>
-            <button id="btnDestrazar" class="bg-red-600 text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition text-sm">
-            Limpiar
-        </button>
+
+        <div class="mt-4">
+            <div class="">
+                <button id="btnVerCards" class="bg-blue-600 text-white px-6 py-2 rounded-full font-bold hover:bg-blue-700 transition text-sm">
+                Ver Rutas
+            </button>
+                <button id="btnDestrazar" class="bg-red-600 text-white px-6 py-2 rounded-full font-bold hover:bg-red-700 transition text-sm">
+                Limpiar
+            </button>
+            </div>
         </div>
     </div>
 
@@ -270,7 +273,7 @@
 
 
     <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100"></div>
-    <a href="/encuestas-metricas-usuario" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 m-4 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+    <a href="/encuestas-metricas-usuario" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
     </div>
 
 

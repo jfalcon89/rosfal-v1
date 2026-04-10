@@ -19,8 +19,6 @@ router.get('/solicita-ya', async(req, res) => {
 
     const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Solicitudes', 'Permisos-Solicitudes') AND descripcion = 'Activo'");
 
-    // console.log(rows)
-
     const config = rows.reduce((acc, row) => {
         const clave = row.parametro_clave;
         const valor = row.parametro_valor;
@@ -92,6 +90,27 @@ router.post("/solicita-ya", async(req, res) => {
     } = req.body;
 
     const permiso_C = 'Cliente App'
+
+    const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Solicitudes', 'Permisos-Solicitudes') AND descripcion = 'Activo'");
+
+    const config = rows.reduce((acc, row) => {
+        const clave = row.parametro_clave;
+        const valor = row.parametro_valor;
+
+        if (acc[clave]) {
+            // Si ya existe la clave, verificamos si ya es un arreglo
+            if (Array.isArray(acc[clave])) {
+                acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+            } else {
+                // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                acc[clave] = [acc[clave], valor];
+            }
+        } else {
+            // Si es la primera vez, lo guardamos como un valor simple (String)
+            acc[clave] = valor;
+        }
+        return acc;
+    }, {});
 
     // OBTENCION DE PARAMAMETROS CLIENTE
     // const ipString = "201.229.238.223, 172.71.82.116";
@@ -231,7 +250,6 @@ router.post("/solicita-ya", async(req, res) => {
     };
     ipapi.location(callback, `${ip}`)
 
-
     // #2 FUNCION QUE ENVIA NOTIFICACION DE SOLICITUD DE PRESTAMOS AL CLIENTE
     if (email) {
         async function enviarCorreo() {
@@ -347,9 +365,6 @@ router.post("/solicita-ya", async(req, res) => {
     };
 
 
-    // ----------------------------------
-
-
     const nuevaSolicitud = {
         cedula,
         nombre,
@@ -388,7 +403,6 @@ router.post("/solicita-ya", async(req, res) => {
         cantidadPagosDiarios,
         cantidadPagosQuincenales,
         cantidadPagosMensuales
-
     };
 
     const actualizaCliente = {
@@ -425,18 +439,19 @@ router.post("/solicita-ya", async(req, res) => {
         montoSolicitado
     };
 
+    console.log('actualiza cliente ', actualizaCliente)
 
 
     await pool.query('INSERT INTO solicitudes set ?', [nuevaSolicitud]);
 
 
     const app_clientedDB = await pool.query("SELECT cliente_id FROM app_clientes WHERE telefono = ?", [celular]);
-
-    if (app_clientedDB > 0) {
-
+    console.log('app_clientedDB ', app_clientedDB)
+    if (app_clientedDB[0]) {
+        console.log('entro porque hay un id del cliente ')
         await pool.query("UPDATE app_clientes set ? WHERE telefono = ?", [actualizaCliente, celular]);
 
-        // console.log(app_clientedDB[0].cliente_id + " cliente id tab app_clientes")
+        console.log(app_clientedDB[0].cliente_id + " cliente id tab app_clientes")
 
         const solicitudDB = await pool.query(`SELECT idSolicitud, celular FROM solicitudes WHERE celular = ${celular} ORDER BY idSolicitud DESC LIMIT 1`)
 
@@ -462,7 +477,8 @@ router.post("/solicita-ya", async(req, res) => {
             timer: 2000,
             ruta: 'panel-administracion',
             rol: req.session.rol,
-            permiso_C
+            permiso_C,
+            config
 
         });
     } else {
@@ -477,7 +493,8 @@ router.post("/solicita-ya", async(req, res) => {
             timer: 2000,
             ruta: '',
             rol: req.session.rol,
-            permiso_C
+            permiso_C,
+            config
 
         });
     };

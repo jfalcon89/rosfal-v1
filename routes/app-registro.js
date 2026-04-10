@@ -84,7 +84,7 @@ router.post('/app-registro', async(req, res) => {
     const telefono = req.body.telefono;
     const token_registro_sms = generarNumeroAleatorio();
     const origen = 'Movil App'
-    const estado_cliente = 'Activo'
+    const estado_cliente = 'Vigente'
 
     // const data = id_iteracion; // Supone que envías un JSON con los datos
     datosCompartidos = telefono; // Almacena los datos en memoria

@@ -632,7 +632,8 @@ router.get('/solicitudes-nuevas', async(req, res) => {
 
         // Vista
         // const arraySolicitudesNuevasDB = await pool.query('SELECT * FROM solicitudes WHERE estadoSolicitud="nueva" ORDER BY fechaSolicitud DESC');
-        const arraySolicitudesNuevasDB = await pool.query('SELECT s.*, c.cliente_id AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("Nueva") ORDER BY s.fechaSolicitud DESC');
+        // const arraySolicitudesNuevasDB = await pool.query('SELECT s.*, c.cliente_id AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("Nueva") ORDER BY s.fechaSolicitud DESC');
+        const arraySolicitudesNuevasDB = await pool.query('SELECT s.*, MAX(c.cliente_id) AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("Nueva") GROUP BY s.idSolicitud ORDER BY s.fechaSolicitud DESC;');
 
         const arrayTotalSolicitudesDB = await pool.query('SELECT * FROM solicitudes ');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
@@ -716,7 +717,8 @@ router.get('/solicitudes-aprobadas', async(req, res) => {
         const permiso_C = 'Cliente App'
 
 
-        const arraySolicitudesAprobadasDB = await pool.query('SELECT s.*, c.cliente_id AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("Aprobada", "En Legal") ORDER BY s.fechaSolicitud DESC');
+        // const arraySolicitudesAprobadasDB = await pool.query('SELECT s.*, c.cliente_id AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("Aprobada", "En Legal") ORDER BY s.fechaSolicitud DESC');
+        const arraySolicitudesAprobadasDB = await pool.query('SELECT s.*, MAX(c.cliente_id) AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("Aprobada", "En Legal") GROUP BY s.idSolicitud ORDER BY s.fechaSolicitud DESC;');
 
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
@@ -762,7 +764,8 @@ router.get('/solicitudes-declinadas', async(req, res) => {
         const permiso_C = 'Cliente App'
 
 
-        const arraySolicitudesDeclinadasDB = await pool.query('SELECT s.*, c.cliente_id AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("Declinada") ORDER BY s.fechaSolicitud DESC');
+        // const arraySolicitudesDeclinadasDB = await pool.query('SELECT s.*, c.cliente_id AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("Declinada") ORDER BY s.fechaSolicitud DESC');
+        const arraySolicitudesDeclinadasDB = await pool.query('SELECT s.*, MAX(c.cliente_id) AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("Declinada") GROUP BY s.idSolicitud ORDER BY s.fechaSolicitud DESC;');
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
@@ -806,7 +809,8 @@ router.get('/solicitudes-en-revision', async(req, res) => {
         const permiso_C = 'Cliente App'
 
 
-        const arraySolicitudesEnRevisionDB = await pool.query('SELECT s.*, c.cliente_id AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("En revision") ORDER BY s.fechaSolicitud DESC');
+        // const arraySolicitudesEnRevisionDB = await pool.query('SELECT s.*, c.cliente_id AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("En revision") ORDER BY s.fechaSolicitud DESC');
+        const arraySolicitudesEnRevisionDB = await pool.query('SELECT s.*, MAX(c.cliente_id) AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular WHERE s.estadoSolicitud IN ("En revision") GROUP BY s.idSolicitud ORDER BY s.fechaSolicitud DESC;');
         const arrayTotalSolicitudesDB = await pool.query('SELECT idSolicitud FROM solicitudes ');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva"');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
@@ -850,7 +854,7 @@ router.get('/todas-las-solicitudes', async(req, res) => {
         const permiso_C = 'Cliente App'
 
 
-        const arrayTotalSolicitudesDB = await pool.query('SELECT s.*, c.cliente_id AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular ORDER BY s.fechaSolicitud DESC');
+        const arrayTotalSolicitudesDB = await pool.query('SELECT s.*, MAX(c.cliente_id) AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular GROUP BY s.idSolicitud ORDER BY s.fechaSolicitud DESC');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva" ');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
         const arraySolicitudesDeclinadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="declinada"');
@@ -1288,9 +1292,6 @@ router.get("/Solicitudes/imprimir-contrato/:id", async(req, res) => {
         });
     }
 });
-
-
-
 
 
 //-----------------------CLIENTES----------------------//
