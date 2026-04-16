@@ -142,7 +142,7 @@ router.post("/solicita-ya", async(req, res) => {
         .container { width: 100%; }
         .text-center { text-align: center; }
         .justify { text-align: justify; }
-        .mt-5 { margin-top: 30px; }
+        .mt-5 { margin-top: 20px; }
         .mt-3 { margin-top: 20px; }
         .flex-container { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; }
         .signature-box { text-align: center; width: 45%; }
@@ -153,8 +153,8 @@ router.post("/solicita-ya", async(req, res) => {
 <body>
     <div class="container">
         <div class="text-center">
-            <img src="https://1drv.ms/i/c/c31f9c66e8bcaac9/UQTJqrzoZpwfIIDDoAcAAAAAAP0_zNEg6T_KyMA?width=256" alt="Logo Rosfal" class="logo">
-            <h2 style="margin-top: 10px;">CONTRATO DE PRÉSTAMO</h2>
+            <img src="https://1drv.ms/i/c/c31f9c66e8bcaac9/UQTJqrzoZpwfIIDDoAcAAAAAAP0_zNEg6T_KyMA?width=180" alt="Logo Rosfal" class="logo">
+            <h3 style="margin-top: 10px;">CONTRATO DE PRÉSTAMO</h3>
         </div>
 
         <div class="mt-5">
@@ -207,15 +207,27 @@ router.post("/solicita-ya", async(req, res) => {
                 <strong>ARTÍCULO 4:</strong> Queda expresamente convenido entre las partes, que en caso de incumplimiento o retraso en el pago de las obligaciones asumidas por <strong>EL DEUDOR</strong>, este último deberá pagar, en adición, una penalidad por mora equivalente al cinco por ciento (5%) por cada cuota vencida.
             </p>
 
-            <div class="flex-container">
-                <div class="signature-box">
-                    <img src="https://1drv.ms/i/c/c31f9c66e8bcaac9/IQT07QITK79-SYWC821wCZYpAXmpWiFR_pHUpLJjznWUGcA" alt="Sello Rosfal" class="sello">
-                </div>
-                <div class="signature-box" style="margin-top: 50px;">
-                    <p>_________________________</p>
-                    <p><strong>EL DEUDOR</strong><br>${nombre} ${apellido}</p>
-                </div>
+        <table style="width: 100%; margin-top: 20px; border-collapse: collapse; border: none;">
+            <tr>
+            <td style="width: 50%; text-align: center; vertical-align: middle; border: none;">
+            <img 
+                src="https://1drv.ms/i/c/c31f9c66e8bcaac9/IQT07QITK79-SYWC821wCZYpAXmpWiFR_pHUpLJjznWUGcA" 
+                alt="Sello Rosfal" 
+                style="width: 200px; height: auto;"
+            >
+            </td>
+        
+            <td style="width: 50%; text-align: center; vertical-align: middle; border: none;">
+            <div style="margin-top: 80px; font-family: Arial, sans-serif; color: #333;">
+                <p style="margin: 0; font-size: 14px;">_________________________</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px;">
+                    <strong style="font-weight: bold;">EL DEUDOR</strong><br>
+                    ${nombre} ${apellido}
+                </p>
             </div>
+            </td>
+            </tr>
+        </table>
         </div>
     </div>
 </body>
@@ -224,7 +236,9 @@ router.post("/solicita-ya", async(req, res) => {
     console.time("GenerarPDF");
     // 2. Generar el PDF
     let opciones = {
-        format: 'Letter',
+
+        width: '8.5in',
+        height: '17in',
         phantomPath: phantomjs.path, // <--- ESTA ES LA LÍNEA CLAVE
         args: [
             '--no-sandbox',
