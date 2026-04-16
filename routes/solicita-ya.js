@@ -7,7 +7,9 @@ const fetch = require("node-fetch");
 const nodemailer = require("nodemailer");
 const ipapi = require('ipapi.co');
 const useragent = require('express-useragent');
-const html_to_pdf = require('html-pdf-node');
+
+const pdf = require('html-pdf'); // Importar la nueva librería
+const phantomjs = require('phantomjs-prebuilt'); // Importa esto
 
 // no se esta usando
 // const LocalStorage = require('node-localstorage').LocalStorage;
@@ -221,12 +223,32 @@ router.post("/solicita-ya", async(req, res) => {
 `;
     console.time("GenerarPDF");
     // 2. Generar el PDF
-    let opciones = { format: 'Letter' };
+    let opciones = {
+        format: 'Letter',
+        phantomPath: phantomjs.path, // <--- ESTA ES LA LÍNEA CLAVE
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage', // Vital para servidores con poca RAM
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process' // Reduce el consumo de CPU
+        ]
+    };
     let archivo = { content: htmlContrato };
     console.timeEnd("GenerarPDF");
 
     console.time("pdfBuffer");
-    const pdfBuffer = await html_to_pdf.generatePdf(archivo, opciones);
+    // const pdfBuffer = await html_to_pdf.generatePdf(archivo, opciones);
+    const pdfBuffer = await new Promise((resolve, reject) => {
+        pdf.create(htmlContrato, opciones).toBuffer((err, buffer) => {
+            if (err) reject(err);
+            else resolve(buffer);
+        });
+    });
+
+    console.log("PDF generado con html-pdf correctamente");
     console.timeEnd("pdfBuffer");
 
     // #1 FUNCION QUE ENVIA AL CORREO NOTIFICACION DE SOLICITUD DE PRESTAMOS A ROSFAL

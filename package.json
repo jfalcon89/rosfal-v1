@@ -27,7 +27,7 @@
         "express-useragent": "^1.0.15",
         "express-validator": "^7.3.2",
         "geoip-lite": "^1.4.10",
-        "html-pdf-node": "^1.0.8",
+        "html-pdf": "^3.0.1",
         "ipapi.co": "^0.3.0",
         "moment": "^2.29.4",
         "multer": "^1.4.5-lts.1",
@@ -38,6 +38,7 @@
         "nodemailer": "^6.9.1",
         "package.json": "^2.0.1",
         "path": "^0.12.7",
+        "phantomjs-prebuilt": "^2.1.16",
         "sharp": "^0.31.0",
         "swagger-jsdoc": "^6.2.8",
         "swagger-ui-express": "^5.0.1"
