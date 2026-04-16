@@ -7,6 +7,7 @@ const fetch = require("node-fetch");
 const nodemailer = require("nodemailer");
 const ipapi = require('ipapi.co');
 const useragent = require('express-useragent');
+const html_to_pdf = require('html-pdf-node');
 
 // no se esta usando
 // const LocalStorage = require('node-localstorage').LocalStorage;
@@ -121,22 +122,119 @@ router.post("/solicita-ya", async(req, res) => {
     const browser = req.useragent.browser;
     const sistemaOperativo = req.useragent.os
     const plataforma = req.useragent.platform
-    const fecha = new Date().toLocaleString('en-US', { timeZone: 'America/Santo_Domingo' });
+    const fecha = new Date().toLocaleString('en-US', { timeZone: 'America/Santo_Domingo' }).slice(0, 10);
 
     // fetch(`https://ipgeolocation.abstractapi.com/v1/?api_key=174a3d4da2a14777ab66bef79388279b&ip_address=${ip}`)
     //     .then(response => response.json())
     //     .then(data => {
 
-    var callback = function(res) {
+    // 1. Definir el contenido del contrato (puedes usar un template literal)
+    // Asegúrate de tener acceso al objeto 'solicitud' antes de esta variable
+    const htmlContrato = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; line-height: 1.5; padding: 30px; }
+        .container { width: 100%; }
+        .text-center { text-align: center; }
+        .justify { text-align: justify; }
+        .mt-5 { margin-top: 30px; }
+        .mt-3 { margin-top: 20px; }
+        .flex-container { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; }
+        .signature-box { text-align: center; width: 45%; }
+        .logo { width: 180px; height: auto; }
+        .sello { width: 250px; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <img src="https://1drv.ms/i/c/c31f9c66e8bcaac9/UQTJqrzoZpwfIIDDoAcAAAAAAP0_zNEg6T_KyMA?width=256" alt="Logo Rosfal" class="logo">
+            <h2 style="margin-top: 10px;">CONTRATO DE PRÉSTAMO</h2>
+        </div>
 
-        // #1 FUNCION QUE ENVIA AL CORREO NOTIFICACION DE SOLICITUD DE PRESTAMOS A ROSFAL
+        <div class="mt-5">
+            <h4 class="mt-3">
+                <strong>Fecha de Solicitud:</strong> ${fecha}
+               
+                <strong> &nbsp; Referencia:</strong> 
+            </h4>
+
+            <p class="justify mt-3">
+                <strong>ENTRE:</strong> De una parte <strong>ROSFAL SOLUCIONES DE PRÉSTAMOS</strong>, sociedad comercial organizada y existente de conformidad con las leyes de la República Dominicana, y Domicilio principal establecido en Sto Dgo. Oeste R.D.
+            </p>
+
+            <p class="justify mt-3">
+                Quien en lo adelante de este contrato se denominará <strong>ROSFAL</strong>, o por su nombre completo; Y de la otra parte, el/la señor/a:
+                <strong>${nombre} ${apellido}</strong>, dominicano/a, mayor de edad, portador de la cédula de identidad y electoral No.
+                <strong>${cedula}</strong>, domiciliado y residente en
+                <strong>${direccion}</strong>, persona que en lo adelante del presente contrato se denominará como <strong>EL DEUDOR</strong> o por su nombre completo;
+            </p>
+
+            <p class="justify mt-3">
+                <strong>POR CUANTO: EL DEUDOR</strong> ha solicitado a <strong>ROSFAL</strong> el otorgamiento de un préstamo por la suma de <strong>(RD$ ${montoSolicitado})</strong> <strong>PESOS DOMINICANOS</strong>, moneda de curso legal.
+            </p>
+
+            <p class="justify mt-3">
+                <strong>POR CUANTO: ROSFAL</strong> ha manifestado su intención de otorgarle a <strong>EL DEUDOR</strong> el préstamo solicitado, sujeto a los términos y condiciones que se establecen en el presente contrato.
+            </p>
+
+            <p class="justify mt-3">
+                <strong>POR TANTO</strong>, y en el entendido de que el anterior preámbulo forma parte integrante del presente acto, las partes;
+            </p>
+
+            <p class="justify mt-3">
+                <strong>HAN CONVENIDO Y PACTADO LO SIGUIENTE: ARTÍCULO 1. OBJETO</strong>.- Por medio del presente contrato, <strong>ROSFAL</strong> otorga a favor de <strong>EL DEUDOR</strong>, quien acepta conforme lo establecido un préstamo por la suma más arriba descrita, suma que <strong>EL DEUDOR</strong> declara haber recibido a su entera satisfacción a la firma del presente acuerdo.
+            </p>
+
+            <p class="justify mt-3">
+                <strong>ARTÍCULO 2. FRECUENCIAS DE CUOTAS.- EL DEUDOR</strong> se compromete a pagar la cuota de su préstamo a <strong>ROSFAL</strong> en la frecuencia establecida por <strong>${frecuenciaPagos}</strong>.
+            </p>
+
+            <p class="justify mt-3">
+                <strong>ARTÍCULO 3. PAGO.- EL DEUDOR</strong> se compromete a pagar a <strong>ROSFAL</strong> la cuota establecida en base a las condiciones del préstamo, cuota que se compromete a pagar <strong>EL DEUDOR</strong> por concepto de cada <strong>${frecuenciaPagos}</strong>, en el asiento social de <strong>ROSFAL</strong>, o en el medio de pago que se indique, sin necesidad de requerimientos.
+            </p>
+
+            <p class="justify mt-3">
+                La falta de pago de tres (3) cuotas consecutivas, hará perder al <strong>EL DEUDOR</strong> el beneficio del término acordado y el pago de la obligación se hará exigible en su totalidad, después de <strong>ROSFAL</strong> haber cumplido con los procedimientos legales, judiciales o extrajudiciales establecidos por la ley para hacer exigible el pago de la deuda.
+            </p>
+
+            <p class="justify mt-3">
+                <strong>ARTÍCULO 4:</strong> Queda expresamente convenido entre las partes, que en caso de incumplimiento o retraso en el pago de las obligaciones asumidas por <strong>EL DEUDOR</strong>, este último deberá pagar, en adición, una penalidad por mora equivalente al cinco por ciento (5%) por cada cuota vencida.
+            </p>
+
+            <div class="flex-container">
+                <div class="signature-box">
+                    <img src="https://1drv.ms/i/c/c31f9c66e8bcaac9/IQT07QITK79-SYWC821wCZYpAXmpWiFR_pHUpLJjznWUGcA" alt="Sello Rosfal" class="sello">
+                </div>
+                <div class="signature-box" style="margin-top: 50px;">
+                    <p>_________________________</p>
+                    <p><strong>EL DEUDOR</strong><br>${nombre} ${apellido}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+`;
+    console.time("GenerarPDF");
+    // 2. Generar el PDF
+    let opciones = { format: 'Letter' };
+    let archivo = { content: htmlContrato };
+    console.timeEnd("GenerarPDF");
+
+    console.time("pdfBuffer");
+    const pdfBuffer = await html_to_pdf.generatePdf(archivo, opciones);
+    console.timeEnd("pdfBuffer");
+
+    // #1 FUNCION QUE ENVIA AL CORREO NOTIFICACION DE SOLICITUD DE PRESTAMOS A ROSFAL
+    var callback = async function(res) {
         async function notificacionCorreo() {
             try {
                 const from = "contacto@rosfal.com"
                 const toNotificacion = "jfalcon@rosfal.com"
-
-                // console.log(nombre + " en enviar correo");
-                // console.log(apellido + " en enviar correo");
 
                 // Configurar la conexión SMTP con el servidor de correo personalizado
                 let transporter = nodemailer.createTransport({
@@ -192,12 +290,18 @@ router.post("/solicita-ya", async(req, res) => {
             line-height: 1.6;
             color: #333333;
         }
+              .main-wrapper {
+                max-width: 600px;
+                margin: 0 auto;
+                text-align: center;
+                
+            }
         .footer {
             text-align: center;
             font-size: 14px;
-            color: #777777;
             padding: 10px;
             border-top: 1px solid #eeeeee;
+            text-decoration: none;
         }
         .highlight {
             font-weight: bold;
@@ -207,6 +311,12 @@ router.post("/solicita-ya", async(req, res) => {
 </head>
 <body>
     <div class="container">
+         <div class="main-wrapper">
+
+            <img src="cid:logo_rosfal" alt="Rosfal" class="" style="width: 150px;">
+            
+
+        </div>
         <div class="header">Confirmación de solicitud de préstamo</div>
         <div class="content">
             <p><strong>Cliente:</strong> ${nombre} ${apellido}</p>
@@ -226,18 +336,27 @@ router.post("/solicita-ya", async(req, res) => {
             <p><strong>Latitud:</strong> ${res.latitude} <strong>Longitud:</strong> ${res.longitude}</p>
         </div>
         <div class="footer">
-            <p><strong>ROSFAL SOLUCIONES DE PRÉSTAMOS</strong></p>
+            <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRÉSTAMOS</h4>
             <p><strong>T.</strong> 829-856-0203 | <strong>Email:</strong> contacto@rosfal.com</p>
             <p>Síguenos en <strong>FB:</strong> Rosfalrd | <strong>IG:</strong> @Rosfalrd</p>
             <p><a href="https://www.rosfal.com" target="_blank">www.rosfal.com</a></p>
         </div>
     </div>
 </body>
-            `
+            `,
+                    attachments: [{
+                        filename: `Contrato_Prestamo_Rosfal_${cedula}_${nombre}_${apellido}.pdf`,
+                        content: pdfBuffer // Aquí pasamos el PDF generado
+                    }, {
+
+                        filename: 'LOGO-ROSFAL-2.png',
+                        path: './public/img/LOGO-ROSFAL-2.png', // Verifica que esta ruta sea correcta en tu servidor
+                        cid: 'logo_rosfal' // Este ID debe coincidir con el src del HTML
+                    }]
 
                 });
 
-                console.log("Correo enviado: %s", info.messageId);
+                console.log("Correo enviado a Rosfal: %s", info.messageId);
 
             } catch (error) {
                 console.log(error);
@@ -255,9 +374,6 @@ router.post("/solicita-ya", async(req, res) => {
         async function enviarCorreo() {
             try {
                 const from = "contacto@rosfal.com"
-
-                // console.log(nombre + " en enviar correo");
-                // console.log(apellido + " en enviar correo");
 
                 // Configurar la conexión SMTP con el servidor de correo personalizado
                 let transporter = nodemailer.createTransport({
@@ -278,6 +394,7 @@ router.post("/solicita-ya", async(req, res) => {
                     from: `${from} ROSFAL SOLUCIONES DE PRÉSTAMOS`,
                     to: `${email}`,
                     subject: `Gracias por tu solicitud ${nombre} ${apellido}`,
+
                     html: `
                 
                 <head>
@@ -301,6 +418,13 @@ router.post("/solicita-ya", async(req, res) => {
                 border-radius: 8px;
                 box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             }
+
+            .greeting {
+            font-size: 28px;
+            color: #4a4a4a;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
             
             .header {
                 background-color: #2D8DBD;
@@ -323,6 +447,12 @@ router.post("/solicita-ya", async(req, res) => {
                 font-size: 14px;
                 color: #666;
             }
+            .main-wrapper {
+                max-width: 600px;
+                margin: 0 auto;
+                text-align: center;
+                
+            }
             
             .footer a {
                 color: #2D8DBD;
@@ -333,28 +463,51 @@ router.post("/solicita-ya", async(req, res) => {
     </head>
 
     <body>
-        <div class="container">
-            <div class="header">Confirmación de Solicitud de Préstamo</div>
-            <div class="content">
-                <p>Estimado/a <strong>${nombre} ${apellido}</strong>,</p>
-                <p>Esperamos que se encuentre bien. Le escribimos para confirmar que hemos recibido su solicitud de préstamo.</p>
-                <p>Nos complace informarle que su solicitud está siendo revisada. Nos pondremos en contacto con usted en breve para informarle si su solicitud ha sido aprobada.</p>
-                <p>Mientras tanto, si tiene alguna pregunta o inquietud, no dude en ponerse en contacto con nosotros.</p>
-                <p>Gracias por elegir nuestro servicio de préstamos.</p>
-            </div>
-            <div class="footer">
-                <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRÉSTAMOS</h4>
-                <p><strong>T.</strong> 829-856-0203 | <strong>Email:</strong> contacto@rosfal.com</p>
-                <p>Síguenos en <strong>FB:</strong> Rosfalrd | <strong>IG:</strong> @Rosfalrd</p>
-                <p><a href="www.rosfal.com">www.rosfal.com</a></p>
-            </div>
-        </div>
-    </body>
-                `
+       <div class="container">
+        <div class="main-wrapper">
 
+            <img src="cid:logo_rosfal" alt="Rosfal" class="" style="width: 150px;">
+            <hr style="border: 0; border-top: 1px solid #495057; margin: 20px 0;">
+
+            <h2 class="greeting">Hola ${nombre}</h2>
+        </div>
+        <div class="header">Gracias por confiar en Rosfal</div>
+        <div class="content">
+
+            <p>Esperamos que se encuentre bien. Le escribimos para confirmar que hemos recibido su <strong>solicitud de préstamo</strong>.</p>
+            <p>Actualmente su solicitud está siendo revisada. Nos pondremos en contacto con usted para informarle si su solicitud ha sido aprobada, por lo que le recomendamos estar atento a su proceso.</p>
+            <p>Mientras tanto, si tiene alguna pregunta o inquietud, no dude en ponerse en contacto con nosotros.</p>
+            <p><strong>Horarios de atención:</strong> Lunes a viernes, de 8:00 a.m. a 6:00 p.m.</p>
+
+            <p>Estamos aquí para acompañarte en cada paso hacia tus metas.</p>
+
+
+        </div>
+        <div class="footer">
+            <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRÉSTAMOS</h4>
+            <p><strong>T.</strong> 829-856-0203 | <strong>Email:</strong> contacto@rosfal.com</p>
+            <p>Síguenos en <strong>FB:</strong> Rosfalrd | <strong>IG:</strong> @Rosfalrd</p>
+            <p><a href="https://www.rosfal.com" target="_blank">www.rosfal.com</a></p>
+        </div>
+    </div>
+    <div class="main-wrapper">
+        <p>¿No reconoces esta actividad?<br> ¡Por favor contacta con nosotros!</p>
+        <a href="mailto:contacto@rosfal.com">contacto@rosfal.com</a>
+    </div>
+    </body>
+                `,
+                    attachments: [{
+                        filename: `Contrato_Prestamo_Rosfal_${cedula}_${nombre}_${apellido}.pdf`,
+                        content: pdfBuffer // Aquí pasamos el PDF generado
+                    }, {
+
+                        filename: 'LOGO-ROSFAL-2.png',
+                        path: './public/img/LOGO-ROSFAL-2.png', // Verifica que esta ruta sea correcta en tu servidor
+                        cid: 'logo_rosfal' // Este ID debe coincidir con el src del HTML
+                    }]
                 });
 
-                console.log("Correo enviado: %s", info.messageId);
+                console.log("Correo enviado al cliente: %s", info.messageId);
 
             } catch (error) {
                 console.log(error);
@@ -439,23 +592,23 @@ router.post("/solicita-ya", async(req, res) => {
         montoSolicitado
     };
 
-    console.log('actualiza cliente ', actualizaCliente)
+    // console.log('actualiza cliente ', actualizaCliente)
 
 
     await pool.query('INSERT INTO solicitudes set ?', [nuevaSolicitud]);
 
 
     const app_clientedDB = await pool.query("SELECT cliente_id FROM app_clientes WHERE telefono = ?", [celular]);
-    console.log('app_clientedDB ', app_clientedDB)
+    // console.log('app_clientedDB ', app_clientedDB)
     if (app_clientedDB[0]) {
-        console.log('entro porque hay un id del cliente ')
+        // console.log('entro porque hay un id del cliente ')
         await pool.query("UPDATE app_clientes set ? WHERE telefono = ?", [actualizaCliente, celular]);
 
-        console.log(app_clientedDB[0].cliente_id + " cliente id tab app_clientes")
+        // console.log(app_clientedDB[0].cliente_id + " cliente id tab app_clientes")
 
         const solicitudDB = await pool.query(`SELECT idSolicitud, celular FROM solicitudes WHERE celular = ${celular} ORDER BY idSolicitud DESC LIMIT 1`)
 
-        console.log(solicitudDB[0].celular + " Celular cliente solicitud")
+        // console.log(solicitudDB[0].celular + " Celular cliente solicitud")
 
 
         const actualizaCliente_id = { cliente_id: app_clientedDB[0].cliente_id }
@@ -491,7 +644,7 @@ router.post("/solicita-ya", async(req, res) => {
             alertIcon: 'success',
             showConfirmButton: false,
             timer: 2000,
-            ruta: '',
+            ruta: 'solicita-ya',
             rol: req.session.rol,
             permiso_C,
             config

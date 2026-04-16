@@ -84,7 +84,7 @@ router.get('/notificacionCorreoAtrasosCliente/:id', async(req, res) => {
     async function notificacionCorreoAtrasosCliente() {
 
         // Coloca aquí el código que deseas que se ejecute cada minuto
-        const solicitudDB = await pool.query(`SELECT * FROM solicitudes WHERE estadoSolicitud = 'Aprobada' AND  solicitudes.atraso > 0 AND solicitudes.idSolicitud = ${id} `);
+        const solicitudDB = await pool.query(`SELECT * FROM solicitudes WHERE solicitudes.atraso > 0 AND solicitudes.idSolicitud = ${id} `);
         const solicitud = solicitudDB[0];
         console.log(solicitudDB);
         // console.log("¡Ejecutando función cada minuto!");
@@ -947,6 +947,8 @@ router.get("/Solicitudes/editar-solicitud/:id", async(req, res) => {
                     ON c.telefono = s.celular
                     WHERE s.idSolicitud = ?`, [id]
             );
+
+            console.log(solicitudDB[0])
             const documentosClienteDB = await pool.query(`SELECT archivo_id, prestamo_id, celular, nombre_archivo, tipo_documento, fecha_subida FROM archivos_prestamos where prestamo_id = ${solicitudDB[0].idSolicitud} `);
             // console.log(solicitudDB[0]);
             res.render("editar-solicitud", {

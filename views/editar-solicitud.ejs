@@ -292,27 +292,33 @@
                 <ul style="background-color: white; border-radius: 10px; list-style:none" class="collapse p-0 shadow-sm" id="collapseExampleNotificacion" aria-labelledby="collapseExampleNotificacion">
 
                     <li>
-                        <a target="_blank" href="https://wa.me/1<%= solicitud.celular %>?text=
+                        <a target="_blank" href="https://wa.me/1<%= solicitud.celular %>?text=<%= encodeURIComponent(`
+*NOTIFICACIÓN DE ESTADO - SOLICITUD DE PRÉSTAMO*
+--------------------------------------------
+Estimado(a) *${solicitud.nombre} ${solicitud.apellido}*
 
-%0A*NOTIFICACION SOLICITUD DE PRESTAMO*%0A
+Le informamos el estado actual de su solicitud:
 
-%0AEstimad@ *<%= solicitud.nombre %> <%= solicitud.apellido %>* le informamos que su solicitud de préstamos No.<%= solicitud.idSolicitud %> realizada en fecha <%= solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10) %> se encuentra *<%= solicitud.estadoSolicitud %>*%0A
-
-%0A*Para mas informacion:*%0A
-
+*Número de Solicitud:* ${solicitud.idSolicitud}
+*Fecha de Solicitud:* ${solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10)}
+*Monto Solicitado:* $${solicitud.montoSolicitado}
+*Estado Actual:* ${solicitud.estadoSolicitud}
+--------------------------------------------
+*CONTACTO Y SOPORTE* 
 *Email:* contacto@rosfal.com
-%0A*WhatsApp:* 829 856-0203%0A
-%0A*Consultar Solicitud*  https://www.rosfal.com/consulta-solicitud %0A
+*WhatsApp:* 829-856-0203
+*Consultar aqui:* https://www.rosfal.com/consulta-solicitud
 
-=================================
-
-        " class="dropdown-item">Estado Solicitud Ws</a>
+*Muchas gracias por confiar en nosotros.* 
+                        `) %>" class="dropdown-item">
+                            <i class="bi bi-whatsapp me-2"></i>Whatsapp Notificar Estado
+                        </a>
 
                     </li>
-                    <% if(solicitud.estadoSolicitud =="Aprobada"){ %>
+                    <% if(solicitud.estadoSolicitud =="Aprobada" || solicitud.estadoSolicitud =="En Legal"){ %>
 
                         <li>
-                            <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModalAtraso" class="dropdown-item">Atrasos prestamo</a>
+                            <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModalAtraso" class="dropdown-item"><i class="bi bi-whatsapp me-2"></i>Whatsapp Notificar Atrasos</a>
 
                         </li>
 
@@ -320,11 +326,11 @@
                             <% if(solicitud.atraso >"0"){ %>
 
                                 <li>
-                                    <a id="notificarAtrasosClienteBtn" type="button" class="dropdown-item ">Notificar sms Atraso</a>
+                                    <a id="notificarAtrasosClienteBtn" type="button" class="dropdown-item "><i class="bi bi-chat-left-text me-2"></i>Sms Notificar Atraso</a>
 
                                 </li>
                                 <li>
-                                    <a id="notificarAtrasosClienteBtnCorreo" type="button" class="dropdown-item ">Notificar Email Atraso</a>
+                                    <a id="notificarAtrasosClienteBtnCorreo" type="button" class="dropdown-item "><i class="bi bi-envelope me-2"></i>Email Notificar Atrasos</a>
 
                                 </li>
 
@@ -334,7 +340,7 @@
                                 <% } %>
                                     <% if(solicitud.legalMonto >"0"){ %>
                                         <li>
-                                            <a id="notificarLegalClienteBtnCorreo" type="button" class="dropdown-item ">Notificar Email Legal</a>
+                                            <a id="notificarLegalClienteBtnCorreo" type="button" class="dropdown-item "><i class="bi bi-envelope me-2"></i>Email Notificar Legal</a>
 
                                         </li>
 
@@ -362,7 +368,8 @@
                                 <div class="container-datos-header ">
                                     <div class="datos-de-busqueda ">
                                         <div class=" mb-4">
-                                            <div class="form-group d-lg-flex justify-content-end  ">
+
+                                            <div class="form-group d-lg-flex justify-content-between">
                                                 <div class="form-group mt-2 me-lg-2 ">
                                                     <div class="input-group ">
                                                         <div class="input-group-prepend">
@@ -372,7 +379,7 @@
                                                                    <%= solicitud.cliente_id_validacion %> 
                                                                 </span>
                                                                 <% }else { %>
-                                                                    <span style="color: red;" id="idSolicitud" class="input-group-text">Solicitud sin Cliente
+                                                                    <span style="color: red;" id="" class="input-group-text">Solicitud sin Cliente
                                                     
                                                                  </span>
 
@@ -392,7 +399,7 @@
                                                 <div class="form-group mt-2 me-lg-2 ">
                                                     <div class="input-group ">
                                                         <div class="input-group-prepend">
-                                                            <span class="input-group-text">Contrato Firma</span>
+                                                            <span class="input-group-text">Firma</span>
                                                         </div>
                                                         <select name="firmaContrato" class="form-control" id="firmaContrato">
                                                             <option value="<%= solicitud.firmaContrato %>" selected>
@@ -408,7 +415,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">Ruta</span>
                                                         </div>
-                                                        <select name="ruta" class="form-control" id="">
+                                                        <select style="max-width: 373px;" name="ruta" class="form-control" id="">
                                                             <option value="<%= solicitud.ruta %>" selected>
                                                                 <%= solicitud.ruta %>
                                                             </option>
@@ -472,23 +479,24 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                         <div class="d-flex justify-content-between">
                                             <div class="">
                                                 <div class="form-group   ">
                                                     <div class="input-group ">
-                                                        <div class="me-lg-5">
+                                                        <div class="me-lg-4">
                                                             <label class="p-2">Cedula</label>
 
                                                             <% const Editar_Cedula = (config.Editar_Cedula || []).includes(rol); %>
                                                                 <% if (Editar_Cedula) { %>
-                                                                    <input type="number" name="cedula" class="form-control" id="cedula" value="<%= solicitud.cedula %>">
+                                                                    <input style="max-width: 160px;" type="number" name="cedula" class="form-control" id="cedula" value="<%= solicitud.cedula %>">
                                                                     <% } else { %>
-                                                                        <input type="number" name="cedula" class="form-control" id="cedula" value="<%= solicitud.cedula %>" readonly>
+                                                                        <input style="max-width: 160px;" type="number" name="cedula" class="form-control" id="cedula" value="<%= solicitud.cedula %>" readonly>
                                                                         <% } %>
                                                         </div>
-                                                        <div class="me-lg-5">
+                                                        <div class="me-lg-4">
                                                             <label for="sexo" class="p-2">Sexo</label>
                                                             <select name="sexo" class="form-control" id="sexo">
                                                             <option value="<%= solicitud.sexo %>" selected>
@@ -501,7 +509,7 @@
                                                                         <% } %>
                                                         </select>
                                                         </div>
-                                                        <div class="me-lg-5">
+                                                        <div class="me-lg-4">
                                                             <label for="sexo" class="p-2">Estado Civil</label>
                                                             <select name="estadoCivil" class="form-control" id="estadoCivil">
                                                             <option value="<%= solicitud.estadoCivil %>" selected>
@@ -515,7 +523,7 @@
                                                             
                                                         </select>
                                                         </div>
-                                                        <div class="me-lg-5">
+                                                        <div class="me-lg-4">
                                                             <label for="sexo" class="p-2">Clasificacion</label>
                                                             <select name="clasificacionCliente" class="form-control" id="clasificacionCliente">
                                                             <option value="<%= solicitud.clasificacionCliente %>" selected>
@@ -531,23 +539,31 @@
                                                         </select>
                                                         </div>
 
-                                                        <% if(solicitud.estadoSolicitud == 'En Legal'){ %>
-
-                                                            <div class="me-lg-5">
-                                                                <label for="sexo" class="p-2 text-danger">Monto en Legal</label>
-                                                                <input type="number" name="legalMonto" class="form-control text-danger " id="legalMonto" value="<%= solicitud.legalMonto %>">
+                                                        <% if(solicitud.atraso){ %>
+                                                            <div class="me-lg-4">
+                                                                <label for="sexo" class="p-2 text-danger">Monto en Atraso</label>
+                                                                <input style="max-width: 160px;" type="number" readonly class="form-control text-danger" id="atraso" value="<%= solicitud.atraso %>">
 
                                                             </div>
                                                             <% } %>
 
-                                                                <% if(solicitud.estadoSolicitud == 'Incobrable'){ %>
+                                                                <% if(solicitud.estadoSolicitud == 'En Legal' || solicitud.estadoSolicitud == 'Incobrable'){ %>
 
-                                                                    <div class="me-lg-5">
-                                                                        <label for="sexo" class="p-2 text-danger">Monto Incobrable</label>
-                                                                        <input type="number" name="incobrableMonto" class="form-control text-danger " id="legalMonto" value="<%= solicitud.incobrableMonto %>">
+                                                                    <div class="me-lg-4">
+                                                                        <label for="sexo" class="p-2 text-danger">Monto en Legal</label>
+                                                                        <input style="max-width: 160px;" type="number" name="legalMonto" class="form-control text-danger " id="legalMonto" value="<%= solicitud.legalMonto %>">
 
                                                                     </div>
                                                                     <% } %>
+
+                                                                        <% if(solicitud.estadoSolicitud == 'Incobrable'){ %>
+
+                                                                            <div class="me-lg-4">
+                                                                                <label for="sexo" class="p-2 text-danger">Monto Incobrable</label>
+                                                                                <input style="max-width: 160px;" style="max-width: 160px;" type="number" name="incobrableMonto" class="form-control text-danger " id="incobrableMonto" value="<%= solicitud.incobrableMonto %>">
+
+                                                                            </div>
+                                                                            <% } %>
 
                                                     </div>
                                                 </div>
@@ -809,7 +825,7 @@
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">Monto atraso:</label>
                                 <div class="d-flex">
-                                    <input type="text" class="form-control" id="recipient-name" name="atraso" value="<%= solicitud.atraso %> ">
+                                    <input type="number" class="form-control" id="recipient-name" name="atraso" value="<%= solicitud.atraso %>">
                                     <button type="submit" class="btn btn-primary text-nowrap">Cargar atraso</button>
                                 </div>
                             </div>
@@ -822,24 +838,29 @@
                         <% if(solicitud.atraso){ %>
 
 
-                            <a target="_blank" href="https://wa.me/1<%= solicitud.celular %>?text=
+                            <a target="_blank" href="https://wa.me/1<%= solicitud.celular %>?text=<%= encodeURIComponent(`
+*ROSFAL SOLUCIONES DE PRÉSTAMOS*
+--------------------------------------------
+*NOTIFICACIÓN DE ATRASO*
 
-%0A*ROSFAL SOLUCIONES DE PRESTAMOS*%0A
+Señor(a): *${solicitud.nombre} ${solicitud.apellido}*
 
-%0ASEÑOR (A):%0A
-*<%= solicitud.nombre %> <%= solicitud.apellido %>*
+Después de un cordial saludo, le informamos que su préstamo *No. ${solicitud.idSolicitud}* (realizado el ${solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10)}) presenta un atraso al día de hoy de:
 
-%0A%0ADespués de un cordial saludo, le informamos que su prestamo No.*<%= solicitud.idSolicitud %>* realizado en fecha <%= solicitud.fechaSolicitud.toLocaleString('es-US').slice(0, 10) %> presenta un atraso al dia de hoy de *%28 <%= solicitud.atraso %> %29* pesos. Le solicitamos poner al dia su prestamo para evitar mora por atraso.%0A%0A
+*Monto en Atraso:* RD$ ${solicitud.atraso.toLocaleString('en-US')}
 
-%0A*Para mas informacion:*%0A
+Le solicitamos poner al día su préstamo a la mayor brevedad posible para evitar cargos adicionales por mora.
 
+--------------------------------------------
+*PARA MÁS INFORMACIÓN:*
 *Email:* cobros@rosfal.com
-%0A*WhatsApp:* 829-432-0547%0A
+*WhatsApp:* 829-432-0547
+*Consultar aqui:* https://www.rosfal.com/login
 
-
-=================================
-
-                                            " class="btn btn-primary">Enviar notificacion</a>
+*Muchas gracias por su atención.*
+`) %>" class="btn btn-primary">
+                                <i class="bi bi-whatsapp me-2"></i>Enviar notificación
+                            </a>
                             <% }else{ %>
                                 <a class="btn btn-primary disabled">Enviar notificacion</a>
 
