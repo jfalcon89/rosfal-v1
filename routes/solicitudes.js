@@ -124,6 +124,11 @@ router.get('/notificacionCorreoAtrasosCliente/:id', async(req, res) => {
                         from: `${from} ROSFAL SOLUCIONES DE PRÉSTAMOS`,
                         to: `${toNotificacion}`,
                         subject: `Notificación Préstamo en Atraso ${solicitud.nombre} ${solicitud.apellido} `,
+                        attachments: [{
+                            filename: 'LOGO-ROSFAL-2.png',
+                            path: './public/img/LOGO-ROSFAL-2.png', // Verifica que esta ruta sea correcta en tu servidor
+                            cid: 'logo_rosfal', // Este ID debe coincidir con el src del HTML
+                        }],
                         html: `
 
              <head>
@@ -187,6 +192,10 @@ router.get('/notificacionCorreoAtrasosCliente/:id', async(req, res) => {
 </head>
 <body>
     <div class="container">
+        <div class="text-center">
+            <img src="cid:logo_rosfal" alt="Logo Rosfal" class="logo">
+            
+        </div>
         <div class="header"><strong>ROSFAL</strong> | NOTIFICACIÓN DE PAGO EN ATRASO</div>
         <div class="content">
             
@@ -1299,13 +1308,12 @@ router.get("/Solicitudes/imprimir-contrato/:id", async(req, res) => {
 
 
 const pdfService = require('../services/pdfService'); // Ajusta la ruta
-
 // Función auxiliar para generar el PDF (Promesa)
 const generarBuffer = (html) => {
     return new Promise((resolve, reject) => {
         const options = {
-            format: 'Tabloid',
-            renderDelay: 500 // Pequeña pausa para asegurar carga de imágenes
+            format: 'Tabloid'
+
         };
         pdf.create(html, options).toBuffer((err, buffer) => {
             if (err) reject(err);
@@ -1313,6 +1321,18 @@ const generarBuffer = (html) => {
         });
     });
 };
+
+const fs = require('fs');
+
+
+const logoBase64 = fs.readFileSync('./public/img/LOGO-ROSFAL.png', { encoding: 'base64' });
+const logoSrc = `data:image/png;base64,${logoBase64}`;
+
+
+const selloBase64 = fs.readFileSync('./public/img/sello-contrato-1.png', { encoding: 'base64' });
+const selloSrc = `data:image/png;base64,${selloBase64}`;
+
+
 
 router.get("/Solicitudes/exportar-contrato/:id", async(req, res) => {
     if (!req.session.loggedin) return res.redirect('/login');
@@ -1360,7 +1380,7 @@ router.get("/Solicitudes/exportar-contrato/:id", async(req, res) => {
 <body>
     <div class="container">
         <div class="text-center">
-            <img src="https://1drv.ms/i/c/c31f9c66e8bcaac9/UQTJqrzoZpwfIIDDoAcAAAAAAP0_zNEg6T_KyMA?width=180" alt="Logo Rosfal" class="logo">
+            <img src="${logoSrc}" alt="Logo Rosfal" class="logo">
             <h3 style="margin-top: 10px;">CONTRATO DE PRÉSTAMO</h3>
         </div>
 
@@ -1418,9 +1438,9 @@ router.get("/Solicitudes/exportar-contrato/:id", async(req, res) => {
             <tr>
             <td style="width: 50%; text-align: center; vertical-align: middle; border: none;">
             <img 
-                src="https://1drv.ms/i/c/c31f9c66e8bcaac9/IQT07QITK79-SYWC821wCZYpAXmpWiFR_pHUpLJjznWUGcA" 
+                src="${selloSrc}" 
                 alt="Sello Rosfal" 
-                style="width: 200px; height: auto;"
+                style="width: 250px; height: auto;"
             >
             </td>
         
@@ -1443,8 +1463,8 @@ router.get("/Solicitudes/exportar-contrato/:id", async(req, res) => {
 
         // 4. Generar el Buffer del PDF
         const buffer = await generarBuffer(htmlContrato);
-
         // --- ACCIÓN: DESCARGAR ---
+
         if (accion === 'descargar') {
             res.contentType("application/pdf");
             res.setHeader("Content-Disposition", `attachment; filename=Contrato_Prestamo_Rosfal_${cedula}_${nombre}_${apellido}.pdf`);
@@ -1452,8 +1472,10 @@ router.get("/Solicitudes/exportar-contrato/:id", async(req, res) => {
         }
 
         // --- ACCIÓN: ENVIAR CORREO ---
+
         if (accion === 'enviar') {
             let transporter = nodemailer.createTransport({
+                pool: true, // <--- ESTO ES CLAVE
                 host: "mail.privateemail.com",
                 port: 465, // El puerto puede variar según la configuración de su servidor
                 secure: true, // Si utiliza SSL/TLS, establezca este valor en true
@@ -1464,9 +1486,11 @@ router.get("/Solicitudes/exportar-contrato/:id", async(req, res) => {
                     user: process.env.USERCORREO,
                     pass: process.env.PASSCORREO,
                 },
-            });
 
-            await transporter.sendMail({
+                maxConnections: 5,
+                maxMessages: 100
+            });
+            transporter.sendMail({
                 from: `${from} ROSFAL SOLUCIONES DE PRÉSTAMOS`,
                 to: `${s.email}, ${to}`, // Asegúrate que la tabla tenga columna 'email'
                 subject: `Contrato de Préstamo - ${nombre} ${apellido}`,
@@ -1580,7 +1604,6 @@ router.get("/Solicitudes/exportar-contrato/:id", async(req, res) => {
                     cid: 'logo_rosfal' // Este ID debe coincidir con el src del HTML
                 }]
             });
-
             return res.send("<script>alert('Contrato enviado al correo del cliente'); window.history.back();</script>");
         }
 

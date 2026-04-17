@@ -50,6 +50,15 @@ router.get('/solicita-ya', async(req, res) => {
     });
 })
 
+const fs = require('fs');
+
+const logoBase64 = fs.readFileSync('./public/img/LOGO-ROSFAL.png', { encoding: 'base64' });
+const logoSrc = `data:image/png;base64,${logoBase64}`;
+
+
+const selloBase64 = fs.readFileSync('./public/img/sello-contrato-1.png', { encoding: 'base64' });
+const selloSrc = `data:image/png;base64,${selloBase64}`;
+
 //INSERTAR NUEVA SOLICITUD A MYSQL****************
 router.post("/solicita-ya", async(req, res) => {
     const {
@@ -144,7 +153,7 @@ router.post("/solicita-ya", async(req, res) => {
         .justify { text-align: justify; }
         .mt-5 { margin-top: 20px; }
         .mt-3 { margin-top: 20px; }
-        .flex-container { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; }
+        .flex-container { display: flex; justify-content: space-between; align-items: center;}
         .signature-box { text-align: center; width: 45%; }
         .logo { width: 180px; height: auto; }
         .sello { width: 250px; height: auto; }
@@ -153,7 +162,7 @@ router.post("/solicita-ya", async(req, res) => {
 <body>
     <div class="container">
         <div class="text-center">
-            <img src="https://1drv.ms/i/c/c31f9c66e8bcaac9/UQTJqrzoZpwfIIDDoAcAAAAAAP0_zNEg6T_KyMA?width=180" alt="Logo Rosfal" class="logo">
+            <img src="${logoSrc}" alt="Logo Rosfal" class="logo">
             <h3 style="margin-top: 10px;">CONTRATO DE PRÉSTAMO</h3>
         </div>
 
@@ -207,21 +216,21 @@ router.post("/solicita-ya", async(req, res) => {
                 <strong>ARTÍCULO 4:</strong> Queda expresamente convenido entre las partes, que en caso de incumplimiento o retraso en el pago de las obligaciones asumidas por <strong>EL DEUDOR</strong>, este último deberá pagar, en adición, una penalidad por mora equivalente al cinco por ciento (5%) por cada cuota vencida.
             </p>
 
-        <table style="width: 100%; margin-top: 20px; border-collapse: collapse; border: none;">
+        <table style="width: 100%; border-collapse: collapse; border: none;">
             <tr>
             <td style="width: 50%; text-align: center; vertical-align: middle; border: none;">
             <img 
-                src="https://1drv.ms/i/c/c31f9c66e8bcaac9/IQT07QITK79-SYWC821wCZYpAXmpWiFR_pHUpLJjznWUGcA" 
+                src="${selloSrc}" 
                 alt="Sello Rosfal" 
-                style="width: 200px; height: auto;"
+                style="width: 250px; height: auto;"
             >
             </td>
         
             <td style="width: 50%; text-align: center; vertical-align: middle; border: none;">
-            <div style="margin-top: 80px; font-family: Arial, sans-serif; color: #333;">
+            <div style="margin-top: 40px; font-family: Arial, sans-serif; color: #333;">
                 <p style="margin: 0; font-size: 14px;">_________________________</p>
                 <p style="margin: 5px 0 0 0; font-size: 14px;">
-                    <strong style="font-weight: bold;">EL DEUDOR</strong><br>
+                    <strong style="font-weight: bold;">DEUDOR</strong><br>
                     ${nombre} ${apellido}
                 </p>
             </div>
@@ -233,7 +242,6 @@ router.post("/solicita-ya", async(req, res) => {
 </body>
 </html>
 `;
-    console.time("GenerarPDF");
     // 2. Generar el PDF
     let opciones = {
         format: 'Tabloid',
@@ -249,9 +257,7 @@ router.post("/solicita-ya", async(req, res) => {
         ]
     };
     let archivo = { content: htmlContrato };
-    console.timeEnd("GenerarPDF");
 
-    console.time("pdfBuffer");
     // const pdfBuffer = await html_to_pdf.generatePdf(archivo, opciones);
     const pdfBuffer = await new Promise((resolve, reject) => {
         pdf.create(htmlContrato, opciones).toBuffer((err, buffer) => {
@@ -261,7 +267,6 @@ router.post("/solicita-ya", async(req, res) => {
     });
 
     console.log("PDF generado con html-pdf correctamente");
-    console.timeEnd("pdfBuffer");
 
     // #1 FUNCION QUE ENVIA AL CORREO NOTIFICACION DE SOLICITUD DE PRESTAMOS A ROSFAL
     var callback = async function(res) {
