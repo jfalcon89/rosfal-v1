@@ -236,9 +236,7 @@ router.post("/solicita-ya", async(req, res) => {
     console.time("GenerarPDF");
     // 2. Generar el PDF
     let opciones = {
-        format: 'Legal',
-        width: '8.5in',
-        height: '17in',
+        format: 'Tabloid',
         phantomPath: phantomjs.path, // <--- ESTA ES LA LÍNEA CLAVE
         args: [
             '--no-sandbox',

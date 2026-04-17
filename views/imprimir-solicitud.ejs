@@ -23,32 +23,23 @@
 
 <body>
 
-    <div class="container-fluid  " style="background-color: #ececec;">
-        <div class=" d-flex align-items-center justify-content-between">
-            <div class="d-flex">
+    <nav class="navbar navbar-expand-lg navbar-light  ">
+        <div class="container-fluid  " style="">
+            <div class="w-100 m-2 d-flex justify-content-between align-items-center">
 
-                <button onclick="imprimirDocumento();">imprimir</button>
-            </div>
-            <div class="btn-group">
-                <% if (login) { %>
-                    <button type="button" class="btn btn-info"><%= name %></button>
-                    <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span class="visually-hidden">Toggle Dropdown</span>
-                </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/solicitudes/editar-solicitud/<%= solicitud.idSolicitud %>">Volver a Solicitud</a></li>
-                        <li><a class="dropdown-item" href="/">Ir a ROSFAL PAGE</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="/logout">Cerrar Session</a></li>
+                <a href="/solicitudes/editar-solicitud/<%= solicitud.idSolicitud %>">
 
-                    </ul>
-                    <%}  %>
+                    <i class="bi bi-arrow-left fs-4"></i>
+                </a>
+
+                <div class="w-100 d-flex justify-content-center">
+
+                    <p class="m-0">Solicitud</p>
+                </div>
             </div>
 
         </div>
-    </div>
+    </nav>
 
 
 

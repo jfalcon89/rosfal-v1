@@ -9,6 +9,8 @@ const { obtenerConteos } = require("../services/conteosService");
 const fetch = require("node-fetch");
 const nodemailer = require("nodemailer");
 const useragent = require('express-useragent');
+const pdf = require('html-pdf');
+
 
 
 // Inicializar la biblioteca SMS
@@ -1296,8 +1298,357 @@ router.get("/Solicitudes/imprimir-contrato/:id", async(req, res) => {
 });
 
 
+const pdfService = require('../services/pdfService'); // Ajusta la ruta
+
+// Función auxiliar para generar el PDF (Promesa)
+const generarBuffer = (html) => {
+    return new Promise((resolve, reject) => {
+        const options = {
+            format: 'Tabloid',
+            renderDelay: 500 // Pequeña pausa para asegurar carga de imágenes
+        };
+        pdf.create(html, options).toBuffer((err, buffer) => {
+            if (err) reject(err);
+            else resolve(buffer);
+        });
+    });
+};
+
+router.get("/Solicitudes/exportar-contrato/:id", async(req, res) => {
+    if (!req.session.loggedin) return res.redirect('/login');
+
+    const { id } = req.params;
+    const { accion } = req.query;
+    const from = "contacto@rosfal.com"
+    const to = "jfalcon@rosfal.com"
+
+    try {
+        // 1. Obtener datos del cliente de la DB
+        const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+        if (solicitudDB.length === 0) return res.status(404).send("Solicitud no encontrada");
+
+        const s = solicitudDB[0];
+
+        // 2. Mapear las variables para tu template htmlContrato
+        const fecha = new Date(s.fechaSolicitud).toLocaleDateString(); // Ajusta según tu columna
+        const nombre = s.nombre;
+        const apellido = s.apellido;
+        const cedula = s.cedula;
+        const direccion = s.direccion;
+        const montoSolicitado = s.montoSolicitado;
+        const frecuenciaPagos = s.frecuenciaPagos;
+
+        // 3. Tu variable de Contrato (Inyectando los datos arriba definidos)
+        const htmlContrato = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; line-height: 1.5; padding: 30px; }
+        .container { width: 100%; }
+        .text-center { text-align: center; }
+        .justify { text-align: justify; }
+        .mt-5 { margin-top: 20px; }
+        .mt-3 { margin-top: 20px; }
+        .flex-container { display: flex; justify-content: space-between; align-items: center;  }
+        .signature-box { text-align: center; width: 45%; }
+        .logo { width: 180px; height: auto; }
+        .sello { width: 250px; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <img src="https://1drv.ms/i/c/c31f9c66e8bcaac9/UQTJqrzoZpwfIIDDoAcAAAAAAP0_zNEg6T_KyMA?width=180" alt="Logo Rosfal" class="logo">
+            <h3 style="margin-top: 10px;">CONTRATO DE PRÉSTAMO</h3>
+        </div>
+
+        <div class="mt-5">
+            <h4 class="mt-3">
+                <strong>Fecha de Solicitud:</strong> ${fecha}
+               
+                <strong> &nbsp; Referencia: ${s.idSolicitud}</strong> 
+            </h4>
+
+            <p class="justify mt-3">
+                <strong>ENTRE:</strong> De una parte <strong>ROSFAL SOLUCIONES DE PRÉSTAMOS</strong>, sociedad comercial organizada y existente de conformidad con las leyes de la República Dominicana, y Domicilio principal establecido en Sto Dgo. Oeste R.D.
+            </p>
+
+            <p class="justify mt-3">
+                Quien en lo adelante de este contrato se denominará <strong>ROSFAL</strong>, o por su nombre completo; Y de la otra parte, el/la señor/a:
+                <strong>${nombre} ${apellido}</strong>, dominicano/a, mayor de edad, portador de la cédula de identidad y electoral No.
+                <strong>${cedula}</strong>, domiciliado y residente en
+                <strong>${direccion}</strong>, persona que en lo adelante del presente contrato se denominará como <strong>EL DEUDOR</strong> o por su nombre completo;
+            </p>
+
+            <p class="justify mt-3">
+                <strong>POR CUANTO: EL DEUDOR</strong> ha solicitado a <strong>ROSFAL</strong> el otorgamiento de un préstamo por la suma de <strong>(RD$ ${montoSolicitado})</strong> <strong>PESOS DOMINICANOS</strong>, moneda de curso legal.
+            </p>
+
+            <p class="justify mt-3">
+                <strong>POR CUANTO: ROSFAL</strong> ha manifestado su intención de otorgarle a <strong>EL DEUDOR</strong> el préstamo solicitado, sujeto a los términos y condiciones que se establecen en el presente contrato.
+            </p>
+
+            <p class="justify mt-3">
+                <strong>POR TANTO</strong>, y en el entendido de que el anterior preámbulo forma parte integrante del presente acto, las partes;
+            </p>
+
+            <p class="justify mt-3">
+                <strong>HAN CONVENIDO Y PACTADO LO SIGUIENTE: ARTÍCULO 1. OBJETO</strong>.- Por medio del presente contrato, <strong>ROSFAL</strong> otorga a favor de <strong>EL DEUDOR</strong>, quien acepta conforme lo establecido un préstamo por la suma más arriba descrita, suma que <strong>EL DEUDOR</strong> declara haber recibido a su entera satisfacción a la firma del presente acuerdo.
+            </p>
+
+            <p class="justify mt-3">
+                <strong>ARTÍCULO 2. FRECUENCIAS DE CUOTAS.- EL DEUDOR</strong> se compromete a pagar la cuota de su préstamo a <strong>ROSFAL</strong> en la frecuencia establecida por <strong>${frecuenciaPagos}</strong>.
+            </p>
+
+            <p class="justify mt-3">
+                <strong>ARTÍCULO 3. PAGO.- EL DEUDOR</strong> se compromete a pagar a <strong>ROSFAL</strong> la cuota establecida en base a las condiciones del préstamo, cuota que se compromete a pagar <strong>EL DEUDOR</strong> por concepto de cada <strong>${frecuenciaPagos}</strong>, en el asiento social de <strong>ROSFAL</strong>, o en el medio de pago que se indique, sin necesidad de requerimientos.
+            </p>
+
+            <p class="justify mt-3">
+                La falta de pago de tres (3) cuotas consecutivas, hará perder al <strong>EL DEUDOR</strong> el beneficio del término acordado y el pago de la obligación se hará exigible en su totalidad, después de <strong>ROSFAL</strong> haber cumplido con los procedimientos legales, judiciales o extrajudiciales establecidos por la ley para hacer exigible el pago de la deuda.
+            </p>
+
+            <p class="justify mt-3">
+                <strong>ARTÍCULO 4:</strong> Queda expresamente convenido entre las partes, que en caso de incumplimiento o retraso en el pago de las obligaciones asumidas por <strong>EL DEUDOR</strong>, este último deberá pagar, en adición, una penalidad por mora equivalente al cinco por ciento (5%) por cada cuota vencida.
+            </p>
+
+        <table style="width: 100%; border-collapse: collapse; border: none;">
+            <tr>
+            <td style="width: 50%; text-align: center; vertical-align: middle; border: none;">
+            <img 
+                src="https://1drv.ms/i/c/c31f9c66e8bcaac9/IQT07QITK79-SYWC821wCZYpAXmpWiFR_pHUpLJjznWUGcA" 
+                alt="Sello Rosfal" 
+                style="width: 200px; height: auto;"
+            >
+            </td>
+        
+            <td style="width: 50%; text-align: center; vertical-align: middle; border: none;">
+            <div style="margin-top: 40px; font-family: Arial, sans-serif; color: #333;">
+                <p style="margin: 0; font-size: 14px;">_________________________</p>
+                <p style="margin: 5px 0 0 0; font-size: 14px;">
+                    <strong style="font-weight: bold;">DEUDOR</strong><br>
+                    ${nombre} ${apellido}
+                </p>
+            </div>
+            </td>
+            </tr>
+        </table>
+        </div>
+    </div>
+</body>
+</html>
+`;
+
+        // 4. Generar el Buffer del PDF
+        const buffer = await generarBuffer(htmlContrato);
+
+        // --- ACCIÓN: DESCARGAR ---
+        if (accion === 'descargar') {
+            res.contentType("application/pdf");
+            res.setHeader("Content-Disposition", `attachment; filename=Contrato_Prestamo_Rosfal_${cedula}_${nombre}_${apellido}.pdf`);
+            return res.send(buffer);
+        }
+
+        // --- ACCIÓN: ENVIAR CORREO ---
+        if (accion === 'enviar') {
+            let transporter = nodemailer.createTransport({
+                host: "mail.privateemail.com",
+                port: 465, // El puerto puede variar según la configuración de su servidor
+                secure: true, // Si utiliza SSL/TLS, establezca este valor en true
+                tls: {
+                    rejectUnauthorized: false
+                },
+                auth: {
+                    user: process.env.USERCORREO,
+                    pass: process.env.PASSCORREO,
+                },
+            });
+
+            await transporter.sendMail({
+                from: `${from} ROSFAL SOLUCIONES DE PRÉSTAMOS`,
+                to: `${s.email}, ${to}`, // Asegúrate que la tabla tenga columna 'email'
+                subject: `Contrato de Préstamo - ${nombre} ${apellido}`,
+                html: `
+                
+                <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Confirmación de Solicitud de Préstamo</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container {
+                width: 80%;
+                max-width: 600px;
+                margin: 20px auto;
+                background: #ffffff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .greeting {
+            font-size: 28px;
+            color: #4a4a4a;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+            
+            .header {
+                background-color: #2D8DBD;
+                color: #fff;
+                text-align: center;
+                padding: 15px;
+                font-size: 20px;
+                border-radius: 8px 8px 0 0;
+            }
+            
+            .content {
+                padding: 20px;
+                color: #333;
+                line-height: 1.6;
+            }
+            
+            .footer {
+                text-align: center;
+                padding: 15px;
+                font-size: 14px;
+                color: #666;
+            }
+            .main-wrapper {
+                max-width: 600px;
+                margin: 0 auto;
+                text-align: center;
+                
+            }
+            
+            .footer a {
+                color: #2D8DBD;
+                text-decoration: none;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+
+    <body>
+       <div class="container">
+        <div class="main-wrapper">
+
+            <img src="cid:logo_rosfal" alt="Rosfal" class="" style="width: 150px;">
+            <hr style="border: 0; border-top: 1px solid #495057; margin: 20px 0;">
+
+            <h2 class="greeting">Hola ${nombre}</h2>
+        </div>
+       <div class="header">Contrato de Préstamo - Rosfal</div>
+        <div class="content">
+
+        <p>Esperamos que se encuentre bien. Le escribimos para hacerle entrega de su <strong>contrato de préstamo</strong> correspondiente a la solicitud número <strong>#${id}</strong>.</p>
+    
+        <p>Adjunto a este correo encontrará el documento digital con todos los términos, condiciones y el plan de pagos acordado. Le recomendamos descargar este archivo y guardarlo para sus registros personales.</p>
+    
+        <p>Si tiene alguna duda sobre las cláusulas del contrato o los próximos pasos a seguir, nuestro equipo está a su entera disposición para asistirle.</p>
+    
+        <p><strong>Horarios de atención:</strong> Lunes a viernes, de 8:00 a.m. a 6:00 p.m.</p>
+
+        <p>Gracias por permitirnos ser parte de tu crecimiento financiero. ¡Estamos para servirte!</p>
+
+        </div>
+        <div class="footer">
+            <h4 style="color: #2D8DBD;">ROSFAL SOLUCIONES DE PRÉSTAMOS</h4>
+            <p><strong>T.</strong> 829-856-0203 | <strong>Email:</strong> contacto@rosfal.com</p>
+            <p>Síguenos en <strong>FB:</strong> Rosfalrd | <strong>IG:</strong> @Rosfalrd</p>
+            <p><a href="https://www.rosfal.com" target="_blank">www.rosfal.com</a></p>
+        </div>
+    </div>
+    <div class="main-wrapper">
+        <p>¿No reconoces esta actividad?<br> ¡Por favor contacta con nosotros!</p>
+        <a href="mailto:contacto@rosfal.com">contacto@rosfal.com</a>
+    </div>
+    </body>
+                `,
+                attachments: [{ filename: `Contrato_Prestamo_Rosfal_${cedula}_${nombre}_${apellido}.pdf`, content: buffer }, {
+
+                    filename: 'LOGO-ROSFAL-2.png',
+                    path: './public/img/LOGO-ROSFAL-2.png', // Verifica que esta ruta sea correcta en tu servidor
+                    cid: 'logo_rosfal' // Este ID debe coincidir con el src del HTML
+                }]
+            });
+
+            return res.send("<script>alert('Contrato enviado al correo del cliente'); window.history.back();</script>");
+        }
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error procesando el contrato");
+    }
+});
+
+
+
+
+
+// router.get("/Solicitudes/exportar-contrato/:id", async(req, res) => {
+//     if (!req.session.loggedin) return res.redirect('/login');
+
+//     const { id } = req.params;
+//     const { accion } = req.query; // 'descargar' o 'enviar'
+
+//     try {
+//         // 1. Obtenemos los mismos datos que usas en tu vista actual
+//         const arrayRutasDB = await pool.query('SELECT * FROM rutas');
+//         const solicitudDB = await pool.query("SELECT * FROM solicitudes WHERE idSolicitud = ?", [id]);
+
+//         // 2. RENDERIZAMOS EL HTML A UNA VARIABLE (No al navegador)
+//         res.render("imprimir-contrato", {
+//             solicitud: solicitudDB[0],
+//             arrayRutas: arrayRutasDB,
+//             name: req.session.name,
+//             rol: req.session.rol,
+//             user: req.session.user,
+//             idUsuario: req.session.idUsuario,
+//             login: true,
+//             layout: false // Importante: evita cargar headers/footers si usas express-layouts
+//         }, async(err, html) => {
+//             if (err) throw err;
+
+//             // 3. Convertimos ese HTML a Buffer de PDF
+//             const buffer = await pdfService.crearBufferPDF(html);
+
+//             if (accion === 'descargar') {
+//                 res.contentType("application/pdf");
+//                 res.setHeader("Content-Disposition", `attachment; filename=Contrato_${id}.pdf`);
+//                 return res.send(buffer);
+//             }
+
+//             if (accion === 'enviar') {
+//                 // Aquí llamarías a tu función de Nodemailer enviando el buffer como attachment
+//                 // await correoService.enviar(solicitudDB[0].email, buffer);
+//                 res.send("<script>alert('Enviado al correo'); window.history.back();</script>");
+//             }
+//         });
+
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send("Error al generar el documento");
+//     }
+// });
+
+
 //-----------------------CLIENTES----------------------//
 // RENDERIZANDO Y MOSTRANDO TODOS LAS SOLITUDES APROBADAS********************
+
+
+
+
+
+
 router.get('/clientes', async(req, res) => {
     if (req.session.loggedin) {
 
