@@ -168,6 +168,8 @@ router.post("/promociones", async(req, res) => {
         valor_credito,
         estado_promocion,
         origen_bono
+
+
     };
 
     await pool.query("INSERT INTO promociones SET ?", nuevaPromocion);
@@ -300,7 +302,10 @@ router.post("/clientes-promociones-adm/editar-promocion-cliente/:id", async(req,
         codigo_promocion,
         valor_credito,
         estado_promocion,
-        origen_bono
+        origen_bono,
+        inicio_vigencia,
+        fin_vigencia
+
     };
 
     await pool.query("UPDATE promociones_clientes SET ? WHERE id_promocion = ?", [actualizacionPromocion, id]);

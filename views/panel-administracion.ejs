@@ -284,160 +284,258 @@
         </div>
 
         <!-- Button trigger modal -->
-        <div style="background-color: #ececec; border-radius: 15px; margin: 15px;" class="d-flex justify-content-lg-center mt-4" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
-            <img style="margin-right: 15px;" width="60px" src="/img/reporte-de-negocios.png" alt="">
+        <div class="d-flex align-items-center justify-content-center p-3 mt-4 shadow-sm" style="
+        background-color: #ffffff; 
+        border: 1px solid #e0e0e0; 
+        border-radius: 15px; 
+        margin: 15px; 
+        cursor: pointer; 
+        transition: all 0.3s ease;
+    " onmouseover="this.style.backgroundColor='#f8f9fa'; this.style.transform='translateY(-3px)'; this.style.shadow='0px 10px 20px rgba(0,0,0,0.1)';" onmouseout="this.style.backgroundColor='#ffffff'; this.style.transform='translateY(0px)';" data-bs-toggle="modal"
+            data-bs-target="#exampleModalLong">
+            <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3 d-flex align-items-center justify-content-center">
+                <img width="45px" height="45px" src="/img/reporte-de-negocios.png" alt="Reporte" style="object-fit: contain;">
+            </div>
 
-            <h4 class="d-flex align-items-center">Resumen Prestamos</h4>
+            <div class="text-start">
+                <h5 class="mb-0 fw-bold text-dark">Resumen de Préstamos</h5>
+                <small class="text-muted">Ver métricas y estados actuales</small>
+            </div>
+
+            <i class="bi bi-chevron-right ms-auto text-secondary fs-5"></i>
         </div>
 
         <!-- Button trigger modal invitar -->
-        <div style="background-color: #ececec; border-radius: 15px; margin: 15px;">
-            <a style="text-decoration: none; color: black;" href="/adm-usuarios/promociones-cliente/<%= usuario.idUsuario %>">
-                <div class="d-flex justify-content-center mt-4">
+        <div class="m-3">
+            <a href="/adm-usuarios/promociones-cliente/<%= usuario.idUsuario %>" class="text-decoration-none">
+                <div class="promo-referido-card p-3 d-flex align-items-center shadow-sm" style="background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%); 
+                    border: 2px dashed #007bff; 
+                    border-radius: 15px; 
+                    transition: all 0.3s ease;">
 
-
-                    <div class="d-flex justify-content-center align-items-center">
-                        <img height="60px" class="me-3" width="60px" src="/img/invita-amigo.png" alt="">
-                    </div>
-                    <div class="">
-                        <p><strong>Invita a alguien!</strong></p>
-                        <p>Obten RD$250 pesos por cada persona que recomiendes a Rosfal</p>
+                    <div class="icon-wrapper me-3">
+                        <img height="65px" width="65px" src="/img/invita-amigo.png" alt="Referir" style="filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.1));">
                     </div>
 
+                    <div class="flex-grow-1">
+                        <h5 class="mb-1 text-dark"><strong>¡Invita a alguien!</strong></h5>
+                        <p class="mb-0 text-muted small" style="line-height: 1.2;">
+                            Gana <span class="badge bg-success text-white">RD$250</span> por cada persona que recomiendes a <span class="fw-bold text-primary">Rosfal</span>
+                        </p>
+                    </div>
+
+                    <div class="ms-2">
+                        <i class="bi bi-arrow-right-circle-fill fs-3 text-primary opacity-75"></i>
+                    </div>
                 </div>
             </a>
         </div>
 
+        <style>
+            .promo-referido-card:hover {
+                transform: scale(1.02);
+                border-style: solid;
+                /* Cambia de dashed a sólido al pasar el mouse */
+                background: linear-gradient(135deg, #f0f7ff 0%, #e0efff 100%);
+                box-shadow: 0 8px 15px rgba(0, 123, 255, 0.1) !important;
+            }
+            
+            .promo-referido-card:active {
+                transform: scale(0.98);
+            }
+        </style>
+
         <!-- Modal -->
-        <div class="modal fade   " id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-            <div style="display: contents;" class="modal-dialog" role="document">
-                <div style="border-radius: 0px 0px 15px 15px;" class="modal-content">
-                    <button style="background: linear-gradient(to right, #eaf6ff, #a5d3ff);" type="button" class="close border-0" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"><i class="bi bi-x-circle fs-4"></i></span>
-          </button>
-                    <ul style="border-radius: 15px; margin-top: 10px;" class="list-group">
-                        <div class="d-xxl-flex justify-content-around">
-                            <div class="card-header">
-                                <div>Prestamos Activo <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes aprobadas vs todas las solicitudes recibidas"></i></div>
-                                <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
-                                    <span class=" badge-primary badge-pill text-success"><%= montoPrestado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoPrestado) %></span>
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div style="border-radius: 15px;" class="modal-content border-0 shadow-lg">
 
-                                </li>
-                            </div>
-                            <div class="card-header">
-                                <div>Liquidado <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje del total de prestamos saldados"></i></div>
-                                <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
-                                    <span class=" badge-primary badge-pill text-success"><%= montoLiquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoLiquidado) %></span>
+                    <div style="background: linear-gradient(to right, #eaf6ff, #a5d3ff); border-radius: 15px 15px 0px 0px;" class="modal-header border-0 shadow-sm">
+                        <h5 class="modal-title text-primary fw-bold" id="exampleModalLongTitle">
+                            <i class="bi bi-pie-chart-fill me-2"></i>Resumen de Créditos
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
-                                </li>
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card h-100 border-0 bg-light">
+                                    <div class="card-body">
+                                        <div class="text-muted small fw-bold mb-1">
+                                            Préstamos Activos <i class="bi bi-info-circle-fill text-info" data-bs-toggle="tooltip" title="Porcentaje de solicitudes aprobadas"></i>
+                                        </div>
+                                        <h5 class="text-success mb-0 fw-bold">
+                                            <%= montoPrestado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoPrestado) %>
+                                        </h5>
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card h-100 border-0 bg-light">
+                                    <div class="card-body">
+                                        <div class="text-muted small fw-bold mb-1">
+                                            Liquidado <i class="bi bi-info-circle-fill text-info" data-bs-toggle="tooltip" title="Total saldado"></i>
+                                        </div>
+                                        <h5 class="text-success mb-0 fw-bold">
+                                            <%= montoLiquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoLiquidado) %>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+
                             <% if(prestamosEnLegalValidacion > 0){ %>
-                                <div class="card-header">
-                                    <div>En Legal <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en legal"></i></div>
-                                    <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
-                                        <span class=" badge-primary badge-pill text-danger"><%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosEnLegal) %></span>
-
-                                    </li>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="card h-100 border-0 bg-danger bg-opacity-10">
+                                        <div class="card-body border-start border-4 border-danger rounded-end">
+                                            <div class="text-danger small fw-bold mb-1">
+                                                En Legal <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" title="Préstamos en proceso legal"></i>
+                                            </div>
+                                            <h5 class="text-danger mb-0 fw-bold">
+                                                <%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosEnLegal) %>
+                                            </h5>
+                                        </div>
+                                    </div>
                                 </div>
                                 <% } %>
-                                    <div class="card-header">
-                                        <div>Atrasos <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en atrasos"></i></div>
-                                        <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
-                                            <span class=" badge-primary badge-pill text-danger"><%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosAtrasos) %></span>
 
-                                        </li>
-                                    </div>
-
-                                    <div class="card-header">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="me-5">Cant. Activo</div>
-                                            <div>Cant. Atrasos</div>
+                                    <div class="col-md-6 col-lg-4">
+                                        <div class="card h-100 border-0 bg-warning bg-opacity-10">
+                                            <div class="card-body border-start border-4 border-warning rounded-end">
+                                                <div class="text-warning small fw-bold mb-1">
+                                                    Atrasos <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" title="Monto en mora"></i>
+                                                </div>
+                                                <h5 class="text-dark mb-0 fw-bold">
+                                                    <%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosAtrasos) %>
+                                                </h5>
+                                            </div>
                                         </div>
-                                        <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
-                                            <span class="badge badge-primary badge-pill text-success"><%= cantPrestamos %></span>
-                                            <span class="badge badge-primary badge-pill text-danger"><%= cantAtrasos %></span>
-                                        </li>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-8">
+                                        <div class="card h-100 border-primary bg-white shadow-sm">
+                                            <div class="card-body d-flex justify-content-around align-items-center py-2">
+                                                <div class="text-center">
+                                                    <div class="text-muted small fw-bold">Cant. Activos</div>
+                                                    <span class="badge rounded-pill bg-success px-3"><%= cantPrestamos %></span>
+                                                </div>
+                                                <div class="vr mx-3"></div>
+                                                <div class="text-center">
+                                                    <div class="text-muted small fw-bold">Cant. Atrasos</div>
+                                                    <span class="badge rounded-pill bg-danger px-3"><%= cantAtrasos %></span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </ul>
+                    </div>
+
+                    <div class="modal-footer border-0 bg-light p-2" style="border-radius: 0px 0px 15px 15px;">
+                        <button type="button" class="btn btn-outline-danger px-4" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <% }else{ %>
             <!-- Button trigger modal -->
-            <div style="background-color: #ececec; border-radius: 15px; margin: 15px;" class="d-flex justify-content-center mt-4" data-bs-toggle="modal" data-bs-target="#exampleModalLong">
-                <img width="60px" src="/img/reporte-de-negocios.png" alt="">
+            <div class="d-flex align-items-center justify-content-center p-3 mt-4 shadow-sm" style="
+        background-color: #ffffff; 
+        border: 1px solid #e0e0e0; 
+        border-radius: 15px; 
+        margin: 15px; 
+        cursor: pointer; 
+        transition: all 0.3s ease;
+    " onmouseover="this.style.backgroundColor='#f8f9fa'; this.style.transform='translateY(-3px)'; this.style.shadow='0px 10px 20px rgba(0,0,0,0.1)';" onmouseout="this.style.backgroundColor='#ffffff'; this.style.transform='translateY(0px)';" data-bs-toggle="modal"
+                data-bs-target="#exampleModalLong">
+                <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3 d-flex align-items-center justify-content-center">
+                    <img width="45px" height="45px" src="/img/reporte-de-negocios.png" alt="Reporte" style="object-fit: contain;">
+                </div>
 
-                <h4 class="d-flex align-items-center">Resumen Prestamos</h4>
+                <div class="text-start">
+                    <h5 class="mb-0 fw-bold text-dark">Resumen de Préstamos</h5>
+                    <small class="text-muted">Ver métricas y estados actuales</small>
+                </div>
+
+                <i class="bi bi-chevron-right ms-auto text-secondary fs-5"></i>
             </div>
             <!-- Modal -->
             <div class="modal fade    " id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div style="display: contents;" class="modal-dialog " role="document">
-                    <div style="border-radius: 0px 0px 15px 15px;" class="modal-content">
-                        <button style="background: linear-gradient(to right, #eaf6ff, #a5d3ff);" type="button" class="close border-0" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"><i class="bi bi-x-circle fs-4"></i></span>
-          </button>
-                        <ul style="border-radius: 15px; margin-top: 10px;" class="list-group">
-                            <div class="d-xxl-flex justify-content-around">
-                                <div class="card-header">
-                                    Resumen
+                    <div style="border-radius: 15px;" class="modal-content border-0 shadow">
+                        <div style="background: linear-gradient(to right, #eaf6ff, #d1e9ff); border-radius: 15px 15px 0 0;" class="p-3 d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0 text-primary"><i class="bi bi-bar-chart-fill me-2"></i>Resumen de Cartera</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
 
-                                </div>
-                                <div class="card-header">
-                                    <div>Prestamos Activo <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de solicitudes aprobadas vs todas las solicitudes recibidas"></i></div>
-                                    <li class=" list-group-item flex-xxl-column d-flex justify-content-between  ">
-                                        <span class=" badge-primary badge-pill text-success me-5"><%= montoPrestado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoPrestado) %></span>
+                        <div class="modal-body p-4">
+                            <div class="row g-3">
 
-                                    </li>
-                                </div>
-                                <div class="card-header">
-                                    <div>Liquidado <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje del total de prestamos saldados"></i></div>
-                                    <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
-                                        <span class=" badge-primary badge-pill text-success me-5"><%= montoLiquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoLiquidado) %></span>
-
-                                    </li>
-                                </div>
-                                <div class="card-header">
-                                    <div>En Legal <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en legal"></i></div>
-                                    <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
-                                        <span class=" badge-primary badge-pill text-danger me-5"><%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosEnLegal) %></span>
-
-                                    </li>
-                                </div>
-                                <div class="card-header">
-                                    <div>Atrasos <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de los prestamos que se encuentran en atrasos"></i></div>
-                                    <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
-                                        <span class=" badge-primary badge-pill text-danger me-5"><%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosAtrasos) %></span>
-
-                                    </li>
-                                </div>
-                                <div class="card-header">
-                                    <div>Incobrables <i class="bi bi-info-circle-fill" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Porcentaje de prestamos que no fueron pagados"></i></div>
-                                    <li class="list-group-item flex-xxl-column d-flex justify-content-between ">
-                                        <span class=" badge-primary badge-pill text-danger me-5"><%= prestamosIncobrables=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosIncobrables) %></span>
-
-                                    </li>
-                                </div>
-                                <div class="card-header">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="me-5">Cant. Activo</div>
-                                        <div>Cant. Atrasos</div>
+                                <div class="col-md-4">
+                                    <div class="p-3 border rounded bg-light h-100">
+                                        <div class="text-muted small fw-bold">Préstamos Activos <i class="bi bi-info-circle-fill text-info" data-bs-toggle="tooltip" title="Porcentaje de solicitudes aprobadas"></i></div>
+                                        <div class="fs-5 fw-bold text-success">
+                                            <%= montoPrestado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoPrestado) %>
+                                        </div>
                                     </div>
-                                    <li class="list-group-item d-flex justify-content-between ">
-                                        <span class=" badge-primary badge-pill text-success"><%= conteos.totalSolicitudesAprobadas %></span>
-                                        <span class=" badge-primary badge-pill text-danger"><%= conteos.totalAtrasos %></span>
-                                    </li>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                            </div>
-                        </ul>
 
+                                <div class="col-md-4">
+                                    <div class="p-3 border rounded bg-light h-100">
+                                        <div class="text-muted small fw-bold">Liquidado <i class="bi bi-info-circle-fill text-info" data-bs-toggle="tooltip" title="Total saldado"></i></div>
+                                        <div class="fs-5 fw-bold text-primary">
+                                            <%= montoLiquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(montoLiquidado) %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="p-3 border rounded bg-light h-100">
+                                        <div class="text-muted small fw-bold">En Legal <i class="bi bi-info-circle-fill text-info" data-bs-toggle="tooltip" title="En proceso legal"></i></div>
+                                        <div class="fs-5 fw-bold text-danger">
+                                            <%= prestamosEnLegal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosEnLegal) %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="p-3 border rounded bg-light h-100">
+                                        <div class="text-muted small fw-bold">Atrasos <i class="bi bi-info-circle-fill text-info" data-bs-toggle="tooltip" title="Préstamos con mora"></i></div>
+                                        <div class="fs-5 fw-bold text-danger">
+                                            <%= prestamosAtrasos=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosAtrasos) %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="p-3 border rounded bg-light h-100">
+                                        <div class="text-muted small fw-bold">Incobrables <i class="bi bi-info-circle-fill text-info" data-bs-toggle="tooltip" title="Pérdidas"></i></div>
+                                        <div class="fs-5 fw-bold text-dark">
+                                            <%= prestamosIncobrables=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(prestamosIncobrables) %>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="p-3 border rounded bg-white shadow-sm h-100 border-primary">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <span class="text-muted small fw-bold">Cant. Activos</span>
+                                            <span class="badge bg-success text-white"><%= conteos.totalSolicitudesAprobadas %></span>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-muted small fw-bold">Cant. Atrasos</span>
+                                            <span class="badge bg-danger text-white"><%= conteos.totalAtrasos %></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer bg-light border-0" style="border-radius: 0 0 15px 15px;">
+                            <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
                     </div>
                 </div>
             </div>

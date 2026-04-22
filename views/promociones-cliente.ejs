@@ -54,31 +54,36 @@
 
 
 
+    <div class="p-3">
+        <div style="border-radius: 20px; background-color: white;" class="container-fluid p-4 shadow-sm border-0">
+            <div class="text-center mb-4">
+                <h5 class="text-muted fw-normal">HOLA,
+                    <span class="text-primary fw-bold">
+                    <% if (SolicitudesCliente.length > 0) { %>
+                        <% SolicitudesCliente.forEach(SolicitudesCliente => { %>
+                            <% if(SolicitudesCliente.celular == usuario.user){ %>
+                                <%= SolicitudesCliente.nombre %>
+                            <% } %>
+                        <% }) %>
+                    <% } else { %>
+                        <%= name %>
+                    <% } %>
+                </span>
+                </h5>
+                <hr class="mx-5 opacity-0">
+            </div>
 
-    <div class=" p-2">
+            <div class="text-center">
+                <img width="80px" src="/img/reporte-de-negocios.png" class="mb-3" alt="Promo">
+                <h3 class="fw-bold">Comparte tu código</h3>
+                <p class="text-secondary px-lg-5">
+                    Obtén <span class="text-success fw-bold">RD$250</span> por cada recomendado.
+                    <br>¡Ellos también recibirán <span class="text-success fw-bold">RD$250</span> en su primer préstamo!
+                </p>
 
-        <div style="border-radius: 15px; background-color: white;" class="container-fluid p-2 shadow">
-            <h5 class="text-secondary text-center"><strong>HOLA, </strong>
-                <% if (SolicitudesCliente.length > 0) { %>
-                    <% SolicitudesCliente.forEach(SolicitudesCliente=> { %>
-                        <% if(SolicitudesCliente.celular == usuario.user){ %>
-                            <%= SolicitudesCliente.nombre %>
-                                <% } %>
-                                    <% }) %>
-                                        <% }else{ %>
-                                            <%= name %>
-                                                <% } %>
-
-            </h5>
-
-
-            <div style="text-align: center;" class="mt-5">
-                <h3><strong>Comparte tu codigo</strong></h3>
-                <h5>Obten RD$250 pesos por cada persona que recomiendes a Rosfal. <br>La persona que recomiendes tambien recibira RD$250 pesos.</h5>
-
-                <div class="mt-5">
-                    <span><strong>Tu codigo es:</strong></span>
-                    <h2>
+                <div class="mt-4 p-4 rounded-3 border-dashed border-2 border-primary bg-light" style="border-style: dashed !important;">
+                    <span class="text-muted small text-uppercase fw-bold">Tu código exclusivo es:</span>
+                    <h2 class="display-6 fw-bold text-primary mb-0 mt-2">
                         <% let codigo_promo = usuario.idUsuario.toString() + cliente.cliente_id.toString() %>
                             <%= codigo_promo %>-PRIMERCREDITO
                     </h2>
@@ -86,68 +91,45 @@
             </div>
         </div>
 
-        <div class="mt-5">
-            <button style="border-radius: 20px;  width: 100%;" class="btn btn-success"><a class="dropdown-item text-white" target="_blank" href="https://wa.me/<%=  %>?text=
-        
-                        %0A*INVITACIÓN ESPECIAL A ROSFAL SOLUCIONES DE PRÉSTAMOS*%0A
-                                    
-                        %0AEstimad@ cliente, le han extendido una invitación especial para registrarse en Rosfal Soluciones de Préstamos.%0A
-                                    
-                        %0AUna vez completado su registro, obtendrás un descuento exclusivo y trato preferencial en su primer préstamo.%0A
+        <div class="mt-4 row g-2">
+            <div class="col-12">
+                <a class="btn btn-success btn-lg w-100 d-flex align-items-center justify-content-center py-3 shadow-sm" style="border-radius: 15px;" target="_blank" href="https://wa.me/?text=%0A*INVITACIÓN ESPECIAL A ROSFAL SOLUCIONES DE PRÉSTAMOS*%0A%0AEstimad@ cliente, le han extendido una invitación especial para registrarse en Rosfal Soluciones de Préstamos.%0A%0AUna vez completado su registro, obtendrás un descuento exclusivo y trato preferencial en su primer préstamo.%0A%0A*Código de invitación:*%0A<%= usuario.idUsuario %><%= cliente.cliente_id %>-PRIMERCREDITO%0A%0A*Para más información:*%0A*Email:* contacto@rosfal.com%0A*WhatsApp:* 829 856-0203%0A*Regístrese aquí:* https://www.rosfal.com/app-inicio">
+                    <i class="bi bi-whatsapp me-2 fs-4"></i> <strong>Compartir mi código</strong>
+                </a>
+            </div>
 
-                        %0A*Código de invitación:*
-                        %0A<%= usuario.idUsuario %><%= cliente.cliente_id %>-PRIMERCREDITO%0A
-                                    
-                        %0A*Para más información:*
-                        %0A*Email:* contacto@rosfal.com
-                        %0A*WhatsApp:* 829 856-0203
-                        %0A*Regístrese aquí:* https://www.rosfal.com/app-inicio
-                                    
-                        
-                                    
-                        ">Compatir mi codigo</a></button>
+            <div class="col-12 mt-2 text-center">
+                <button type="button" style="border-radius: 15px;" class="btn btn-outline-warning text-dark w-100 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+                <i class="bi bi-qr-code-scan me-2"></i> CARGAR CÓDIGO PROMOCIÓN
+            </button>
+            </div>
         </div>
 
-
-
-
-
-        <form id="form-validacion" class="" autocomplete="off" action="" method="POST">
-            <div class="d-lg-flex justify-content-center mt-3">
-                <a style="border-radius: 20px;" id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 me-lg-3" type="" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">CARGAR CODIGO PROMOCION</a>
-            </div>
-
-            <!-- Modal 2 -->
-            <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
-                <div class="modal-dialog  modal-dialog-centered">
-
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center fw-bold" id="staticBackdropLabel2">Cargar codigo promocion</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form id="form-validacion" class="" autocomplete="off" action="" method="POST">
-                            <div class="modal-body">
-
-                                <h5 class="text-center">
-                                    <input style="text-transform:uppercase" class="form-control " type="text" name="codigo_promocion" value="" id="Contraseña" placeholder="" aria-describedby="codigo_promocion">
-
-                                </h5>
-
-                            </div>
-                            <div class="modal-footer border-0">
-                                <button id="btnGuardarDatos" class="btn btn-warning btn-block p-2 mt-1 mb-3 w-100 " type="submit">GUARDAR CODIGO</button>
-                            </div>
-
-                        </form>
+        <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow" style="border-radius: 20px;">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title w-100 text-center fw-bold mt-2">Cargar código promoción</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <form id="form-validacion" autocomplete="off" action="" method="POST">
+                        <div class="modal-body p-4">
+                            <div class="form-floating mb-3">
+                                <input style="text-transform:uppercase" class="form-control bg-light border-0 text-center fs-4 fw-bold text-primary" type="text" name="codigo_promocion" id="codigoInput" placeholder="CODIGO123" required>
+                                <label for="codigoInput" class="w-100 text-center">Escribe el código aquí</label>
+                            </div>
+                            <p class="text-center text-muted small px-3">El crédito se aplicará automáticamente tras validar el código.</p>
+                        </div>
+                        <div class="modal-footer border-0 p-4 pt-0">
+                            <button class="btn btn-warning w-100 py-3 fw-bold shadow-sm" style="border-radius: 15px;" type="submit">
+                            GUARDAR CÓDIGO
+                        </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-
-        </form>
-
+        </div>
     </div>
-
     <div class="container-fluid  mt-3">
         <div class="container-fluid p-1">
             <h3 class="text-secondary"><strong>LISTADO</strong> DE PROMOCIONES</h3>
