@@ -4,11 +4,11 @@
 
 
         <li class="btn p-0 dropdown-item">
-            <a style="padding: 16px 20px 16px 20px; background: none; box-shadow: none" class="dropdown-item text-black holographic-card " href="/panel-administracion"><i class="bi bi-house-door me-2"></i>Inicios</a>
+            <a style="padding: 16px 20px 16px 20px; background: none; box-shadow: none" class="dropdown-item text-black  " href="/panel-administracion"><i class="bi bi-house-door me-2"></i>Inicios</a>
         </li>
         <li class="accordion-header" id="panelsStayOpen-heading1">
             <li class="btn p-0 dropdown-item">
-                <a style="background: none; box-shadow: none " class="dropdown-item accordion-button collapsed text-black holographic-card" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse1" aria-expanded="false" aria-controls="panelsStayOpen-collapse1"><i class="bi bi-file-text me-2"></i>Solicitudes</a>
+                <a style="background: none; box-shadow: none " class="dropdown-item accordion-button collapsed text-black " data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse1" aria-expanded="false" aria-controls="panelsStayOpen-collapse1"><i class="bi bi-file-text me-2"></i>Solicitudes</a>
             </li>
             <li style="margin-left: 30px; " id="panelsStayOpen-collapse1" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading1">
                 <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
@@ -16,28 +16,28 @@
                         </a><span class="badge badge-pill badge-info bg-secondary"><%= conteos.totalSolicitudesNuevas %></span>
             </li>
             <li style="margin-left: 30px; " id="panelsStayOpen-collapse1" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading1">
-                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-aprobadas">
                             Solicitudes Aprobadas 
                         </a><span class="badge badge-pill badge-info bg-secondary"><%= conteos.totalSolicitudesAprobadas %></span>
             </li>
             <li style="margin-left: 30px; " id="panelsStayOpen-collapse1" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading1">
-                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-declinadas">
                             Solicitudes Declinadas 
                         </a><span class="badge badge-pill badge-info bg-secondary"><%= conteos.totalSolicitudesDeclinadas %></span>
             </li>
             <li style="margin-left: 30px; " id="panelsStayOpen-collapse1" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading1">
-                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                <a style="color: black; text-decoration: none;" href="/solicitudes-en-revision">
                             Solicitudes en Revision 
                         </a><span class="badge badge-pill badge-info bg-secondary"><%= conteos.totalSolicitudesEnRevision %></span>
             </li>
             <li style="margin-left: 30px; " id="panelsStayOpen-collapse1" class="accordion-collapse collapse dropdown-item" aria-labelledby="panelsStayOpen-heading1">
-                <a style="color: black; text-decoration: none;" href="/solicitudes-nuevas">
+                <a style="color: black; text-decoration: none;" href="/todas-las-solicitudes">
                             Todas las Solicitudes
                         </a><span class="badge badge-pill badge-info bg-secondary"><%= conteos.solicitudesTotales %></span>
             </li>
         </li>
 
-        <li class="accordion-header" id="panelsStayOpen-heading2">
+        <!-- <li class="accordion-header" id="panelsStayOpen-heading2">
             <li class="btn p-0 dropdown-item">
                 <a style="background: none; box-shadow: none " class="dropdown-item accordion-button collapsed text-black holographic-card" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse2" aria-expanded="false" aria-controls="panelsStayOpen-collapse2"><i class="bi bi-file-text me-2"></i>Procesos</a>
             </li>
@@ -177,12 +177,12 @@
                             Otros
                         </a>
             </li>
-        </li>
+        </li> -->
 
 
 
-        <li class="p-2"><a class="dropdown-item holographic-card" href="/mensajes"><i class="bi bi-envelope-paper me-2"></i>Bandeja Mensaje <span class="badge badge-pill badge-info bg-success">Nuevo: <%= conteos.totalMensajesNuevos %></span></a></li>
-        <li class="p-2"><a class="dropdown-item holographic-card" href="/encuestas-administracion"><i class="bi bi-envelope-paper me-2"></i>Encuestas</a></li>
+        <li class="p-2"><a class="dropdown-item " href="/mensajes"><i class="bi bi-envelope-paper me-2"></i>Bandeja Mensaje <span class="badge badge-pill badge-info bg-success">Nuevo: <%= conteos.totalMensajesNuevos %></span></a></li>
+        <li class="p-2"><a class="dropdown-item " href="/encuestas-administracion"><i class="bi bi-envelope-paper me-2"></i>Encuestas</a></li>
 
         <li class="p-2"><a class="dropdown-item" href="/rutas"><i class="bi bi-map me-2"></i>Rutas</a></li>
         <% if (conteos.totalTestimoniosNuevos == 0) { %>

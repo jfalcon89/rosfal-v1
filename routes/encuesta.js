@@ -353,6 +353,8 @@ router.get('/encuestas-general', async(req, res) => {
         const permiso_B = 'Representante'
         const permiso_D = 'Encuestador'
 
+        const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
+        const arrayUserDB = await pool.query('SELECT name FROM users WhERE users.rol = ?', ['Encuestador']);
         const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Permisos-Encuestas') AND descripcion = 'Activo'");
 
         // console.log(rows)
@@ -432,7 +434,9 @@ router.get('/encuestas-general', async(req, res) => {
             permiso_B,
             conteos,
             arrayEncuestas: arrayEncuestasDB,
-            config
+            config,
+            arrayRutas: arrayRutasDB,
+            arrayUser: arrayUserDB
         });
     } else {
         res.render('login', {

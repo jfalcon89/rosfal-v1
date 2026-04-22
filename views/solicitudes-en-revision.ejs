@@ -231,7 +231,7 @@
                                         <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                     </td>
                                     <td>
-                                        <%= solicitud.montoSolicitado %>
+                                        <%= solicitud.montoSolicitado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(solicitud.montoSolicitado) %>
                                     </td>
                                     <td>
                                         <%= solicitud.tipoPrestamo %>
@@ -241,29 +241,30 @@
                                     </td>
                                     <td>
                                         <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
-                                            <p style="background-color: gray; color: white;">
-                                                <%= solicitud.clasificacionCliente %>
-                                            </p>
+                                            <span style="background-color: #ffffff; color: gray; border-radius: 5px; border: 1px solid gray; padding: 2px 5px;">
+                                                                        <%= solicitud.clasificacionCliente %>
+                                                                    </span>
                                             <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
-                                                <p style="background-color: green; color: white;">
-                                                    <%= solicitud.clasificacionCliente %>
-                                                </p>
+                                                <span style="background-color: #ffffff; color: #2563eb; border-radius: 5px; border: 1px solid #2563eb; padding: 2px 5px;">
+                                                                            <%= solicitud.clasificacionCliente %>
+                                                                        </span>
                                                 <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
-                                                    <p style="background-color: yellow; color: black;">
-                                                        <%= solicitud.clasificacionCliente %>
-                                                    </p>
+                                                    <span style="background-color: #ffffff; color: #60a5fa; border-radius: 5px; border: 1px solid #60a5fa; padding: 2px 5px;">
+                                                                                <%= solicitud.clasificacionCliente %>
+                                                                            </span>
+
                                                     <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
-                                                        <p style="background-color: orange; color: black;">
-                                                            <%= solicitud.clasificacionCliente %>
-                                                        </p>
+                                                        <span style="background-color: #ffffff; color: orange; border-radius: 5px; border: 1px solid orange; padding: 2px 5px;">
+                                                                                    <%= solicitud.clasificacionCliente %>
+                                                                                </span>
                                                         <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
-                                                            <p style="background-color: darkred; color: white;">
-                                                                <%= solicitud.clasificacionCliente %>
-                                                            </p>
+                                                            <span style="background-color: #ffffff; color: darkred; border-radius: 5px; border: 1px solid darkred; padding: 2px 5px;">
+                                                                                        <%= solicitud.clasificacionCliente %>
+                                                                                    </span>
                                                             <% } else if (solicitud.clasificacionCliente == 'E-Penalizado') { %>
-                                                                <p style="background-color: rgb(0, 0, 0); color: white;">
-                                                                    <%= solicitud.clasificacionCliente %>
-                                                                </p>
+                                                                <span style="background-color: #ffffff; color: black; border-radius: 5px; border: 1px solid black; padding: 2px 5px;">
+                                                                                            <%= solicitud.clasificacionCliente %>
+                                                                                        </span>
                                                                 <% } %>
                                     </td>
 

@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
     <link rel="icon" href="/img/favicon/logo-favicon.png">
-    <title>Rosfal - Panel de Inteligencia de Mercado</title>
+    <title>Rosfal - Reporte de Encuestas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -211,7 +211,54 @@
             </div>
             <div style="border-radius: 50px; box-shadow:  20px 20px 60px #bebebe, -20px -20px 60px #ffffff;" class="container-fluid p-4">
                 <div class="overflow-x-auto">
-                    <table id="datatable2" class="w-full text-left min-w-[600px] ">
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label>Filtrar por Ruta:</label>
+                            <select id="filtroRuta" class="form-control">
+                             <option value="">Todas las rutas</option>
+                             <% if (arrayRutas.length > 0) { %>
+                                 <% arrayRutas.forEach(ruta => { %>
+                                     <option value="<%= ruta.nombreRuta %>"><%= ruta.nombreRuta %></option>
+                                 <% }) %>
+                             <% } %>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Filtrar por Encuestador:</label>
+                            <select id="filtroEncuestador" class="form-control">
+                                <option value="">Todos los encuestadores</option>
+                                         <% if (arrayUser.length > 0) { %>
+                                         <% arrayUser.forEach(user => { %>
+                                     <option value="<%= user.name %>"><%= user.name %></option>
+                                 <% }) %>
+                             <% } %>
+
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label>Filtrar por tipo:</label>
+                            <select id="filtroTipo" class="form-control">
+                                <option value="">Todos los Tipos</option>
+                                <option value="Salón de Belleza">Salón de Belleza</option>
+                                <option value="Peluquería">Peluquería</option>
+                                <option value="Colmado">Colmado</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="d-flex mb-3">
+                                <div class="me-2">
+                                    <label>Desde:</label>
+                                    <input style="width: auto;" type="date" id="min" class="form-control">
+                                </div>
+                                <div class="">
+                                    <label>Hasta:</label>
+                                    <input style="width: auto;" type="date" id="max" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table id="datatable" class="w-full text-left min-w-[600px] ">
                         <thead>
                             <tr class="text-slate-400 text-sm border-b">
                                 <th class="pb-3 font-semibold">ID</th>
@@ -350,17 +397,28 @@
 
     <script>
         $(document).ready(function() {
-            $('#datatable2').DataTable({
+            $('#datatable').DataTable({
                 order: [
                     [0, 'desc']
                 ],
-
-
+                // 'B' para botones, 'l' para el selector de cantidad (lengthMenu)
+                dom: 'Blfrtip',
+                buttons: [{
+                    extend: 'excel',
+                    text: 'Exportar a Excel',
+                    className: 'btn btn-success' // Opcional: clase CSS para estilo
+                }, {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                    text: 'Exportar a PDF',
+                    className: 'btn btn-danger' // Opcional: clase CSS para estilo
+                }],
                 language: {
                     "decimal": "",
                     "emptyTable": "No hay información",
                     "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 Entradas",
                     "infoFiltered": "(Filtrado de _MAX_ total entradas)",
                     "infoPostFix": "",
                     "thousands": ",",
@@ -375,9 +433,79 @@
                         "next": "Siguiente",
                         "previous": "Anterior"
                     }
-                }
+                },
+
+            });
+            // Lógica de filtrado por Ruta (Columna índice 4)
+            $('#filtroRuta').on('change', function() {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                $('#datatable').DataTable().column(4).search(val ? '^' + val + '$' : '', true, false).draw();
             });
 
+            // Lógica de filtrado por Cobrador (Columna índice 11)
+            $('#filtroEncuestador').on('change', function() {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                $('#datatable').DataTable().column(11).search(val ? '^' + val + '$' : '', true, false).draw();
+            });
+            // Lógica de filtrado por tipo (Columna índice 2)
+            $('#filtroTipo').on('change', function() {
+                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                $('#datatable').DataTable().column(2).search(val ? '^' + val + '$' : '', true, false).draw();
+            });
+            // 1. Definimos la función de filtrado personalizada
+            $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                    var min = $('#min').val(); // Formato: YYYY-MM-DD
+                    var max = $('#max').val(); // Formato: YYYY-MM-DD
+
+                    // 1. Obtenemos el texto de la columna 7
+                    var rawData = data[12] || "";
+                    if (rawData === "") return true;
+
+                    // 2. LIMPIEZA: Extraemos solo la parte de la fecha (lo que esté antes de la coma o el espacio)
+                    // Si sale "2022, 12:48:07 p. m.-9-6", necesitamos extraer los números.
+                    // Lo más seguro es usar una expresión regular para sacar día, mes y año.
+                    var dateMatches = rawData.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+
+                    if (!dateMatches) {
+                        // Intento alternativo si el formato viene separado por espacios o comas
+                        // Esto limpia casos raros de toLocaleString()
+                        var cleanDate = rawData.split(',')[0].trim();
+                        dateMatches = cleanDate.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+                    }
+
+                    if (dateMatches) {
+                        var day = dateMatches[1].padStart(2, '0');
+                        var month = dateMatches[2].padStart(2, '0');
+                        var year = dateMatches[3];
+
+                        // 3. Formateamos a YYYY-MM-DD para comparar
+                        var dateComparable = year + '-' + month + '-' + day;
+
+                        // 4. Comparación lógica
+                        if (
+                            (min === "" && max === "") ||
+                            (min === "" && dateComparable <= max) ||
+                            (min <= dateComparable && max === "") ||
+                            (min <= dateComparable && dateComparable <= max)
+                        ) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            );
+
+            // 2. Eventos para redibujar la tabla al cambiar las fechas
+            $(document).ready(function() {
+                // Asegúrate de que esta variable 'table' coincida con la inicialización de tu DataTable
+                var table = $('#datatable').DataTable();
+
+                $('#min, #max').on('change', function() {
+                    table.draw();
+                });
+            });
         });
     </script>
 

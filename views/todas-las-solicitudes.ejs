@@ -193,6 +193,77 @@
         <h3 style="color: #2f6eaa;" class=""><strong>REPORTES</strong> TOTAL DE SOLICITUDES</h3>
         <div style="border-radius: 50px; box-shadow:  20px 20px 60px #bebebe, -20px -20px 60px #ffffff;" class="container-fluid p-4">
             <div class="container-table table-responsive">
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label>Filtrar por Ruta:</label>
+                        <select id="filtroRuta" class="form-control">
+                             <option value="">Todas las rutas</option>
+                             <option value="Sin Ruta Establecida">Sin Ruta Establecida</option>
+                             <% if (arrayRutas.length > 0) { %>
+                                 <% arrayRutas.forEach(ruta => { %>
+                                     <option value="<%= ruta.nombreRuta %>"><%= ruta.nombreRuta %></option>
+                                 <% }) %>
+                             <% } %>
+                            </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Filtrar por Clasificación:</label>
+                        <select id="filtroClasificacion" class="form-control">
+                                <option value="">Todas las clasificaciones</option>
+                                <option value="Sin Clasificacion">Sin Clasificacion</option>
+                                       <% if (config.clasificacionCliente) { %>
+                                         <% config.clasificacionCliente.forEach(clasificacionCliente=> { %>
+                                        <option value="<%= clasificacionCliente %>">
+                                             <%= clasificacionCliente %>
+                                        </option>
+                                        <% }) %>
+                                         <% } %>
+
+                            </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Filtrar por tipo:</label>
+                        <select id="filtroTipo" class="form-control">
+                                <option value="">Todos los Tipos</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Comercial">Comercial</option>
+                            </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Filtrar por estado:</label>
+                        <select id="filtroEstado" class="form-control">
+                                <option value="">Todos los Estados</option>
+                                <% if (config.estadoSolicitud.length> 0) { %>
+                                <% config.estadoSolicitud.forEach(estadoSolicitud=> { %>
+                                 <option value="<%= estadoSolicitud %>"><%= estadoSolicitud %></option>
+                                 <% }) %>
+                                 <% } %>
+                            </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Filtrar por frecuencia de pagos:</label>
+                        <select id="filtroFrecuencia" class="form-control">
+                                <option value="">Todas las frecuencias</option>
+                                <% if (config.frecuencia_Pagos) { %>
+                                <% config.frecuencia_Pagos.forEach(frecuencia => { %>
+                                 <option value="<%= frecuencia %>"><%= frecuencia %></option>
+                                 <% }) %>
+                                 <% } %>
+                            </select>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="d-flex mb-3">
+                            <div class="me-2">
+                                <label>Desde:</label>
+                                <input style="width: auto;" type="date" id="min" class="form-control">
+                            </div>
+                            <div class="">
+                                <label>Hasta:</label>
+                                <input style="width: auto;" type="date" id="max" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <table id="datatable" class="display responsive nowrap" style="width:100%">
                     <!-- <table id="datatable" class="display table table-sm table-hover  " style="width: 100%;"> -->
                     <thead class="thead-ligth">
@@ -212,6 +283,8 @@
                             <th scope="col">Firma</th>
                             <th scope="col">Estado Solicitud</th>
                             <th scope="col">Clasificacion</th>
+                            <th class="d-none" scope="col">Ruta</th>
+                            <th class="d-none" scope="col">Frecuencia de Pagos</th>
                             <th scope="col">Ver Solicitud</th>
 
                         </tr>
@@ -253,12 +326,12 @@
                                         <%= solicitud.fechaSolicitud.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                     </td>
                                     <td>
-                                        <%= solicitud.montoSolicitado %>
+                                        <%= solicitud.montoSolicitado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(solicitud.montoSolicitado) %>
                                     </td>
                                     <td>
                                         <% if(solicitud.saldoFinal){ %>
                                             <span style="color: green;">
-                                                <%= solicitud.saldoFinal %>
+                                                <%= solicitud.saldoFinal=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(solicitud.saldoFinal) %>
                                             </span>
                                             <% }else if(solicitud.estadoSolicitud == 'Declinada'){ %>
                                                 <span style="color: rgb(148, 3, 3);">No Aprobado</span>
@@ -277,30 +350,24 @@
                                     </td>
                                     <td>
                                         <% if (solicitud.clasificacionCliente == 'Sin Clasificacion') { %>
-                                            <p style="background-color: gray; color: white;">
-                                                <%= solicitud.clasificacionCliente %>
-                                            </p>
+                                            <span style="background-color: #ffffff; color: gray; border-radius: 5px; border: 1px solid gray; padding: 2px 5px;"><%= solicitud.clasificacionCliente %></span>
                                             <% } else if (solicitud.clasificacionCliente == 'A-Premium') { %>
-                                                <p style="background-color: green; color: white;">
-                                                    <%= solicitud.clasificacionCliente %>
-                                                </p>
+                                                <span style="background-color: #ffffff; color: #2563eb; border-radius: 5px; border: 1px solid #2563eb; padding: 2px 5px;"><%= solicitud.clasificacionCliente %></span>
                                                 <% } else if (solicitud.clasificacionCliente == 'B-Regular') { %>
-                                                    <p style="background-color: yellow; color: black;">
-                                                        <%= solicitud.clasificacionCliente %>
-                                                    </p>
+                                                    <span style="background-color: #ffffff; color: #60a5fa; border-radius: 5px; border: 1px solid #60a5fa; padding: 2px 5px;"><%= solicitud.clasificacionCliente %></span>
                                                     <% } else if (solicitud.clasificacionCliente == 'C-Riesgo') { %>
-                                                        <p style="background-color: orange; color: black;">
-                                                            <%= solicitud.clasificacionCliente %>
-                                                        </p>
+                                                        <span style="background-color: #ffffff; color: orange; border-radius: 5px; border: 1px solid orange; padding: 2px 5px;"><%= solicitud.clasificacionCliente %></span>
                                                         <% } else if (solicitud.clasificacionCliente == 'D-Desestimado') { %>
-                                                            <p style="background-color: darkred; color: white;">
-                                                                <%= solicitud.clasificacionCliente %>
-                                                            </p>
+                                                            <span style="background-color: #ffffff; color: darkred; border-radius: 5px; border: 1px solid darkred; padding: 2px 5px;"><%= solicitud.clasificacionCliente %></span>
                                                             <% } else if (solicitud.clasificacionCliente == 'E-Penalizado') { %>
-                                                                <p style="background-color: rgb(0, 0, 0); color: white;">
-                                                                    <%= solicitud.clasificacionCliente %>
-                                                                </p>
+                                                                <span style="background-color: #ffffff; color: black; border-radius: 5px; border: 1px solid black; padding: 2px 5px;"><%= solicitud.clasificacionCliente %></span>
                                                                 <% } %>
+                                    </td>
+                                    <td class="d-none">
+                                        <%= solicitud.ruta %>
+                                    </td>
+                                    <td class="d-none">
+                                        <%= solicitud.frecuenciaPagos %>
                                     </td>
                                     <td class="w-0 "><a href="/solicitudes/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>
 
@@ -330,7 +397,7 @@
                     [0, 'desc']
                 ],
 
-                dom: 'Bfrtip',
+                dom: 'Blfrtip',
                 buttons: [{
                         extend: 'excel',
                         text: 'Exportar a Excel',
@@ -364,10 +431,138 @@
                 }
             });
 
+            $('#filtroRuta').on('change', function() {
+                // Obtenemos la instancia de la tabla
+                var table = $('#datatable').DataTable();
+                var val = $(this).val();
+
+                if (val === "") {
+                    // Si selecciona "Todas", limpiamos el filtro de esa columna
+                    table.column(14).search('').draw();
+                } else {
+                    // Usamos una búsqueda simple (sin escapeRegex estricto) 
+                    // para que ignore los iconos o etiquetas HTML que tengas en la celda
+                    table.column(14).search(val).draw();
+                }
+            });
+
+            $('#filtroClasificacion').on('change', function() {
+                // Obtenemos la instancia de la tabla
+                var table = $('#datatable').DataTable();
+                var val = $(this).val();
+
+                if (val === "") {
+                    // Si selecciona "Todas", limpiamos el filtro de esa columna
+                    table.column(13).search('').draw();
+                } else {
+                    // Usamos una búsqueda simple (sin escapeRegex estricto) 
+                    // para que ignore los iconos o etiquetas HTML que tengas en la celda
+                    table.column(13).search(val).draw();
+                }
+            });
+
+            $('#filtroTipo').on('change', function() {
+                // Obtenemos la instancia de la tabla
+                var table = $('#datatable').DataTable();
+                var val = $(this).val();
+
+                if (val === "") {
+                    // Si selecciona "Todas", limpiamos el filtro de esa columna
+                    table.column(10).search('').draw();
+                } else {
+                    // Usamos una búsqueda simple (sin escapeRegex estricto) 
+                    // para que ignore los iconos o etiquetas HTML que tengas en la celda
+                    table.column(10).search(val).draw();
+                }
+            });
+            $('#filtroEstado').on('change', function() {
+                // Obtenemos la instancia de la tabla
+                var table = $('#datatable').DataTable();
+                var val = $(this).val();
+
+                if (val === "") {
+                    // Si selecciona "Todas", limpiamos el filtro de esa columna
+                    table.column(12).search('').draw();
+                } else {
+                    // Usamos una búsqueda simple (sin escapeRegex estricto) 
+                    // para que ignore los iconos o etiquetas HTML que tengas en la celda
+                    table.column(12).search(val).draw();
+                }
+            });
+            $('#filtroFrecuencia').on('change', function() {
+                // Obtenemos la instancia de la tabla
+                var table = $('#datatable').DataTable();
+                var val = $(this).val();
+
+                if (val === "") {
+                    // Si selecciona "Todas", limpiamos el filtro de esa columna
+                    table.column(15).search('').draw();
+                } else {
+                    // Usamos una búsqueda simple (sin escapeRegex estricto) 
+                    // para que ignore los iconos o etiquetas HTML que tengas en la celda
+                    table.column(15).search(val).draw();
+                }
+            });
+
+            // 1. Definimos la función de filtrado personalizada
+            $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                    var min = $('#min').val(); // Formato: YYYY-MM-DD
+                    var max = $('#max').val(); // Formato: YYYY-MM-DD
+
+                    // 1. Obtenemos el texto de la columna 7
+                    var rawData = data[7] || "";
+                    if (rawData === "") return true;
+
+                    // 2. LIMPIEZA: Extraemos solo la parte de la fecha (lo que esté antes de la coma o el espacio)
+                    // Si sale "2022, 12:48:07 p. m.-9-6", necesitamos extraer los números.
+                    // Lo más seguro es usar una expresión regular para sacar día, mes y año.
+                    var dateMatches = rawData.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+
+                    if (!dateMatches) {
+                        // Intento alternativo si el formato viene separado por espacios o comas
+                        // Esto limpia casos raros de toLocaleString()
+                        var cleanDate = rawData.split(',')[0].trim();
+                        dateMatches = cleanDate.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+                    }
+
+                    if (dateMatches) {
+                        var day = dateMatches[1].padStart(2, '0');
+                        var month = dateMatches[2].padStart(2, '0');
+                        var year = dateMatches[3];
+
+                        // 3. Formateamos a YYYY-MM-DD para comparar
+                        var dateComparable = year + '-' + month + '-' + day;
+
+                        // 4. Comparación lógica
+                        if (
+                            (min === "" && max === "") ||
+                            (min === "" && dateComparable <= max) ||
+                            (min <= dateComparable && max === "") ||
+                            (min <= dateComparable && dateComparable <= max)
+                        ) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            );
+
+            // 2. Eventos para redibujar la tabla al cambiar las fechas
+            $(document).ready(function() {
+                // Asegúrate de que esta variable 'table' coincida con la inicialización de tu DataTable
+                var table = $('#datatable').DataTable();
+
+                $('#min, #max').on('change', function() {
+                    table.draw();
+                });
+            });
         });
     </script>
 
-
+    <script>
+    </script>
 
 </body>
 

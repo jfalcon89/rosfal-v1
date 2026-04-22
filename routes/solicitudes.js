@@ -864,7 +864,32 @@ router.get('/todas-las-solicitudes', async(req, res) => {
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
 
+        const rows = await pool.query("SELECT parametro_clave, parametro_valor FROM configuracion_parametros WHERE vista_nombre in ('Roles', 'Solicitudes') AND descripcion = 'Activo'");
 
+        // console.log(rows)
+
+        const config = rows.reduce((acc, row) => {
+            const clave = row.parametro_clave;
+            const valor = row.parametro_valor;
+
+            if (acc[clave]) {
+                // Si ya existe la clave, verificamos si ya es un arreglo
+                if (Array.isArray(acc[clave])) {
+                    acc[clave].push(valor); // Solo agregamos el valor al arreglo existente
+                } else {
+                    // Si era un string único, lo convertimos en un arreglo con el valor viejo y el nuevo
+                    acc[clave] = [acc[clave], valor];
+                }
+            } else {
+                // Si es la primera vez, lo guardamos como un valor simple (String)
+                acc[clave] = valor;
+            }
+            return acc;
+        }, {});
+
+        console.log(config)
+
+        const arrayRutasDB = await pool.query('SELECT * FROM rutas ');
         const arrayTotalSolicitudesDB = await pool.query('SELECT s.*, MAX(c.cliente_id) AS cliente_id_validacion FROM solicitudes s LEFT JOIN app_clientes c ON c.telefono = s.celular GROUP BY s.idSolicitud ORDER BY s.fechaSolicitud DESC');
         const arraySolicitudesNuevasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="nueva" ');
         const arraySolicitudesAprobadasDB = await pool.query('SELECT idSolicitud FROM solicitudes WHERE estadoSolicitud="aprobada" OR estadoSolicitud = "En Legal"');
@@ -884,8 +909,9 @@ router.get('/todas-las-solicitudes', async(req, res) => {
             permiso_A,
             permiso_B,
             permiso_C,
-            conteos
-
+            conteos,
+            arrayRutas: arrayRutasDB,
+            config: config || {}
         });
 
     } else {
