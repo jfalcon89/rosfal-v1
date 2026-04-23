@@ -196,7 +196,7 @@
                             <th scope="col">Firma</th>
                             <th scope="col">Estatado solicitud</th>
                             <th scope="col">Clasificacion</th>
-                            <th scope="col">Ver Solicitud</th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -284,9 +284,9 @@
                                                                 <% } %>
                                     </td>
 
-                                    <td class="w-0 "><a href="/solicitudes/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Editar Solicitud"><i class="bi bi-pencil-square "></i></a>
-                                        <a id="eventoAct-Inact" href="/solicitudes/imprimir-solicitud/<%= solicitud.idSolicitud %>" class="btn " title="Imprimir Solicitud"><i class="bi bi-printer "></i></a>
-                                        <a id="eventoAct-Inact" href="/solicitudes/imprimir-contrato/<%= solicitud.idSolicitud %>" class="btn " title="Imprimir Contrato"><i class="bi bi-printer "></i></a>
+                                    <td class="w-0 "><a href="/solicitudes/editar-solicitud/<%= solicitud.idSolicitud %>" class="btn btn-sm btn-outline-primary" title="Ver Solicitud"><i class="bi bi-eye"></i></a>
+                                        <a id="eventoAct-Inact" href="/solicitudes/imprimir-solicitud/<%= solicitud.idSolicitud %>" class="btn btn-sm btn-outline-secondary" title="Imprimir Solicitud"><i class="bi bi-printer "></i></a>
+                                        <a id="eventoAct-Inact" href="/solicitudes/imprimir-contrato/<%= solicitud.idSolicitud %>" class="btn btn-sm btn-outline-secondary" title="Imprimir Contrato"><i class="bi bi-printer "></i></a>
 
 
 

@@ -277,16 +277,17 @@
                         <table id="datatable" class="display responsive nowrap compact" style="width:100%">
                             <thead class="thead-ligth">
                                 <tr>
-                                    <th scope="col">ID Promocion</th>
-                                    <th scope="col">Codigo Promocion</th>
-                                    <th scope="col">Valor Credito</th>
-                                    <th scope="col">Fecha Registro</th>
-                                    <th scope="col">Estado</th>
-                                    <th scope="col">Usuario Beneficiado</th>
-                                    <th scope="col">Origen Bonos</th>
-                                    <th scope="col">Vigencia</th>
+                                    <th class="p-0" scope="col">ID Promocion</th>
+                                    <th class="p-0" scope="col">Codigo Promocion</th>
+                                    <th class="p-0" scope="col">Valor Credito</th>
+                                    <th class="p-0" scope="col">Fecha Registro</th>
+                                    <th class="p-0" scope="col">Estado</th>
+                                    <th class="p-0" scope="col">Usuario Beneficiado</th>
+                                    <th class="p-0" scope="col">Origen Bonos</th>
+                                    <th class="p-0" scope="col">Solicitud</th>
+                                    <th class="p-0" scope="col">Vigencia</th>
                                     <% if(rol == permiso_A){ %>
-                                        <th scope="col">Acciones</th>
+                                        <th class="p-0" scope="col">Acciones</th>
                                         <% } %>
                                 </tr>
                             </thead>
@@ -323,6 +324,7 @@
                                                         <%= promocion.cliente_id %> -
                                                             <%= promocion.usuario %>
                                                     </td>
+
                                                     <td>
                                                         <% if(promocion.tipo_bono == 'Credito' ){ %>
                                                             <span style="background-color: #ffffff; color: #27ae60; border-radius: 5px; border: 1px solid #27ae60; padding: 2px 5px;">Credito</span>
@@ -331,7 +333,12 @@
                                                                 <% } %>
                                                                     <%= promocion.origen_bono %>
                                                     </td>
-
+                                                    <td>
+                                                        <!-- <a href="/Solicitudes/editar-solicitud-cedula/<%= promocion.usuario %>" class="btn btn-primary" title="Editar promocion" data-bs-toggle="modal" data-bs-target="#exampleModal5<%= i %>"><i class="bi bi-pencil-square "></i></a> -->
+                                                        <a href="#" class="btn btn-sm btn-outline-primary open-modal-iframe" title="Editar promocion" data-bs-toggle="modal" data-bs-target="#exampleModal5<%= i %>" data-url="/Solicitudes/editar-solicitud-celular/<%= promocion.usuario %>">
+                                                            <i class="bi bi-eye"></i>
+                                                        </a>
+                                                    </td>
                                                     <td>
                                                         <p class="status-text" id="daysLeft<%= promocion.id_promocion %>">Calculando...</p>
                                                         <small id="dateRange<%= promocion.id_promocion %>"></small>
@@ -342,8 +349,9 @@
                                                     </td>
                                                     <% if(rol == permiso_A){ %>
                                                         <td class="w-0 ">
-                                                            <a id="eventoAct-Inact" href="/clientes-promociones-adm/editar-promocion-cliente/<%= promocion.id_promocion %>" class="btn " title="Editar promocion" data-bs-toggle="modal" data-bs-target="#exampleModal3<%= i %>"><i class="bi bi-pencil-square "></i></a>
-                                                            <a id="eventoAct-Inact" href="/clientes-promociones/eliminar-promocion-cliente/<%= promocion.id_promocion %>" class="btn " title="Eliminar Promocion" data-bs-toggle="modal" data-bs-target="#exampleModal4<%= i %>"><i style="color: red;" class="bi bi-x-square-fill"></i></a>
+                                                            <!-- class="btn btn-sm btn-outline-primary" target="_parent"><i class="bi bi-eye"></i> -->
+                                                            <a id="eventoAct-Inact" href="/clientes-promociones-adm/editar-promocion-cliente/<%= promocion.id_promocion %>" class="btn btn-sm btn-outline-primary" title="Editar promocion" data-bs-toggle="modal" data-bs-target="#exampleModal3<%= i %>"><i class="bi bi-pencil-square "></i></a>
+                                                            <a id="eventoAct-Inact" href="/clientes-promociones/eliminar-promocion-cliente/<%= promocion.id_promocion %>" class="btn btn-sm btn-outline-danger" title="Eliminar Promocion" data-bs-toggle="modal" data-bs-target="#exampleModal4<%= i %>"><i style="" class="bi bi-x-square-fill"></i></a>
 
                                                             <% }%>
 
@@ -527,6 +535,21 @@
                                                     </div>
                                                 </div>
 
+                                                <!-- Modal consultar fecha pago cliente -->
+                                                <div class="modal fade mt-4" id="exampleModal5<%= i %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Consulta fecha pago Cliente</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body" style="padding: 0; height: 500px; overflow: hidden;">
+                                                                <iframe id="iframeModal<%= i %>" src="" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
 
 
                                                 <!-- Modal Eliminar promociones -->
@@ -574,7 +597,25 @@
     </div>
 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Detectamos todos los botones que abren el modal de iframe
+            const buttons = document.querySelectorAll('.open-modal-iframe');
 
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const url = this.getAttribute('data-url');
+                    const targetModal = this.getAttribute('data-bs-target');
+                    const iframe = document.querySelector(targetModal + ' iframe');
+
+                    // Si el iframe ya tiene la misma URL, no la recargamos
+                    if (iframe && iframe.src !== window.location.origin + url) {
+                        iframe.src = url;
+                    }
+                });
+            });
+        });
+    </script>
 
 
     <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">

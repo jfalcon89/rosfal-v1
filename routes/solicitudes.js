@@ -1028,6 +1028,46 @@ router.get("/Solicitudes/editar-solicitud/:id", async(req, res) => {
     }
 });
 
+
+router.get('/Solicitudes/editar-solicitud-celular/:celular?', async(req, res) => {
+    try {
+        const { celular } = req.params;
+
+        // Consultamos todas las solicitudes vinculadas a ese celular
+        // Ordenamos por fecha o ID para ver la más reciente primero
+        const solicitudes = await pool.query(`
+            SELECT idSolicitud, fechaPago, montoCuota, estadoSolicitud, fechaSolicitud
+            FROM solicitudes 
+            WHERE celular = ? 
+            ORDER BY idSolicitud DESC
+        `, [celular]);
+
+        console.log(solicitudes)
+            // Renderizamos la vista enviando el array de solicitudes y el celular
+        res.render('lista_iframe', {
+            solicitudes,
+            celular,
+            layout: false
+        });
+
+    } catch (error) {
+        console.error("Error detectado, redirigiendo a 404:", error);
+
+        // Establecemos el status 404 y renderizamos la vista de error
+        res.status(404).render("404", {
+            error: true,
+            mensaje: "No se pudo procesar la solicitud o la ruta no existe.",
+            detalles: error.message // Opcional: para debug interno
+        });
+    }
+
+    // } catch (error) {
+    //     console.error("Error en el iframe de solicitudes:", error);
+    //     res.status(500).send('Error al cargar las solicitudes');
+    // }
+});
+
+
 //GUARDAR ACTUALIZACION DE SOLICITUD 
 router.post('/Solicitudes/editar-solicitud/:id', async(req, res) => {
     const id = req.params.id;

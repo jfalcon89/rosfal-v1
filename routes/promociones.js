@@ -65,7 +65,7 @@ router.get('/clientes-promociones-adm', async(req, res) => {
         const permiso_B = 'Representante'
         const permiso_C = 'Cliente App'
         const arrayUsuariosVDB = await pool.query('SELECT * FROM users ');
-        const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
+        const arrayClientesVDB = await pool.query(`SELECT c.*, COALESCE(s.nombre, '') AS nombre_solicitud, COALESCE(s.apellido, '') AS apellido_solicitud, COALESCE(s.idSolicitud, '') AS idSolicitud  FROM app_clientes c LEFT JOIN (SELECT celular, nombre, apellido, idSolicitud FROM solicitudes GROUP BY celular) s ON c.telefono = s.celular;`);
         const promocionesClienteDB = await pool.query(`SELECT 
                                                             p.*, 
                                                             u.user AS usuario, 
