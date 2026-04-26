@@ -495,7 +495,7 @@ router.get("/adm-usuarios/promociones-cliente/:id", async(req, res) => {
                 rol: req.session.rol,
                 user: req.session.user,
                 idUsuario: req.session.idUsuario,
-                ol,
+                // ol,
                 permiso_A,
                 permiso_B,
                 permiso_C,
@@ -589,6 +589,11 @@ router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
                 return res.status(404).send('Cliente no encontrado.');
             }
 
+            console.log('Codigo promocion del cliente:' + usuarioDB[0].idUsuario + clienteDB[0].cliente_id + 'PRIMERCREDITO');
+            console.log('Codigo promocion del enviada:', codigo_promocion);
+
+            const codigoPromocionPropio = `${usuarioDB[0].idUsuario}${clienteDB[0].cliente_id}PRIMERCREDITO`;
+
             // Verificar si el código de promoción existe
             const promocionesDB = await pool.query(`SELECT * FROM promociones WHERE codigo_promocion = "${codigo_promocion}" AND estado_promocion = "Activo"`);
 
@@ -623,8 +628,41 @@ router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
                     ruta: `/adm-usuarios/promociones-cliente/${id}`
                 });
             }
-            // Verificar si el código de promoción existe en el cliente que recibe
+
+            // Verificar si el código de promoción existe en el cliente que recibe y que no sea su misma promocion
             const promocionesEnElClientesDB = await pool.query(`SELECT * FROM promociones_clientes WHERE codigo_promocion = "${codigo_promocion}" AND cliente_id = ${id} `);
+
+            if (codigo_promocion === codigoPromocionPropio) {
+                // Parámetros para la alerta de código inválido
+                return res.render('promociones-cliente', {
+                    SolicitudesCliente: SolicitudesClienteDB,
+                    promociones: promocionesDB,
+                    promocionesCliente: promocionesClienteDB,
+                    cliente: clienteDB[0],
+                    usuario: usuarioDB[0],
+                    permiso_A,
+                    permiso_B,
+                    permiso_C,
+                    arrayUsuarios,
+                    arrayClientes,
+                    arraySolicitudes,
+                    arrayMensajesNuevos,
+                    arrayVisitas,
+                    arrayTestimoniosNuevos,
+                    login: true,
+                    name: req.session.name,
+                    rol: req.session.rol,
+                    user: req.session.user,
+                    idUsuario: req.session.idUsuario,
+                    alert: true,
+                    alertTitle: "Código inválido",
+                    alertMessage: "No puedes utilizar tu propio código de promoción.",
+                    alertIcon: "error",
+                    showConfirmButton: true,
+                    timer: 4000, // 4 segundos
+                    ruta: `/adm-usuarios/promociones-cliente/${id}`
+                });
+            }
 
             if (promocionesEnElClientesDB.length > 0) {
                 // Parámetros para la alerta de código inválido
@@ -657,6 +695,9 @@ router.post('/adm-usuarios/promociones-cliente/:id', async(req, res) => {
                     ruta: `/adm-usuarios/promociones-cliente/${id}`
                 });
             }
+
+
+
 
             // buscar el código del cliente que envia
             const idUsuarioEnviaDB = await pool.query(`SELECT * FROM users WHERE user = "${promocionesDB[0].origen_bono}" `);

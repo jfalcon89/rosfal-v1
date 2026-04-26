@@ -83,17 +83,17 @@
 
                 <div class="mt-4 p-4 rounded-3 border-dashed border-2 border-primary bg-light" style="border-style: dashed !important;">
                     <span class="text-muted small text-uppercase fw-bold">Tu código exclusivo es:</span>
-                    <h2 class="display-6 fw-bold text-primary mb-0 mt-2">
+                    <h5 class="display-6 fw-bold text-primary mb-0 mt-2">
                         <% let codigo_promo = usuario.idUsuario.toString() + cliente.cliente_id.toString() %>
-                            <%= codigo_promo %>-PRIMERCREDITO
-                    </h2>
+                            <%= codigo_promo %>PRIMERCREDITO
+                    </h5>
                 </div>
             </div>
         </div>
 
         <div class="mt-4 row g-2">
             <div class="col-12">
-                <a class="btn btn-success btn-lg w-100 d-flex align-items-center justify-content-center py-3 shadow-sm" style="border-radius: 15px;" target="_blank" href="https://wa.me/?text=%0A*INVITACIÓN ESPECIAL A ROSFAL SOLUCIONES DE PRÉSTAMOS*%0A%0AEstimad@ cliente, le han extendido una invitación especial para registrarse en Rosfal Soluciones de Préstamos.%0A%0AUna vez completado su registro, obtendrás un descuento exclusivo y trato preferencial en su primer préstamo.%0A%0A*Código de invitación:*%0A<%= usuario.idUsuario %><%= cliente.cliente_id %>-PRIMERCREDITO%0A%0A*Para más información:*%0A*Email:* contacto@rosfal.com%0A*WhatsApp:* 829 856-0203%0A*Regístrese aquí:* https://www.rosfal.com/app-inicio">
+                <a class="btn btn-success btn-lg w-100 d-flex align-items-center justify-content-center py-3 shadow-sm" style="border-radius: 15px;" target="_blank" href="https://wa.me/?text=%0A*INVITACIÓN ESPECIAL A ROSFAL SOLUCIONES DE PRÉSTAMOS*%0A%0AEstimad@ cliente, le han extendido una invitación especial para registrarse en Rosfal Soluciones de Préstamos.%0A%0AUna vez completado su registro, obtendrás un descuento exclusivo y trato preferencial en su primer préstamo.%0A%0A*Código de invitación:*%0A<%= usuario.idUsuario %><%= cliente.cliente_id %>PRIMERCREDITO%0A%0A*Para más información:*%0A*Email:* contacto@rosfal.com%0A*WhatsApp:* 829 856-0203%0A*Regístrese aquí:* https://www.rosfal.com/app-inicio">
                     <i class="bi bi-whatsapp me-2 fs-4"></i> <strong>Compartir mi código</strong>
                 </a>
             </div>
@@ -131,117 +131,206 @@
         </div>
     </div>
     <div class="container-fluid  mt-3">
-        <div class="container-fluid p-1">
-            <h3 class="text-secondary"><strong>LISTADO</strong> DE PROMOCIONES</h3>
-            <div class="container-fluid p-4">
-                <div class="container-table table-responsive">
-                    <table id="datatable" class="display responsive nowrap compact" style="width:100%">
-                        <thead class="thead-ligth">
-                            <tr>
-                                <th scope="col">Promocion</th>
-                                <th scope="col">Valor Acreditado</th>
-                                <th scope="col">Fecha Registro</th>
+        <style>
+            /* Estilos de la Tarjeta */
+            
+            .promo-card {
+                border: none;
+                border-radius: 15px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                background: #ffffff;
+                border-left: 5px solid #6c757d;
+                /* Color gris por defecto */
+            }
+            
+            .promo-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+            }
+            /* Clases de borde según el estado */
+            
+            .status-aprobado {
+                border-left-color: #28a745 !important;
+            }
+            
+            .status-revision {
+                border-left-color: #fd7e14 !important;
+            }
+            
+            .status-pagado {
+                border-left-color: #0d6efd !important;
+            }
+            
+            .status-declinado {
+                border-left-color: #f85e5e !important;
+            }
+            
+            .status-vencido {
+                border-left-color: #6c757d !important;
+            }
+            /* Tipografía y elementos internos */
+            
+            .promo-value {
+                font-size: 1.4rem;
+                font-weight: 700;
+                color: #333;
+            }
+            
+            .promo-label {
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: #888;
+                margin-bottom: 2px;
+            }
+            
+            .icon-box {
+                width: 45px;
+                height: 45px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 10px;
+                background: #f8f9fa;
+            }
+        </style>
 
-                                <th scope="col">Origen Bono</th>
-                                <th scope="col">Estado</th>
+        <div class="container-fluid p-1 mt-3">
+            <h3 class="text-secondary mb-4"><strong>MIS</strong> PROMOCIONES</h3>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% if (promocionesCliente.length > 0) { %>
-                                <% promocionesCliente.forEach(promocion=> { %>
-                                    <tr>
-                                        <td>
-                                            <%= promocion.codigo_promocion %>
-                                        </td>
-                                        <td>
-                                            <%= promocion.valor_credito=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(promocion.valor_credito) %>
-                                        </td>
-                                        <td>
-                                            <%= promocion.fecha_registro.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
-                                        </td>
+            <div class="row g-4">
+                <% if (promocionesCliente.length > 0) { %>
+                    <% promocionesCliente.forEach(promocion => { 
+                /* Lógica para definir clase de borde y color de texto según estado */
+                let estadoClass = '';
+                let colorHex = '#000000';
+                let iconClass = 'bi-question-square-fill';
 
-                                        <td>
-                                            <%= promocion.origen_bono %>
-                                        </td>
-                                        <td>
-                                            <% if(promocion.estado_promocion == 'Aprobado' ) { %>
-                                                <i style="color: green;" class="bi bi-check-square-fill"></i>
-                                                <%= promocion.estado_promocion  %>
+                if (promocion.estado_promocion == 'Aprobado') { 
+                    estadoClass = 'status-aprobado'; colorHex = '#28a745'; iconClass = 'bi-check-square-fill';
+                } else if (promocion.estado_promocion == 'En revision') { 
+                    estadoClass = 'status-revision'; colorHex = '#fd7e14'; iconClass = 'bi-hourglass-split';
+                } else if (promocion.estado_promocion == 'Pagado') { 
+                    estadoClass = 'status-pagado'; colorHex = '#0d6efd'; iconClass = 'bi-cash-stack';
+                } else if (promocion.estado_promocion == 'Declinado') { 
+                    estadoClass = 'status-declinado'; colorHex = '#f85e5e'; iconClass = 'bi-x-square-fill';
+                } else if (promocion.estado_promocion == 'Vencido') { 
+                    estadoClass = 'status-vencido'; colorHex = '#6c757d'; iconClass = 'bi-calendar-x-fill';
+                }
+                %>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm promo-card <%= estadoClass %>">
+                                <div class="card-body p-4">
 
-                                                    <% }else { %>
-                                                        <span style="color: #f85e5e;"><i class="bi bi-x-square-fill"></i> <%= promocion.estado_promocion  %></span>
-                                                        <% } %>
-                                        </td>
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <div>
+                                            <p class="promo-label mb-0">Código Promoción</p>
+                                            <h5 class="fw-bold text-primary">
+                                                <%= promocion.codigo_promocion %>
+                                            </h5>
+                                        </div>
+                                        <div class="icon-box">
+                                            <i style="color: <%= colorHex %>; font-size: 1.5rem;" class="bi <%= iconClass %>"></i>
+                                        </div>
+                                    </div>
 
-                                    </tr>
+                                    <hr class="text-muted opacity-25">
 
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <p class="promo-label">Valor</p>
+                                            <span class="promo-value">
+                                        <%= Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'USD' }).format(promocion.valor_credito) %>
+                                    </span>
+                                        </div>
+                                        <div class="col-6 text-end">
+                                            <p class="promo-label">Origen</p>
+                                            <span class="badge bg-light text-dark border"><%= promocion.origen_bono %></span>
+                                        </div>
+                                    </div>
 
-                                    <% }) %>
-                                        <% } %>
-                        </tbody>
-                    </table>
-                </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <small class="text-muted">
+                                    <i class="bi bi-calendar3 me-1"></i>
+                                    <%= promocion.fecha_registro.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
+                                </small>
+
+                                        <span class="fw-bold" style="color: <%= colorHex %>;">
+                                    <i class="bi <%= iconClass %> me-1"></i> <%= promocion.estado_promocion %>
+                                </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <div class="col-12">
+                                    <div class="alert alert-info text-center py-5">
+                                        <i class="bi bi-info-circle fs-2 d-block mb-3"></i> No tienes promociones disponibles en este momento.
+                                    </div>
+                                </div>
+                                <% } %>
             </div>
+
+
         </div>
 
-    </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <% if (typeof alert !== "undefined") { %>
+            <script>
+                Swal.fire({
+                    title: "<%= alertTitle %>",
+                    text: "<%= alertMessage %>",
+                    icon: "<%= alertIcon %>",
+                    showConfirmButton: <%= showConfirmButton %>,
+                    timer: <%= timer %>
+                }).then(() => {
+                    window.location.href = "<%= ruta %>";
+                });
+            </script>
+            <% } %>
+
+
+                <% if (rol == 'Cliente App'){ %>
+                    <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
+                        <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
+                    </div>
+                    <% } %>
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <% if (typeof alert !== "undefined") { %>
-        <script>
-            Swal.fire({
-                title: "<%= alertTitle %>",
-                text: "<%= alertMessage %>",
-                icon: "<%= alertIcon %>",
-                showConfirmButton: <%= showConfirmButton %>,
-                timer: <%= timer %>
-            }).then(() => {
-                window.location.href = "<%= ruta %>";
-            });
-        </script>
-        <% } %>
-
-
-            <% if (rol == 'Cliente App'){ %>
-                <div style="padding-bottom: 10px;" class="d-flex justify-content-center w-100">
-                    <a href="/panel-administracion" style="text-align: center; color: #014c90; text-decoration: none;" type="submit" class=" p-2 w-100" id="btn-info"><i class="bi bi-arrow-left-circle me-2"></i>Regresar atras</a>
-                </div>
-                <% } %>
-
-
-
-                    <script>
-                        $(document).ready(function() {
-                            $('#datatable').DataTable({
-                                order: [
-                                    [3, 'desc']
-                                ],
-                                language: {
-                                    "decimal": "",
-                                    "emptyTable": "No hay información",
-                                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                                    "infoPostFix": "",
-                                    "thousands": ",",
-                                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                                    "loadingRecords": "Cargando...",
-                                    "processing": "Procesando...",
-                                    "search": "Buscar:",
-                                    "zeroRecords": "Sin resultados encontrados",
-                                    "paginate": {
-                                        "first": "Primero",
-                                        "last": "Ultimo",
-                                        "next": "Siguiente",
-                                        "previous": "Anterior"
+                        <script>
+                            $(document).ready(function() {
+                                $('#datatable').DataTable({
+                                    order: [
+                                        [3, 'desc']
+                                    ],
+                                    language: {
+                                        "decimal": "",
+                                        "emptyTable": "No hay información",
+                                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                                        "infoPostFix": "",
+                                        "thousands": ",",
+                                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                                        "loadingRecords": "Cargando...",
+                                        "processing": "Procesando...",
+                                        "search": "Buscar:",
+                                        "zeroRecords": "Sin resultados encontrados",
+                                        "paginate": {
+                                            "first": "Primero",
+                                            "last": "Ultimo",
+                                            "next": "Siguiente",
+                                            "previous": "Anterior"
+                                        }
                                     }
-                                }
+                                });
                             });
-                        });
-                    </script>
+                        </script>
 
 
 

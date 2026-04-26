@@ -245,10 +245,10 @@
                                     <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-circle me-3">
                                         <i class="bi bi-cash-stack"></i>
                                     </div>
-                                    <h6 class="card-subtitle text-muted mb-0">Liquidados</h6>
+                                    <h6 class="card-subtitle text-muted mb-0">Pagados</h6>
                                 </div>
                                 <h4 class="card-title mb-0">
-                                    <%= pagosPromociones[0].creditos_liquidado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'DOP' }).format(pagosPromociones[0].creditos_liquidado) %>
+                                    <%= pagosPromociones[0].creditos_pagado=Intl.NumberFormat('en-EN', { style: 'currency' , currency: 'DOP' }).format(pagosPromociones[0].creditos_pagado) %>
                                 </h4>
                             </div>
                         </div>
@@ -312,13 +312,36 @@
                                                         <%= promocion.fecha_registro.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}) %>
                                                     </td>
                                                     <td>
-                                                        <% if(promocion.estado_promocion == 'Aprobado' ) { %>
-                                                            <i style="color: green;" class="bi bi-check-square-fill"></i>
-                                                            <%= promocion.estado_promocion  %>
+                                                        <% if (promocion.estado_promocion == 'Aprobado') { %>
+                                                            <span style="color: #28a745;">
+                                                                            <i class="bi bi-check-square-fill"></i> <%= promocion.estado_promocion %>
+                                                                        </span>
 
-                                                                <% }else { %>
-                                                                    <span style="color: #f85e5e;"><i class="bi bi-x-square-fill"></i> <%= promocion.estado_promocion  %></span>
-                                                                    <% } %>
+                                                            <% } else if (promocion.estado_promocion == 'En revision') { %>
+                                                                <span style="color: #fd7e14;">
+                                                                            <i class="bi bi-hourglass-split"></i> <%= promocion.estado_promocion %>
+                                                                        </span>
+
+                                                                <% } else if (promocion.estado_promocion == 'Pagado') { %>
+                                                                    <span style="color: #0d6efd;">
+                                                                            <i class="bi bi-cash-stack"></i> <%= promocion.estado_promocion %>
+                                                                     </span>
+
+                                                                    <% } else if (promocion.estado_promocion == 'Declinado') { %>
+                                                                        <span style="color: #f85e5e;">
+                                                                            <i class="bi bi-x-square-fill"></i> <%= promocion.estado_promocion %>
+                                                                        </span>
+
+                                                                        <% } else if (promocion.estado_promocion == 'Vencido') { %>
+                                                                            <span style="color: #6c757d;">
+                                                                            <i class="bi bi-calendar-x-fill"></i> <%= promocion.estado_promocion %>
+                                                                        </span>
+
+                                                                            <% } else { %>
+                                                                                <span style="color: #000000;">
+                                                                            <i class="bi bi-question-square-fill"></i> <%= promocion.estado_promocion %>
+                                                                        </span>
+                                                                                <% } %>
                                                     </td>
                                                     <td>
                                                         <%= promocion.cliente_id %> -
@@ -394,10 +417,10 @@
                                                                     <select name="estado_promocion" class="form-control" id="estado_promocion" required>
                                                          <option value="<%= promocion.estado_promocion %>" selected><%= promocion.estado_promocion %></option>
                                                          <option value="Aprobado">Aprobado</option>
-                                                         <option value="En Revision">En Revision</option>
-                                                         <option value="Liquidado">Liquidado</option>
+                                                         <option value="En revision">En revision</option>
+                                                         <option value="Pagado">Pagado</option>
                                                          <option value="Declinado">Declinado</option>
-                                                         <option value="Vencida">Vencido</option>
+                                                         <option value="Vencido">Vencido</option>
                                                                                         
                                                      </select>
 
