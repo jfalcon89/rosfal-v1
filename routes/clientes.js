@@ -13,6 +13,173 @@ const swaggerUi = require('swagger-ui-express');
 
 
 
+// 1. RUTA PARA MOSTRAR LA RIFA
+// router.get('/rifas', async(req, res) => {
+//     try {
+//         // Añadimos ORDER BY para asegurar que el índice 0 sea el número 1, el índice 1 sea el número 2...
+//         const [rows] = await pool.query('SELECT id_rifa, nombre, estado FROM rifas ORDER BY id_rifa ASC');
+
+//         res.render('rifas', { boletosRegistrados: rows || [] });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).send('Error al cargar la matriz de la rifa');
+//     }
+// });
+
+// 1. RUTA PARA MOSTRAR LA RIFA
+// 1. RUTA PARA MOSTRAR LA RIFA
+router.get('/rifas', async(req, res) => {
+    try {
+        // Hacemos la consulta capturando el resultado completo sin desestructurar todavía
+        const resultadoBruto = await pool.query('SELECT id_rifa, nombre, estado FROM rifas');
+
+        // 🔥 DIAGNÓSTICO CRÍTICO: Mira qué llega exactamente de la base de datos
+        console.log("=== DETECTANDO ESTRUCTURA DE LA BD ===");
+        console.log(resultadoBruto);
+        console.log("=======================================");
+
+        // El driver de mysql2 a veces devuelve las filas directamente en la primera posición
+        // o dentro de un objeto. Aseguramos capturar las filas reales:
+        let filas = [];
+        if (Array.isArray(resultadoBruto)) {
+            // Si es el formato estándar [rows, fields], las filas están en la posición 0
+            filas = Array.isArray(resultadoBruto[0]) ? resultadoBruto[0] : resultadoBruto;
+        } else if (resultadoBruto && resultadoBruto.rows) {
+            // Por si estás usando una configuración híbrida o Sequelize/Postgres/etc.
+            filas = resultadoBruto.rows;
+        }
+
+        const mapaBoletos = {};
+
+        if (Array.isArray(filas)) {
+            filas.forEach(boleto => {
+                if (boleto) {
+                    // Evaluamos de forma segura las propiedades del objeto de la fila
+                    const idRaw = boleto.id_rifa !== undefined ? boleto.id_rifa : boleto.ID_RIFA;
+
+                    if (idRaw !== undefined && idRaw !== null) {
+                        const id = String(idRaw);
+                        const nombreRaw = boleto.nombre !== undefined ? boleto.nombre : boleto.NOMBRE;
+                        const estadoRaw = boleto.estado !== undefined ? boleto.estado : boleto.ESTADO;
+
+                        mapaBoletos[id] = {
+                            nombre: nombreRaw || '',
+                            estado: estadoRaw || 'pendiente'
+                        };
+                    }
+                }
+            });
+        }
+
+        console.log("Mapa de boletos corregido para EJS:", mapaBoletos);
+
+        res.render('rifas', { mapaBoletos });
+    } catch (error) {
+        console.error("Error en GET /rifas:", error);
+        res.status(500).send('Error al cargar la matriz de la rifa');
+    }
+});
+
+// RUTA PARA ACTUALIZAR LOS DATOS DE LA RIFA
+router.post('/rifas/guardar', async(req, res) => {
+    const { boletos } = req.body; // Array de objetos { id_rifa, nombre, estado }
+
+    if (!boletos || !Array.isArray(boletos)) {
+        return res.status(400).json({ success: false, message: 'Datos inválidos' });
+    }
+
+    try {
+        // Creamos un arreglo de promesas para actualizar las filas existentes
+        const consultas = boletos.map(boleto => {
+            return pool.query(
+                `UPDATE rifas 
+                 SET nombre = ?, 
+                     estado = ? 
+                 WHERE id_rifa = ?`, [boleto.nombre, boleto.estado, boleto.id_rifa]
+            );
+        });
+
+        // Se ejecutan todas las actualizaciones en la base de datos en paralelo
+        await Promise.all(consultas);
+
+        res.json({ success: true, message: 'Rifa actualizada con éxito' });
+    } catch (error) {
+        console.error('Error al actualizar la rifa:', error);
+        res.status(500).json({ success: false, message: 'Error interno del servidor' });
+    }
+});
+
+// RUTA PARA EL LISTADO Y ESTADÍSTICAS DE LA RIFA
+router.get('/rifa_listado', async(req, res) => {
+    try {
+        // Capturamos el resultado completo de la base de datos sin desestructurar a ciegas
+        const resultadoBruto = await pool.query('SELECT id_rifa, nombre, estado FROM rifas');
+
+        const PRECIO_BOLETO = 100;
+        const TOTAL_NUMEROS_RIFA = 100;
+
+        // Extraemos las filas reales de forma ultra segura (idéntico a la ruta /rifas)
+        let filas = [];
+        if (Array.isArray(resultadoBruto)) {
+            filas = Array.isArray(resultadoBruto[0]) ? resultadoBruto[0] : resultadoBruto;
+        } else if (resultadoBruto && resultadoBruto.rows) {
+            filas = resultadoBruto.rows;
+        }
+
+        // Ahora que estamos 100% seguros de que 'filas' es un Array, mapeamos los campos
+        // Normalizamos las propiedades por si vienen en Mayúsculas (ID_RIFA, NOMBRE, ESTADO)
+        const registrosLimpios = [];
+        if (Array.isArray(filas)) {
+            filas.forEach(b => {
+                if (b) {
+                    const nombreRaw = b.nombre !== undefined ? b.nombre : b.NOMBRE;
+                    const idRaw = b.id_rifa !== undefined ? b.id_rifa : b.ID_RIFA;
+                    const estadoRaw = b.estado !== undefined ? b.estado : b.ESTADO;
+
+                    registrosLimpios.push({
+                        id_rifa: idRaw,
+                        nombre: nombreRaw || '',
+                        estado: estadoRaw || 'pendiente'
+                    });
+                }
+            });
+        }
+
+        // 1. Filtrar solo los números que ya tienen un jugador registrado (con el array ya limpio)
+        const jugados = registrosLimpios.filter(b => b.nombre && b.nombre.trim() !== '');
+
+        // 2. Total de personas que han jugado (números con nombre)
+        const totalJugados = jugados.length;
+
+        // 3. Total de números disponibles/pendientes por vender
+        const totalDisponibles = TOTAL_NUMEROS_RIFA - totalJugados;
+
+        // 4. Monto total recaudado (Los que están en estado 'pagado')
+        const recaudado = jugados.filter(b => {
+            const est = String(b.estado).toLowerCase().trim();
+            return est === 'pagado' || est === 'pago' || est === '1' || est === 'true';
+        });
+        const montoPagado = recaudado.length * PRECIO_BOLETO;
+
+        // 5. Monto pendiente por cobrar (Tienen nombre pero estado NO es pagado)
+        const montoPendiente = (totalJugados - recaudado.length) * PRECIO_BOLETO;
+
+        // Renderizamos la nueva vista pasando los datos procesados de forma segura
+        res.render('rifa_listado', {
+            jugados,
+            totalJugados,
+            totalDisponibles,
+            montoPagado,
+            montoPendiente,
+            PRECIO_BOLETO
+        });
+
+    } catch (error) {
+        console.error("Error en GET /rifa_listado:", error);
+        res.status(500).send('Error al cargar el listado de la rifa');
+    }
+});
+
 
 
 // VISTA DE CLIENTES GENERALES

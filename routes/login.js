@@ -107,8 +107,18 @@ router.post('/auth', async(req, res) => {
                                     timer: 1500,
                                     ruta: 'encuesta'
                                 });
+                            } else if (req.session.rol == 'rifa') {
+                                return res.render('login', {
+                                    device,
+                                    alert: true,
+                                    alertTitle: "Conexión exitosa",
+                                    alertMessage: "¡LOGIN CORRECTO!",
+                                    alertIcon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                    ruta: 'rifas'
+                                });
                             } else {
-
                                 return res.render('login', {
                                     device,
                                     alert: true,

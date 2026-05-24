@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Control - Gran Rifa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen font-sans">
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+
+        <header class="relative mb-8 bg-gradient-to-br from-gray-900 via-zinc-900 to-stone-900 p-6 rounded-3xl shadow-xl border border-zinc-800 text-white flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-black bg-gradient-to-r from-pink-500 to-amber-400 bg-clip-text text-transparent">
+                    📊 Panel de Control y Auditoría
+                </h1>
+                <p class="text-zinc-400 text-sm mt-1">Monitoreo financiero e inscripción de jugadores en tiempo real</p>
+            </div>
+            <a href="/rifas" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 px-4 py-2 rounded-xl text-sm font-bold transition flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
+                </svg>
+                <span>Volver a la Matriz</span>
+            </a>
+        </header>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+
+            <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex items-center space-x-4">
+                <div class="p-3 bg-blue-50 text-blue-600 rounded-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-gray-500 text-xs font-bold uppercase tracking-wider block">Boletos Vendidos</span>
+                    <span class="text-2xl font-black text-gray-800"><%= totalJugados %></span>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex items-center space-x-4">
+                <div class="p-3 bg-purple-50 text-purple-600 rounded-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-gray-500 text-xs font-bold uppercase tracking-wider block">Disponibles</span>
+                    <span class="text-2xl font-black text-gray-800"><%= totalDisponibles %></span>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex items-center space-x-4">
+                <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-gray-500 text-xs font-bold uppercase tracking-wider block">Total Recaudado</span>
+                    <span class="text-2xl font-black text-emerald-600">RD$ <%= montoPagado %></span>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex items-center space-x-4">
+                <div class="p-3 bg-amber-50 text-amber-600 rounded-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="text-gray-500 text-xs font-bold uppercase tracking-wider block">Por Cobrar</span>
+                    <span class="text-2xl font-black text-amber-600">RD$ <%= montoPendiente %></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="p-5 border-b border-gray-100 bg-gray-50/50">
+                <h2 class="text-lg font-bold text-gray-800">Listado Maestro de Jugadores</h2>
+                <p class="text-zinc-500 text-xs">Solo se listan los números con compradores confirmados en el sistema.</p>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100/70 border-b border-gray-200 text-zinc-600 text-xs font-bold uppercase tracking-wider">
+                            <th class="px-6 py-4">Boleto Nº</th>
+                            <th class="px-6 py-4">Nombre del Jugador</th>
+                            <th class="px-6 py-4">Monto Individual</th>
+                            <th class="px-6 py-4 text-center">Estado del Pago</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 text-sm text-gray-700">
+                        <% if (jugados.length === 0) { %>
+                            <tr>
+                                <td colspan="4" class="px-6 py-10 text-center text-gray-400 font-medium">
+                                    Aún no se han registrado ventas de boletos en la base de datos.
+                                </td>
+                            </tr>
+                            <% } else { %>
+                                <% jugados.forEach(boleto => { %>
+                                    <% 
+                                    const esPago = String(boleto.estado).toLowerCase().trim() === 'pagado' || 
+                                                   String(boleto.estado).toLowerCase().trim() === 'pago' || 
+                                                   String(boleto.estado) === '1';
+                                %>
+                                        <tr class="hover:bg-gray-50/80 transition-colors">
+                                            <td class="px-6 py-4 font-black text-gray-800">
+                                                <span class="bg-zinc-100 text-zinc-800 px-2.5 py-1 rounded-md border border-zinc-200 text-xs">
+                                            #<%= String(boleto.id_rifa).padStart(2, '0') %>
+                                        </span>
+                                            </td>
+                                            <td class="px-6 py-4 font-semibold text-gray-700 capitalize">
+                                                <%= boleto.nombre %>
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-gray-600">
+                                                RD$
+                                                <%= PRECIO_BOLETO %>
+                                            </td>
+                                            <td class="px-6 py-4 text-center">
+                                                <% if (esPago) { %>
+                                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Pagado
+                                                    </span>
+                                                    <% } else { %>
+                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span> Pendiente
+                                                        </span>
+                                                        <% } %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
