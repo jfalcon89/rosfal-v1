@@ -93,6 +93,7 @@
                             <th class="px-6 py-4">Nombre del Jugador</th>
                             <th class="px-6 py-4">Monto Individual</th>
                             <th class="px-6 py-4 text-center">Estado del Pago</th>
+                            <th class="px-6 py-4">Fecha Jugada</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 text-sm text-gray-700">
@@ -132,6 +133,9 @@
                                                 <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span> Pendiente
                                                         </span>
                                                         <% } %>
+                                            </td>
+                                            <td class="px-6 py-4 font-medium text-gray-600">
+                                                <%= boleto.fecha_creacion.toLocaleString('es-US', { timeZone: "America/Santo_Domingo"}).slice(0, 18) %>
                                             </td>
                                         </tr>
                                         <% }) %>

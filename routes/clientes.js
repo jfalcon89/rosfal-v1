@@ -31,12 +31,12 @@ const swaggerUi = require('swagger-ui-express');
 router.get('/rifas', async(req, res) => {
     try {
         // Hacemos la consulta capturando el resultado completo sin desestructurar todavía
-        const resultadoBruto = await pool.query('SELECT id_rifa, nombre, estado FROM rifas');
+        const resultadoBruto = await pool.query('SELECT id_rifa, nombre, estado, fecha_creacion FROM rifas');
 
         // 🔥 DIAGNÓSTICO CRÍTICO: Mira qué llega exactamente de la base de datos
-        console.log("=== DETECTANDO ESTRUCTURA DE LA BD ===");
-        console.log(resultadoBruto);
-        console.log("=======================================");
+        // console.log("=== DETECTANDO ESTRUCTURA DE LA BD ===");
+        // console.log(resultadoBruto);
+        // console.log("=======================================");
 
         // El driver de mysql2 a veces devuelve las filas directamente en la primera posición
         // o dentro de un objeto. Aseguramos capturar las filas reales:
@@ -61,17 +61,19 @@ router.get('/rifas', async(req, res) => {
                         const id = String(idRaw);
                         const nombreRaw = boleto.nombre !== undefined ? boleto.nombre : boleto.NOMBRE;
                         const estadoRaw = boleto.estado !== undefined ? boleto.estado : boleto.ESTADO;
+                        const fechaCreacionRaw = boleto.fecha_creacion;
 
                         mapaBoletos[id] = {
                             nombre: nombreRaw || '',
-                            estado: estadoRaw || 'pendiente'
+                            estado: estadoRaw || 'pendiente',
+                            fecha_creacion: fechaCreacionRaw || ''
                         };
                     }
                 }
             });
         }
 
-        console.log("Mapa de boletos corregido para EJS:", mapaBoletos);
+        // console.log("Mapa de boletos corregido para EJS:", mapaBoletos);
 
         res.render('rifas', { mapaBoletos });
     } catch (error) {
@@ -113,7 +115,7 @@ router.post('/rifas/guardar', async(req, res) => {
 router.get('/rifa_listado', async(req, res) => {
     try {
         // Capturamos el resultado completo de la base de datos sin desestructurar a ciegas
-        const resultadoBruto = await pool.query('SELECT id_rifa, nombre, estado FROM rifas');
+        const resultadoBruto = await pool.query('SELECT id_rifa, nombre, estado, fecha_creacion FROM rifas');
 
         const PRECIO_BOLETO = 100;
         const TOTAL_NUMEROS_RIFA = 100;
@@ -135,11 +137,12 @@ router.get('/rifa_listado', async(req, res) => {
                     const nombreRaw = b.nombre !== undefined ? b.nombre : b.NOMBRE;
                     const idRaw = b.id_rifa !== undefined ? b.id_rifa : b.ID_RIFA;
                     const estadoRaw = b.estado !== undefined ? b.estado : b.ESTADO;
-
+                    const fechaCreacionRaw = b.fecha_creacion !== undefined ? b.fecha_creacion : b.FECHA_CREACION;
                     registrosLimpios.push({
                         id_rifa: idRaw,
                         nombre: nombreRaw || '',
-                        estado: estadoRaw || 'pendiente'
+                        estado: estadoRaw || 'pendiente',
+                        fecha_creacion: fechaCreacionRaw || ''
                     });
                 }
             });
